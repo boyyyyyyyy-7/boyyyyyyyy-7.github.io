@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="icon" href="">
+    <meta property="og:title" content="Brayden is tall">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta itemprop="url" content="">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
+    <title>Brayden is tall</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Moving Stars Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: moveStars 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes moveStars {
+            0% { transform: translateX(0px) translateY(0px); }
+            100% { transform: translateX(-200px) translateY(-100px); }
+        }
+        
+        /* Additional star layers for depth */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
+                radial-gradient(1px 1px at 100px 100px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
+                radial-gradient(1px 1px at 200px 200px, rgba(255,255,255,0.6), transparent);
+            background-repeat: repeat;
+            background-size: 300px 200px;
+            animation: moveStars2 30s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        @keyframes moveStars2 {
+            0% { transform: translateX(0px) translateY(0px); }
+            100% { transform: translateX(-300px) translateY(-200px); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0;
+            background: linear-gradient(135deg, rgba(8, 15, 19, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+        
+        .game-section {
+            margin: 40px 0;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+        
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .game-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .game-card:hover::before {
+            left: 100%;
+        }
+        
+        .game-card:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(78, 205, 196, 0.3);
+            border-color: rgba(78, 205, 196, 0.5);
+        }
+        
+        .game-card a {
+            color: #f9f9f9;
+            text-decoration: none;
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-card p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+            transition: color 0.3s ease;
+        }
+        
+        .game-card:hover p {
+            color: #4ecdc4;
+            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+        }
+        
+        .divider {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #4ecdc4, transparent);
+            margin: 40px 0;
+            border-radius: 2px;
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+        }
+        
+        /* Floating animation for cards */
+        .game-card:nth-child(odd) {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .game-card:nth-child(even) {
+            animation: float 6s ease-in-out infinite reverse;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        /* Glow effect for header */
+        header::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+        }
+        
+        @media (max-width: 768px) {
+            .game-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            header {
+                padding: 40px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Brayden is tall games 2.0</h1>
+        </header>
+        
+
+        
+        <div class="game-section">
+            <h2 class="section-title">Game list</h2>
+            <div class="divider"></div>
+            
+            <div class="game-grid">
+                <div class="game-card">
+                    <a href="crazy-cattle-3d.html">
+                        <p>Crazy cattle 3d</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="crazy-chicken-3d.html">
+                        <p>Crazy chicken 3D</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="crazy-kitty-3d.html">
+                        <p>Crazy kitty 3D</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="curve-rush.html">
+                        <p>Curve Rush</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="slender-multiplayer.html">
+                        <p>Slender Multiplayer</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="escape-road-2.html">
+                        <p>Escape Road 2</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="cars.html">
+                        <p>Cars</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="drive-mad.html">
+                        <p>Drive mad</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="shell-shockers.html">
+                        <p>Shell shockers</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="basketball-stars.html">
+                        <p>Basketball stars</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="minecraft.html">
+                        <p>Minecraft</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="ovo.html">
+                        <p>OVO</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="smash-karts.html">
+                        <p>Smash karts</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="crossy-road.html">
+                        <p>Crossy Road</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="1v1-lol.html">
+                        <p>1v1.lol</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="speed-stars.html">
+                        <p>Speed Stars</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="ragdoll-archers.html">
+                        <p>Ragdoll Archers</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="cookie-clicker.html">
+                        <p>Cookie clicker</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="unblocked-beta.html">
+                        <p>unblocked beta</p>
+                    </a>
+                </div>
+                
+                <div class="game-card">
+                    <a href="slow-roads.html">
+                        <p>slow roads</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
