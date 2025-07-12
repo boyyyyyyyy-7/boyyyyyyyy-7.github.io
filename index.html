@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="icon" href="">
     <meta property="og:title" content="Brayden is tall">
     <meta property="og:type" content="website">
@@ -20,6 +24,8 @@
             box-sizing: border-box;
         }
         
+        /* Remove the glass-bg gradient background */
+        
         body {
             font-family: 'Maven Pro', Arial, sans-serif;
             background: #0a0a0a;
@@ -28,6 +34,51 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            /* Prevent zoom on mobile */
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Fullscreen button styles */
+        .fullscreen-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(78, 205, 196, 0.9);
+            color: #0a0a0a;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .fullscreen-btn:hover {
+            background: rgba(78, 205, 196, 1);
+            transform: scale(1.1);
+        }
+        
+        .fullscreen-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Hide fullscreen button on desktop */
+        @media (min-width: 769px) {
+            .fullscreen-btn {
+                display: none;
+            }
         }
         
         /* Moving Stars Background */
@@ -48,7 +99,7 @@
             background-size: 200px 100px;
             animation: moveStars 20s linear infinite;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
         
         @keyframes moveStars {
@@ -73,7 +124,7 @@
             background-size: 300px 200px;
             animation: moveStars2 30s linear infinite;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
         }
         
         @keyframes moveStars2 {
@@ -86,18 +137,32 @@
             margin: 0 auto;
             padding: 20px;
             position: relative;
-            z-index: 2;
+            z-index: 10;
         }
         
         header {
-            text-align: center;
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.18);
+            border-radius: 18px;
             padding: 60px 0;
-            background: linear-gradient(135deg, rgba(8, 15, 19, 0.9) 0%, rgba(26, 26, 46, 0.9) 100%);
-            border-radius: 20px;
             margin-bottom: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px) saturate(160%);
+            -webkit-backdrop-filter: blur(3px) saturate(160%);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Fallback for browsers that don't support backdrop-filter */
+        @supports not (backdrop-filter: blur(15px)) {
+            header {
+                background: rgba(8, 15, 19, 0.9);
+                box-shadow: 
+                    0 20px 40px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
         }
         
         h1 {
@@ -120,26 +185,74 @@
             text-align: center;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+        .search-input {
+            background: rgba(255,255,255,0.12);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-size: 1.1rem;
+            color: #fff;
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            backdrop-filter: blur(3px) saturate(160%);
+            -webkit-backdrop-filter: blur(3px) saturate(160%);
+            transition: border-color 0.2s, box-shadow 0.2s;
+            width: 320px;
+            max-width: 90vw;
+        }
+        .search-input::placeholder {
+            color: #e0e0e0;
+            opacity: 0.8;
+        }
+        .search-input:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 4px 16px rgba(78,205,196,0.15);
+        }
         
         .game-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 32px;
             margin-top: 30px;
+            overflow: visible !important;
         }
         
         .game-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border: 1.5px solid rgba(255,255,255,0.18);
             border-radius: 15px;
             padding: 25px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(3px) saturate(160%);
+            -webkit-backdrop-filter: blur(3px) saturate(160%);
+            text-decoration: none;
         }
+        .game-card:hover, .game-card:focus-visible {
+            background: rgba(255,255,255,0.18);
+            border-color: #fff;
+            transform: scale(1.08);
+            z-index: 10;
+        }
+        .game-card:active {
+            transform: scale(0.98);
+        }
+        .game-card::after, .game-card:hover::after { display: none !important; }
         
         .game-card::before {
             content: '';
@@ -154,23 +267,6 @@
         
         .game-card:hover::before {
             left: 100%;
-        }
-        
-        .game-card:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 30px rgba(78, 205, 196, 0.3);
-            border-color: rgba(78, 205, 196, 0.5);
-        }
-        
-        .game-card a {
-            color: #f9f9f9;
-            text-decoration: none;
-            display: block;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 2;
         }
         
         .game-card p {
@@ -194,18 +290,9 @@
         }
         
         /* Floating animation for cards */
-        .game-card:nth-child(odd) {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        .game-card:nth-child(even) {
-            animation: float 6s ease-in-out infinite reverse;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
+        /* .game-card:nth-child(odd) { animation: float 6s ease-in-out infinite; } */
+        /* .game-card:nth-child(even) { animation: float 6s ease-in-out infinite reverse; } */
+        /* @keyframes float { ... } */
         
         /* Glow effect for header */
         header::after {
@@ -243,143 +330,213 @@
             header {
                 padding: 40px 0;
             }
+            
+            /* Prevent horizontal scroll on mobile */
+            body {
+                overflow-x: hidden;
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Remove the .glass-bg div -->
+    <!-- Fullscreen button for mobile -->
+    <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+        <span id="fullscreenIcon">⛶</span>
+    </button>
+
     <div class="container">
         <header>
-            <h1>Brayden is tall games 2.0</h1>
+            <h1>Tall Games 2.0</h1>
         </header>
         
 
         
         <div class="game-section">
             <h2 class="section-title">Game list</h2>
-            <div class="divider"></div>
+            <div class="search-box">
+                <input class="search-input" type="text" placeholder="Search games..." />
+            </div>
             
             <div class="game-grid">
-                <div class="game-card">
-                    <a href="crazy-cattle-3d.html">
-                        <p>Crazy cattle 3d</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="crazy-chicken-3d.html">
-                        <p>Crazy chicken 3D</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="crazy-kitty-3d.html">
-                        <p>Crazy kitty 3D</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="curve-rush.html">
-                        <p>Curve Rush</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="slender-multiplayer.html">
-                        <p>Slender Multiplayer</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="escape-road-2.html">
-                        <p>Escape Road 2</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="cars.html">
-                        <p>Cars</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="drive-mad.html">
-                        <p>Drive mad</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="shell-shockers.html">
-                        <p>Shell shockers</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="basketball-stars.html">
-                        <p>Basketball stars</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="minecraft.html">
-                        <p>Minecraft</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="ovo.html">
-                        <p>OVO</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="smash-karts.html">
-                        <p>Smash karts</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="crossy-road.html">
-                        <p>Crossy Road</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="1v1-lol.html">
-                        <p>1v1.lol</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="speed-stars.html">
-                        <p>Speed Stars</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="ragdoll-archers.html">
-                        <p>Ragdoll Archers</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="cookie-clicker.html">
-                        <p>Cookie clicker</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="unblocked-beta.html">
-                        <p>unblocked beta</p>
-                    </a>
-                </div>
-                
-                <div class="game-card">
-                    <a href="slow-roads.html">
-                        <p>slow roads</p>
-                    </a>
-                </div>
+                <a class="game-card" href="crazy-cattle-3d.html">
+                    <p>Crazy cattle 3d</p>
+                </a>
+                <a class="game-card" href="crazy-chicken-3d.html">
+                    <p>Crazy chicken 3D</p>
+                </a>
+                <a class="game-card" href="crazy-kitty-3d.html">
+                    <p>Crazy kitty 3D</p>
+                </a>
+                <a class="game-card" href="curve-rush.html">
+                    <p>Curve Rush</p>
+                </a>
+                <a class="game-card" href="slender-multiplayer.html">
+                    <p>Slender Multiplayer</p>
+                </a>
+                <a class="game-card" href="escape-road-2.html">
+                    <p>Escape Road 2</p>
+                </a>
+                <a class="game-card" href="cars.html">
+                    <p>Cars</p>
+                </a>
+                <a class="game-card" href="drive-mad.html">
+                    <p>Drive mad</p>
+                </a>
+                <a class="game-card" href="shell-shockers.html">
+                    <p>Shell shockers</p>
+                </a>
+                <a class="game-card" href="basketball-stars.html">
+                    <p>Basketball stars</p>
+                </a>
+                <a class="game-card" href="minecraft.html">
+                    <p>Minecraft</p>
+                </a>
+                <a class="game-card" href="ovo.html">
+                    <p>OVO</p>
+                </a>
+                <a class="game-card" href="smash-karts.html">
+                    <p>Smash karts</p>
+                </a>
+                <a class="game-card" href="crossy-road.html">
+                    <p>Crossy Road</p>
+                </a>
+                <a class="game-card" href="1v1-lol.html">
+                    <p>1v1.lol</p>
+                </a>
+                <a class="game-card" href="speed-stars.html">
+                    <p>Speed Stars</p>
+                </a>
+                <a class="game-card" href="ragdoll-archers.html">
+                    <p>Ragdoll Archers</p>
+                </a>
+                <a class="game-card" href="cookie-clicker.html">
+                    <p>Cookie clicker</p>
+                </a>
+                <a class="game-card" href="unblocked-beta.html">
+                    <p>unblocked beta</p>
+                </a>
+                <a class="game-card" href="slow-roads.html">
+                    <p>slow roads</p>
+                </a>
             </div>
         </div>
     </div>
+
+    <script>
+        // Fullscreen functionality
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const fullscreenIcon = document.getElementById('fullscreenIcon');
+        let isFullscreen = false;
+
+        // Check if fullscreen is supported
+        function isFullscreenSupported() {
+            return document.fullscreenEnabled || 
+                   document.webkitFullscreenEnabled || 
+                   document.mozFullScreenEnabled || 
+                   document.msFullscreenEnabled;
+        }
+
+        // Enter fullscreen
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // Exit fullscreen
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        // Toggle fullscreen
+        function toggleFullscreen() {
+            if (!isFullscreen) {
+                enterFullscreen();
+            } else {
+                exitFullscreen();
+            }
+        }
+
+        // Update button state
+        function updateFullscreenState() {
+            const isFullscreenNow = !!(document.fullscreenElement || 
+                                     document.webkitFullscreenElement || 
+                                     document.mozFullScreenElement || 
+                                     document.msFullscreenElement);
+            
+            isFullscreen = isFullscreenNow;
+            fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
+        }
+
+        // Event listeners
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+        // Listen for fullscreen change events
+        document.addEventListener('fullscreenchange', updateFullscreenState);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenState);
+        document.addEventListener('mozfullscreenchange', updateFullscreenState);
+        document.addEventListener('MSFullscreenChange', updateFullscreenState);
+
+        // Hide fullscreen button if not supported
+        if (!isFullscreenSupported()) {
+            fullscreenBtn.style.display = 'none';
+        }
+
+        // Prevent zoom on double tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Prevent context menu on long press
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Auto-hide fullscreen button after 3 seconds on mobile
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                fullscreenBtn.style.opacity = '0.7';
+            }, 3000);
+        }
+
+        // Live search filter for game cards
+        const searchInput = document.querySelector('.search-input');
+        const gameCards = document.querySelectorAll('.game-card');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim().toLowerCase();
+            gameCards.forEach(card => {
+                const text = card.textContent.trim().toLowerCase();
+                if (query === "" || text.includes(query)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
