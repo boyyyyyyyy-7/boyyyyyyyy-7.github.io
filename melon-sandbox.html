@@ -1,27 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Ezoic Privacy Scripts -->
-    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
-    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
-    <!-- Ezoic Header Script -->
-    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
-    <script>
-        window.ezstandalone = window.ezstandalone || {};
-        ezstandalone.cmd = ezstandalone.cmd || [];
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
-    <meta property="og:title" content="Granny - Brayden is tall">
+    <meta property="og:title" content="Melon Sandbox - Brayden is tall">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta itemprop="url" content="">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-    <title>Granny - Brayden is tall games 2.0</title>
+    <title>Melon Sandbox - Brayden is tall games 2.0</title>
     <style>
         * {
             margin: 0;
@@ -187,33 +178,36 @@
                 <a href="index.html" class="back-button">← Back to Games</a>
                 <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
-            <h1 class="game-title">Granny</h1>
+            <h1 class="game-title">Melon Sandbox</h1>
         </div>
         
-        <div class="game-container" id="game-container">
+        <div class="game-container">
             <iframe 
                 id="gameFrame"
-                src="https://1games.io/game/granny-horror/" 
+                src="https://sites.google.com/view/brayden-is-tall-games/melon-sandbox" 
                 class="game-frame"
                 allowfullscreen
                 allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
-                style="width: 100%; border: none; display: block; background: #000; border-radius: 10px;"
-            ></iframe>
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
+            </iframe>
         </div>
     </div>
     
     <script>
         function toggleFullscreen() {
-            const container = document.getElementById('game-container');
+            const iframe = document.getElementById('gameFrame');
+            
             if (!document.fullscreenElement) {
-                if (container.requestFullscreen) {
-                    container.requestFullscreen();
-                } else if (container.webkitRequestFullscreen) {
-                    container.webkitRequestFullscreen();
-                } else if (container.msRequestFullscreen) {
-                    container.msRequestFullscreen();
+                // Enter fullscreen
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                } else if (iframe.msRequestFullscreen) {
+                    iframe.msRequestFullscreen();
                 }
             } else {
+                // Exit fullscreen
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) {
@@ -223,10 +217,12 @@
                 }
             }
         }
+        
         // Update button text based on fullscreen state
         document.addEventListener('fullscreenchange', updateButtonText);
         document.addEventListener('webkitfullscreenchange', updateButtonText);
         document.addEventListener('msfullscreenchange', updateButtonText);
+        
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {

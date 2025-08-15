@@ -181,33 +181,31 @@
             <h1 class="game-title">Crazy Kitty 3D</h1>
         </div>
         
-        <div class="game-container">
+        <div class="game-container" id="game-container">
             <iframe 
                 id="gameFrame"
                 src="https://1games.io/game/crazy-kitty-3d" 
                 title="Crazy Kitty 3D"
                 class="game-frame"
                 allow="fullscreen;autoplay;encrypted-media"
-                sandbox="allow-forms allow-scripts allow-same-origin allow-modals">
-            </iframe>
+                sandbox="allow-forms allow-scripts allow-same-origin allow-modals"
+                style="width: 100%; border: none; display: block; background: #000; border-radius: 10px;"
+            ></iframe>
         </div>
     </div>
     
     <script>
         function toggleFullscreen() {
-            const iframe = document.getElementById('gameFrame');
-            
+            const container = document.getElementById('game-container');
             if (!document.fullscreenElement) {
-                // Enter fullscreen
-                if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) {
-                    iframe.msRequestFullscreen();
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
                 }
             } else {
-                // Exit fullscreen
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) {
@@ -217,12 +215,10 @@
                 }
             }
         }
-        
         // Update button text based on fullscreen state
         document.addEventListener('fullscreenchange', updateButtonText);
         document.addEventListener('webkitfullscreenchange', updateButtonText);
         document.addEventListener('msfullscreenchange', updateButtonText);
-        
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
