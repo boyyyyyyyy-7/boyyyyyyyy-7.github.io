@@ -894,22 +894,16 @@
         
         // About:Blank injection function
         function openAboutBlank() {
-            const newTab = window.open('about:blank', '_blank');
+            // Redirect current tab to about:blank
+            window.location.replace('about:blank');
             
-            if (newTab) {
-                // Wait for the new tab to load
-                newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
-                newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                newTab.document.write('</body></html>');
-                newTab.document.close();
-                
-                // Close the original tab after a short delay
-                setTimeout(function() {
-                    window.close();
-                }, 500);
-            } else {
-                alert('Popup blocked! Please allow popups for this site.');
-            }
+            // Wait a moment then inject the content
+            setTimeout(function() {
+                document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
+                document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
+                document.write('</body></html>');
+                document.close();
+            }, 100);
         }
         
         // Auto-open about:blank when toggle is enabled
