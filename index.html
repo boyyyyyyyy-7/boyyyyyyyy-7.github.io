@@ -902,6 +902,11 @@
                 newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
                 newTab.document.write('</body></html>');
                 newTab.document.close();
+                
+                // Close the original tab after a short delay
+                setTimeout(function() {
+                    window.close();
+                }, 500);
             } else {
                 alert('Popup blocked! Please allow popups for this site.');
             }
