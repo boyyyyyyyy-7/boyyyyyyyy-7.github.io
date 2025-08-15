@@ -53,6 +53,13 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Light Mode Styles */
+        body.light-mode {
+            background: #ffffff;
+            color: #0a0a0a;
         }
         
         /* Settings button styles */
@@ -90,7 +97,7 @@
             position: fixed;
             top: 80px;
             right: 20px;
-            background: rgba(10, 10, 10, 0.95);
+            background: rgba(78, 205, 196, 0.9);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(78, 205, 196, 0.3);
             border-radius: 10px;
@@ -125,9 +132,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            color: #f9f9f9;
+            color: #0a0a0a;
             cursor: pointer;
             font-size: 14px;
+            font-weight: bold;
         }
         
         .toggle-switch {
@@ -213,7 +221,7 @@
             }
         }
         
-        /* Moving Stars Background */
+        /* Moving Stars Background - Dark Mode */
         body::before {
             content: '';
             position: fixed;
@@ -232,6 +240,16 @@
             animation: moveStars 20s linear infinite;
             pointer-events: none;
             z-index: 0;
+        }
+        
+        /* Light Mode - White Sky with Black Stars */
+        body.light-mode::before {
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #000, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(0,0,0,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #000, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(0,0,0,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #333, transparent);
         }
         
         @keyframes moveStars {
@@ -502,24 +520,6 @@
         
         <div class="settings-option">
             <label>
-                Sound Effects
-                <div class="toggle-switch" id="soundToggle">
-                    <input type="checkbox" id="soundCheckbox" style="display: none;">
-                </div>
-            </label>
-        </div>
-        
-        <div class="settings-option">
-            <label>
-                Background Music
-                <div class="toggle-switch" id="musicToggle">
-                    <input type="checkbox" id="musicCheckbox" style="display: none;">
-                </div>
-            </label>
-        </div>
-        
-        <div class="settings-option">
-            <label>
                 Dark Mode
                 <div class="toggle-switch" id="darkModeToggle">
                     <input type="checkbox" id="darkModeCheckbox" style="display: none;">
@@ -529,16 +529,7 @@
         
         <div class="settings-option">
             <label>
-                Notifications
-                <div class="toggle-switch" id="notificationsToggle">
-                    <input type="checkbox" id="notificationsCheckbox" style="display: none;">
-                </div>
-            </label>
-        </div>
-        
-        <div class="settings-option">
-            <label>
-                About:Blank Injection
+                Auto Inject About:Blank
                 <div class="toggle-switch" id="injectionToggle">
                     <input type="checkbox" id="injectionCheckbox" style="display: none;">
                 </div>
@@ -547,7 +538,7 @@
         
         <div class="settings-option">
             <button id="openInjectionBtn" style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                Open About:Blank
+                Inject Into About:Blank
             </button>
         </div>
     </div>
@@ -777,17 +768,11 @@
         const closeSettings = document.getElementById('closeSettings');
         
         // Toggle switches
-        const soundToggle = document.getElementById('soundToggle');
-        const musicToggle = document.getElementById('musicToggle');
         const darkModeToggle = document.getElementById('darkModeToggle');
-        const notificationsToggle = document.getElementById('notificationsToggle');
         const injectionToggle = document.getElementById('injectionToggle');
         
         // Checkboxes
-        const soundCheckbox = document.getElementById('soundCheckbox');
-        const musicCheckbox = document.getElementById('musicCheckbox');
         const darkModeCheckbox = document.getElementById('darkModeCheckbox');
-        const notificationsCheckbox = document.getElementById('notificationsCheckbox');
         const injectionCheckbox = document.getElementById('injectionCheckbox');
         
         // Injection button
@@ -797,22 +782,24 @@
         function loadSettings() {
             const settings = JSON.parse(localStorage.getItem('gameSettings') || '{}');
             
-            soundCheckbox.checked = settings.sound !== false;
-            musicCheckbox.checked = settings.music !== false;
-            darkModeCheckbox.checked = settings.darkMode === true;
-            notificationsCheckbox.checked = settings.notifications !== false;
+            // Default to dark mode if not set
+            darkModeCheckbox.checked = settings.darkMode !== false;
             injectionCheckbox.checked = settings.injection === true;
             
             updateToggleStates();
+            
+            // Apply dark mode by default
+            if (darkModeCheckbox.checked) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
         }
         
         // Save settings to localStorage
         function saveSettings() {
             const settings = {
-                sound: soundCheckbox.checked,
-                music: musicCheckbox.checked,
                 darkMode: darkModeCheckbox.checked,
-                notifications: notificationsCheckbox.checked,
                 injection: injectionCheckbox.checked
             };
             localStorage.setItem('gameSettings', JSON.stringify(settings));
@@ -820,10 +807,7 @@
         
         // Update toggle switch visual states
         function updateToggleStates() {
-            soundToggle.classList.toggle('active', soundCheckbox.checked);
-            musicToggle.classList.toggle('active', musicCheckbox.checked);
             darkModeToggle.classList.toggle('active', darkModeCheckbox.checked);
-            notificationsToggle.classList.toggle('active', notificationsCheckbox.checked);
             injectionToggle.classList.toggle('active', injectionCheckbox.checked);
         }
         
@@ -849,35 +833,19 @@
         });
         
         // Toggle switch functionality
-        soundToggle.addEventListener('click', function() {
-            soundCheckbox.checked = !soundCheckbox.checked;
-            updateToggleStates();
-            saveSettings();
-        });
-        
-        musicToggle.addEventListener('click', function() {
-            musicCheckbox.checked = !musicCheckbox.checked;
-            updateToggleStates();
-            saveSettings();
-        });
-        
         darkModeToggle.addEventListener('click', function() {
             darkModeCheckbox.checked = !darkModeCheckbox.checked;
             updateToggleStates();
             saveSettings();
             
-            // Apply dark mode if needed
+            // Apply dark mode or light mode
             if (darkModeCheckbox.checked) {
+                document.body.classList.remove('light-mode');
                 document.body.classList.add('dark-mode');
             } else {
                 document.body.classList.remove('dark-mode');
+                document.body.classList.add('light-mode');
             }
-        });
-        
-        notificationsToggle.addEventListener('click', function() {
-            notificationsCheckbox.checked = !notificationsCheckbox.checked;
-            updateToggleStates();
-            saveSettings();
         });
         
         injectionToggle.addEventListener('click', function() {
