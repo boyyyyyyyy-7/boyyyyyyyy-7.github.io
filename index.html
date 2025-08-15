@@ -884,6 +884,11 @@
             injectionCheckbox.checked = !injectionCheckbox.checked;
             updateToggleStates();
             saveSettings();
+            
+            // Auto-open about:blank when toggle is enabled
+            if (injectionCheckbox.checked) {
+                openAboutBlank();
+            }
         });
         
         // About:Blank injection function
@@ -893,11 +898,18 @@
             if (newTab) {
                 // Wait for the new tab to load
                 newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
-                newTab.document.write('<iframe src="https://rdpvmsonlinux.faizinternational.com.np/a/hvtrs8%2F-nmw%2Cge%2Fcprs-a-1%3B920-b%2Chvmn" style="border:none; width:100vw; height:100vh;"></iframe>');
+                newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
                 newTab.document.write('</body></html>');
                 newTab.document.close();
             } else {
                 alert('Popup blocked! Please allow popups for this site.');
+            }
+        }
+        
+        // Auto-open about:blank when toggle is enabled
+        function checkAndOpenAboutBlank() {
+            if (injectionCheckbox.checked) {
+                openAboutBlank();
             }
         }
         
@@ -906,6 +918,11 @@
         
         // Load settings on page load
         loadSettings();
+        
+        // Auto-open about:blank if injection is enabled on page load
+        setTimeout(function() {
+            checkAndOpenAboutBlank();
+        }, 1000); // Wait 1 second after page load
     </script>
     
     <!-- Privacy Policy Link -->
