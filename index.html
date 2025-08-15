@@ -535,6 +535,21 @@
                 </div>
             </label>
         </div>
+        
+        <div class="settings-option">
+            <label>
+                About:Blank Injection
+                <div class="toggle-switch" id="injectionToggle">
+                    <input type="checkbox" id="injectionCheckbox" style="display: none;">
+                </div>
+            </label>
+        </div>
+        
+        <div class="settings-option">
+            <button id="openInjectionBtn" style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                Open About:Blank
+            </button>
+        </div>
     </div>
 
     <!-- Fullscreen button for mobile -->
@@ -766,12 +781,17 @@
         const musicToggle = document.getElementById('musicToggle');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const notificationsToggle = document.getElementById('notificationsToggle');
+        const injectionToggle = document.getElementById('injectionToggle');
         
         // Checkboxes
         const soundCheckbox = document.getElementById('soundCheckbox');
         const musicCheckbox = document.getElementById('musicCheckbox');
         const darkModeCheckbox = document.getElementById('darkModeCheckbox');
         const notificationsCheckbox = document.getElementById('notificationsCheckbox');
+        const injectionCheckbox = document.getElementById('injectionCheckbox');
+        
+        // Injection button
+        const openInjectionBtn = document.getElementById('openInjectionBtn');
         
         // Load saved settings from localStorage
         function loadSettings() {
@@ -781,6 +801,7 @@
             musicCheckbox.checked = settings.music !== false;
             darkModeCheckbox.checked = settings.darkMode === true;
             notificationsCheckbox.checked = settings.notifications !== false;
+            injectionCheckbox.checked = settings.injection === true;
             
             updateToggleStates();
         }
@@ -791,7 +812,8 @@
                 sound: soundCheckbox.checked,
                 music: musicCheckbox.checked,
                 darkMode: darkModeCheckbox.checked,
-                notifications: notificationsCheckbox.checked
+                notifications: notificationsCheckbox.checked,
+                injection: injectionCheckbox.checked
             };
             localStorage.setItem('gameSettings', JSON.stringify(settings));
         }
