@@ -886,7 +886,8 @@
             saveSettings();
             
             // Auto-open about:blank when toggle is enabled
-            if (injectionCheckbox.checked) {
+            // Only if we're not already in an iframe (to prevent loops)
+            if (injectionCheckbox.checked && !window.frameElement) {
                 openAboutBlank();
             }
         });
@@ -920,8 +921,11 @@
         loadSettings();
         
         // Auto-open about:blank if injection is enabled on page load
+        // Only if we're not already in an iframe (to prevent loops)
         setTimeout(function() {
-            checkAndOpenAboutBlank();
+            if (!window.frameElement) {
+                checkAndOpenAboutBlank();
+            }
         }, 1000); // Wait 1 second after page load
     </script>
     
