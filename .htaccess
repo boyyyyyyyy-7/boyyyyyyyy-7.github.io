@@ -1,0 +1,26 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Redirect ads.txt to Ezoic Ads.txt Manager
+RewriteRule ^ads\.txt$ https://srv.adstxtmanager.com/19390/braydenistallgames.online [R=302,L]
+
+# Ensure ads.txt is accessible
+<Files "ads.txt">
+    Header set Access-Control-Allow-Origin "*"
+    Header set Content-Type "text/plain"
+</Files>
+
+# Security headers
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+
+# Cache control for static assets
+<FilesMatch "\.(css|js|png|jpg|jpeg|gif|ico|svg)$">
+    Header set Cache-Control "max-age=31536000, public"
+</FilesMatch>
+
+# Cache control for HTML files
+<FilesMatch "\.html$">
+    Header set Cache-Control "max-age=3600, public"
+</FilesMatch>

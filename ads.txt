@@ -1,0 +1,4 @@
+# This ads.txt file is managed by Ezoic Ads.txt Manager
+# Redirecting to: https://srv.adstxtmanager.com/19390/braydenistallgames.online
+# If you see this content, the redirect may not be working properly.
+# Please ensure your .htaccess file is properly configured.
