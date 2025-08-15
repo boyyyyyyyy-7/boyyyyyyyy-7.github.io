@@ -862,58 +862,13 @@
         
         // About:Blank injection function
         function openAboutBlank() {
-            // Open a new tab with about:blank
             const newTab = window.open('about:blank', '_blank');
             
             if (newTab) {
-                // Wait for the new tab to load, then inject content
-                setTimeout(function() {
-                    try {
-                        // Check if the document is accessible
-                        if (newTab.document && newTab.document.readyState === 'complete') {
-                            newTab.document.write('<!DOCTYPE html>');
-                            newTab.document.write('<html lang="en">');
-                            newTab.document.write('<head>');
-                            newTab.document.write('<meta charset="UTF-8">');
-                            newTab.document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-                            newTab.document.write('<title>Brayden-is-tall-games</title>');
-                            newTab.document.write('<style>body{margin:0;padding:0;overflow:hidden;}</style>');
-                            newTab.document.write('</head>');
-                            newTab.document.write('<body>');
-                            newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh; display:block;"></iframe>');
-                            newTab.document.write('</body>');
-                            newTab.document.write('</html>');
-                            newTab.document.close();
-                        } else {
-                            // If document not ready, try again after a longer delay
-                            setTimeout(function() {
-                                try {
-                                    newTab.document.write('<!DOCTYPE html>');
-                                    newTab.document.write('<html lang="en">');
-                                    newTab.document.write('<head>');
-                                    newTab.document.write('<meta charset="UTF-8">');
-                                    newTab.document.write('<meta name="viewport" content="width=device-width, initial-scale=1.0">');
-                                    newTab.document.write('<title>Brayden-is-tall-games</title>');
-                                    newTab.document.write('<style>body{margin:0;padding:0;overflow:hidden;}</style>');
-                                    newTab.document.write('</head>');
-                                    newTab.document.write('<body>');
-                                    newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh; display:block;"></iframe>');
-                                    newTab.document.write('</body>');
-                                    newTab.document.write('</html>');
-                                    newTab.document.close();
-                                } catch (error) {
-                                    console.error('Error injecting content (retry):', error);
-                                    newTab.close();
-                                    alert('Error opening about:blank. Please try again.');
-                                }
-                            }, 500);
-                        }
-                    } catch (error) {
-                        console.error('Error injecting content:', error);
-                        newTab.close();
-                        alert('Error opening about:blank. Please try again.');
-                    }
-                }, 200);
+                newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
+                newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
+                newTab.document.write('</body></html>');
+                newTab.document.close();
             } else {
                 alert('Popup blocked! Please allow popups for this site.');
             }
