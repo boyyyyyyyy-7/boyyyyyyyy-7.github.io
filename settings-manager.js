@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listeners
-    if (settingsBtn) settingsBtn.addEventListener('click', toggleSettings);
-    if (closeSettings) closeSettings.addEventListener('click', closeSettingsMenu);
+    settingsBtn.addEventListener('click', toggleSettings);
+    closeSettings.addEventListener('click', closeSettingsMenu);
     
     // Close menu when clicking outside
     document.addEventListener('click', function(e) {
@@ -71,51 +71,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', function() {
-            darkModeCheckbox.checked = !darkModeCheckbox.checked;
-            updateToggleStates();
-            saveBackgroundSetting('darkMode', darkModeCheckbox.checked);
-            
-            if (darkModeCheckbox.checked) {
-                document.body.classList.remove('light-mode');
-                document.body.classList.add('dark-mode');
-                document.body.classList.remove('christmas-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-                document.body.classList.add('light-mode');
-                document.body.classList.remove('christmas-mode');
-            }
-        });
-    }
+    darkModeToggle.addEventListener('click', function() {
+        darkModeCheckbox.checked = !darkModeCheckbox.checked;
+        updateToggleStates();
+        saveBackgroundSetting('darkMode', darkModeCheckbox.checked);
+        
+        if (darkModeCheckbox.checked) {
+            document.body.classList.remove('light-mode');
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('christmas-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+            document.body.classList.add('light-mode');
+            document.body.classList.remove('christmas-mode');
+        }
+    });
     
-    if (injectionToggle) {
-        injectionToggle.addEventListener('click', function() {
-            injectionCheckbox.checked = !injectionCheckbox.checked;
-            updateToggleStates();
-            saveBackgroundSetting('injection', injectionCheckbox.checked);
-            
-            if (injectionCheckbox.checked && !window.frameElement) {
-                openAboutBlank();
-            }
-        });
-    }
+    injectionToggle.addEventListener('click', function() {
+        injectionCheckbox.checked = !injectionCheckbox.checked;
+        updateToggleStates();
+        saveBackgroundSetting('injection', injectionCheckbox.checked);
+        
+        if (injectionCheckbox.checked && !window.frameElement) {
+            openAboutBlank();
+        }
+    });
 
-    if (christmasModeToggle) {
-        christmasModeToggle.addEventListener('click', function() {
-            christmasModeCheckbox.checked = !christmasModeCheckbox.checked;
-            updateToggleStates();
-            saveBackgroundSetting('christmasMode', christmasModeCheckbox.checked);
+    christmasModeToggle.addEventListener('click', function() {
+        christmasModeCheckbox.checked = !christmasModeCheckbox.checked;
+        updateToggleStates();
+        saveBackgroundSetting('christmasMode', christmasModeCheckbox.checked);
 
-            if (christmasModeCheckbox.checked) {
-                document.body.classList.add('christmas-mode');
-            } else {
-                document.body.classList.remove('christmas-mode');
-            }
-        });
-    }
+        if (christmasModeCheckbox.checked) {
+            document.body.classList.add('christmas-mode');
+        } else {
+            document.body.classList.remove('christmas-mode');
+        }
+    });
 
-    if (openInjectionBtn) openInjectionBtn.addEventListener('click', openAboutBlank);
+    openInjectionBtn.addEventListener('click', openAboutBlank);
 
     // Load settings on page load
     const savedDarkMode = loadBackgroundSetting('darkMode');
