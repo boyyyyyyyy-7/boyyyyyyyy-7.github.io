@@ -131,6 +131,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedInjection = loadBackgroundSetting('injection');
     if (savedInjection !== null) {
         injectionCheckbox.checked = savedInjection;
+        // Immediately check and open about:blank if injection is enabled on page load
+        if (injectionCheckbox.checked && !window.frameElement) {
+            openAboutBlank();
+        }
     }
     
     const savedChristmasMode = loadBackgroundSetting('christmasMode');
@@ -141,11 +145,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     updateToggleStates();
-
-    // Auto-open about:blank if injection is enabled on page load
-    setTimeout(function() {
-        if (!window.frameElement) {
-            checkAndOpenAboutBlank();
-        }
-    }, 1000);
 });
