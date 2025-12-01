@@ -5,3 +5,6 @@ Commercial use, redistribution, or modification for profit by any party other th
 
 The copyright holder, BraydenIsTallGames, retains exclusive rights to use this project commercially.  
 No warranties or guarantees are provided; use at your own risk.
+
+## Updates
+- Implemented a "sinking" background effect for game pages.

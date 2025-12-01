@@ -1,9 +1,16 @@
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
+     crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
-     crossorigin="anonymous"></script>
-    
+    <!-- Ezoic Privacy Scripts -->
+    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+    <!-- Ezoic Header Script -->
+    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+    <script>
+        window.ezstandalone = window.ezstandalone || {};
+        ezstandalone.cmd = ezstandalone.cmd || [];
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -20,7 +27,7 @@
     <meta itemprop="url" content="">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-    <title>Brayden is tall</title>
+    <title>Tall Games 2.0</title>
     <style>
         * {
             margin: 0;
@@ -243,6 +250,56 @@
                 radial-gradient(1px 1px at 90px 40px, #000, transparent),
                 radial-gradient(1px 1px at 130px 80px, rgba(0,0,0,0.6), transparent),
                 radial-gradient(2px 2px at 160px 30px, #333, transparent);
+        }
+        
+        /* Christmas Mode Styles */
+        body.christmas-mode {
+            background: #283747; /* Dark blue background for night sky */
+            color: #f9f9f9;
+            background-attachment: fixed; /* This creates the "sinking" effect */
+            background-size: cover; /* Ensure background covers the entire viewport */
+            background-position: center center; /* Center the background image */
+        }
+
+        body.christmas-mode::before {
+            background: 
+                url('https://www.transparenttextures.com/patterns/christmas-eves.png') repeat, /* Snow pattern */
+                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.4) 1px, transparent 60px),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.3) 1px, transparent 40px),
+                radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.5) 1px, transparent 80px);
+            background-size: 200px 200px, cover, cover, cover, cover;
+            animation: snowfall 30s linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
+            100% { background-position: 0 200px, 0 200px, 0 200px, 0 200px, 0 200px; }
+        }
+
+        body.christmas-mode::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(4px 4px at 30px 40px, #fff, transparent),
+                radial-gradient(3px 3px at 80px 10px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(5px 5px at 120px 60px, #ddd, transparent),
+                radial-gradient(2px 2px at 180px 90px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(6px 6px at 200px 20px, #eee, transparent);
+            background-repeat: repeat;
+            background-size: 180px 180px; /* Adjust size for more varied flakes */
+            animation: moveSnowflakes 25s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes moveSnowflakes {
+            0% { transform: translateY(0px); opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(200px); opacity: 0; }
         }
         
         @keyframes moveStars {
@@ -530,6 +587,15 @@
         </div>
         
         <div class="settings-option">
+            <label>
+                Christmas Mode
+                <div class="toggle-switch" id="christmasModeToggle">
+                    <input type="checkbox" id="christmasModeCheckbox" style="display: none;">
+                </div>
+            </label>
+        </div>
+        
+        <div class="settings-option">
             <button id="openInjectionBtn" style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                 Inject Into About:Blank
             </button>
@@ -546,8 +612,6 @@
             <h1>Tall Games 2.0</h1>
         </header>
         
-
-        
         <div class="game-section">
             <h2 class="section-title">Game list</h2>
             <div class="search-box">
@@ -561,9 +625,7 @@
                 <a class="game-card" href="crazy-chicken-3d.html">
                     <p>Crazy chicken 3D</p>
                 </a>
-                <a class="game-card" href="crazy-kitty-3d.html">
-                    <p>Crazy kitty 3D</p>
-                </a>
+                <!-- Removed: Crazy kitty 3D -->
                 <a class="game-card" href="curve-rush.html">
                     <p>Curve Rush</p>
                 </a>
@@ -579,18 +641,12 @@
                 <a class="game-card" href="drive-mad.html">
                     <p>Drive mad</p>
                 </a>
-                <a class="game-card" href="shell-shockers.html">
-                    <p>Shell shockers</p>
-                </a>
+                <!-- Removed: Shell shockers -->
                 <a class="game-card" href="basketball-stars.html">
                     <p>Basketball stars</p>
                 </a>
-                <a class="game-card" href="minecraft.html">
-                    <p>Minecraft</p>
-                </a>
-                <a class="game-card" href="ovo.html">
-                    <p>OVO</p>
-                </a>
+                <!-- Removed: Minecraft -->
+                <!-- Removed: OVO -->
                 <a class="game-card" href="smash-karts.html">
                     <p>Smash karts</p>
                 </a>
@@ -613,30 +669,39 @@
                 <a class="game-card" href="slow-roads.html">
                     <p>slow roads</p>
                 </a>
-                <a class="game-card" href="escape-road.html">
-                    <p>Escape Road</p>
-                </a>
+                <!-- Removed: Escape Road -->
                 <a class="game-card" href="golf-orbit.html">
                     <p>Golf Orbit</p>
                 </a>
                 <a class="game-card" href="traffic-road.html">
                     <p>Traffic Road</p>
                 </a>
-                <a class="game-card" href="wave-dash.html">
-                    <p>Wave Dash</p>
-                </a>
+                <!-- Removed: Wave Dash -->
                 <a class="game-card" href="ragdoll-hit-stickman.html">
                     <p>Ragdoll Hit Stickman</p>
                 </a>
 
-                <a class="game-card" href="chill-guy-clicker.html">
-                    <p>Chill Guy Clicker</p>
-                </a>
+                <!-- Removed: Chill Guy Clicker -->
 
                 <a class="game-card" href="granny.html">
                     <p>Granny</p>
                 </a>
 
+                <a class="game-card" href="cowboy-safari.html">
+                    <p>Cowboy Safari</p>
+                </a>
+
+                <a class="game-card" href="slope-rider.html">
+                    <p>Slope Rider</p>
+                </a>
+
+                <a class="game-card" href="ramp-xtreme.html">
+                    <p>Ramp Xtreme</p>
+                </a>
+
+                <a class="game-card" href="geometry-lite.html">
+                    <p>Geometry Lite</p>
+                </a>
             </div>
         </div>
     </div>
@@ -763,45 +828,21 @@
         // Toggle switches
         const darkModeToggle = document.getElementById('darkModeToggle');
         const injectionToggle = document.getElementById('injectionToggle');
+        const christmasModeToggle = document.getElementById('christmasModeToggle');
         
         // Checkboxes
         const darkModeCheckbox = document.getElementById('darkModeCheckbox');
         const injectionCheckbox = document.getElementById('injectionCheckbox');
+        const christmasModeCheckbox = document.getElementById('christmasModeCheckbox');
         
         // Injection button
         const openInjectionBtn = document.getElementById('openInjectionBtn');
-        
-        // Load saved settings from localStorage
-        function loadSettings() {
-            const settings = JSON.parse(localStorage.getItem('gameSettings') || '{}');
-            
-            // Default to dark mode if not set
-            darkModeCheckbox.checked = settings.darkMode !== false;
-            injectionCheckbox.checked = settings.injection === true;
-            
-            updateToggleStates();
-            
-            // Apply dark mode by default
-            if (darkModeCheckbox.checked) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.add('light-mode');
-            }
-        }
-        
-        // Save settings to localStorage
-        function saveSettings() {
-            const settings = {
-                darkMode: darkModeCheckbox.checked,
-                injection: injectionCheckbox.checked
-            };
-            localStorage.setItem('gameSettings', JSON.stringify(settings));
-        }
         
         // Update toggle switch visual states
         function updateToggleStates() {
             darkModeToggle.classList.toggle('active', darkModeCheckbox.checked);
             injectionToggle.classList.toggle('active', injectionCheckbox.checked);
+            christmasModeToggle.classList.toggle('active', christmasModeCheckbox.checked);
         }
         
         // Toggle settings menu
@@ -829,27 +870,42 @@
         darkModeToggle.addEventListener('click', function() {
             darkModeCheckbox.checked = !darkModeCheckbox.checked;
             updateToggleStates();
-            saveSettings();
+            saveBackgroundSetting('darkMode', darkModeCheckbox.checked); // Use the new save function
             
             // Apply dark mode or light mode
             if (darkModeCheckbox.checked) {
                 document.body.classList.remove('light-mode');
                 document.body.classList.add('dark-mode');
+                document.body.classList.remove('christmas-mode'); // Remove Christmas mode if dark mode is enabled
             } else {
                 document.body.classList.remove('dark-mode');
                 document.body.classList.add('light-mode');
+                document.body.classList.remove('christmas-mode'); // Remove Christmas mode if light mode is enabled
             }
         });
         
         injectionToggle.addEventListener('click', function() {
             injectionCheckbox.checked = !injectionCheckbox.checked;
             updateToggleStates();
-            saveSettings();
+            saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
             
             // Auto-open about:blank when toggle is enabled
             // Only if we're not already in an iframe (to prevent loops)
             if (injectionCheckbox.checked && !window.frameElement) {
                 openAboutBlank();
+            }
+        });
+
+        christmasModeToggle.addEventListener('click', function() {
+            christmasModeCheckbox.checked = !christmasModeCheckbox.checked;
+            updateToggleStates();
+            saveBackgroundSetting('christmasMode', christmasModeCheckbox.checked); // Use the new save function
+
+            // Apply Christmas mode
+            if (christmasModeCheckbox.checked) {
+                document.body.classList.add('christmas-mode');
+            } else {
+                document.body.classList.remove('christmas-mode');
             }
         });
         
@@ -877,8 +933,8 @@
         // Add event listener for the injection button
         openInjectionBtn.addEventListener('click', openAboutBlank);
         
-        // Load settings on page load
-        loadSettings();
+        // Load settings on page load - REMOVED (now handled by background-manager.js)
+        // loadSettings();
         
         // Auto-open about:blank if injection is enabled on page load
         // Only if we're not already in an iframe (to prevent loops)
@@ -893,5 +949,6 @@
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
         <a href="privacy-policy.html" style="color: #4ecdc4; text-decoration: none; font-size: 12px; opacity: 0.7; font-family: 'Maven Pro', Arial, sans-serif;">Privacy Policy</a>
     </div>
+    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
 </body>
 </html>
