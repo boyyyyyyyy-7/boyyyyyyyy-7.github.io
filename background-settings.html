@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Settings - Brayden is tall games 2</title>
+    <style>
+        :root {
+            --primary-color: #4ecdc4;
+            --dark-bg: #0a0a0a;
+            --light-bg: #ffffff;
+            --text-light: #f9f9f9;
+            --card-bg: rgba(30, 30, 30, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 16px;
+        }
+
+        .sidebar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 14px;
+            position: sticky;
+            top: 14px;
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            margin-top: 10px;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .sidebar input {
+            width: 100%;
+            padding: 10px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(0, 0, 0, 0.35);
+            color: var(--text-light);
+            outline: none;
+        }
+
+        .sidebar input::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .sidebar-actions {
+            margin-top: 10px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .reset-btn {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .nav {
+            margin-top: 14px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 800;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .nav-btn.active {
+            border-color: rgba(78, 205, 196, 0.8);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.18);
+        }
+
+        .main {
+            min-width: 0;
+        }
+
+        .container {
+            max-width: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .preview-panel {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .preview-frame {
+            height: 170px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .preview-meta {
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+        }
+        
+        .back-btn {
+            position: static;
+            background: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .category {
+            display: none;
+        }
+
+        .category.active {
+            display: block;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                padding: 14px;
+            }
+
+            .app {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+        
+        .background-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .background-option {
+            background: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .background-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-color: var(--primary-color);
+        }
+        
+        .background-option.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+        
+        .preview {
+            height: 150px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .option-name {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .section-title {
+            margin: 30px 0 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+        }
+        
+        .custom-upload {
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .custom-upload input[type="file"] {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: var(--primary-color);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <a href="beta%20home%20page.html" class="back-btn">← Back</a>
+            <div class="sidebar-title">Background Settings</div>
+            <input id="searchInput" type="text" placeholder="Search..." autocomplete="off" />
+
+            <div class="sidebar-actions">
+                <button class="reset-btn" id="resetBtn">Reset to Default</button>
+            </div>
+
+            <div class="nav" id="nav">
+                <button class="nav-btn active" data-category="all">All</button>
+                <button class="nav-btn" data-category="themes">Themes</button>
+                <button class="nav-btn" data-category="colors">Solid Colors</button>
+                <button class="nav-btn" data-category="gradients">Gradients</button>
+                <button class="nav-btn" data-category="upload">Upload</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <div class="container">
+                <div class="preview-panel">
+                    <div class="preview-frame" id="bgPreview"></div>
+                    <div class="preview-meta" id="previewLabel">Preview</div>
+                </div>
+
+                <div class="category active" data-category="themes">
+                    <h2 class="section-title">Themes</h2>
+                    <div class="background-grid">
+                        <div class="background-option" data-theme="classic">
+                            <div class="preview" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);"></div>
+                            <div class="option-name">Classic Dark</div>
+                        </div>
+                        <div class="background-option" data-theme="light">
+                            <div class="preview" style="background: linear-gradient(135deg, #f6f7fb 0%, #e5e7eb 100%);"></div>
+                            <div class="option-name">Light Mode</div>
+                        </div>
+                        <div class="background-option" data-theme="christmas">
+                            <div class="preview" style="background: linear-gradient(135deg, #1a2b3c 0%, #0d1a26 100%);
+                                position: relative;
+                                overflow: hidden;
+                            ">
+                                <div style="position: absolute; width: 100%; height: 100%; background: 
+                                    radial-gradient(circle at 20% 30%, rgba(255,0,0,0.1) 0%, transparent 20%),
+                                    radial-gradient(circle at 80% 70%, rgba(0,255,0,0.1) 0%, transparent 20%);
+                                    "></div>
+                            </div>
+                            <div class="option-name">Winter Mode</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category active" data-category="colors">
+                    <h2 class="section-title">Solid Colors</h2>
+                    <div class="background-grid">
+                        <div class="background-option" data-bg="#0a0a0a" style="--bg-color: #0a0a0a">
+                            <div class="preview" style="background-color: #0a0a0a"></div>
+                            <div class="option-name">Dark Black</div>
+                        </div>
+                        <div class="background-option" data-bg="#1a1a1a" style="--bg-color: #1a1a1a">
+                            <div class="preview" style="background-color: #1a1a1a"></div>
+                            <div class="option-name">Dark Gray</div>
+                        </div>
+                        <div class="background-option" data-bg="#0d1b2a" style="--bg-color: #0d1b2a">
+                            <div class="preview" style="background-color: #0d1b2a"></div>
+                            <div class="option-name">Navy Blue</div>
+                        </div>
+                        <div class="background-option" data-bg="#0b1320" style="--bg-color: #0b1320">
+                            <div class="preview" style="background-color: #0b1320"></div>
+                            <div class="option-name">Midnight</div>
+                        </div>
+                        <div class="background-option" data-bg="#111827" style="--bg-color: #111827">
+                            <div class="preview" style="background-color: #111827"></div>
+                            <div class="option-name">Slate</div>
+                        </div>
+                        <div class="background-option" data-bg="#0a2a24" style="--bg-color: #0a2a24">
+                            <div class="preview" style="background-color: #0a2a24"></div>
+                            <div class="option-name">Deep Teal</div>
+                        </div>
+                        <div class="background-option" data-bg="#2a0a1a" style="--bg-color: #2a0a1a">
+                            <div class="preview" style="background-color: #2a0a1a"></div>
+                            <div class="option-name">Burgundy</div>
+                        </div>
+                        <div class="background-option" data-bg="#0f2a1a" style="--bg-color: #0f2a1a">
+                            <div class="preview" style="background-color: #0f2a1a"></div>
+                            <div class="option-name">Pine</div>
+                        </div>
+                        <div class="background-option" data-bg="#f6f7fb" style="--bg-color: #f6f7fb">
+                            <div class="preview" style="background-color: #f6f7fb"></div>
+                            <div class="option-name">Light Paper</div>
+                        </div>
+                        <div class="background-option" data-bg="#e5e7eb" style="--bg-color: #e5e7eb">
+                            <div class="preview" style="background-color: #e5e7eb"></div>
+                            <div class="option-name">Light Gray</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category active" data-category="gradients">
+                    <h2 class="section-title">Gradients</h2>
+                    <div class="background-grid">
+                        <div class="background-option" data-bg="linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)"></div>
+                            <div class="option-name">Deep Space</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(to right, #0f2027, #203a43, #2c5364)">
+                            <div class="preview" style="background: linear-gradient(to right, #0f2027, #203a43, #2c5364)"></div>
+                            <div class="option-name">Ocean Breeze</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(45deg, #1e3c72, #2a5298, #7db9e8)">
+                            <div class="preview" style="background: linear-gradient(45deg, #1e3c72, #2a5298, #7db9e8)"></div>
+                            <div class="option-name">Blue Horizon</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #051a2a 0%, #0b4a6a 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #051a2a 0%, #0b4a6a 100%)"></div>
+                            <div class="option-name">Ocean</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #1a0b1f 0%, #ff8a5b 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #1a0b1f 0%, #ff8a5b 100%)"></div>
+                            <div class="option-name">Sunset</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #06150f 0%, #1f7a5a 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #06150f 0%, #1f7a5a 100%)"></div>
+                            <div class="option-name">Forest</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #050510 0%, #a855f7 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #050510 0%, #a855f7 100%)"></div>
+                            <div class="option-name">Neon</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #140f24 0%, #d8b4fe 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #140f24 0%, #d8b4fe 100%)"></div>
+                            <div class="option-name">Lavender</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #0b1320 0%, #111827 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #0b1320 0%, #111827 100%)"></div>
+                            <div class="option-name">Midnight Slate</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #0a2a24 0%, #38bdf8 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #0a2a24 0%, #38bdf8 100%)"></div>
+                            <div class="option-name">Teal Glow</div>
+                        </div>
+                        <div class="background-option" data-bg="linear-gradient(135deg, #2a0a1a 0%, #ff4d4d 100%)">
+                            <div class="preview" style="background: linear-gradient(135deg, #2a0a1a 0%, #ff4d4d 100%)"></div>
+                            <div class="option-name">Red Glow</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="category" data-category="upload">
+                    <h2 class="section-title">Upload</h2>
+                    <div class="custom-upload">
+                        <p>Upload your own background image:</p>
+                        <label class="upload-btn">
+                            Choose Image
+                            <input type="file" id="bg-upload" accept="image/*">
+                        </label>
+                        <div id="preview-container" style="margin-top: 20px; display: none;">
+                            <p>Preview:</p>
+                            <div id="image-preview" style="max-width: 100%; max-height: 200px; margin-top: 10px; border-radius: 5px; overflow: hidden;"></div>
+                            <button id="apply-bg" style="margin-top: 10px; padding: 8px 15px; background: var(--primary-color); border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Use This Image</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bgOptions = Array.from(document.querySelectorAll('.background-option'));
+            const bgUpload = document.getElementById('bg-upload');
+            const previewContainer = document.getElementById('preview-container');
+            const imagePreview = document.getElementById('image-preview');
+            const applyBgBtn = document.getElementById('apply-bg');
+            const bgPreview = document.getElementById('bgPreview');
+            const previewLabel = document.getElementById('previewLabel');
+            const searchInput = document.getElementById('searchInput');
+            const resetBtn = document.getElementById('resetBtn');
+            const nav = document.getElementById('nav');
+            const categories = Array.from(document.querySelectorAll('.category'));
+
+            let uploadedImage = null;
+            let currentCategory = 'all';
+            let searchTerm = '';
+
+            const getBgType = (bgValue) => {
+                if (!bgValue) return null;
+                if (bgValue.startsWith('url')) return 'image';
+                if (bgValue.startsWith('linear-gradient')) return 'gradient';
+                return 'color';
+            };
+
+            const setPreviewLabel = (text) => {
+                if (!previewLabel) return;
+                previewLabel.textContent = text || 'Preview';
+            };
+
+            const applyPreviewTheme = (theme) => {
+                if (!bgPreview) return;
+                bgPreview.style.backgroundImage = 'none';
+                bgPreview.style.backgroundColor = 'transparent';
+                bgPreview.style.background = '';
+
+                if (theme === 'classic') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
+                    setPreviewLabel('Theme: Classic Dark');
+                } else if (theme === 'light') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #f6f7fb 0%, #e5e7eb 100%)';
+                    setPreviewLabel('Theme: Light');
+                } else if (theme === 'christmas') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #1a2b3c 0%, #0d1a26 100%)';
+                    setPreviewLabel('Theme: Winter Mode');
+                } else {
+                    setPreviewLabel('Theme');
+                }
+
+                bgPreview.style.backgroundSize = 'cover';
+                bgPreview.style.backgroundPosition = 'center';
+            };
+
+            const applyPreviewBackground = (bgValue) => {
+                if (!bgPreview) return;
+                bgPreview.style.background = '';
+
+                if (bgValue.startsWith('url')) {
+                    bgPreview.style.backgroundImage = bgValue;
+                    bgPreview.style.backgroundSize = 'cover';
+                    bgPreview.style.backgroundPosition = 'center';
+                    bgPreview.style.backgroundColor = 'transparent';
+                    setPreviewLabel('Custom: Image');
+                } else if (bgValue.startsWith('linear-gradient')) {
+                    bgPreview.style.backgroundImage = bgValue;
+                    bgPreview.style.backgroundSize = 'cover';
+                    bgPreview.style.backgroundColor = 'transparent';
+                    setPreviewLabel('Custom: Gradient');
+                } else {
+                    bgPreview.style.backgroundImage = 'none';
+                    bgPreview.style.backgroundColor = bgValue;
+                    setPreviewLabel('Custom: Solid Color');
+                }
+            };
+
+            const setActiveOption = () => {
+                const savedTheme = localStorage.getItem('selectedTheme');
+                const savedBg = localStorage.getItem('customBackground');
+
+                bgOptions.forEach(opt => opt.classList.remove('active'));
+
+                if (savedTheme) {
+                    bgOptions
+                        .filter(opt => opt.getAttribute('data-theme') === savedTheme)
+                        .forEach(opt => opt.classList.add('active'));
+                    return;
+                }
+
+                if (savedBg) {
+                    bgOptions
+                        .filter(opt => opt.getAttribute('data-bg') === savedBg)
+                        .forEach(opt => opt.classList.add('active'));
+                }
+            };
+
+            const applyToStorageTheme = (theme) => {
+                localStorage.setItem('selectedTheme', theme);
+                localStorage.removeItem('customBackground');
+                localStorage.removeItem('bgType');
+                applyPreviewTheme(theme);
+                setActiveOption();
+            };
+
+            const applyToStorageBackground = (bgValue) => {
+                localStorage.removeItem('selectedTheme');
+                localStorage.setItem('customBackground', bgValue);
+                localStorage.setItem('bgType', getBgType(bgValue));
+                applyPreviewBackground(bgValue);
+                setActiveOption();
+            };
+
+            const updateCategoryVisibility = () => {
+                categories.forEach(section => {
+                    const c = section.getAttribute('data-category');
+                    const show = currentCategory === 'all' ? (c !== 'upload') : c === currentCategory;
+                    section.classList.toggle('active', !!show);
+                });
+            };
+
+            const updateSearchVisibility = () => {
+                const term = searchTerm.trim().toLowerCase();
+                const visibleSections = categories.filter(s => s.classList.contains('active'));
+
+                visibleSections.forEach(section => {
+                    const tiles = Array.from(section.querySelectorAll('.background-option'));
+                    tiles.forEach(tile => {
+                        const name = tile.querySelector('.option-name')?.textContent || '';
+                        const ok = !term || name.toLowerCase().includes(term);
+                        tile.style.display = ok ? '' : 'none';
+                    });
+                });
+            };
+
+            const setCategory = (category) => {
+                currentCategory = category;
+                const buttons = Array.from(nav.querySelectorAll('.nav-btn'));
+                buttons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-category') === category));
+                updateCategoryVisibility();
+                updateSearchVisibility();
+            };
+
+            bgOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const theme = option.getAttribute('data-theme');
+                    if (theme) {
+                        applyToStorageTheme(theme);
+                        return;
+                    }
+                    const bgValue = option.getAttribute('data-bg');
+                    if (bgValue) {
+                        applyToStorageBackground(bgValue);
+                    }
+                });
+            });
+
+            if (nav) {
+                nav.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.nav-btn');
+                    if (!btn) return;
+                    const category = btn.getAttribute('data-category') || 'all';
+                    setCategory(category);
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    searchTerm = searchInput.value;
+                    updateSearchVisibility();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    localStorage.removeItem('customBackground');
+                    localStorage.removeItem('bgType');
+                    localStorage.setItem('selectedTheme', 'christmas');
+                    applyPreviewTheme('christmas');
+                    setActiveOption();
+                });
+            }
+
+            if (bgUpload) {
+                bgUpload.addEventListener('change', (e) => {
+                    const file = e.target.files && e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        uploadedImage = String(event.target.result || '');
+                        imagePreview.style.backgroundImage = `url(${uploadedImage})`;
+                        imagePreview.style.height = '200px';
+                        imagePreview.style.backgroundSize = 'cover';
+                        imagePreview.style.backgroundPosition = 'center';
+                        previewContainer.style.display = 'block';
+
+                        applyToStorageBackground(`url(${uploadedImage})`);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            if (applyBgBtn) {
+                applyBgBtn.addEventListener('click', () => {
+                    if (!uploadedImage) return;
+                    applyToStorageBackground(`url(${uploadedImage})`);
+                });
+            }
+
+            const savedTheme = localStorage.getItem('selectedTheme');
+            const savedBg = localStorage.getItem('customBackground');
+            if (savedTheme) {
+                applyPreviewTheme(savedTheme);
+            } else if (savedBg) {
+                applyPreviewBackground(savedBg);
+            } else {
+                applyPreviewTheme('christmas');
+            }
+
+            setActiveOption();
+            setCategory('all');
+        });
+    </script>
+    <script src="background-loader.js"></script>
+</body>
+</html>
+
+

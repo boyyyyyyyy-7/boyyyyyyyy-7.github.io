@@ -1,4 +1,4 @@
-﻿<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
      crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
@@ -1329,27 +1329,6 @@
             return Math.round((end - start) / msPerDay);
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let data = loadV2();
-            data = migrateLegacyIntoV2(data);
-            data = recordVisit(data, new Date());
-            const computed = computeStreak(data, new Date());
-            data = computed.data;
-            saveV2(data);
-
-            const streakNumber = document.getElementById('streakNumber');
-            const streakDisplay = document.getElementById('streakDisplay');
-            if (streakNumber) {
-                streakNumber.textContent = String(computed.streak);
-            }
-
-            if (streakDisplay) {
-                streakDisplay.addEventListener('click', function() {
-                    window.location.href = 'streaks.html';
-                });
-                streakDisplay.style.cursor = 'pointer';
-            }
-        });
     </script>
 
     <script>
@@ -1907,7 +1886,7 @@
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script src="background-loader.js"><\\/script></body></html>');
+                    newTab.document.write('<script src="background-loader.js"></script></body></html>');
                     newTab.document.close();
                 } else {
                     alert('Popup blocked! Please allow popups for this site.');
@@ -1959,12 +1938,6 @@
         }
     </script>
     
-    <!-- Streak Functionality -->
-    <script>
-        // Streak management
-        document.addEventListener('DOMContentLoaded', function() {
-        });
-    </script>
     
     <!-- Version and Privacy Links -->
     <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
@@ -1977,4 +1950,348 @@
     <script src="background-loader.js"></script>
 </body>
 </html>
+
+
+            const STORAGE_KEY_V2 = 'streakDataV2';
+
+            const normalizeToNoon = (date) => {
+                const d = new Date(date);
+                d.setHours(12, 0, 0, 0);
+                return d;
+            };
+
+            const toDayKey = (date) => {
+                const d = normalizeToNoon(date);
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            };
+
+            const getWeekKey = (date) => {
+                const d = normalizeToNoon(date);
+                const day = d.getDay();
+                const diffToMonday = (day + 6) % 7;
+                const monday = new Date(d);
+                monday.setDate(d.getDate() - diffToMonday);
+                monday.setHours(12, 0, 0, 0);
+                return toDayKey(monday);
+            };
+
+            const mergeDayKeys = (existing, add) => {
+                const set = new Set(Array.isArray(existing) ? existing : []);
+                if (Array.isArray(add)) {
+                    add.forEach(k => set.add(k));
+                } else if (add) {
+                    set.add(add);
+                }
+                return Array.from(set).sort();
+            };
+
+            let parsed = null;
+            try {
+                parsed = JSON.parse(localStorage.getItem(STORAGE_KEY_V2) || 'null');
+            } catch {
+                parsed = null;
+            }
+
+            const data = {
+                version: 2,
+                visits: [],
+                freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
+                usedFreezes: [],
+                lastFreezeWeek: null,
+                best: Number(localStorage.getItem('bestStreak') || 0) || 0,
+                ...(parsed && typeof parsed === 'object' ? parsed : {})
+            };
+
+            if (!Array.isArray(data.visits)) data.visits = [];
+            if (!Array.isArray(data.usedFreezes)) data.usedFreezes = [];
+            if (!Number.isFinite(Number(data.freezes))) data.freezes = 0;
+            if (!Number.isFinite(Number(data.best))) data.best = 0;
+
+            const today = normalizeToNoon(new Date());
+            const todayKey = toDayKey(today);
+            data.visits = mergeDayKeys(data.visits, todayKey);
+
+            if (today.getDay() === 1) {
+                const weekKey = getWeekKey(today);
+                if (data.lastFreezeWeek !== weekKey) {
+                    data.freezes = Number(data.freezes) + 1;
+                    data.lastFreezeWeek = weekKey;
+                }
+            }
+
+            localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(data));
+            localStorage.setItem('streakFreezes', String(data.freezes));
+            localStorage.setItem('bestStreak', String(data.best));
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize components
+            initFullscreen();
+            initSearch();
+            initSettings();
+            initStarControls();
+
+            recordStreakVisit();
+            
+            // Apply saved theme
+            applySavedTheme();
+            
+            // Listen for theme and background changes from settings page
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'selectedTheme') {
+                    handleThemeChange(e.newValue);
+                } else if (e.key === 'customBackground' || e.key === 'bgType') {
+                    // If background was changed, apply it
+                    if (e.key === 'customBackground' && e.newValue) {
+                        if (e.newValue.startsWith('url')) {
+                            document.body.style.backgroundImage = e.newValue;
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundPosition = 'center';
+                            document.body.style.backgroundAttachment = 'fixed';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else if (e.newValue.startsWith('linear-gradient')) {
+                            document.body.style.backgroundImage = e.newValue;
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundAttachment = 'fixed';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else {
+                            document.body.style.backgroundImage = 'none';
+                            document.body.style.backgroundColor = e.newValue;
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Make handleThemeChange available globally for settings page
+        window.handleThemeChange = handleThemeChange;
+
+        // Fullscreen functionality
+        function initFullscreen() {
+            const fullscreenBtn = document.querySelector(AppConfig.selectors.fullscreenBtn);
+            const fullscreenIcon = document.querySelector(AppConfig.selectors.fullscreenIcon);
+            let isFullscreen = false;
+
+            if (!fullscreenBtn || !fullscreenIcon) return;
+
+            const isFullscreenSupported = () => 
+                document.fullscreenEnabled || 
+                document.webkitFullscreenEnabled || 
+                document.mozFullScreenEnabled || 
+                document.msFullscreenEnabled;
+
+            const enterFullscreen = () => {
+                const elem = document.documentElement;
+                const requestFullscreen = 
+                    elem.requestFullscreen ||
+                    elem.webkitRequestFullscreen ||
+                    elem.mozRequestFullScreen ||
+                    elem.msRequestFullscreen;
+                
+                if (requestFullscreen) {
+                    requestFullscreen.call(elem);
+                }
+            };
+
+            const exitFullscreen = () => {
+                const exit = 
+                    document.exitFullscreen ||
+                    document.webkitExitFullscreen ||
+                    document.mozCancelFullScreen ||
+                    document.msExitFullscreen;
+                
+                if (exit) {
+                    exit.call(document);
+                }
+            };
+
+            const updateFullscreenState = () => {
+                const isFullscreenNow = !!(
+                    document.fullscreenElement || 
+                    document.webkitFullscreenElement || 
+                    document.mozFullScreenElement || 
+                    document.msFullscreenElement
+                );
+                
+                isFullscreen = isFullscreenNow;
+                if (fullscreenIcon) {
+                    fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
+                }
+            };
+
+            // Event listeners
+            fullscreenBtn.addEventListener('click', () => {
+                isFullscreen ? exitFullscreen() : enterFullscreen();
+            });
+
+            // Fullscreen change events
+            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
+                .forEach(event => document.addEventListener(event, updateFullscreenState));
+
+            // Hide button if not supported
+            if (!isFullscreenSupported()) {
+                fullscreenBtn.style.display = 'none';
+            }
+        }
+
+        // Live search filter for game cards
+        function initSearch() {
+            const searchInput = document.querySelector(AppConfig.selectors.searchInput);
+            const gameCards = document.querySelectorAll(AppConfig.selectors.gameCards);
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                gameCards.forEach(card => {
+                    const text = card.textContent.trim().toLowerCase();
+                    if (query === "" || text.includes(query)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Settings functionality
+        function initSettings() {
+            const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
+            const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
+            const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
+            
+            // Toggle switches
+            const injectionToggle = document.getElementById('injectionToggle');
+            
+            // Checkboxes
+            const injectionCheckbox = document.getElementById('injectionCheckbox');
+            
+            // Injection button
+            const openInjectionBtn = document.getElementById('openInjectionBtn');
+
+            const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
+            
+            // Update toggle switch visual states
+            function updateToggleStates() {
+                injectionToggle.classList.toggle('active', injectionCheckbox.checked);
+            }
+            
+            // Toggle settings menu
+            function toggleSettings(event) {
+                event.stopPropagation();
+                settingsMenu.classList.toggle('active');
+            }
+            
+            // Close settings menu
+            function closeSettingsMenu() {
+                settingsMenu.classList.remove('active');
+            }
+            
+            // Event listeners
+            settingsBtn.addEventListener('click', toggleSettings);
+            closeSettings.addEventListener('click', closeSettingsMenu);
+
+            if (openBackgroundSettingsBtn) {
+                openBackgroundSettingsBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    window.location.href = 'background-settings.html';
+                });
+            }
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (settingsMenu && settingsBtn && 
+                    !settingsMenu.contains(event.target) && 
+                    !settingsBtn.contains(event.target)) {
+                    closeSettingsMenu();
+                }
+            });
+            
+            // Toggle switch functionality
+            injectionToggle.addEventListener('click', () => {
+                injectionCheckbox.checked = !injectionCheckbox.checked;
+                updateToggleStates();
+                saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
+                
+                // Auto-open about:blank when toggle is enabled
+                // Only if we're not already in an iframe (to prevent loops)
+                if (injectionCheckbox.checked && !window.frameElement) {
+                    openAboutBlank();
+                }
+            });
+            
+            // About:Blank injection function
+            function openAboutBlank() {
+                const newTab = window.open('about:blank', '_blank');
+                
+                if (newTab) {
+                    newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
+                    newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
+                    newTab.document.write('<script src="background-loader.js"></script></body></html>');
+                    newTab.document.close();
+                } else {
+                    alert('Popup blocked! Please allow popups for this site.');
+                }
+            }
+            
+            // Auto-open about:blank when toggle is enabled
+            function checkAndOpenAboutBlank() {
+                if (injectionCheckbox.checked) {
+                    openAboutBlank();
+                }
+            }
+            
+            // Add event listener for the injection button
+            openInjectionBtn.addEventListener('click', openAboutBlank);
+            
+            // Load settings on page load - REMOVED (now handled by background-manager.js)
+            // loadSettings();
+            
+            // Auto-open about:blank if injection is enabled on page load
+            // Only if we're not already in an iframe (to prevent loops)
+            setTimeout(function() {
+                if (!window.frameElement) {
+                    checkAndOpenAboutBlank();
+                }
+            }, 1000); // Wait 1 second after page load
+        }
+
+        // Prevent zoom on double tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Prevent context menu on long press
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Auto-hide fullscreen button after 3 seconds on mobile
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                document.querySelector(AppConfig.selectors.fullscreenBtn).style.opacity = '0.7';
+            }, 3000);
+        }
+    </script>
+    
+    
+    <!-- Version and Privacy Links -->
+    <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
+        v0.1
+    </div>
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
+        <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
+    </div>
+    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
+    <script src="background-loader.js"></script>
+</body>
+</html>
+
 
