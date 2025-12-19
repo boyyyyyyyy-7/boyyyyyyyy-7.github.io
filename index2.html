@@ -2035,69 +2035,8 @@
     </script>
     
     <!-- Streak Functionality -->
-    <script>
-        // Streak management
-        document.addEventListener('DOMContentLoaded', function() {
-        });
-    </script>
     
-    <!-- Version and Privacy Links -->
-    <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
-        v0.1
-    </div>
-    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
-        <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
-    </div>
-    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
-    <script src="background-loader.js"></script>
-</body>
-</html>
-
-
-            const s = getStarSettings();
-            if (starContainer) starContainer.style.display = s.enabled ? '' : 'none';
-            renderStars(s);
-        }
-        
-        function applySavedBackground() {
-            const savedBg = localStorage.getItem('customBackground');
-            const bgType = localStorage.getItem('bgType');
             
-            if (!savedBg) return;
-            
-            if (bgType === 'image' || savedBg.startsWith('url')) {
-                document.body.style.backgroundImage = savedBg;
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundAttachment = 'fixed';
-                document.body.style.backgroundColor = 'transparent';
-            } else if (bgType === 'gradient' || savedBg.startsWith('linear-gradient')) {
-                document.body.style.backgroundImage = savedBg;
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundAttachment = 'fixed';
-                document.body.style.backgroundColor = 'transparent';
-            } else {
-                document.body.style.backgroundImage = 'none';
-                document.body.style.backgroundColor = savedBg;
-            }
-        }
-        
-        // Function to apply saved theme on page load
-        function applySavedTheme() {
-            const savedTheme = localStorage.getItem('selectedTheme');
-            const savedBg = localStorage.getItem('customBackground');
-            
-            // Only apply theme if no custom background is set
-            if (!savedBg && savedTheme) {
-                handleThemeChange(savedTheme);
-            } else if (savedBg) {
-                // If there's a saved background, apply it
-                applySavedBackground();
-            } else {
-                // Default to winter theme if nothing is set
-                handleThemeChange('christmas');
-            }
-        }
         
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
