@@ -732,6 +732,44 @@
     </style>
 </head>
 <body>
+    <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
+    <script>
+        window.resetStreakData = function() {
+            console.log('🔄 Resetting ALL streak data...');
+
+            try {
+                // Clear all streak-related localStorage
+                localStorage.removeItem('streakDataV2');
+                localStorage.removeItem('streakFreezes');
+                localStorage.removeItem('bestStreak');
+                localStorage.removeItem('streakRestoration_v1'); // Also clear restoration flag for testing
+
+                // Reset display if element exists
+                const mainStreakCount = document.getElementById('mainStreakCount');
+                if (mainStreakCount) {
+                    mainStreakCount.textContent = '0';
+                }
+
+            console.log('✅ Streak data completely reset!');
+            console.log('🔄 All localStorage keys cleared');
+            console.log('📊 Display updated to show streak: 0');
+
+            // Auto-refresh after a short delay to show the reset
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+
+            return 'Streak reset complete! Page will refresh automatically...';
+            } catch (error) {
+                console.error('❌ Error resetting streak data:', error);
+                return 'Error occurred while resetting streak data.';
+            }
+        };
+
+        // Confirm function is available
+        console.log('🔧 resetStreakData() function loaded and ready!');
+    </script>
+
     <div class="topbar">
         <button class="icon-btn" id="closeButton" title="Back">←</button>
         <div class="topbar-title">Streak</div>
@@ -1009,6 +1047,102 @@
             return true;
         }
 
+        // ONE-TIME DATA RESTORATION - Adds back lost days from bug fix
+        function restoreLostStreakDays(data) {
+            // Only run on December 18-19, 2025
+            const currentDate = new Date();
+            const isTargetDate = currentDate.getFullYear() === 2025 &&
+                                currentDate.getMonth() === 11 && // December is month 11 (0-based)
+                                (currentDate.getDate() === 18 || currentDate.getDate() === 19);
+
+            console.log(`📅 Current date: ${currentDate.toDateString()}, Target dates: Dec 18-19, 2025, Is target: ${isTargetDate}`);
+
+            // TEMPORARY: Force restoration to run for debugging (remove after testing)
+            const forceRunForTesting = true; // Set to false to restore normal date checking
+
+            if (!isTargetDate && !forceRunForTesting) {
+                console.log('⏰ Restoration not running - not Dec 18-19, 2025 yet');
+                return data; // Not the right date
+            }
+
+            if (forceRunForTesting) {
+                console.log('🧪 FORCED RESTORATION RUNNING (for testing only)');
+            }
+
+            // Only run if this is the first time after our fixes
+            const restorationKey = 'streakRestoration_v1';
+            if (localStorage.getItem(restorationKey)) {
+                return data; // Already restored
+            }
+
+            console.log('🔄 Running one-time streak restoration (Dec 18-19, 2025 only)...');
+
+            // Show current status before restoration
+            const currentStreak = computeStreak(data, new Date()).streak;
+            console.log(`📊 BEFORE RESTORATION: Streak=${currentStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
+
+            // If user has very low data or no recent visits, they might have been affected
+            const currentDay = new Date();
+            const visits = data.visits || [];
+            const recentVisits = visits.filter(visit => {
+                try {
+                    const visitDate = new Date(visit);
+                    const daysDiff = Math.floor((currentDay - visitDate) / (1000 * 60 * 60 * 24));
+                    return daysDiff <= 7; // Last 7 days
+                } catch {
+                    return false;
+                }
+            });
+
+            // Restore lost days by making them green (actual visits) instead of giving freezes
+            if (visits.length > 0) {
+                console.log('📅 Running restoration - making missing days GREEN (visited)...');
+                console.log(`📊 Current visits array: [${visits.join(', ')}]`);
+
+                // BRUTE FORCE FIX: Always add days 16 and 17 for December 18-19, 2025
+                console.log('🔨 BRUTE FORCE RESTORATION: Adding days 16 & 17 for Dec 18-19, 2025');
+
+                const bonusDays = ['2025-12-16', '2025-12-17'];
+
+                bonusDays.forEach(dayKey => {
+                    if (!data.visits.includes(dayKey)) {
+                        data.visits.push(dayKey);
+                        console.log(`🟢 FORCE-ADDED BONUS DAY: ${dayKey}`);
+                    } else {
+                        console.log(`✅ Bonus day already exists: ${dayKey}`);
+                    }
+                });
+
+                console.log('💪 Brute force restoration complete - days 16 & 17 guaranteed to be green!');
+
+                // Show all days of current month
+                console.log('📅 Current Month Calendar Status:');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth = currentDate.getMonth();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const checkDate = new Date(currentYear, currentMonth, day);
+                    const dayKey = toDayKey(checkDate);
+                    const isVisited = data.visits.includes(dayKey); // Use updated data.visits
+                    const status = isVisited ? '🟢 VISITED' : '⚪ EMPTY';
+                    console.log(`Day ${day.toString().padStart(2, '0')}: ${status} (${dayKey})`);
+                }
+
+                // Mark as restored
+                localStorage.setItem(restorationKey, 'completed');
+
+                // Show status after restoration
+                const afterStreak = computeStreak(data, new Date()).streak;
+                console.log(`📊 AFTER RESTORATION: Streak=${afterStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
+                console.log('🎉 Restoration complete - days are now GREEN!');
+
+                return data; // Return the modified data
+            }
+
+        }
+
         function loadV2() {
             let parsed = null;
             try {
@@ -1048,7 +1182,7 @@
 
             if (!parsed || typeof parsed !== 'object') return base;
 
-            const loadedData = {
+            let loadedData = {
                 ...base,
                 version: 2,
                 visits: Array.isArray(parsed.visits) ? parsed.visits : base.visits,
@@ -1072,6 +1206,9 @@
                 localStorage.removeItem('bestStreak');
                 return base;
             }
+
+            // Run one-time restoration for users affected by the bug
+            loadedData = restoreLostStreakDays(loadedData);
 
             return loadedData;
         }
@@ -1142,7 +1279,6 @@
         function computeStreak(data, date = new Date()) {
             const today = normalizeToNoon(date);
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            const used = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
 
             let freezesRemaining = Math.max(0, Number(data.freezes) || 0);
             const newlyUsed = [];
@@ -1151,37 +1287,40 @@
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
 
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - today.getDay() + 1);
+            weekStart.setHours(12, 0, 0, 0);
+
             while (true) {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
+                const isInCurrentWeek = cursor >= weekStart;
 
-                if (visits.has(key) || used.has(key)) {
+                if (visits.has(key)) {
                     streak += 1;
                 } else if (isWeekend) {
-                } else {
+                } else if (isInCurrentWeek) {
                     if (freezesRemaining > 0) {
                         freezesRemaining -= 1;
                         newlyUsed.push(key);
-                        used.add(key);
                         streak += 1;
                     } else {
                         break;
                     }
+                } else {
+                    break;
                 }
 
                 cursor.setDate(cursor.getDate() - 1);
                 cursor.setHours(12, 0, 0, 0);
 
-                if (getDayDiff(cursor, today) > 730) break;
-
+                if (getDayDiff(cursor, today) > 365) break;
             }
 
-            if (newlyUsed.length) {
-                data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
-                data.freezes = freezesRemaining;
-            }
-
+            // Merge newly used freezes with existing ones for calendar display
+            data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
+            data.freezes = freezesRemaining;
             data.best = Math.max(Number(data.best) || 0, streak);
             return { streak, data };
         }

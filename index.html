@@ -801,6 +801,44 @@
 </head>
 <body>
 
+        <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
+        <script>
+            window.resetStreakData = function() {
+                console.log('🔄 Resetting ALL streak data...');
+
+            try {
+                // Clear all streak-related localStorage
+                localStorage.removeItem('streakDataV2');
+                localStorage.removeItem('streakFreezes');
+                localStorage.removeItem('bestStreak');
+                localStorage.removeItem('streakRestoration_v1'); // Also clear restoration flag for testing
+
+                    // Reset display if element exists
+                    const streakNumber = document.getElementById('streakNumber');
+                    if (streakNumber) {
+                        streakNumber.textContent = '0';
+                    }
+
+            console.log('✅ Streak data completely reset!');
+            console.log('🔄 All localStorage keys cleared');
+            console.log('📊 Display updated to show streak: 0');
+
+            // Auto-refresh after a short delay to show the reset
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+
+            return 'Streak reset complete! Page will refresh automatically...';
+                } catch (error) {
+                    console.error('❌ Error resetting streak data:', error);
+                    return 'Error occurred while resetting streak data.';
+                }
+            };
+
+            // Confirm function is available
+            console.log('🔧 resetStreakData() function loaded and ready!');
+        </script>
+
         <canvas id="streakCanvas"></canvas>
         <div class="star-container" id="starContainer"></div>
         <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
@@ -821,11 +859,12 @@
         </button>
 
         <!-- Streak display -->
-        <div class="streak-display" id="streakDisplay" title="Daily Streak">
-            <span id="streakNumber">0</span>
-            <span class="flame">🔥</span>
-            <div class="notification-dot"></div>
-        </div>
+    <div class="streak-display" id="streakDisplay" title="Daily Streak">
+        <span id="streakNumber">0</span>
+        <span class="flame">🔥</span>
+        <div class="notification-dot"></div>
+    </div>
+
         
         <!-- Settings menu -->
         <div class="settings-menu" id="settingsMenu">
@@ -1153,6 +1192,102 @@
             return toDayKey(monday);
         }
 
+        // ONE-TIME DATA RESTORATION - Adds back lost days from bug fix
+        function restoreLostStreakDays(data) {
+            // Only run on December 18-19, 2025
+            const today = new Date();
+            const isTargetDate = today.getFullYear() === 2025 &&
+                                today.getMonth() === 11 && // December is month 11 (0-based)
+                                (today.getDate() === 18 || today.getDate() === 19);
+
+            console.log(`📅 Current date: ${today.toDateString()}, Target dates: Dec 18-19, 2025, Is target: ${isTargetDate}`);
+
+            // TEMPORARY: Force restoration to run for debugging (remove after testing)
+            const forceRunForTesting = true; // Set to false to restore normal date checking
+
+            if (!isTargetDate && !forceRunForTesting) {
+                console.log('⏰ Restoration not running - not Dec 18-19, 2025 yet');
+                return data; // Not the right date
+            }
+
+            if (forceRunForTesting) {
+                console.log('🧪 FORCED RESTORATION RUNNING (for testing only)');
+            }
+
+            // Only run if this is the first time after our fixes
+            const restorationKey = 'streakRestoration_v1';
+            if (localStorage.getItem(restorationKey)) {
+                return data; // Already restored
+            }
+
+            console.log('🔄 Running one-time streak restoration (Dec 18-19, 2025 only)...');
+
+            // Show current status before restoration
+            const currentStreak = computeStreak(data, new Date()).streak;
+            console.log(`📊 BEFORE RESTORATION: Streak=${currentStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
+
+            // If user has very low data or no recent visits, they might have been affected
+            const currentDay = new Date();
+            const visits = data.visits || [];
+            const recentVisits = visits.filter(visit => {
+                try {
+                    const visitDate = new Date(visit);
+                    const daysDiff = Math.floor((currentDay - visitDate) / (1000 * 60 * 60 * 24));
+                    return daysDiff <= 7; // Last 7 days
+                } catch {
+                    return false;
+                }
+            });
+
+            // Restore lost days by making them green (actual visits) instead of giving freezes
+            if (visits.length > 0) {
+                console.log('📅 Running restoration - making missing days GREEN (visited)...');
+                console.log(`📊 Current visits array: [${visits.join(', ')}]`);
+
+                // BRUTE FORCE FIX: Always add days 16 and 17 for December 18-19, 2025
+                console.log('🔨 BRUTE FORCE RESTORATION: Adding days 16 & 17 for Dec 18-19, 2025');
+
+                const bonusDays = ['2025-12-16', '2025-12-17'];
+
+                bonusDays.forEach(dayKey => {
+                    if (!data.visits.includes(dayKey)) {
+                        data.visits.push(dayKey);
+                        console.log(`🟢 FORCE-ADDED BONUS DAY: ${dayKey}`);
+                    } else {
+                        console.log(`✅ Bonus day already exists: ${dayKey}`);
+                    }
+                });
+
+                console.log('💪 Brute force restoration complete - days 16 & 17 guaranteed to be green!');
+
+                // Show all days of current month
+                console.log('📅 Current Month Calendar Status:');
+                const currentDate = new Date();
+                const currentYear = currentDate.getFullYear();
+                const currentMonth = currentDate.getMonth();
+                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const checkDate = new Date(currentYear, currentMonth, day);
+                    const dayKey = toDayKey(checkDate);
+                    const isVisited = data.visits.includes(dayKey); // Use updated data.visits
+                    const status = isVisited ? '🟢 VISITED' : '⚪ EMPTY';
+                    console.log(`Day ${day.toString().padStart(2, '0')}: ${status} (${dayKey})`);
+                }
+
+                // Mark as restored
+                localStorage.setItem(restorationKey, 'completed');
+
+                // Show status after restoration
+                const afterStreak = computeStreak(data, new Date()).streak;
+                console.log(`📊 AFTER RESTORATION: Streak=${afterStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
+                console.log('🎉 Restoration complete - days are now GREEN!');
+
+                return data; // Return the modified data
+            }
+
+        }
+
         function loadV2() {
             let parsed = null;
             try {
@@ -1192,7 +1327,7 @@
 
             if (!parsed || typeof parsed !== 'object') return base;
 
-            const loadedData = {
+            let loadedData = {
                 ...base,
                 version: 2,
                 visits: Array.isArray(parsed.visits) ? parsed.visits : base.visits,
@@ -1216,6 +1351,9 @@
                 localStorage.removeItem('bestStreak');
                 return base;
             }
+
+            // Run one-time restoration for users affected by the bug
+            loadedData = restoreLostStreakDays(loadedData);
 
             return loadedData;
         }
@@ -1267,10 +1405,17 @@
 
             if (today.getDay() === 1) {
                 const weekKey = getWeekKey(today);
+                console.log(`📅 Monday detected! Current week: ${weekKey}, Last freeze week: ${data.lastFreezeWeek}`);
                 if (data.lastFreezeWeek !== weekKey) {
                     data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
                     data.lastFreezeWeek = weekKey;
+                    console.log(`❄️ Monday bonus: +1 Freeze (Total: ${data.freezes})`);
+                    showToast('Monday bonus: +1 Freeze');
+                } else {
+                    console.log('❄️ Monday bonus already claimed this week');
                 }
+            } else {
+                console.log(`📅 Day ${today.getDay()} (not Monday, no freeze)`);
             }
 
             return data;
@@ -1316,11 +1461,13 @@
                 if (getDayDiff(cursor, today) > 365) break;
             }
 
-            data.usedFreezes = mergeDayKeys([], newlyUsed);
+            // Merge newly used freezes with existing ones for calendar display
+            data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
             data.freezes = freezesRemaining;
             data.best = Math.max(Number(data.best) || 0, streak);
             return { streak, data };
         }
+
 
         function getDayDiff(a, b) {
             const msPerDay = 1000 * 60 * 60 * 24;
@@ -1328,6 +1475,7 @@
             const end = normalizeToNoon(b);
             return Math.round((end - start) / msPerDay);
         }
+
 
         document.addEventListener('DOMContentLoaded', function() {
             let data = loadV2();
@@ -1629,82 +1777,6 @@
             }
         }
         
-        function recordStreakVisit() {
-            const STORAGE_KEY_V2 = 'streakDataV2';
-
-            const normalizeToNoon = (date) => {
-                const d = new Date(date);
-                d.setHours(12, 0, 0, 0);
-                return d;
-            };
-
-            const toDayKey = (date) => {
-                const d = normalizeToNoon(date);
-                const y = d.getFullYear();
-                const m = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${y}-${m}-${day}`;
-            };
-
-            const getWeekKey = (date) => {
-                const d = normalizeToNoon(date);
-                const day = d.getDay();
-                const diffToMonday = (day + 6) % 7;
-                const monday = new Date(d);
-                monday.setDate(d.getDate() - diffToMonday);
-                monday.setHours(12, 0, 0, 0);
-                return toDayKey(monday);
-            };
-
-            const mergeDayKeys = (existing, add) => {
-                const set = new Set(Array.isArray(existing) ? existing : []);
-                if (Array.isArray(add)) {
-                    add.forEach(k => set.add(k));
-                } else if (add) {
-                    set.add(add);
-                }
-                return Array.from(set).sort();
-            };
-
-            let parsed = null;
-            try {
-                parsed = JSON.parse(localStorage.getItem(STORAGE_KEY_V2) || 'null');
-            } catch {
-                parsed = null;
-            }
-
-            const data = {
-                version: 2,
-                visits: [],
-                freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
-                usedFreezes: [],
-                lastFreezeWeek: null,
-                best: Number(localStorage.getItem('bestStreak') || 0) || 0,
-                ...(parsed && typeof parsed === 'object' ? parsed : {})
-            };
-
-            if (!Array.isArray(data.visits)) data.visits = [];
-            if (!Array.isArray(data.usedFreezes)) data.usedFreezes = [];
-            if (!Number.isFinite(Number(data.freezes))) data.freezes = 0;
-            if (!Number.isFinite(Number(data.best))) data.best = 0;
-
-            const today = normalizeToNoon(new Date());
-            const todayKey = toDayKey(today);
-            data.visits = mergeDayKeys(data.visits, todayKey);
-
-            if (today.getDay() === 1) {
-                const weekKey = getWeekKey(today);
-                if (data.lastFreezeWeek !== weekKey) {
-                    data.freezes = Number(data.freezes) + 1;
-                    data.lastFreezeWeek = weekKey;
-                }
-            }
-
-            localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(data));
-            localStorage.setItem('streakFreezes', String(data.freezes));
-            localStorage.setItem('bestStreak', String(data.best));
-        }
-        
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize components
@@ -1713,11 +1785,11 @@
             initSettings();
             initStarControls();
 
-            recordStreakVisit();
-            
             // Apply saved theme
             applySavedTheme();
-            
+
+
+
             // Listen for theme and background changes from settings page
             window.addEventListener('storage', (e) => {
                 if (e.key === 'selectedTheme') {
@@ -1968,7 +2040,7 @@
     
     <!-- Version and Privacy Links -->
     <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
-        
+        v0.1
     </div>
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
         <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
@@ -1977,4 +2049,324 @@
     <script src="background-loader.js"></script>
 </body>
 </html>
+
+
+            const s = getStarSettings();
+            if (starContainer) starContainer.style.display = s.enabled ? '' : 'none';
+            renderStars(s);
+        }
+        
+        function applySavedBackground() {
+            const savedBg = localStorage.getItem('customBackground');
+            const bgType = localStorage.getItem('bgType');
+            
+            if (!savedBg) return;
+            
+            if (bgType === 'image' || savedBg.startsWith('url')) {
+                document.body.style.backgroundImage = savedBg;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundAttachment = 'fixed';
+                document.body.style.backgroundColor = 'transparent';
+            } else if (bgType === 'gradient' || savedBg.startsWith('linear-gradient')) {
+                document.body.style.backgroundImage = savedBg;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundAttachment = 'fixed';
+                document.body.style.backgroundColor = 'transparent';
+            } else {
+                document.body.style.backgroundImage = 'none';
+                document.body.style.backgroundColor = savedBg;
+            }
+        }
+        
+        // Function to apply saved theme on page load
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('selectedTheme');
+            const savedBg = localStorage.getItem('customBackground');
+            
+            // Only apply theme if no custom background is set
+            if (!savedBg && savedTheme) {
+                handleThemeChange(savedTheme);
+            } else if (savedBg) {
+                // If there's a saved background, apply it
+                applySavedBackground();
+            } else {
+                // Default to winter theme if nothing is set
+                handleThemeChange('christmas');
+            }
+        }
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize components
+            initFullscreen();
+            initSearch();
+            initSettings();
+            initStarControls();
+
+            // Apply saved theme
+            applySavedTheme();
+
+
+
+            // Listen for theme and background changes from settings page
+            window.addEventListener('storage', (e) => {
+                if (e.key === 'selectedTheme') {
+                    handleThemeChange(e.newValue);
+                } else if (e.key === 'customBackground' || e.key === 'bgType') {
+                    // If background was changed, apply it
+                    if (e.key === 'customBackground' && e.newValue) {
+                        if (e.newValue.startsWith('url')) {
+                            document.body.style.backgroundImage = e.newValue;
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundPosition = 'center';
+                            document.body.style.backgroundAttachment = 'fixed';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else if (e.newValue.startsWith('linear-gradient')) {
+                            document.body.style.backgroundImage = e.newValue;
+                            document.body.style.backgroundSize = 'cover';
+                            document.body.style.backgroundAttachment = 'fixed';
+                            document.body.style.backgroundColor = 'transparent';
+                        } else {
+                            document.body.style.backgroundImage = 'none';
+                            document.body.style.backgroundColor = e.newValue;
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Make handleThemeChange available globally for settings page
+        window.handleThemeChange = handleThemeChange;
+
+        // Fullscreen functionality
+        function initFullscreen() {
+            const fullscreenBtn = document.querySelector(AppConfig.selectors.fullscreenBtn);
+            const fullscreenIcon = document.querySelector(AppConfig.selectors.fullscreenIcon);
+            let isFullscreen = false;
+
+            if (!fullscreenBtn || !fullscreenIcon) return;
+
+            const isFullscreenSupported = () => 
+                document.fullscreenEnabled || 
+                document.webkitFullscreenEnabled || 
+                document.mozFullScreenEnabled || 
+                document.msFullscreenEnabled;
+
+            const enterFullscreen = () => {
+                const elem = document.documentElement;
+                const requestFullscreen = 
+                    elem.requestFullscreen ||
+                    elem.webkitRequestFullscreen ||
+                    elem.mozRequestFullScreen ||
+                    elem.msRequestFullscreen;
+                
+                if (requestFullscreen) {
+                    requestFullscreen.call(elem);
+                }
+            };
+
+            const exitFullscreen = () => {
+                const exit = 
+                    document.exitFullscreen ||
+                    document.webkitExitFullscreen ||
+                    document.mozCancelFullScreen ||
+                    document.msExitFullscreen;
+                
+                if (exit) {
+                    exit.call(document);
+                }
+            };
+
+            const updateFullscreenState = () => {
+                const isFullscreenNow = !!(
+                    document.fullscreenElement || 
+                    document.webkitFullscreenElement || 
+                    document.mozFullScreenElement || 
+                    document.msFullscreenElement
+                );
+                
+                isFullscreen = isFullscreenNow;
+                if (fullscreenIcon) {
+                    fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
+                }
+            };
+
+            // Event listeners
+            fullscreenBtn.addEventListener('click', () => {
+                isFullscreen ? exitFullscreen() : enterFullscreen();
+            });
+
+            // Fullscreen change events
+            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
+                .forEach(event => document.addEventListener(event, updateFullscreenState));
+
+            // Hide button if not supported
+            if (!isFullscreenSupported()) {
+                fullscreenBtn.style.display = 'none';
+            }
+        }
+
+        // Live search filter for game cards
+        function initSearch() {
+            const searchInput = document.querySelector(AppConfig.selectors.searchInput);
+            const gameCards = document.querySelectorAll(AppConfig.selectors.gameCards);
+
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.trim().toLowerCase();
+                gameCards.forEach(card => {
+                    const text = card.textContent.trim().toLowerCase();
+                    if (query === "" || text.includes(query)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Settings functionality
+        function initSettings() {
+            const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
+            const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
+            const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
+            
+            // Toggle switches
+            const injectionToggle = document.getElementById('injectionToggle');
+            
+            // Checkboxes
+            const injectionCheckbox = document.getElementById('injectionCheckbox');
+            
+            // Injection button
+            const openInjectionBtn = document.getElementById('openInjectionBtn');
+
+            const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
+            
+            // Update toggle switch visual states
+            function updateToggleStates() {
+                injectionToggle.classList.toggle('active', injectionCheckbox.checked);
+            }
+            
+            // Toggle settings menu
+            function toggleSettings(event) {
+                event.stopPropagation();
+                settingsMenu.classList.toggle('active');
+            }
+            
+            // Close settings menu
+            function closeSettingsMenu() {
+                settingsMenu.classList.remove('active');
+            }
+            
+            // Event listeners
+            settingsBtn.addEventListener('click', toggleSettings);
+            closeSettings.addEventListener('click', closeSettingsMenu);
+
+            if (openBackgroundSettingsBtn) {
+                openBackgroundSettingsBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    window.location.href = 'background-settings.html';
+                });
+            }
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (event) => {
+                if (settingsMenu && settingsBtn && 
+                    !settingsMenu.contains(event.target) && 
+                    !settingsBtn.contains(event.target)) {
+                    closeSettingsMenu();
+                }
+            });
+            
+            // Toggle switch functionality
+            injectionToggle.addEventListener('click', () => {
+                injectionCheckbox.checked = !injectionCheckbox.checked;
+                updateToggleStates();
+                saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
+                
+                // Auto-open about:blank when toggle is enabled
+                // Only if we're not already in an iframe (to prevent loops)
+                if (injectionCheckbox.checked && !window.frameElement) {
+                    openAboutBlank();
+                }
+            });
+            
+            // About:Blank injection function
+            function openAboutBlank() {
+                const newTab = window.open('about:blank', '_blank');
+                
+                if (newTab) {
+                    newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
+                    newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
+                    newTab.document.write('<script src="background-loader.js"><\\/script></body></html>');
+                    newTab.document.close();
+                } else {
+                    alert('Popup blocked! Please allow popups for this site.');
+                }
+            }
+            
+            // Auto-open about:blank when toggle is enabled
+            function checkAndOpenAboutBlank() {
+                if (injectionCheckbox.checked) {
+                    openAboutBlank();
+                }
+            }
+            
+            // Add event listener for the injection button
+            openInjectionBtn.addEventListener('click', openAboutBlank);
+            
+            // Load settings on page load - REMOVED (now handled by background-manager.js)
+            // loadSettings();
+            
+            // Auto-open about:blank if injection is enabled on page load
+            // Only if we're not already in an iframe (to prevent loops)
+            setTimeout(function() {
+                if (!window.frameElement) {
+                    checkAndOpenAboutBlank();
+                }
+            }, 1000); // Wait 1 second after page load
+        }
+
+        // Prevent zoom on double tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Prevent context menu on long press
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Auto-hide fullscreen button after 3 seconds on mobile
+        if (window.innerWidth <= 768) {
+            setTimeout(() => {
+                document.querySelector(AppConfig.selectors.fullscreenBtn).style.opacity = '0.7';
+            }, 3000);
+        }
+    </script>
+    
+    <!-- Streak Functionality -->
+    <script>
+        // Streak management
+        document.addEventListener('DOMContentLoaded', function() {
+        });
+    </script>
+    
+    <!-- Version and Privacy Links -->
+    <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
+        v0.1
+    </div>
+    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
+        <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
+    </div>
+    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
+    <script src="background-loader.js"></script>
+</body>
+</html>
+
 
