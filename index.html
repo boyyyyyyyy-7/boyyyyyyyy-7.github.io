@@ -1,11 +1,44 @@
-  </script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1994347174379480"
      crossorigin="anonymous"></script>
 <!DOCTYPE html>
 <html lang="en">
+<script>
+// #region agent log - Hypothesis A: Browser cache serving old content
+fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:4',message:'Page load started',data:{url:window.location.href,userAgent:navigator.userAgent},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'A'})}).catch(()=>{});
+
+window.addEventListener('load', function() {
+    // #region agent log - Hypothesis E: Check DOM and service worker on window load
+    const bgManagerRefs = Array.from(document.querySelectorAll('script')).filter(s => s.src && s.src.includes('background-manager'));
+    const allScripts = Array.from(document.querySelectorAll('script')).map(s => s.src || s.innerHTML.substring(0,50));
+
+    fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:window-load',message:'Window loaded, checking for background-manager references',data:{bgManagerRefs:bgManagerRefs.length,allScripts:allScripts,hasServiceWorker:'serviceWorker' in navigator},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'E'})}).catch(()=>{});
+
+    // Check if service worker is registered
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(registrations => {
+            fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:SW-check',message:'Service worker registrations found',data:{registrationCount:registrations.length,urls:registrations.map(r => r.scope)},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'E'})}).catch(()=>{});
+        });
+    }
+
+    // #region agent log - Hypothesis F: Track scroll attempts
+    let scrollAttempts = 0;
+    window.addEventListener('scroll', function() {
+        scrollAttempts++;
+        fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:scroll',message:'Scroll event detected',data:{scrollAttempts:scrollAttempts,scrollY:window.scrollY,scrollX:window.scrollX},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function(e) {
+        fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchmove',message:'Touch move detected',data:{touches:e.touches.length,defaultPrevented:e.defaultPrevented},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
+    }, { passive: true });
+    // #endregion
+    // #endregion
+});
+// #endregion
+</script>
 <head>
     <!-- Meta Information -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     
@@ -173,11 +206,7 @@
             --header-bg: rgba(13, 26, 38, 0.9);
             --primary-color: #ff4d4d;
         }
-html {
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
+
         /* Apply theme colors */
         body {
             background: var(--bg-color);
@@ -208,6 +237,12 @@ html {
             height: 100%;
             z-index: -1;
             opacity: 0.7;
+            pointer-events: none;
+        }
+        
+        html, body {
+            overflow-y: auto;
+            height: auto;
         }
         
         body {
@@ -222,7 +257,6 @@ html {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
-            overflow-y: auto;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         
@@ -805,6 +839,44 @@ html {
 </head>
 <body>
 
+        <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
+        <script>
+            window.resetStreakData = function() {
+                console.log('🔄 Resetting ALL streak data...');
+
+            try {
+                // Clear all streak-related localStorage
+                localStorage.removeItem('streakDataV2');
+                localStorage.removeItem('streakFreezes');
+                localStorage.removeItem('bestStreak');
+                localStorage.removeItem('streakRestoration_v1'); // Also clear restoration flag for testing
+
+                    // Reset display if element exists
+                    const streakNumber = document.getElementById('streakNumber');
+                    if (streakNumber) {
+                        streakNumber.textContent = '0';
+                    }
+
+            console.log('✅ Streak data completely reset!');
+            console.log('🔄 All localStorage keys cleared');
+            console.log('📊 Display updated to show streak: 0');
+
+            // Auto-refresh after a short delay to show the reset
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+
+            return 'Streak reset complete! Page will refresh automatically...';
+                } catch (error) {
+                    console.error('❌ Error resetting streak data:', error);
+                    return 'Error occurred while resetting streak data.';
+                }
+            };
+
+            // Confirm function is available
+            console.log('🔧 resetStreakData() function loaded and ready!');
+        </script>
+
         <canvas id="streakCanvas"></canvas>
         <div class="star-container" id="starContainer"></div>
         <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
@@ -825,11 +897,12 @@ html {
         </button>
 
         <!-- Streak display -->
-        <div class="streak-display" id="streakDisplay" title="Daily Streak">
-            <span id="streakNumber">0</span>
-            <span class="flame">🔥</span>
-            <div class="notification-dot"></div>
-        </div>
+    <div class="streak-display" id="streakDisplay" title="Daily Streak">
+        <span id="streakNumber">0</span>
+        <span class="flame">🔥</span>
+        <div class="notification-dot"></div>
+    </div>
+
         
         <!-- Settings menu -->
         <div class="settings-menu" id="settingsMenu">
@@ -998,6 +1071,7 @@ html {
             </div>
         </div>
     </div>
+    </div>
 
     <!-- Streak functionality -->
     <script>
@@ -1157,6 +1231,7 @@ html {
             return toDayKey(monday);
         }
 
+
         function loadV2() {
             let parsed = null;
             try {
@@ -1196,7 +1271,7 @@ html {
 
             if (!parsed || typeof parsed !== 'object') return base;
 
-            const loadedData = {
+            let loadedData = {
                 ...base,
                 version: 2,
                 visits: Array.isArray(parsed.visits) ? parsed.visits : base.visits,
@@ -1220,6 +1295,7 @@ html {
                 localStorage.removeItem('bestStreak');
                 return base;
             }
+
 
             return loadedData;
         }
@@ -1271,10 +1347,17 @@ html {
 
             if (today.getDay() === 1) {
                 const weekKey = getWeekKey(today);
+                console.log(`📅 Monday detected! Current week: ${weekKey}, Last freeze week: ${data.lastFreezeWeek}`);
                 if (data.lastFreezeWeek !== weekKey) {
                     data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
                     data.lastFreezeWeek = weekKey;
+                    console.log(`❄️ Monday bonus: +1 Freeze (Total: ${data.freezes})`);
+                    showToast('Monday bonus: +1 Freeze');
+                } else {
+                    console.log('❄️ Monday bonus already claimed this week');
                 }
+            } else {
+                console.log(`📅 Day ${today.getDay()} (not Monday, no freeze)`);
             }
 
             return data;
@@ -1290,27 +1373,19 @@ html {
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
 
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay() + 1);
-            weekStart.setHours(12, 0, 0, 0);
-
             while (true) {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
-                const isInCurrentWeek = cursor >= weekStart;
 
                 if (visits.has(key)) {
                     streak += 1;
                 } else if (isWeekend) {
-                } else if (isInCurrentWeek) {
-                    if (freezesRemaining > 0) {
-                        freezesRemaining -= 1;
-                        newlyUsed.push(key);
-                        streak += 1;
-                    } else {
-                        break;
-                    }
+                    // Skip weekends without breaking streak
+                } else if (freezesRemaining > 0) {
+                    freezesRemaining -= 1;
+                    newlyUsed.push(key);
+                    streak += 1;
                 } else {
                     break;
                 }
@@ -1320,11 +1395,13 @@ html {
                 if (getDayDiff(cursor, today) > 365) break;
             }
 
-            data.usedFreezes = mergeDayKeys([], newlyUsed);
+            // Merge newly used freezes with existing ones for calendar display
+            data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
             data.freezes = freezesRemaining;
             data.best = Math.max(Number(data.best) || 0, streak);
             return { streak, data };
         }
+
 
         function getDayDiff(a, b) {
             const msPerDay = 1000 * 60 * 60 * 24;
@@ -1333,6 +1410,28 @@ html {
             return Math.round((end - start) / msPerDay);
         }
 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            let data = loadV2();
+            data = migrateLegacyIntoV2(data);
+            data = recordVisit(data, new Date());
+            const computed = computeStreak(data, new Date());
+            data = computed.data;
+            saveV2(data);
+
+            const streakNumber = document.getElementById('streakNumber');
+            const streakDisplay = document.getElementById('streakDisplay');
+            if (streakNumber) {
+                streakNumber.textContent = String(computed.streak);
+            }
+
+            if (streakDisplay) {
+                streakDisplay.addEventListener('click', function() {
+                    window.location.href = 'streaks.html';
+                });
+                streakDisplay.style.cursor = 'pointer';
+            }
+        });
     </script>
 
     <script>
@@ -1612,82 +1711,6 @@ html {
             }
         }
         
-        function recordStreakVisit() {
-            const STORAGE_KEY_V2 = 'streakDataV2';
-
-            const normalizeToNoon = (date) => {
-                const d = new Date(date);
-                d.setHours(12, 0, 0, 0);
-                return d;
-            };
-
-            const toDayKey = (date) => {
-                const d = normalizeToNoon(date);
-                const y = d.getFullYear();
-                const m = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${y}-${m}-${day}`;
-            };
-
-            const getWeekKey = (date) => {
-                const d = normalizeToNoon(date);
-                const day = d.getDay();
-                const diffToMonday = (day + 6) % 7;
-                const monday = new Date(d);
-                monday.setDate(d.getDate() - diffToMonday);
-                monday.setHours(12, 0, 0, 0);
-                return toDayKey(monday);
-            };
-
-            const mergeDayKeys = (existing, add) => {
-                const set = new Set(Array.isArray(existing) ? existing : []);
-                if (Array.isArray(add)) {
-                    add.forEach(k => set.add(k));
-                } else if (add) {
-                    set.add(add);
-                }
-                return Array.from(set).sort();
-            };
-
-            let parsed = null;
-            try {
-                parsed = JSON.parse(localStorage.getItem(STORAGE_KEY_V2) || 'null');
-            } catch {
-                parsed = null;
-            }
-
-            const data = {
-                version: 2,
-                visits: [],
-                freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
-                usedFreezes: [],
-                lastFreezeWeek: null,
-                best: Number(localStorage.getItem('bestStreak') || 0) || 0,
-                ...(parsed && typeof parsed === 'object' ? parsed : {})
-            };
-
-            if (!Array.isArray(data.visits)) data.visits = [];
-            if (!Array.isArray(data.usedFreezes)) data.usedFreezes = [];
-            if (!Number.isFinite(Number(data.freezes))) data.freezes = 0;
-            if (!Number.isFinite(Number(data.best))) data.best = 0;
-
-            const today = normalizeToNoon(new Date());
-            const todayKey = toDayKey(today);
-            data.visits = mergeDayKeys(data.visits, todayKey);
-
-            if (today.getDay() === 1) {
-                const weekKey = getWeekKey(today);
-                if (data.lastFreezeWeek !== weekKey) {
-                    data.freezes = Number(data.freezes) + 1;
-                    data.lastFreezeWeek = weekKey;
-                }
-            }
-
-            localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(data));
-            localStorage.setItem('streakFreezes', String(data.freezes));
-            localStorage.setItem('bestStreak', String(data.best));
-        }
-        
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize components
@@ -1696,11 +1719,11 @@ html {
             initSettings();
             initStarControls();
 
-            recordStreakVisit();
-            
             // Apply saved theme
             applySavedTheme();
-            
+
+
+
             // Listen for theme and background changes from settings page
             window.addEventListener('storage', (e) => {
                 if (e.key === 'selectedTheme') {
@@ -1819,6 +1842,10 @@ html {
 
         // Settings functionality
         function initSettings() {
+            // Prevent duplicate execution
+            if (window.initSettingsCalled) return;
+            window.initSettingsCalled = true;
+
             const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
             const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
             const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
@@ -1890,7 +1917,7 @@ html {
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script src="background-loader.js"></script></body></html>');
+                    newTab.document.write('<script src="background-loader.js"><\/script></body></html>');
                     newTab.document.close();
                 } else {
                     alert('Popup blocked! Please allow popups for this site.');
@@ -1907,7 +1934,7 @@ html {
             // Add event listener for the injection button
             openInjectionBtn.addEventListener('click', openAboutBlank);
             
-            // Load settings on page load - REMOVED (now handled by background-manager.js)
+            // Load settings on page load - REMOVED (now handled by background-loader.js)
             // loadSettings();
             
             // Auto-open about:blank if injection is enabled on page load
@@ -1919,11 +1946,32 @@ html {
             }, 1000); // Wait 1 second after page load
         }
 
-        // Prevent zoom on double tap for mobile
+        // Prevent zoom on double tap for mobile (only prevent if it's a true double tap, not scroll)
         let lastTouchEnd = 0;
+        let touchStartY = 0;
+
+        document.addEventListener('touchstart', function(event) {
+            if (event.touches.length === 1) {
+                touchStartY = event.touches[0].clientY;
+                // #region agent log - Hypothesis F: Track touch start
+                fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchstart',message:'Touch start detected',data:{touchStartY:touchStartY,touches:event.touches.length},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
+                // #endregion
+            }
+        }, { passive: true });
+
         document.addEventListener('touchend', function (event) {
             const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
+            const timeDiff = now - lastTouchEnd;
+            const touchEndY = event.changedTouches[0].clientY;
+            const yDiff = Math.abs(touchEndY - touchStartY);
+
+            // #region agent log - Hypothesis F: Track touch event behavior
+            const willPrevent = timeDiff <= 200 && yDiff <= 2;
+            fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchend',message:'Touch end event',data:{timeDiff:timeDiff,yDiff:yDiff,willPrevent:willPrevent,lastTouchEnd:lastTouchEnd,touchStartY:touchStartY,touchEndY:touchEndY},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
+            // #endregion
+
+            // Only prevent default if it's a very quick double tap with almost no movement (not a scroll)
+            if (willPrevent) {
                 event.preventDefault();
             }
             lastTouchEnd = now;
@@ -1942,359 +1990,24 @@ html {
         }
     </script>
     
+    <!-- Streak Functionality -->
     
     <!-- Version and Privacy Links -->
     <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
-        v0.1
+        vSB3.4
     </div>
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
         <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
     </div>
-    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
+    <script src="background-loader.js"></script> <!-- Background theme loader -->
     <script src="background-loader.js"></script>
-</body>
-</html>
-
-
-            const STORAGE_KEY_V2 = 'streakDataV2';
-
-            const normalizeToNoon = (date) => {
-                const d = new Date(date);
-                d.setHours(12, 0, 0, 0);
-                return d;
-            };
-
-            const toDayKey = (date) => {
-                const d = normalizeToNoon(date);
-                const y = d.getFullYear();
-                const m = String(d.getMonth() + 1).padStart(2, '0');
-                const day = String(d.getDate()).padStart(2, '0');
-                return `${y}-${m}-${day}`;
-            };
-
-            const getWeekKey = (date) => {
-                const d = normalizeToNoon(date);
-                const day = d.getDay();
-                const diffToMonday = (day + 6) % 7;
-                const monday = new Date(d);
-                monday.setDate(d.getDate() - diffToMonday);
-                monday.setHours(12, 0, 0, 0);
-                return toDayKey(monday);
-            };
-
-            const mergeDayKeys = (existing, add) => {
-                const set = new Set(Array.isArray(existing) ? existing : []);
-                if (Array.isArray(add)) {
-                    add.forEach(k => set.add(k));
-                } else if (add) {
-                    set.add(add);
-                }
-                return Array.from(set).sort();
-            };
-
-            let parsed = null;
-            try {
-                parsed = JSON.parse(localStorage.getItem(STORAGE_KEY_V2) || 'null');
-            } catch {
-                parsed = null;
-            }
-
-            const data = {
-                version: 2,
-                visits: [],
-                freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
-                usedFreezes: [],
-                lastFreezeWeek: null,
-                best: Number(localStorage.getItem('bestStreak') || 0) || 0,
-                ...(parsed && typeof parsed === 'object' ? parsed : {})
-            };
-
-            if (!Array.isArray(data.visits)) data.visits = [];
-            if (!Array.isArray(data.usedFreezes)) data.usedFreezes = [];
-            if (!Number.isFinite(Number(data.freezes))) data.freezes = 0;
-            if (!Number.isFinite(Number(data.best))) data.best = 0;
-
-            const today = normalizeToNoon(new Date());
-            const todayKey = toDayKey(today);
-            data.visits = mergeDayKeys(data.visits, todayKey);
-
-            if (today.getDay() === 1) {
-                const weekKey = getWeekKey(today);
-                if (data.lastFreezeWeek !== weekKey) {
-                    data.freezes = Number(data.freezes) + 1;
-                    data.lastFreezeWeek = weekKey;
-                }
-            }
-
-            localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(data));
-            localStorage.setItem('streakFreezes', String(data.freezes));
-            localStorage.setItem('bestStreak', String(data.best));
-        }
-        
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize components
-            initFullscreen();
-            initSearch();
-            initSettings();
-            initStarControls();
-
-            recordStreakVisit();
-            
-            // Apply saved theme
-            applySavedTheme();
-            
-            // Listen for theme and background changes from settings page
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'selectedTheme') {
-                    handleThemeChange(e.newValue);
-                } else if (e.key === 'customBackground' || e.key === 'bgType') {
-                    // If background was changed, apply it
-                    if (e.key === 'customBackground' && e.newValue) {
-                        if (e.newValue.startsWith('url')) {
-                            document.body.style.backgroundImage = e.newValue;
-                            document.body.style.backgroundSize = 'cover';
-                            document.body.style.backgroundPosition = 'center';
-                            document.body.style.backgroundAttachment = 'fixed';
-                            document.body.style.backgroundColor = 'transparent';
-                        } else if (e.newValue.startsWith('linear-gradient')) {
-                            document.body.style.backgroundImage = e.newValue;
-                            document.body.style.backgroundSize = 'cover';
-                            document.body.style.backgroundAttachment = 'fixed';
-                            document.body.style.backgroundColor = 'transparent';
-                        } else {
-                            document.body.style.backgroundImage = 'none';
-                            document.body.style.backgroundColor = e.newValue;
-                        }
-                    }
-                }
-            });
-        });
-        
-        // Make handleThemeChange available globally for settings page
-        window.handleThemeChange = handleThemeChange;
-
-        // Fullscreen functionality
-        function initFullscreen() {
-            const fullscreenBtn = document.querySelector(AppConfig.selectors.fullscreenBtn);
-            const fullscreenIcon = document.querySelector(AppConfig.selectors.fullscreenIcon);
-            let isFullscreen = false;
-
-            if (!fullscreenBtn || !fullscreenIcon) return;
-
-            const isFullscreenSupported = () => 
-                document.fullscreenEnabled || 
-                document.webkitFullscreenEnabled || 
-                document.mozFullScreenEnabled || 
-                document.msFullscreenEnabled;
-
-            const enterFullscreen = () => {
-                const elem = document.documentElement;
-                const requestFullscreen = 
-                    elem.requestFullscreen ||
-                    elem.webkitRequestFullscreen ||
-                    elem.mozRequestFullScreen ||
-                    elem.msRequestFullscreen;
-                
-                if (requestFullscreen) {
-                    requestFullscreen.call(elem);
-                }
-            };
-
-            const exitFullscreen = () => {
-                const exit = 
-                    document.exitFullscreen ||
-                    document.webkitExitFullscreen ||
-                    document.mozCancelFullScreen ||
-                    document.msExitFullscreen;
-                
-                if (exit) {
-                    exit.call(document);
-                }
-            };
-
-            const updateFullscreenState = () => {
-                const isFullscreenNow = !!(
-                    document.fullscreenElement || 
-                    document.webkitFullscreenElement || 
-                    document.mozFullScreenElement || 
-                    document.msFullscreenElement
-                );
-                
-                isFullscreen = isFullscreenNow;
-                if (fullscreenIcon) {
-                    fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
-                }
-            };
-
-            // Event listeners
-            fullscreenBtn.addEventListener('click', () => {
-                isFullscreen ? exitFullscreen() : enterFullscreen();
-            });
-
-            // Fullscreen change events
-            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
-                .forEach(event => document.addEventListener(event, updateFullscreenState));
-
-            // Hide button if not supported
-            if (!isFullscreenSupported()) {
-                fullscreenBtn.style.display = 'none';
-            }
-        }
-
-        // Live search filter for game cards
-        function initSearch() {
-            const searchInput = document.querySelector(AppConfig.selectors.searchInput);
-            const gameCards = document.querySelectorAll(AppConfig.selectors.gameCards);
-
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.trim().toLowerCase();
-                gameCards.forEach(card => {
-                    const text = card.textContent.trim().toLowerCase();
-                    if (query === "" || text.includes(query)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        // Settings functionality
-        function initSettings() {
-            const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
-            const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
-            const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
-            
-            // Toggle switches
-            const injectionToggle = document.getElementById('injectionToggle');
-            
-            // Checkboxes
-            const injectionCheckbox = document.getElementById('injectionCheckbox');
-            
-            // Injection button
-            const openInjectionBtn = document.getElementById('openInjectionBtn');
-
-            const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
-            
-            // Update toggle switch visual states
-            function updateToggleStates() {
-                injectionToggle.classList.toggle('active', injectionCheckbox.checked);
-            }
-            
-            // Toggle settings menu
-            function toggleSettings(event) {
-                event.stopPropagation();
-                settingsMenu.classList.toggle('active');
-            }
-            
-            // Close settings menu
-            function closeSettingsMenu() {
-                settingsMenu.classList.remove('active');
-            }
-            
-            // Event listeners
-            settingsBtn.addEventListener('click', toggleSettings);
-            closeSettings.addEventListener('click', closeSettingsMenu);
-
-            if (openBackgroundSettingsBtn) {
-                openBackgroundSettingsBtn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    window.location.href = 'background-settings.html';
-                });
-            }
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (settingsMenu && settingsBtn && 
-                    !settingsMenu.contains(event.target) && 
-                    !settingsBtn.contains(event.target)) {
-                    closeSettingsMenu();
-                }
-            });
-            
-            // Toggle switch functionality
-            injectionToggle.addEventListener('click', () => {
-                injectionCheckbox.checked = !injectionCheckbox.checked;
-                updateToggleStates();
-                saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
-                
-                // Auto-open about:blank when toggle is enabled
-                // Only if we're not already in an iframe (to prevent loops)
-                if (injectionCheckbox.checked && !window.frameElement) {
-                    openAboutBlank();
-                }
-            });
-            
-            // About:Blank injection function
-            function openAboutBlank() {
-                const newTab = window.open('about:blank', '_blank');
-                
-                if (newTab) {
-                    newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
-                    newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script src="background-loader.js"></script></body></html>');
-                    newTab.document.close();
-                } else {
-                    alert('Popup blocked! Please allow popups for this site.');
-                }
-            }
-            
-            // Auto-open about:blank when toggle is enabled
-            function checkAndOpenAboutBlank() {
-                if (injectionCheckbox.checked) {
-                    openAboutBlank();
-                }
-            }
-            
-            // Add event listener for the injection button
-            openInjectionBtn.addEventListener('click', openAboutBlank);
-            
-            // Load settings on page load - REMOVED (now handled by background-manager.js)
-            // loadSettings();
-            
-            // Auto-open about:blank if injection is enabled on page load
-            // Only if we're not already in an iframe (to prevent loops)
-            setTimeout(function() {
-                if (!window.frameElement) {
-                    checkAndOpenAboutBlank();
-                }
-            }, 1000); // Wait 1 second after page load
-        }
-
-        // Prevent zoom on double tap for mobile
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Prevent context menu on long press
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // Auto-hide fullscreen button after 3 seconds on mobile
-        if (window.innerWidth <= 768) {
-            setTimeout(() => {
-                document.querySelector(AppConfig.selectors.fullscreenBtn).style.opacity = '0.7';
-            }, 3000);
-        }
+    
+    <script>
+        const s = getStarSettings();
+        if (starContainer) starContainer.style.display = s.enabled ? '' : 'none';
+        renderStars(s);
     </script>
-    
-    
-    <!-- Version and Privacy Links -->
-    <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
-        v0.1
-    </div>
-    <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
-        <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
-    </div>
-    <script src="background-manager.js"></script> <!-- Include the new background manager script -->
-    <script src="background-loader.js"></script>
 </body>
 </html>
-
+        
+        

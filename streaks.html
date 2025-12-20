@@ -1047,101 +1047,6 @@
             return true;
         }
 
-        // ONE-TIME DATA RESTORATION - Adds back lost days from bug fix
-        function restoreLostStreakDays(data) {
-            // Only run on December 18-19, 2025
-            const currentDate = new Date();
-            const isTargetDate = currentDate.getFullYear() === 2025 &&
-                                currentDate.getMonth() === 11 && // December is month 11 (0-based)
-                                (currentDate.getDate() === 18 || currentDate.getDate() === 19);
-
-            console.log(`📅 Current date: ${currentDate.toDateString()}, Target dates: Dec 18-19, 2025, Is target: ${isTargetDate}`);
-
-            // TEMPORARY: Force restoration to run for debugging (remove after testing)
-            const forceRunForTesting = true; // Set to false to restore normal date checking
-
-            if (!isTargetDate && !forceRunForTesting) {
-                console.log('⏰ Restoration not running - not Dec 18-19, 2025 yet');
-                return data; // Not the right date
-            }
-
-            if (forceRunForTesting) {
-                console.log('🧪 FORCED RESTORATION RUNNING (for testing only)');
-            }
-
-            // Only run if this is the first time after our fixes
-            const restorationKey = 'streakRestoration_v1';
-            if (localStorage.getItem(restorationKey)) {
-                return data; // Already restored
-            }
-
-            console.log('🔄 Running one-time streak restoration (Dec 18-19, 2025 only)...');
-
-            // Show current status before restoration
-            const currentStreak = computeStreak(data, new Date()).streak;
-            console.log(`📊 BEFORE RESTORATION: Streak=${currentStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
-
-            // If user has very low data or no recent visits, they might have been affected
-            const currentDay = new Date();
-            const visits = data.visits || [];
-            const recentVisits = visits.filter(visit => {
-                try {
-                    const visitDate = new Date(visit);
-                    const daysDiff = Math.floor((currentDay - visitDate) / (1000 * 60 * 60 * 24));
-                    return daysDiff <= 7; // Last 7 days
-                } catch {
-                    return false;
-                }
-            });
-
-            // Restore lost days by making them green (actual visits) instead of giving freezes
-            if (visits.length > 0) {
-                console.log('📅 Running restoration - making missing days GREEN (visited)...');
-                console.log(`📊 Current visits array: [${visits.join(', ')}]`);
-
-                // BRUTE FORCE FIX: Always add days 16 and 17 for December 18-19, 2025
-                console.log('🔨 BRUTE FORCE RESTORATION: Adding days 16 & 17 for Dec 18-19, 2025');
-
-                const bonusDays = ['2025-12-16', '2025-12-17'];
-
-                bonusDays.forEach(dayKey => {
-                    if (!data.visits.includes(dayKey)) {
-                        data.visits.push(dayKey);
-                        console.log(`🟢 FORCE-ADDED BONUS DAY: ${dayKey}`);
-                    } else {
-                        console.log(`✅ Bonus day already exists: ${dayKey}`);
-                    }
-                });
-
-                console.log('💪 Brute force restoration complete - days 16 & 17 guaranteed to be green!');
-
-                // Show all days of current month
-                console.log('📅 Current Month Calendar Status:');
-                const currentDate = new Date();
-                const currentYear = currentDate.getFullYear();
-                const currentMonth = currentDate.getMonth();
-                const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const checkDate = new Date(currentYear, currentMonth, day);
-                    const dayKey = toDayKey(checkDate);
-                    const isVisited = data.visits.includes(dayKey); // Use updated data.visits
-                    const status = isVisited ? '🟢 VISITED' : '⚪ EMPTY';
-                    console.log(`Day ${day.toString().padStart(2, '0')}: ${status} (${dayKey})`);
-                }
-
-                // Mark as restored
-                localStorage.setItem(restorationKey, 'completed');
-
-                // Show status after restoration
-                const afterStreak = computeStreak(data, new Date()).streak;
-                console.log(`📊 AFTER RESTORATION: Streak=${afterStreak}, Freezes=${data.freezes || 0}, Best=${data.best || 0}`);
-                console.log('🎉 Restoration complete - days are now GREEN!');
-
-                return data; // Return the modified data
-            }
-
-        }
 
         function loadV2() {
             let parsed = null;
@@ -1207,8 +1112,6 @@
                 return base;
             }
 
-            // Run one-time restoration for users affected by the bug
-            loadedData = restoreLostStreakDays(loadedData);
 
             return loadedData;
         }
