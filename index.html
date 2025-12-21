@@ -592,7 +592,7 @@
             color: var(--text-light);
             border: 1.5px solid var(--card-border);
             border-radius: 18px;
-            padding: 60px 0;
+            padding: 30px 0;
             margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(3px) saturate(160%);
@@ -1849,9 +1849,26 @@
 
             const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
             
+            // Save background setting function
+            function saveBackgroundSetting(key, value) {
+                localStorage.setItem('bg_' + key, String(value));
+            }
+            
+            // Load background setting function
+            function loadBackgroundSetting(key, defaultValue = false) {
+                const value = localStorage.getItem('bg_' + key);
+                return value !== null ? value === 'true' : defaultValue;
+            }
+            
             // Update toggle switch visual states
             function updateToggleStates() {
                 injectionToggle.classList.toggle('active', injectionCheckbox.checked);
+            }
+            
+            // Load settings on page load
+            function loadSettings() {
+                injectionCheckbox.checked = loadBackgroundSetting('injection', false);
+                updateToggleStates();
             }
             
             // Toggle settings menu
@@ -1889,7 +1906,7 @@
             injectionToggle.addEventListener('click', () => {
                 injectionCheckbox.checked = !injectionCheckbox.checked;
                 updateToggleStates();
-                saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
+                saveBackgroundSetting('injection', injectionCheckbox.checked);
                 
                 // Auto-open about:blank when toggle is enabled
                 // Only if we're not already in an iframe (to prevent loops)
@@ -1905,7 +1922,7 @@
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script src="background-loader.js"><\/script></body></html>');
+                    newTab.document.write('</body></html>');
                     newTab.document.close();
                 } else {
                     alert('Popup blocked! Please allow popups for this site.');
@@ -1922,8 +1939,8 @@
             // Add event listener for the injection button
             openInjectionBtn.addEventListener('click', openAboutBlank);
             
-            // Load settings on page load - REMOVED (now handled by background-loader.js)
-            // loadSettings();
+            // Load settings on page load
+            loadSettings();
             
             // Auto-open about:blank if injection is enabled on page load
             // Only if we're not already in an iframe (to prevent loops)
