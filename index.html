@@ -1917,11 +1917,18 @@
             
             // About:Blank injection function
             function openAboutBlank() {
+                // Prevent multiple injections
+                if (window.aboutBlankInjected) {
+                    return;
+                }
+                window.aboutBlankInjected = true;
+                
                 const newTab = window.open('about:blank', '_blank');
                 
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
+                    newTab.document.write('<script>window.top.aboutBlankInjected = true; window.aboutBlankInjected = true;<\/script>');
                     newTab.document.write('</body></html>');
                     newTab.document.close();
                 } else {
