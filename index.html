@@ -1955,9 +1955,9 @@
             loadSettings();
             
             // Auto-open about:blank if injection is enabled on page load
-            // Only if we're not already in an iframe (to prevent loops)
+            // Only works on localhost/file:// due to browser security restrictions
             setTimeout(function() {
-                if (!window.frameElement) {
+                if (!window.frameElement && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
                     checkAndOpenAboutBlank();
                 }
             }, 1000); // Wait 1 second after page load
