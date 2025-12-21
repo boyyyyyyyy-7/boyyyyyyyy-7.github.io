@@ -1910,14 +1910,10 @@
                 updateToggleStates();
                 saveBackgroundSetting('injection', injectionCheckbox.checked);
                 
-                // Only auto-open on localhost/file:// due to browser security restrictions
-                // Live websites block automatic popups for security
-                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600 && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
-                    openAboutBlank();
-                } else if (injectionCheckbox.checked && window.location.hostname !== 'localhost' && window.location.protocol !== 'file:') {
-                    // Show notification for live sites
+                // Show notification that auto-injection is not available
+                if (injectionCheckbox.checked) {
                     if (typeof showToast === 'function') {
-                        showToast('Auto-injection disabled on live sites. Use the button below.');
+                        showToast('Use the "Inject Into About:Blank" button below.');
                     }
                 }
             });
@@ -1960,14 +1956,6 @@
             
             // Load settings on page load
             loadSettings();
-            
-            // Auto-open about:blank if injection is enabled on page load
-            // Only works on localhost/file:// due to browser security restrictions
-            setTimeout(function() {
-                if (!window.frameElement && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
-                    checkAndOpenAboutBlank();
-                }
-            }, 1000); // Wait 1 second after page load
         }
 
         // Prevent zoom on double tap for mobile (only prevent if it's a true double tap, not scroll)
