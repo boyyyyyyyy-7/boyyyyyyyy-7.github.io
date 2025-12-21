@@ -1910,10 +1910,14 @@
                 updateToggleStates();
                 saveBackgroundSetting('injection', injectionCheckbox.checked);
                 
-                // Show notification that auto-injection is not available
-                if (injectionCheckbox.checked) {
+                // Only auto-open on localhost/file:// due to browser security restrictions
+                // Live websites block automatic popups for security
+                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600 && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
+                    openAboutBlank();
+                } else if (injectionCheckbox.checked && window.location.hostname !== 'localhost' && window.location.protocol !== 'file:') {
+                    // Show notification for live sites
                     if (typeof showToast === 'function') {
-                        showToast('Use the "Inject Into About:Blank" button below.');
+                        showToast('Auto-injection disabled on live sites. Use the button below.');
                     }
                 }
             });
@@ -1956,6 +1960,14 @@
             
             // Load settings on page load
             loadSettings();
+            
+            // Auto-open about:blank if injection is enabled on page load
+            // Only works on localhost/file:// due to browser security restrictions
+            setTimeout(function() {
+                if (!window.frameElement && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
+                    checkAndOpenAboutBlank();
+                }
+            }, 1000); // Wait 1 second after page load
         }
 
         // Prevent zoom on double tap for mobile (only prevent if it's a true double tap, not scroll)
@@ -2010,7 +2022,6 @@ font-family: 'Orbitron', sans-serif;">
         <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
     </div>
     <script src="background-loader.js"></script> <!-- Background theme loader -->
-    <script src="background-loader.js"></script>
     
     <!-- Ad Script -->
    
