@@ -972,11 +972,10 @@
         function getRollingSeed() {
             const now = new Date();
             const dateStr = now.toISOString().split('T')[0];
-            const hour = now.getHours();
             const deviceId = getDeviceFingerprint();
 
             let seed = 0;
-            const seedStr = dateStr + hour.toString() + deviceId;
+            const seedStr = dateStr + deviceId;
             for (let i = 0; i < seedStr.length; i++) {
                 seed += seedStr.charCodeAt(i) * (i + 1);
             }

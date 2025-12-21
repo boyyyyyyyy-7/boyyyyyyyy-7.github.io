@@ -3,37 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <script>
-// #region agent log - Hypothesis A: Browser cache serving old content
-fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:4',message:'Page load started',data:{url:window.location.href,userAgent:navigator.userAgent},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'A'})}).catch(()=>{});
-
-window.addEventListener('load', function() {
-    // #region agent log - Hypothesis E: Check DOM and service worker on window load
-    const bgManagerRefs = Array.from(document.querySelectorAll('script')).filter(s => s.src && s.src.includes('background-manager'));
-    const allScripts = Array.from(document.querySelectorAll('script')).map(s => s.src || s.innerHTML.substring(0,50));
-
-    fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:window-load',message:'Window loaded, checking for background-manager references',data:{bgManagerRefs:bgManagerRefs.length,allScripts:allScripts,hasServiceWorker:'serviceWorker' in navigator},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'E'})}).catch(()=>{});
-
-    // Check if service worker is registered
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(registrations => {
-            fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:SW-check',message:'Service worker registrations found',data:{registrationCount:registrations.length,urls:registrations.map(r => r.scope)},timestamp:Date.now(),sessionId:'debug-session',runId:'initial',hypothesisId:'E'})}).catch(()=>{});
-        });
-    }
-
-    // #region agent log - Hypothesis F: Track scroll attempts
-    let scrollAttempts = 0;
-    window.addEventListener('scroll', function() {
-        scrollAttempts++;
-        fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:scroll',message:'Scroll event detected',data:{scrollAttempts:scrollAttempts,scrollY:window.scrollY,scrollX:window.scrollX},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
-    }, { passive: true });
-
-    window.addEventListener('touchmove', function(e) {
-        fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchmove',message:'Touch move detected',data:{touches:e.touches.length,defaultPrevented:e.defaultPrevented},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
-    }, { passive: true });
-    // #endregion
-    // #endregion
-});
-// #endregion
+// Debug logging removed for production
 </script>
 <head>
     <!-- Meta Information -->
@@ -879,16 +849,6 @@ window.addEventListener('load', function() {
 
         <canvas id="streakCanvas"></canvas>
         <div class="star-container" id="starContainer"></div>
-        <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
-            unblocked games, free online games, browser games, play games online,
-            cool math games unblocked, io games, free browser games, top browser games,
-            no download games, multiplayer browser games, html5 games, instant play games,
-            free puzzle games online, adventure browser games, action browser games,
-            tower defense games free, proxy, roblox unblocked, 3D browser games, platformer games online,
-            idle games free, play games without download, no sign up online games,
-            online game emulators, free game websites, addicting games online,
-            online arcade games, retro games online, safe online games,
-        </div>
 
         <!-- Settings button -->
         <button class="settings-btn" id="settingsBtn" title="Settings">
@@ -973,6 +933,19 @@ window.addEventListener('load', function() {
 
 
         <div class="container">
+            <!-- Header Ad -->
+            <div style="text-align: center; margin: 20px 0;">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-1994347174379480"
+                     data-ad-slot="1234567890"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+            
             <header>
                 <h1>Brayden is tall games 2</h1>
             </header>
@@ -1032,6 +1005,19 @@ window.addEventListener('load', function() {
                     <p>Cookie clicker</p>
                 </a>
 
+                <!-- Mid-content Ad -->
+                <div style="grid-column: 1 / -1; text-align: center; margin: 20px 0;">
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-1994347174379480"
+                         data-ad-slot="0987654321"
+                         data-ad-format="fluid"
+                         data-full-width-responsive="true"></ins>
+                    <script>
+                         (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+
                 <a class="game-card" href="slow-roads.html">
                     <p>slow roads</p>
                 </a>
@@ -1073,6 +1059,19 @@ window.addEventListener('load', function() {
     </div>
     </div>
 
+    <!-- Footer Ad -->
+    <div style="text-align: center; margin: 40px 0;">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1994347174379480"
+             data-ad-slot="1122334455"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <!-- Streak functionality -->
     <script>
         const STORAGE_KEY_V2 = 'streakDataV2';
@@ -1110,11 +1109,10 @@ window.addEventListener('load', function() {
         function getRollingSeed() {
             const now = new Date();
             const dateStr = now.toISOString().split('T')[0];
-            const hour = now.getHours();
             const deviceId = getDeviceFingerprint();
 
             let seed = 0;
-            const seedStr = dateStr + hour.toString() + deviceId;
+            const seedStr = dateStr + deviceId;
             for (let i = 0; i < seedStr.length; i++) {
                 seed += seedStr.charCodeAt(i) * (i + 1);
             }
@@ -1369,6 +1367,7 @@ window.addEventListener('load', function() {
             let freezesRemaining = Math.max(0, Number(data.freezes) || 0);
             const newlyUsed = [];
             let streak = 0;
+            let hasWeekdayVisit = false;
 
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
@@ -1377,15 +1376,19 @@ window.addEventListener('load', function() {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
+                const isWeekday = !isWeekend;
 
                 if (visits.has(key)) {
                     streak += 1;
-                } else if (isWeekend) {
-                    // Skip weekends without breaking streak
-                } else if (freezesRemaining > 0) {
+                    if (isWeekday) hasWeekdayVisit = true;
+                } else if (isWeekend && hasWeekdayVisit) {
+                    // Only count weekends if we have a weekday streak to continue
+                    streak += 1;
+                } else if (isWeekday && freezesRemaining > 0) {
                     freezesRemaining -= 1;
                     newlyUsed.push(key);
                     streak += 1;
+                    hasWeekdayVisit = true;
                 } else {
                     break;
                 }
@@ -1953,9 +1956,6 @@ window.addEventListener('load', function() {
         document.addEventListener('touchstart', function(event) {
             if (event.touches.length === 1) {
                 touchStartY = event.touches[0].clientY;
-                // #region agent log - Hypothesis F: Track touch start
-                fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchstart',message:'Touch start detected',data:{touchStartY:touchStartY,touches:event.touches.length},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
-                // #endregion
             }
         }, { passive: true });
 
@@ -1965,10 +1965,7 @@ window.addEventListener('load', function() {
             const touchEndY = event.changedTouches[0].clientY;
             const yDiff = Math.abs(touchEndY - touchStartY);
 
-            // #region agent log - Hypothesis F: Track touch event behavior
             const willPrevent = timeDiff <= 200 && yDiff <= 2;
-            fetch('http://127.0.0.1:7242/ingest/a7fcfa60-2a83-4652-be39-96291f61b443',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'index.html:touchend',message:'Touch end event',data:{timeDiff:timeDiff,yDiff:yDiff,willPrevent:willPrevent,lastTouchEnd:lastTouchEnd,touchStartY:touchStartY,touchEndY:touchEndY},timestamp:Date.now(),sessionId:'debug-session',runId:'scroll-test',hypothesisId:'F'})}).catch(()=>{});
-            // #endregion
 
             // Only prevent default if it's a very quick double tap with almost no movement (not a scroll)
             if (willPrevent) {
@@ -2001,6 +1998,9 @@ window.addEventListener('load', function() {
     </div>
     <script src="background-loader.js"></script> <!-- Background theme loader -->
     <script src="background-loader.js"></script>
+    
+    <!-- Ad Script -->
+   
     
     <script>
         const s = getStarSettings();
