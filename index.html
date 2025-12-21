@@ -1909,8 +1909,8 @@
                 saveBackgroundSetting('injection', injectionCheckbox.checked);
                 
                 // Auto-open about:blank when toggle is enabled
-                // Only if we're not already in an iframe (to prevent loops)
-                if (injectionCheckbox.checked && !window.frameElement) {
+                // Only if we're not already in an iframe and window is large enough
+                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600) {
                     openAboutBlank();
                 }
             });
@@ -1931,6 +1931,11 @@
             
             // Auto-open about:blank when toggle is enabled
             function checkAndOpenAboutBlank() {
+                // Don't run if we're in an iframe or if the window is too small (likely iframe)
+                if (window.frameElement || window.innerWidth < 800 || window.innerHeight < 600) {
+                    return;
+                }
+                
                 if (injectionCheckbox.checked) {
                     openAboutBlank();
                 }
