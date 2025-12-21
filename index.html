@@ -1938,8 +1938,8 @@
             
             // Auto-open about:blank when toggle is enabled
             function checkAndOpenAboutBlank() {
-                // Don't run if we're in an iframe or if the window is too small (likely iframe)
-                if (window.frameElement || window.innerWidth < 800 || window.innerHeight < 600) {
+                // Prevent multiple injections and don't run if we're in an iframe
+                if (window.aboutBlankInjected || window.frameElement || window.innerWidth < 800 || window.innerHeight < 600) {
                     return;
                 }
                 
