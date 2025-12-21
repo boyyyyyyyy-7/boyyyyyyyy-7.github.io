@@ -1910,10 +1910,15 @@
                 updateToggleStates();
                 saveBackgroundSetting('injection', injectionCheckbox.checked);
                 
-                // Auto-open about:blank when toggle is enabled
-                // Only if we're not already in an iframe and window is large enough
-                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600) {
+                // Only auto-open on localhost/file:// due to browser security restrictions
+                // Live websites block automatic popups for security
+                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600 && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
                     openAboutBlank();
+                } else if (injectionCheckbox.checked && window.location.hostname !== 'localhost' && window.location.protocol !== 'file:') {
+                    // Show notification for live sites
+                    if (typeof showToast === 'function') {
+                        showToast('Auto-injection disabled on live sites. Use the button below.');
+                    }
                 }
             });
             
