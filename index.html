@@ -30,6 +30,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+    
     <title>Brayden is tall games 2</title>
     <style>
         @keyframes twinkle {
@@ -299,6 +308,19 @@
             .streak-display:hover {
                 background: rgba(78, 205, 196, 1);
                 transform: scale(1.05);
+            }
+
+            /* Ensure streak display is always clickable */
+            .streak-display {
+                pointer-events: auto !important;
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+
+            .streak-display * {
+                pointer-events: none;
             }
 
             .streak-display .flame {
@@ -807,6 +829,30 @@
                 width: 100%;
             }
         }
+
+        /* Toast notification styles */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 10000;
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast.active {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -1028,6 +1074,15 @@
 
     <!-- Streak functionality -->
     <script>
+        // Global toast function - must be defined before other functions
+        window.showToast = function(message) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('active');
+            window.setTimeout(() => toast.classList.remove('active'), 3500);
+        };
+
         const STORAGE_KEY_V2 = 'streakDataV2';
 
         const XOR_KEY = "StreakSecure2024!@#$%^&*()_+-=[]{}|;:,.<>?";
@@ -1378,17 +1433,76 @@
 
             const streakNumber = document.getElementById('streakNumber');
             const streakDisplay = document.getElementById('streakDisplay');
+            
+            console.log('Streak data loaded:', { streak: computed.streak, data: data });
+            
             if (streakNumber) {
                 streakNumber.textContent = String(computed.streak);
+                console.log('Streak number updated to:', computed.streak);
+            } else {
+                console.error('Streak number element not found');
             }
 
             if (streakDisplay) {
-                streakDisplay.addEventListener('click', function() {
-                    window.location.href = 'streaks.html';
-                });
+                // Remove any existing event listeners to prevent duplicates
+                streakDisplay.removeEventListener('click', handleStreakClick);
+                // Add the click event listener
+                streakDisplay.addEventListener('click', handleStreakClick);
                 streakDisplay.style.cursor = 'pointer';
+                streakDisplay.style.pointerEvents = 'auto';
+                console.log('Streak display click listener added');
+            } else {
+                console.error('Streak display element not found');
             }
         });
+
+        // Define the click handler function separately to avoid duplication
+        function handleStreakClick() {
+            console.log('Streak display clicked, navigating to streaks.html');
+            window.location.href = 'streaks.html';
+        }
+
+        // Also set up the click listener immediately in case DOMContentLoaded already fired
+        function setupStreakButton() {
+            const streakDisplay = document.getElementById('streakDisplay');
+            if (streakDisplay) {
+                streakDisplay.removeEventListener('click', handleStreakClick);
+                streakDisplay.addEventListener('click', handleStreakClick);
+                streakDisplay.style.cursor = 'pointer';
+                streakDisplay.style.pointerEvents = 'auto';
+                console.log('Streak button setup completed');
+            }
+        }
+
+        // Try to set up immediately and also when DOM is ready
+        setupStreakButton();
+
+        // Periodic check to ensure streak button remains functional
+        setInterval(function() {
+            const streakDisplay = document.getElementById('streakDisplay');
+            const streakNumber = document.getElementById('streakNumber');
+            
+            if (streakDisplay && !streakDisplay.onclick) {
+                setupStreakButton();
+                console.log('Streak button re-attached');
+            }
+            
+            // Ensure the streak number is not stuck at 0 incorrectly
+            if (streakNumber && streakNumber.textContent === '0') {
+                // Try to reload and update the streak data
+                try {
+                    let data = loadV2();
+                    data = migrateLegacyIntoV2(data);
+                    const computed = computeStreak(data, new Date());
+                    if (computed.streak > 0) {
+                        streakNumber.textContent = String(computed.streak);
+                        console.log('Streak number corrected from 0 to:', computed.streak);
+                    }
+                } catch (e) {
+                    console.error('Error updating streak number:', e);
+                }
+            }
+        }, 5000); // Check every 5 seconds
     </script>
 
     <script>
@@ -1913,8 +2027,8 @@ font-family: 'Orbitron', sans-serif;">
     </div>
     <script src="background-loader.js"></script> <!-- Background theme loader -->
     
-    <!-- Ad Script -->
-   
+    <!-- Toast notification element -->
+    <div class="toast" id="toast"></div>
     
     <script>
         const s = getStarSettings();
