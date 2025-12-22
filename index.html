@@ -872,15 +872,6 @@
             <h3>Settings</h3>
 
             <div class="settings-option">
-                <label>
-                    Auto Inject About:Blank
-                    <div class="toggle-switch" id="injectionToggle">
-                        <input type="checkbox" id="injectionCheckbox" style="display: none;">
-                    </div>
-                </label>
-            </div>
-
-            <div class="settings-option">
                 <button id="openInjectionBtn" style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                     Inject Into About:Blank
                 </button>
@@ -1840,38 +1831,9 @@
             const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
             const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
             
-            // Toggle switches
-            const injectionToggle = document.getElementById('injectionToggle');
-            
-            // Checkboxes
-            const injectionCheckbox = document.getElementById('injectionCheckbox');
-            
             // Injection button
             const openInjectionBtn = document.getElementById('openInjectionBtn');
-
             const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
-            
-            // Save background setting function
-            function saveBackgroundSetting(key, value) {
-                localStorage.setItem('bg_' + key, String(value));
-            }
-            
-            // Load background setting function
-            function loadBackgroundSetting(key, defaultValue = false) {
-                const value = localStorage.getItem('bg_' + key);
-                return value !== null ? value === 'true' : defaultValue;
-            }
-            
-            // Update toggle switch visual states
-            function updateToggleStates() {
-                injectionToggle.classList.toggle('active', injectionCheckbox.checked);
-            }
-            
-            // Load settings on page load
-            function loadSettings() {
-                injectionCheckbox.checked = loadBackgroundSetting('injection', false);
-                updateToggleStates();
-            }
             
             // Toggle settings menu
             function toggleSettings(event) {
@@ -1904,38 +1866,13 @@
                 }
             });
             
-            // Toggle switch functionality
-            injectionToggle.addEventListener('click', () => {
-                injectionCheckbox.checked = !injectionCheckbox.checked;
-                updateToggleStates();
-                saveBackgroundSetting('injection', injectionCheckbox.checked);
-                
-                // Only auto-open on localhost/file:// due to browser security restrictions
-                // Live websites block automatic popups for security
-                if (injectionCheckbox.checked && !window.frameElement && window.innerWidth >= 800 && window.innerHeight >= 600 && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
-                    openAboutBlank();
-                } else if (injectionCheckbox.checked && window.location.hostname !== 'localhost' && window.location.protocol !== 'file:') {
-                    // Show notification for live sites
-                    if (typeof showToast === 'function') {
-                        showToast('Auto-injection disabled on live sites. Use the button below.');
-                    }
-                }
-            });
-            
             // About:Blank injection function
             function openAboutBlank() {
-                // Prevent multiple injections
-                if (window.aboutBlankInjected) {
-                    return;
-                }
-                window.aboutBlankInjected = true;
-                
                 const newTab = window.open('about:blank', '_blank');
                 
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script>window.top.aboutBlankInjected = true; window.aboutBlankInjected = true;<\/script>');
                     newTab.document.write('</body></html>');
                     newTab.document.close();
                 } else {
@@ -1943,31 +1880,8 @@
                 }
             }
             
-            // Auto-open about:blank when toggle is enabled
-            function checkAndOpenAboutBlank() {
-                // Prevent multiple injections and don't run if we're in an iframe
-                if (window.aboutBlankInjected || window.frameElement || window.innerWidth < 800 || window.innerHeight < 600) {
-                    return;
-                }
-                
-                if (injectionCheckbox.checked) {
-                    openAboutBlank();
-                }
-            }
-            
             // Add event listener for the injection button
             openInjectionBtn.addEventListener('click', openAboutBlank);
-            
-            // Load settings on page load
-            loadSettings();
-            
-            // Auto-open about:blank if injection is enabled on page load
-            // Only works on localhost/file:// due to browser security restrictions
-            setTimeout(function() {
-                if (!window.frameElement && (window.location.hostname === 'localhost' || window.location.protocol === 'file:')) {
-                    checkAndOpenAboutBlank();
-                }
-            }, 1000); // Wait 1 second after page load
         }
 
         // Prevent zoom on double tap for mobile (only prevent if it's a true double tap, not scroll)
