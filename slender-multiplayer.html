@@ -21,6 +21,16 @@
     <meta itemprop="url" content="">
     <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
+    
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+    
     <title>Slender Multiplayer</title>
     <style>
         * {
@@ -179,6 +189,57 @@
             }
         }
     </style>
+
+    <!-- Ad container styles - prevent overlapping -->
+    <style>
+        .ad-container {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 160px;
+            height: 600px;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        .ad-container > * {
+            pointer-events: auto;
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+            .ad-container {
+                position: fixed;
+                bottom: 60px;
+                right: 10px;
+                top: auto;
+                transform: none;
+                width: 120px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ad-container {
+                bottom: 50px;
+                right: 5px;
+                width: 100px;
+                height: 300px;
+            }
+        }
+
+        /* Ensure main content doesn't overlap with ad */
+        .container {
+            margin-right: 170px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin-right: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -241,6 +302,23 @@
             }
         }
     </script>
+    
+    <!-- Ad Script -->
+    <div class="ad-container">
+        <script type="text/javascript">
+          atOptions = {
+            'key' : 'a6eba8c873cb894a5c1718b7d671aaa4',
+            'format' : 'iframe',
+            'height' : 600,
+            'width' : 160,
+            'params' : {}
+          };
+        </script>
+        <script
+          type="text/javascript"
+          src="https://www.highperformanceformat.com/a6eba8c873cb894a5c1718b7d671aaa4/invoke.js"
+        ></script>
+    </div>
     <script src="background-loader.js"></script>
 </body>
 </html> 
