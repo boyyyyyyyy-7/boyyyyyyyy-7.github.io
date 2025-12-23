@@ -1191,34 +1191,37 @@
         function computeStreak(data, date = new Date()) {
             const today = normalizeToNoon(date);
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+            const used = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
 
-            let freezesRemaining = Math.max(0, Number(data.freezes) || 0);
-            const newlyUsed = [];
             let streak = 0;
+            let streakActive = false;
 
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
-
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay() + 1);
-            weekStart.setHours(12, 0, 0, 0);
 
             while (true) {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
-                const isInCurrentWeek = cursor >= weekStart;
+
+                console.log(`Checking ${key}: weekday=${!isWeekend}, visit=${visits.has(key)}, freeze=${used.has(key)}, active=${streakActive}`);
 
                 if (visits.has(key)) {
+                    // Green day - always counts
                     streak += 1;
-                } else if (isWeekend) {
-                    // Weekends don't break streak
-                } else if (freezesRemaining > 0) {
-                    // Use freeze for any non-weekend day without a visit
-                    freezesRemaining -= 1;
-                    newlyUsed.push(key);
+                    streakActive = true;
+                    console.log(`  -> Green day, streak=${streak}`);
+                } else if (isWeekend && streakActive) {
+                    // Weekend during active streak - counts but no freeze used
                     streak += 1;
+                    console.log(`  -> Weekend, streak=${streak}`);
+                } else if (!isWeekend && used.has(key) && streakActive) {
+                    // Blue day - freeze was used during active streak
+                    streak += 1;
+                    console.log(`  -> Freeze day, streak=${streak}`);
                 } else {
+                    // Break streak - missed weekday without freeze or before streak started
+                    console.log(`  -> Break streak`);
                     break;
                 }
 
@@ -1228,9 +1231,8 @@
                 if (getDayDiff(cursor, today) > 365) break;
             }
 
-            // Merge newly used freezes with existing ones for calendar display
-            data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
-            data.freezes = freezesRemaining;
+            console.log(`Final streak: ${streak}`);
+            // Don't modify usedFreezes or freezes during calculation
             data.best = Math.max(Number(data.best) || 0, streak);
             return { streak, data };
         }
@@ -1278,16 +1280,19 @@
                 if (visits.has(dateKey)) {
                     el.classList.add('practiced');
                 } else if (used.has(dateKey)) {
-                    el.classList.add('used-freeze');
+                    el.classList.add('practiced', 'used-freeze');
                     el.title = 'Used a freeze on this day';
                 }
 
+                
                 calendarDays.appendChild(el);
             }
         }
 
         function render(data, streak) {
-            mainStreakCount.textContent = String(streak);
+            // Calculate active days (weekdays with visits or freezes) for display
+            const activeStreak = calculateActiveStreak(data);
+            mainStreakCount.textContent = String(activeStreak);
             bestStreak.textContent = String(data.best || 0);
             headerFreezeCount.textContent = String(data.freezes || 0);
             freezeCount.textContent = String(data.freezes || 0);
@@ -1295,6 +1300,44 @@
             const todayKey = toDayKey(new Date());
             const visitedToday = (data.visits || []).includes(todayKey);
             todayStatus.textContent = visitedToday ? 'Today is counted (you visited)' : 'Today is not counted yet';
+        }
+
+        function calculateActiveStreak(data) {
+            const today = normalizeToNoon(new Date());
+            const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+            const used = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
+
+            let activeStreak = 0;
+            let streakActive = false;
+
+            const cursor = new Date(today);
+            cursor.setHours(12, 0, 0, 0);
+
+            while (true) {
+                const key = toDayKey(cursor);
+                const dow = cursor.getDay();
+                const isWeekend = dow === 0 || dow === 6;
+
+                if (visits.has(key)) {
+                    // Green day - counts as active
+                    activeStreak += 1;
+                    streakActive = true;
+                } else if (!isWeekend && used.has(key) && streakActive) {
+                    // Blue day - counts as active
+                    activeStreak += 1;
+                } else if (!isWeekend && !visits.has(key) && !used.has(key)) {
+                    // Missed weekday without freeze - break active streak
+                    break;
+                }
+                // Weekends don't count toward active streak but don't break it
+
+                cursor.setDate(cursor.getDate() - 1);
+                cursor.setHours(12, 0, 0, 0);
+
+                if (getDayDiff(cursor, today) > 365) break;
+            }
+
+            return activeStreak;
         }
 
         function navigateToHome(e) {
