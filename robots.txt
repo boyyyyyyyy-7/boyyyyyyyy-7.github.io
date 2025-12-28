@@ -1,19 +1,19 @@
 User-agent: *
 Allow: /
 
-# Block certain external resources that might cause issues
+# Block internal or non-public paths
 Disallow: /ads/
-Disallow: /analytics/
 Disallow: /tracking/
+Disallow: /test
+Disallow: /beta
 
-# Allow important crawling paths
-Allow: /games/
+# Allow core site assets
 Allow: *.html
 Allow: *.css
 Allow: *.js
 
 # Sitemap location
-Sitemap: https://boyyyyyyyy-7.github.io/sitemap.xml
+Sitemap: https://braydenistallgames.online/sitemap.xml
 
-# Crawl delay for respectful crawling
+# Crawl delay (ignored by Google, respected by some bots)
 Crawl-delay: 1

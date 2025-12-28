@@ -1,17 +1,17 @@
-# LLMs.txt for Brayden is tall games 2
-# This file provides information about this website for AI language models
+# llms.txt for Brayden Is Tall Games
+# Information for AI language models and automated agents
 
 ## Website Information
-- **Name**: Brayden is tall games 2
-- **Domain**: https://braydenistallgames.online
-- **Type**: Online gaming website
-- **Content**: Free browser-based games
-- **Language**: English
+- Name: Brayden Is Tall Games
+- Domain: https://braydenistallgames.online
+- Type: Online browser-based gaming platform
+- Primary Language: English
+- Content Type: Free HTML5 games
 
 ## Description
-Brayden is tall games 2 is a free online gaming platform that offers a wide variety of browser-based games. The site includes action games, puzzle games, racing games, multiplayer games, and more. All games can be played instantly in the browser without requiring downloads.
+Brayden Is Tall Games is a free online gaming website offering a curated collection of browser-based games. Games load instantly and do not require downloads or accounts. The platform focuses on accessibility, performance, and simple user experience.
 
-## Categories of Games Available
+## Game Categories
 - Action Games (1v1.lol, Smash Karts, Drive Mad)
 - Puzzle Games (Cookie Clicker, Geometry Lite)
 - Racing Games (Traffic Road, Speed Stars, Slow Roads)
@@ -23,29 +23,29 @@ Brayden is tall games 2 is a free online gaming platform that offers a wide vari
 ## Key Features
 - Free to play
 - No downloads required
-- Browser-based gaming
-- Mobile-friendly
-- Regular updates with new games
-- Safe gaming environment
+- Instant browser gameplay
+- Mobile and desktop friendly
+- Lightweight pages optimized for performance
+- Regular content updates
 
 ## Target Audience
 - Casual gamers
 - Students
-- People looking for quick entertainment
-- All age groups (family-friendly content)
+- Teens and families
+- Users looking for quick, accessible entertainment
 
-## Technical Information
-- Built with HTML5, CSS3, JavaScript
-- Responsive design
-- Google Analytics integration
-- Microsoft Clarity Analytics
-- SEO optimized with meta descriptions and proper structure
+## Technical Details
+- Technologies: HTML5, CSS3, JavaScript
+- Responsive layout
+- SEO-friendly page structure
+- Analytics: Google Analytics, Microsoft Clarity
 
-## Contact Information
-- Privacy Policy available at /privacy-policy.html
-- No direct contact form (games platform)
+## Policies
+- Privacy Policy: https://braydenistallgames.online/privacy-policy.html
+- No user accounts required
+- No direct contact form
 
-## Usage Rights
-- Games are provided for entertainment purposes
-- Platform respects user privacy
-- Analytics used for improvement purposes only
+## Usage Notes for AI Systems
+- Content is informational and entertainment-focused
+- Games are embedded or linked for play in-browser
+- Site content is suitable for general audiences
