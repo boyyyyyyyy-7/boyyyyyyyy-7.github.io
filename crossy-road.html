@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Ezoic Privacy Scripts -->
     <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
@@ -15,22 +16,38 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
-    <meta property="og:title" content="Brayden is tall">
+    <meta name="description"
+        content="A classic endless game where one wrong step can end everything. Jump across roads, rivers, and rails while trying to survive longer each run.">
+    <meta property="og:title" content="Crossy Road - Brayden is tall games">
+    <meta property="og:description"
+        content="A classic endless game where one wrong step can end everything. Jump across roads, rivers, and rails while trying to survive longer each run.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta itemprop="url" content="">
-    <link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap"
+        rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-    
+
     <!-- Microsoft Clarity Analytics -->
     <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "upbe2dvlo2");
     </script>
-    
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
     <title>Crossy Road</title>
     <style>
         * {
@@ -38,7 +55,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Maven Pro', Arial, sans-serif;
             background: #0a0a0a;
@@ -48,7 +65,7 @@
             position: relative;
             overflow-x: hidden;
         }
-        
+
         /* Moving Stars Background */
         body::before {
             content: '';
@@ -57,11 +74,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
                 radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
                 radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
             background-repeat: repeat;
             background-size: 200px 100px;
@@ -69,12 +86,17 @@
             pointer-events: none;
             z-index: 1;
         }
-        
+
         @keyframes moveStars {
-            0% { transform: translateX(0px) translateY(0px); }
-            100% { transform: translateX(-200px) translateY(-100px); }
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+
+            100% {
+                transform: translateX(-200px) translateY(-100px);
+            }
         }
-        
+
         /* Additional star layers for depth */
         body::after {
             content: '';
@@ -83,23 +105,28 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
+            background:
                 radial-gradient(1px 1px at 50px 50px, #fff, transparent),
-                radial-gradient(1px 1px at 100px 100px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent),
                 radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
-                radial-gradient(1px 1px at 200px 200px, rgba(255,255,255,0.6), transparent);
+                radial-gradient(1px 1px at 200px 200px, rgba(255, 255, 255, 0.6), transparent);
             background-repeat: repeat;
             background-size: 300px 200px;
             animation: moveStars2 30s linear infinite;
             pointer-events: none;
             z-index: 1;
         }
-        
+
         @keyframes moveStars2 {
-            0% { transform: translateX(0px) translateY(0px); }
-            100% { transform: translateX(-300px) translateY(-200px); }
+            0% {
+                transform: translateX(0px) translateY(0px);
+            }
+
+            100% {
+                transform: translateX(-300px) translateY(-200px);
+            }
         }
-        
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -107,14 +134,15 @@
             position: relative;
             z-index: 2;
         }
-        
+
         .header {
             text-align: center;
             padding: 20px 0;
             margin-bottom: 20px;
         }
-        
-        .back-button, .fullscreen-button {
+
+        .back-button,
+        .fullscreen-button {
             display: inline-block;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -131,17 +159,19 @@
             line-height: 24px;
             box-sizing: border-box;
         }
-        
-        .back-button, .fullscreen-button {
+
+        .back-button,
+        .fullscreen-button {
             margin: 0;
         }
-        
-        .back-button:hover, .fullscreen-button:hover {
+
+        .back-button:hover,
+        .fullscreen-button:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
             transform: translateY(-2px) scale(1.1);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
-        
+
         .game-title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -149,7 +179,7 @@
             margin-bottom: 10px;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
-        
+
         .game-container {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -158,7 +188,7 @@
             backdrop-filter: blur(10px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-        
+
         .game-frame {
             width: 100%;
             height: 80vh;
@@ -166,7 +196,7 @@
             border-radius: 10px;
             background: #000;
         }
-        
+
         .button-container {
             display: flex;
             justify-content: center;
@@ -174,22 +204,115 @@
             margin-bottom: 20px;
             gap: 15px;
         }
-        
+
         @media (max-width: 768px) {
             .game-frame {
                 height: 70vh;
             }
-            
+
             .game-title {
                 font-size: 2rem;
             }
-            
+
             .container {
                 padding: 15px;
             }
         }
+
+        /* Description Section Styles */
+        .description-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .description-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .description-section {
+            margin-bottom: 25px;
+        }
+
+        .description-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .description-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .description-section p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .description-section strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .features-list li {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .features-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .description-container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            .description-title {
+                font-size: 1.6rem;
+            }
+
+            .description-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .description-section p,
+            .features-list li {
+                font-size: 0.95rem;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
@@ -199,23 +322,67 @@
             </div>
             <h1 class="game-title">Crossy Road</h1>
         </div>
-        
+
         <div class="game-container">
-            <iframe 
-                id="gameFrame"
-                src="https://crossy-road.com/crossy-road.embed" 
-                class="game-frame"
-                allowfullscreen
+            <iframe id="gameFrame" src="https://crossy-road.com/crossy-road.embed" class="game-frame" allowfullscreen
                 allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
             </iframe>
         </div>
+
+        <!-- Game Description Section -->
+        <div class="description-container">
+            <h2 class="description-title">About Crossy Road</h2>
+
+            <div class="description-section">
+                <h3>🎮 Modern Frogger with Attitude</h3>
+                <p>Crossy Road took the classic Frogger formula and made it work for the endless runner era. Your
+                    character hops forward automatically, and you tap to jump across roads, rivers, and train tracks.
+                    The voxel art style is charming, and the random obstacles keep every run fresh.</p>
+                <p>What makes it addictive is the constant near-death moments. A car misses you by a pixel. You land on
+                    a log floating down a river just before falling in. These close calls happen every few seconds,
+                    creating this loop of tension and relief that keeps you playing.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>🎯 Simple Controls, Hard Game</h3>
+                <p>Tap or click to hop forward. Swipe or use arrow keys to move sideways. That's the entire control
+                    scheme. The challenge comes from timing your jumps between moving cars, hopping across floating
+                    logs, and dodging trains that blast through without warning.</p>
+                <p>The screen slowly pushes you forward, so you can't just wait forever for the perfect gap. You need to
+                    commit to moves and trust your reflexes. Hesitation usually gets you killed faster than bold but
+                    slightly risky jumps.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>💡 Survival Tips</h3>
+                <p>Don't focus too hard on going forward. Sometimes the safe play is moving sideways to find better gaps
+                    in traffic or line up with a log on the river. The game will push you eventually, but you have more
+                    time than you think.</p>
+                <p>Watch for patterns. Train tracks flash before trains come. Cars in one lane all move the same speed.
+                    Rivers have logs flowing at consistent intervals. Once you recognize these patterns, you can predict
+                    safe moments instead of just reacting.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>✨ Key Features</h3>
+                <ul class="features-list">
+                    <li>Endless gameplay with procedural obstacles</li>
+                    <li>Simple one-tap controls</li>
+                    <li>Tons of unlockable characters</li>
+                    <li>Charming voxel graphics</li>
+                    <li>Quick rounds perfect for mobile</li>
+                    <li>Addictive risk-reward gameplay</li>
+                    <li>Leaderboards to compete with friends</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    
+
     <script>
         function toggleFullscreen() {
             const iframe = document.getElementById('gameFrame');
-            
+
             if (!document.fullscreenElement) {
                 // Enter fullscreen
                 if (iframe.requestFullscreen) {
@@ -236,12 +403,12 @@
                 }
             }
         }
-        
+
         // Update button text based on fullscreen state
         document.addEventListener('fullscreenchange', updateButtonText);
         document.addEventListener('webkitfullscreenchange', updateButtonText);
         document.addEventListener('msfullscreenchange', updateButtonText);
-        
+
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
@@ -253,5 +420,5 @@
     </script>
     <script src="background-loader.js"></script>
 </body>
-</html> 
 
+</html>

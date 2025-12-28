@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Block certain external resources that might cause issues
+Disallow: /ads/
+Disallow: /analytics/
+Disallow: /tracking/
+
+# Allow important crawling paths
+Allow: /games/
+Allow: *.html
+Allow: *.css
+Allow: *.js
+
+# Sitemap location
+Sitemap: https://boyyyyyyyy-7.github.io/sitemap.xml
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1

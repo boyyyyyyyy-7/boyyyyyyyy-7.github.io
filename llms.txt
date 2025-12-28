@@ -1,0 +1,51 @@
+# LLMs.txt for Brayden is tall games 2
+# This file provides information about this website for AI language models
+
+## Website Information
+- **Name**: Brayden is tall games 2
+- **Domain**: https://braydenistallgames.online
+- **Type**: Online gaming website
+- **Content**: Free browser-based games
+- **Language**: English
+
+## Description
+Brayden is tall games 2 is a free online gaming platform that offers a wide variety of browser-based games. The site includes action games, puzzle games, racing games, multiplayer games, and more. All games can be played instantly in the browser without requiring downloads.
+
+## Categories of Games Available
+- Action Games (1v1.lol, Smash Karts, Drive Mad)
+- Puzzle Games (Cookie Clicker, Geometry Lite)
+- Racing Games (Traffic Road, Speed Stars, Slow Roads)
+- Multiplayer Games (Slender Multiplayer, 1v1.lol)
+- Arcade Games (Crossy Road, Basketball Stars)
+- Horror Games (Granny)
+- Sandbox Games (Melon Sandbox)
+
+## Key Features
+- Free to play
+- No downloads required
+- Browser-based gaming
+- Mobile-friendly
+- Regular updates with new games
+- Safe gaming environment
+
+## Target Audience
+- Casual gamers
+- Students
+- People looking for quick entertainment
+- All age groups (family-friendly content)
+
+## Technical Information
+- Built with HTML5, CSS3, JavaScript
+- Responsive design
+- Google Analytics integration
+- Microsoft Clarity Analytics
+- SEO optimized with meta descriptions and proper structure
+
+## Contact Information
+- Privacy Policy available at /privacy-policy.html
+- No direct contact form (games platform)
+
+## Usage Rights
+- Games are provided for entertainment purposes
+- Platform respects user privacy
+- Analytics used for improvement purposes only

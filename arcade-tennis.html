@@ -2,16 +2,25 @@
 <html lang="en">
 
 <head>
+    <!-- Ezoic Privacy Scripts -->
+    <script src="https://cmp.gatekeeperconsent.com/min.js" data-cfasync="false"></script>
+    <script src="https://the.gatekeeperconsent.com/cmp.min.js" data-cfasync="false"></script>
+    <!-- Ezoic Header Script -->
+    <script async src="//www.ezojs.com/ezoic/sa.min.js"></script>
+    <script>
+        window.ezstandalone = window.ezstandalone || {};
+        ezstandalone.cmd = ezstandalone.cmd || [];
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
     <meta name="description"
-        content="A rhythm platformer where everything moves to the music. Jump, fly, and dodge obstacles as the levels get faster and more intense.">
-    <meta property="og:title" content="Geometry Lite - Brayden is tall games">
+        content="Play Arcade Tennis, a fast-paced sports challenge. Master the court with quick reflexes and strategic shots in this addictive arcade experience.">
+    <meta property="og:title" content="Arcade Tennis - Sports Challenge | Brayden is tall games">
     <meta property="og:description"
-        content="A rhythm platformer where everything moves to the music. Jump, fly, and dodge obstacles as the levels get faster and more intense.">
+        content="Master the court in Arcade Tennis. A high-energy sports game where every rally counts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta itemprop="url" content="">
@@ -39,7 +48,7 @@
         gtag('config', 'G-CFTDLXZJZJ');
     </script>
 
-    <title>Geometry Lite</title>
+    <title>Arcade Tennis - Fast-Paced Sports Action | Brayden is tall games</title>
     <style>
         * {
             margin: 0;
@@ -55,67 +64,6 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* Moving Stars Background */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: moveStars 20s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-200px) translateY(-100px);
-            }
-        }
-
-        /* Additional star layers for depth */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
-                radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent),
-                radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
-                radial-gradient(1px 1px at 200px 200px, rgba(255, 255, 255, 0.6), transparent);
-            background-repeat: repeat;
-            background-size: 300px 200px;
-            animation: moveStars2 30s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars2 {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-300px) translateY(-200px);
-            }
         }
 
         .container {
@@ -151,15 +99,10 @@
             box-sizing: border-box;
         }
 
-        .back-button,
-        .fullscreen-button {
-            margin: 0;
-        }
-
         .back-button:hover,
         .fullscreen-button:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            transform: translateY(-2px) scale(1.1);
+            transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
@@ -196,21 +139,6 @@
             gap: 15px;
         }
 
-        @media (max-width: 768px) {
-            .game-frame {
-                height: 70vh;
-            }
-
-            .game-title {
-                font-size: 2rem;
-            }
-
-            .container {
-                padding: 15px;
-            }
-        }
-
-        /* Description Section Styles */
         .description-container {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -227,43 +155,28 @@
             color: #ffffff;
             margin-bottom: 25px;
             text-align: center;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
         .description-section {
             margin-bottom: 25px;
         }
 
-        .description-section:last-child {
-            margin-bottom: 0;
-        }
-
         .description-section h3 {
             font-size: 1.3rem;
-            font-weight: 600;
-            color: #ffffff;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #ffffff;
         }
 
         .description-section p {
             color: rgba(255, 255, 255, 0.85);
             line-height: 1.8;
-            margin-bottom: 10px;
             font-size: 1.05rem;
-        }
-
-        .description-section strong {
-            color: #ffffff;
-            font-weight: 600;
+            margin-bottom: 10px;
         }
 
         .features-list {
             list-style: none;
             padding: 0;
-            margin: 0;
         }
 
         .features-list li {
@@ -271,34 +184,25 @@
             padding: 8px 0 8px 28px;
             position: relative;
             font-size: 1.05rem;
-            line-height: 1.6;
         }
 
         .features-list li::before {
-            content: "▸";
+            content: "🎾";
             position: absolute;
-            left: 8px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.2rem;
+            left: 0;
         }
 
         @media (max-width: 768px) {
-            .description-container {
-                padding: 20px;
-                margin-top: 20px;
+            .game-frame {
+                height: 70vh;
+            }
+
+            .game-title {
+                font-size: 2rem;
             }
 
             .description-title {
                 font-size: 1.6rem;
-            }
-
-            .description-section h3 {
-                font-size: 1.1rem;
-            }
-
-            .description-section p,
-            .features-list li {
-                font-size: 0.95rem;
             }
         }
     </style>
@@ -311,62 +215,69 @@
                 <a href="index.html" class="back-button">← Back to Games</a>
                 <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
-            <h1 class="game-title">Geometry Lite</h1>
+            <h1 class="game-title">Arcade Tennis</h1>
         </div>
 
-        <div class="game-container">
-            <iframe id="gameFrame" src="https://1games.io/game/geometry-lite/" class="game-frame" allowfullscreen
+        <div class="game-container" id="game-container">
+            <iframe id="gameFrame" src="https://1games.io/game/arcade-tennis/" class="game-frame" allowfullscreen
                 allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
             </iframe>
         </div>
 
-        <!-- Game Description Section -->
         <div class="description-container">
-            <h2 class="description-title">About Geometry Lite</h2>
+            <h2 class="description-title">About Arcade Tennis</h2>
 
             <div class="description-section">
-                <h3>🎮 Rhythm Meets Platforming</h3>
-                <p>Geometry Lite (or Geometry Dash) turns platforming into a music game. Your character moves
-                    automatically to the beat, and you jump by clicking or tapping. Simple concept, but the execution is
-                    brutal. Spikes everywhere. Tight jumps. Split-second timing required. One mistake sends you back to
-                    the start.</p>
-                <p>What hooks people is how the music syncs with the obstacles. You're not just memorizing
-                    patterns—you're feeling the rhythm. When you nail a tricky section after dozens of attempts, it
-                    feels like you're playing the song, not just surviving it. That moment when muscle memory kicks in
-                    and you flow through a level is unmatched.</p>
+                <h3>🏆 The Ultimate Court Challenge</h3>
+                <p>Arcade Tennis brings the high-stakes world of professional tennis to your browser with a vibrant,
+                    fast-paced twist. Far from a standard simulation, this game captures the raw energy and split-second
+                    decision-making that makes tennis one of the world's most thrilling sports. From the moment you step
+                    onto the digital clay, you'll find yourself locked in intense rallies that demand perfect timing and
+                    strategic foresight.</p>
+                <p>What sets Arcade Tennis apart is its accessibility paired with a surprising depth of skill. Whether
+                    you're a seasoned sports gamer or just looking for a quick five-minute break, the intuitive
+                    mechanics allow you to start smashing aces right away. However, as you progress through more
+                    difficult opponents, you'll realize that winning isn't just about hitting the ball back—it's about
+                    placement, spin, and wearing down your rival's stamina levels.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 One Button, Infinite Challenge</h3>
-                <p>Click, tap, or press space to jump. That's it. Your cube runs forward automatically. The challenge is
-                    timing your jumps to clear spikes, navigate moving platforms, and survive gravity-flipping sections
-                    that mess with your head.</p>
-                <p>Later levels add new mechanics—ship mode where you hold to fly up, ball mode where you flip gravity
-                    with each tap, wave mode with constant flight control. Each mode changes how you think about timing,
-                    keeping levels fresh even after hundreds of deaths.</p>
+                <h3>🎾 How to Play & Controls</h3>
+                <p>The controls in Arcade Tennis are designed to be fluid and responsive, ensuring that your on-screen
+                    player moves exactly when you want them to. Most players find that using the arrow keys or WASD
+                    offers the best precision for positioning. The spacebar or dedicated action keys are used to swing
+                    your racket, with the timing of your press determining the power and angle of your shot.</p>
+                <p>Serving is your first opportunity to take control of the point. A well-placed serve can force a weak
+                    return, setting you up for a devastating volley at the net. During the rally, pay close attention to
+                    your player's position relative to the ball; hitting the ball too early or too late will lead to
+                    inaccurate shots that your opponent can easily exploit. Mastery comes from learning how to redirect
+                    the ball's momentum to keep your opponent constantly on the move.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Getting Past the Difficulty</h3>
-                <p>Practice mode is your best friend. It lets you place checkpoints so you don't restart the entire
-                    level every time. Use it to learn the hardest sections, then try the full run once you've got the
-                    muscle memory down.</p>
-                <p>Turn up the music. Seriously. The audio cues often matter more than visual ones. You'll start
-                    recognizing beats that signal jumps. Some players close their eyes on sections they've mastered
-                    because rhythm alone guides them through.</p>
+                <h3>💡 Pro Tips & Strategy</h3>
+                <p>To truly dominate the court, you need to think two steps ahead. One of the most effective strategies
+                    is "cross-court cornering"—repeatedly hitting the ball to one corner of the baseline to pull your
+                    opponent wide, then suddenly smashing it to the opposite side once they're out of position. This
+                    makes it almost impossible for even the toughest AI to recover in time.</p>
+                <p>Don't just stay glued to the baseline! Sneaking up to the net (the "serve and volley" technique) can
+                    be a high-risk-high-reward move. By shortening the distance, you give your opponent less time to
+                    react, but you also leave yourself vulnerable to a well-placed lob. Learn to read your opponent's
+                    animations; often, they will telegraph where they are going to hit the ball a fraction of a second
+                    before they do it, giving you the edge you need to win the set.</p>
             </div>
 
             <div class="description-section">
-                <h3>✨ Key Features</h3>
+                <h3>✨ Game Features</h3>
                 <ul class="features-list">
-                    <li>Rhythm-based platforming gameplay</li>
-                    <li>One-button controls with perfect precision</li>
-                    <li>Multiple game modes (cube, ship, ball, wave)</li>
-                    <li>Practice mode with checkpoints</li>
-                    <li>Level editor for custom creations</li>
-                    <li>Awesome electronic soundtrack</li>
-                    <li>Insanely satisfying when you finally beat a level</li>
+                    <li>High-intensity, arcade-style tennis physics</li>
+                    <li>Progressive difficulty levels to test your evolving skills</li>
+                    <li>Smooth, butter-soft animations and responsive controls</li>
+                    <li>Dynamic scoring system that rewards strategic placement</li>
+                    <li>Clean, glassmorphic UI that keeps the focus on the court</li>
+                    <li>Accessible gameplay that's easy to learn but hard to master</li>
+                    <li>Optimized for low-latency performance in any browser</li>
                 </ul>
             </div>
         </div>
@@ -374,19 +285,16 @@
 
     <script>
         function toggleFullscreen() {
-            const iframe = document.getElementById('gameFrame');
-
+            const container = document.getElementById('game-container');
             if (!document.fullscreenElement) {
-                // Enter fullscreen
-                if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) {
-                    iframe.msRequestFullscreen();
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
                 }
             } else {
-                // Exit fullscreen
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
                 } else if (document.webkitExitFullscreen) {
@@ -396,12 +304,9 @@
                 }
             }
         }
-
-        // Update button text based on fullscreen state
         document.addEventListener('fullscreenchange', updateButtonText);
         document.addEventListener('webkitfullscreenchange', updateButtonText);
         document.addEventListener('msfullscreenchange', updateButtonText);
-
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
