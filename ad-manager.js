@@ -7,4 +7,5 @@
  * - Viewport width safety check (min 1100px)
  * - Protocol-aware loading (file:// check)
  */
+/** vSB3.7
 
