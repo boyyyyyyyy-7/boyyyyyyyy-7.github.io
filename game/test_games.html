@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Test Page</title>
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #00ff88;
+            margin-bottom: 30px;
+        }
+
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .game-card {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #333;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+        }
+
+        .game-icon {
+            height: 120px;
+            background-color: #2a2a2a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .game-title {
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Game Test Page</h1>
+
+    <div class="game-grid">
+        <a href="stickmanhook.html" class="game-card">
+            <div class="game-icon">🪝</div>
+            <div class="game-title">Stickman Hook</div>
+        </a>
+        <a href="drivemad/drivemad.html" class="game-card">
+            <div class="game-icon">🚗</div>
+            <div class="game-title">Drive Mad</div>
+        </a>
+        <a href="spacebarclicker.html" class="game-card">
+            <div class="game-icon">⌨️</div>
+            <div class="game-title">Spacebar Clicker</div>
+        </a>
+        <a href="sandgame.html" class="game-card">
+            <div class="game-icon">⏳</div>
+            <div class="game-title">Sand Game</div>
+        </a>
+        <a href="itsrainingboxes.html" class="game-card">
+            <div class="game-icon">📦</div>
+            <div class="game-title">Its Raining Boxes</div>
+        </a>
+        <a href="stack.html" class="game-card">
+            <div class="game-icon">🗼</div>
+            <div class="game-title">Stack</div>
+        </a>
+        <a href="fluidsimulator.html" class="game-card">
+            <div class="game-icon">💧</div>
+            <div class="game-title">Fluid Simulator</div>
+        </a>
+        <a href="wordle.html" class="game-card">
+            <div class="game-icon">🔤</div>
+            <div class="game-title">Wordle</div>
+        </a>
+        <a href="paperio2.html" class="game-card">
+            <div class="game-icon">🐍</div>
+            <div class="game-title">Paper.io 2</div>
+        </a>
+        <a href="burritobison/burritobison.html" class="game-card">
+            <div class="game-icon">🐂</div>
+            <div class="game-title">Burrito Bison</div>
+        </a>
+        <a href="holeio.html" class="game-card">
+            <div class="game-icon">🕳️</div>
+            <div class="game-title">Hole.io</div>
+        </a>
+        <a href="tunnelrush/tunnelrush.html" class="game-card">
+            <div class="game-icon">🌀</div>
+            <div class="game-title">Tunnel Rush</div>
+        </a>
+        <a href="breakingthebank.html" class="game-card">
+            <div class="game-icon">💰</div>
+            <div class="game-title">Breaking the Bank</div>
+        </a>
+        <a href="tetris.html" class="game-card">
+            <div class="game-icon">🧱</div>
+            <div class="game-title">Tetris</div>
+        </a>
+        <a href="raftwars.html" class="game-card">
+            <div class="game-icon">🔫</div>
+            <div class="game-title">Raft Wars</div>
+        </a>
+        <a href="learntofly1.html" class="game-card">
+            <div class="game-icon">🐧</div>
+            <div class="game-title">Learn to Fly 1</div>
+        </a>
+        <a href="learntofly2.html" class="game-card">
+            <div class="game-icon">🐧</div>
+            <div class="game-title">Learn to Fly 2</div>
+        </a>
+        <a href="learntofly3.html" class="game-card">
+            <div class="game-icon">🐧</div>
+            <div class="game-title">Learn to Fly 3</div>
+        </a>
+        <a href="learntoflyidle.html" class="game-card">
+            <div class="game-icon">🐧</div>
+            <div class="game-title">Learn to Fly Idle</div>
+        </a>
+        <a href="bloonstowerdefense5.html" class="game-card">
+            <div class="game-icon">🎈</div>
+            <div class="game-title">BTD 5</div>
+        </a>
+        <a href="bloonstowerdefense2.html" class="game-card">
+            <div class="game-icon">🎈</div>
+            <div class="game-title">BTD 2</div>
+        </a>
+        <a href="ducklife1.html" class="game-card">
+            <div class="game-icon">🦆</div>
+            <div class="game-title">Duck Life 1</div>
+        </a>
+        <a href="ducklife2.html" class="game-card">
+            <div class="game-icon">🦆</div>
+            <div class="game-title">Duck Life 2</div>
+        </a>
+        <a href="ducklife3.html" class="game-card">
+            <div class="game-icon">🦆</div>
+            <div class="game-title">Duck Life 3</div>
+        </a>
+    </div>
+
+</body>
+
+</html>
