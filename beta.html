@@ -885,56 +885,6 @@
             text-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
         }
 
-        .hot-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(45deg, #ff4e50, #f9d423);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 5px rgba(255, 78, 80, 0.4);
-            z-index: 5;
-            animation: pulse-hot 2s infinite;
-        }
-
-        .new-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: linear-gradient(45deg, #11998e, #38ef7d);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 5px rgba(17, 153, 142, 0.4);
-            z-index: 5;
-            animation: pulse-hot 2s infinite;
-        }
-
-        @keyframes pulse-hot {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
         .divider {
             height: 3px;
             background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
@@ -1104,6 +1054,460 @@
         .dev-modal .close-btn:hover {
             color: #f9f9f9;
         }
+
+        .widget-card {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: flex-start;
+            text-align: left;
+            gap: 12px;
+            padding: 22px;
+        }
+
+        .widget-card:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(78, 205, 196, 0.55);
+        }
+
+        .widget-card .widget-body {
+            width: 100%;
+        }
+
+        .widget-subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.72);
+            margin-top: -6px;
+        }
+
+        .widget-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .widget-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .widget-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .widget-field label {
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.4px;
+            color: rgba(255, 255, 255, 0.78);
+            text-transform: uppercase;
+        }
+
+        .widget-input,
+        .widget-select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(0, 0, 0, 0.35);
+            color: rgba(255, 255, 255, 0.92);
+            outline: none;
+        }
+
+        .widget-input:focus,
+        .widget-select:focus {
+            border-color: rgba(78, 205, 196, 0.6);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.18);
+        }
+
+        .widget-progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            overflow: hidden;
+        }
+
+        .widget-progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, rgba(78, 205, 196, 0.95), rgba(56, 189, 248, 0.95));
+            border-radius: 999px;
+            transition: width 0.25s ease;
+        }
+
+        .widget-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .widget-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(78, 205, 196, 0.12);
+            border: 1px solid rgba(78, 205, 196, 0.25);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .widget-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .widget-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            font-weight: 900;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .widget-badge.good {
+            background: rgba(78, 205, 196, 0.12);
+            border-color: rgba(78, 205, 196, 0.25);
+        }
+
+        .widget-badge.warn {
+            background: rgba(255, 215, 0, 0.10);
+            border-color: rgba(255, 215, 0, 0.22);
+        }
+
+        .widget-button {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.92);
+            border-radius: 12px;
+            padding: 12px 12px;
+            font-weight: 900;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .widget-button:hover {
+            border-color: rgba(78, 205, 196, 0.55);
+            background: rgba(78, 205, 196, 0.10);
+        }
+
+        .widget-button.danger {
+            border-color: rgba(255, 71, 87, 0.55);
+            background: rgba(255, 71, 87, 0.12);
+        }
+
+        .widget-button.danger:hover {
+            border-color: rgba(255, 71, 87, 0.75);
+            background: rgba(255, 71, 87, 0.18);
+        }
+
+        .widgets-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .widgets-toolbar {
+            display: inline-flex;
+            gap: 10px;
+        }
+
+        .widgets-toolbar .widgets-mini-btn {
+            width: auto;
+            padding: 10px 12px;
+            font-size: 13px;
+            border-radius: 12px;
+            white-space: nowrap;
+        }
+
+        .widget-remove {
+            display: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(0, 0, 0, 0.35);
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 900;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .widgets-edit .widget-remove {
+            display: inline-flex;
+        }
+
+        .widgets-edit .widget-header {
+            touch-action: none;
+            cursor: grab;
+        }
+
+        @keyframes widgetWiggle {
+            0% {
+                transform: rotate(-0.6deg);
+            }
+
+            50% {
+                transform: rotate(0.6deg);
+            }
+
+            100% {
+                transform: rotate(-0.6deg);
+            }
+        }
+
+        .widgets-edit .game-card[data-widget-key] {
+            animation: widgetWiggle 0.18s ease-in-out infinite;
+            transform-origin: 50% 50%;
+        }
+
+        .game-card.widget-dragging {
+            animation: none !important;
+            box-shadow: 0 18px 44px rgba(0, 0, 0, 0.55) !important;
+            border-color: rgba(78, 205, 196, 0.75) !important;
+            background: rgba(0, 0, 0, 0.75) !important;
+            cursor: grabbing;
+        }
+
+        .widget-placeholder {
+            border: 2px dashed rgba(78, 205, 196, 0.55);
+            border-radius: 18px;
+            background: rgba(78, 205, 196, 0.06);
+            min-height: 140px;
+        }
+
+        .widgets-modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 10005;
+        }
+
+        .widgets-modal.active {
+            display: flex;
+        }
+
+        .widgets-modal-content {
+            width: min(540px, 92vw);
+            max-height: min(720px, 86vh);
+            overflow: hidden;
+            border-radius: 16px;
+            background: rgba(10, 10, 10, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .widgets-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .widgets-modal-title {
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.92);
+            letter-spacing: 0.3px;
+        }
+
+        .widgets-modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.92);
+            font-weight: 900;
+            cursor: pointer;
+        }
+
+        .widgets-modal-body {
+            padding: 14px 14px 18px;
+            overflow: auto;
+            max-height: calc(min(720px, 86vh) - 64px);
+        }
+
+        .widget-picker-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+        }
+
+        .widget-picker-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .widget-picker-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(78, 205, 196, 0.16);
+            border: 1px solid rgba(78, 205, 196, 0.30);
+        }
+
+        .widget-picker-name {
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .widget-picker-desc {
+            font-size: 12px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.70);
+            margin-top: 2px;
+        }
+
+        .widget-picker-toggle {
+            transform: scale(1.2);
+        }
+
+        .widget-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .widget-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            color: rgba(255, 255, 255, 0.92);
+            font-size: 16px;
+        }
+
+        .widget-title .widget-icon {
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(78, 205, 196, 0.18);
+            border: 1px solid rgba(78, 205, 196, 0.35);
+            color: rgba(255, 255, 255, 0.95);
+            font-size: 16px;
+        }
+
+        .widget-body {
+            color: rgba(255, 255, 255, 0.88);
+            font-size: 14px;
+            line-height: 1.35;
+        }
+
+        .pet-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: rgba(78, 205, 196, 0.12);
+            border: 1px solid rgba(78, 205, 196, 0.35);
+            margin-bottom: 10px;
+            transform-origin: center;
+            transition: transform 0.25s ease;
+            font-size: 34px;
+        }
+
+        .pet-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .pet-stat {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 10px;
+            padding: 8px;
+        }
+
+        .pet-stat .label {
+            display: block;
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 2px;
+        }
+
+        .pet-stat .value {
+            display: block;
+            font-size: 14px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        .widget-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 6px;
+        }
+
+        .widget-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.92);
+            border-radius: 10px;
+            padding: 8px 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .widget-link:hover {
+            border-color: rgba(78, 205, 196, 0.55);
+            background: rgba(78, 205, 196, 0.10);
+        }
     </style>
 </head>
 
@@ -1240,6 +1644,216 @@
         </header>
 
         <div class="game-section">
+            <div class="widgets-header">
+                <h2 class="section-title" style="margin: 0;">Widgets</h2>
+                <div class="widgets-toolbar">
+                    <button class="widget-button widgets-mini-btn" id="widgetsEditBtn" type="button">Edit</button>
+                    <button class="widget-button widgets-mini-btn" id="widgetsAddBtn" type="button">+ Add</button>
+                </div>
+            </div>
+
+            <div class="game-grid" id="widgetsGrid">
+                <div class="game-card widget-card" id="petWidgetCard" data-widget-key="pet">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">🐾</span>
+                            <span>Streak Pet</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="pet"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-subtitle" id="petSubtitle">Your pet grows with your streak</div>
+                    <div class="widget-body">
+                        <div class="pet-avatar" id="petAvatar">🥚</div>
+                        <div class="pet-stats">
+                            <div class="pet-stat">
+                                <span class="label">Level</span>
+                                <span class="value" id="petLevel">1</span>
+                            </div>
+                            <div class="pet-stat">
+                                <span class="label">Streak</span>
+                                <span class="value" id="petStreak">0</span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 12px;">
+                            <div class="widget-meta">
+                                <span id="petProgressText">0 / 3</span>
+                                <span class="widget-pill" id="petNextText">Next: 3</span>
+                            </div>
+                            <div class="widget-progress" aria-hidden="true" style="margin-top: 8px;">
+                                <div class="widget-progress-bar" id="petProgressBar"></div>
+                            </div>
+                        </div>
+
+                        <div class="widget-controls" style="margin-top: 14px;">
+                            <div class="widget-field">
+                                <label for="petNameInput">Pet Name</label>
+                                <input class="widget-input" id="petNameInput" type="text" maxlength="18"
+                                    placeholder="Nova" />
+                            </div>
+                            <div class="widget-field">
+                                <label for="petTypeSelect">Pet Type</label>
+                                <select class="widget-select" id="petTypeSelect">
+                                    <option value="bird" selected>Bird</option>
+                                    <option value="cat">Cat</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="slime">Slime</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card widget-card" id="clockWidgetCard" data-widget-key="clock">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">🕒</span>
+                            <span>Clock</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="clock"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-body" style="font-weight: 900; font-size: 18px;" id="clockTime">--:--</div>
+                    <div class="widget-body" style="opacity: 0.85;" id="clockDate">---</div>
+                </div>
+
+                <div class="game-card widget-card" id="statsWidgetCard" data-widget-key="stats">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">📈</span>
+                            <span>Streak Stats</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="stats"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-subtitle">Quick overview</div>
+                    <div class="widget-body">
+                        <div class="widget-badges" style="margin-bottom: 12px;">
+                            <div class="widget-badge good" id="coinsBadge">Coins: <span id="coinsAmount">0</span></div>
+                            <div class="widget-badge" id="achievementsBadge">Achievements: <span
+                                    id="achievementsUnlocked">0</span>/<span id="achievementsTotal">0</span></div>
+                        </div>
+                        <div class="pet-stats">
+                            <div class="pet-stat">
+                                <span class="label">Current</span>
+                                <span class="value" id="statsCurrent">0</span>
+                            </div>
+                            <div class="pet-stat">
+                                <span class="label">Best</span>
+                                <span class="value" id="statsBest">0</span>
+                            </div>
+                            <div class="pet-stat">
+                                <span class="label">Freezes</span>
+                                <span class="value" id="statsFreezes">0</span>
+                            </div>
+                            <div class="pet-stat">
+                                <span class="label">Pet</span>
+                                <span class="value" id="statsPetName">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card widget-card" id="dailyWidgetCard" data-widget-key="daily">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">🎁</span>
+                            <span>Daily Reward</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="daily"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-subtitle" id="dailyStatus">Ready to claim</div>
+                    <div class="widget-body">
+                        <div class="widget-badges" style="margin-bottom: 12px;">
+                            <div class="widget-badge good">Reward: <span id="dailyRewardAmount">0</span> coins</div>
+                            <div class="widget-badge">Bonus: +<span id="dailyBonus">0</span></div>
+                        </div>
+                        <button class="widget-button" id="claimDailyBtn" type="button">
+                            <span>Claim Reward</span>
+                            <span>+</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="game-card widget-card" id="achievementsWidgetCard" data-widget-key="achievements">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">🏆</span>
+                            <span>Achievements</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="achievements"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-subtitle" id="achievementsNext">Next: —</div>
+                    <div class="widget-body">
+                        <div class="widget-badges" id="achievementsList"></div>
+                    </div>
+                </div>
+
+                <div class="game-card widget-card" id="actionsWidgetCard" data-widget-key="actions">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">⚡</span>
+                            <span>Quick Actions</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="actions"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-subtitle">Tools</div>
+                    <div class="widget-body">
+                        <div class="widget-links">
+                            <button class="widget-button" id="openStreaksBtn" type="button">
+                                <span>Open Streaks</span>
+                                <span>→</span>
+                            </button>
+                            <button class="widget-button" id="resetPetBtn" type="button">
+                                <span>Reset Pet</span>
+                                <span>⟲</span>
+                            </button>
+                            <button class="widget-button danger" id="resetDashboardBtn" type="button">
+                                <span>Reset Dashboard Data</span>
+                                <span>!</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-card widget-card" id="streaksWidgetCard" data-widget-key="streaks">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <span class="widget-icon">🔥</span>
+                            <span>Streaks</span>
+                        </div>
+                        <button class="widget-remove" type="button" data-remove-widget="streaks"
+                            aria-label="Remove widget">×</button>
+                    </div>
+                    <div class="widget-body">
+                        Open your streak calendar and progress.
+                    </div>
+
+                    <div class="widget-body" style="margin-top: 12px;">
+                        <button class="widget-button" id="openStreaksCardBtn" type="button">
+                            <span>Open</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widgets-modal" id="widgetsModal" aria-hidden="true">
+                <div class="widgets-modal-content">
+                    <div class="widgets-modal-header">
+                        <div class="widgets-modal-title">Choose Widgets</div>
+                        <button class="widgets-modal-close" id="widgetsModalClose" type="button">×</button>
+                    </div>
+                    <div class="widgets-modal-body" id="widgetsModalList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-section">
             <h2 class="section-title">Game list</h2>
 
             <div class="search-box">
@@ -1247,30 +1861,6 @@
             </div>
 
             <div class="game-grid">
-                <a class="game-card" href="arcade-tennis.html">
-                    <div class="hot-badge"><span>🔥</span> Hot</div>
-                    <p>Arcade Tennis</p>
-                </a>
-                <a class="game-card" href="geometry-lite.html">
-                    <div class="hot-badge"><span>🔥</span> Hot</div>
-                    <p>Geometry Lite</p>
-                </a>
-                <a class="game-card" href="cookie-clicker.html">
-                    <div class="hot-badge"><span>🔥</span> Hot</div>
-                    <p>Cookie clicker</p>
-                </a>
-                <a class="game-card" href="ragdoll-hit-stickman.html">
-                    <div class="hot-badge"><span>🔥</span> Hot</div>
-                    <p>Ragdoll Hit Stickman</p>
-                </a>
-                <a class="game-card" href="agario-minigame.html">
-                    <div class="new-badge"><span>✨</span> New</div>
-                    <p>Agario Minigame</p>
-                </a>
-                <a class="game-card" href="slope.html">
-                    <div class="new-badge"><span>✨</span> New</div>
-                    <p>Slope</p>
-                </a>
                 <a class="game-card" href="ant-escape.html">
                     <p>Ant Escape</p>
                 </a>
@@ -1317,7 +1907,9 @@
                 <a class="game-card" href="ragdoll-archers.html">
                     <p>Ragdoll Archers</p>
                 </a>
-
+                <a class="game-card" href="cookie-clicker.html">
+                    <p>Cookie clicker</p>
+                </a>
 
                 <a class="game-card" href="slow-roads.html">
                     <p>slow roads</p>
@@ -1330,7 +1922,9 @@
                     <p>Traffic Road</p>
                 </a>
                 <!-- Removed: Wave Dash -->
-
+                <a class="game-card" href="ragdoll-hit-stickman.html">
+                    <p>Ragdoll Hit Stickman</p>
+                </a>
 
                 <!-- Removed: Chill Guy Clicker -->
 
@@ -1350,8 +1944,12 @@
                     <p>Ramp Xtreme</p>
                 </a>
 
-
-
+                <a class="game-card" href="geometry-lite.html">
+                    <p>Geometry Lite</p>
+                </a>
+                <a class="game-card" href="arcade-tennis.html">
+                    <p>Arcade Tennis</p>
+                </a>
             </div>
         </div>
     </div>
@@ -1859,6 +2457,9 @@
                 const activeStreak = calculateActiveStreak(data);
                 streakNumber.textContent = String(activeStreak);
                 console.log('Streak number updated to:', activeStreak);
+                if (typeof window.updatePetWidget === 'function') {
+                    window.updatePetWidget(activeStreak);
+                }
             } else {
                 console.error('Streak number element not found');
             }
@@ -1917,12 +2518,824 @@
                     if (computed.streak > 0) {
                         streakNumber.textContent = String(computed.streak);
                         console.log('Streak number corrected from 0 to:', computed.streak);
+                        if (typeof window.updatePetWidget === 'function') {
+                            window.updatePetWidget(Number(streakNumber.textContent) || 0);
+                        }
                     }
                 } catch (e) {
                     console.error('Error updating streak number:', e);
                 }
             }
         }, 5000); // Check every 5 seconds
+    </script>
+
+    <script>
+        function clamp(n, min, max) {
+            return Math.max(min, Math.min(max, n));
+        }
+
+        function formatTime(d) {
+            const h = d.getHours();
+            const m = String(d.getMinutes()).padStart(2, '0');
+            const h12 = ((h + 11) % 12) + 1;
+            const ampm = h >= 12 ? 'PM' : 'AM';
+            return `${h12}:${m} ${ampm}`;
+        }
+
+        function formatDate(d) {
+            return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeEl = document.getElementById('clockTime');
+            const dateEl = document.getElementById('clockDate');
+            if (timeEl) timeEl.textContent = formatTime(now);
+            if (dateEl) dateEl.textContent = formatDate(now);
+        }
+
+        const PET_PREFS_KEY = 'betaPetPrefsV1';
+        const DASHBOARD_KEY = 'betaDashboardStateV1';
+
+        const Achievements = [
+            { id: 'streak_3', title: '3-Day Streak', min: 3 },
+            { id: 'streak_7', title: '7-Day Streak', min: 7 },
+            { id: 'streak_14', title: '14-Day Streak', min: 14 },
+            { id: 'streak_30', title: '30-Day Streak', min: 30 },
+            { id: 'streak_60', title: '60-Day Streak', min: 60 }
+        ];
+
+        function todayKey() {
+            const d = new Date();
+            const y = d.getFullYear();
+            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            return `${y}-${m}-${day}`;
+        }
+
+        function readDashboardState() {
+            try {
+                const raw = localStorage.getItem(DASHBOARD_KEY);
+                const parsed = raw ? JSON.parse(raw) : null;
+                if (!parsed || typeof parsed !== 'object') throw new Error('invalid');
+
+                return {
+                    version: 1,
+                    coins: Number.isFinite(parsed.coins) ? parsed.coins : 0,
+                    lastDailyClaim: typeof parsed.lastDailyClaim === 'string' ? parsed.lastDailyClaim : null,
+                    pet: {
+                        name: parsed.pet && typeof parsed.pet.name === 'string' ? parsed.pet.name : null,
+                        type: parsed.pet && typeof parsed.pet.type === 'string' ? parsed.pet.type : null
+                    },
+                    unlocked: parsed.unlocked && typeof parsed.unlocked === 'object' ? parsed.unlocked : {}
+                };
+            } catch {
+                const legacy = readPetPrefs();
+                return {
+                    version: 1,
+                    coins: 0,
+                    lastDailyClaim: null,
+                    pet: { name: legacy.name, type: legacy.type },
+                    unlocked: {}
+                };
+            }
+        }
+
+        function writeDashboardState(next) {
+            localStorage.setItem(DASHBOARD_KEY, JSON.stringify(next));
+        }
+
+        const DashboardStore = (() => {
+            let state = readDashboardState();
+            const listeners = new Set();
+
+            const notify = () => {
+                for (const fn of listeners) fn(state);
+            };
+
+            const setState = (patch) => {
+                state = { ...state, ...patch };
+                writeDashboardState(state);
+                notify();
+            };
+
+            const getState = () => state;
+
+            const subscribe = (fn) => {
+                listeners.add(fn);
+                return () => listeners.delete(fn);
+            };
+
+            const dispatch = (action) => {
+                if (!action || typeof action.type !== 'string') return;
+
+                if (action.type === 'SET_PET') {
+                    const next = {
+                        ...state,
+                        pet: { name: action.name, type: action.petType }
+                    };
+                    state = next;
+                    writeDashboardState(state);
+                    writePetPrefs({ name: action.name, type: action.petType });
+                    notify();
+                    return;
+                }
+
+                if (action.type === 'CLAIM_DAILY') {
+                    const next = {
+                        ...state,
+                        coins: (Number(state.coins) || 0) + (Number(action.amount) || 0),
+                        lastDailyClaim: todayKey()
+                    };
+                    state = next;
+                    writeDashboardState(state);
+                    notify();
+                    return;
+                }
+
+                if (action.type === 'UNLOCK') {
+                    const unlocked = { ...(state.unlocked || {}) };
+                    unlocked[action.id] = true;
+                    const next = { ...state, unlocked };
+                    state = next;
+                    writeDashboardState(state);
+                    notify();
+                    return;
+                }
+
+                if (action.type === 'RESET') {
+                    localStorage.removeItem(DASHBOARD_KEY);
+                    state = readDashboardState();
+                    notify();
+                    return;
+                }
+            };
+
+            return { getState, setState, subscribe, dispatch };
+        })();
+
+        function readPetPrefs() {
+            try {
+                const raw = localStorage.getItem(PET_PREFS_KEY);
+                const parsed = raw ? JSON.parse(raw) : null;
+                return {
+                    name: parsed && typeof parsed.name === 'string' ? parsed.name : 'Nova',
+                    type: parsed && typeof parsed.type === 'string' ? parsed.type : 'bird'
+                };
+            } catch {
+                return { name: 'Nova', type: 'bird' };
+            }
+        }
+
+        function writePetPrefs(next) {
+            localStorage.setItem(PET_PREFS_KEY, JSON.stringify(next));
+        }
+
+        function getPetStages(type) {
+            const stagesByType = {
+                bird: [
+                    { level: 1, min: 0, emoji: '🥚', scale: 1.0 },
+                    { level: 2, min: 3, emoji: '🐣', scale: 1.05 },
+                    { level: 3, min: 7, emoji: '🐥', scale: 1.10 },
+                    { level: 4, min: 14, emoji: '🐤', scale: 1.16 },
+                    { level: 5, min: 30, emoji: '🐔', scale: 1.22 },
+                    { level: 6, min: 60, emoji: '🦅', scale: 1.30 }
+                ],
+                cat: [
+                    { level: 1, min: 0, emoji: '🐾', scale: 1.0 },
+                    { level: 2, min: 3, emoji: '🐱', scale: 1.05 },
+                    { level: 3, min: 7, emoji: '😺', scale: 1.10 },
+                    { level: 4, min: 14, emoji: '😸', scale: 1.16 },
+                    { level: 5, min: 30, emoji: '🦁', scale: 1.22 },
+                    { level: 6, min: 60, emoji: '🐯', scale: 1.30 }
+                ],
+                dragon: [
+                    { level: 1, min: 0, emoji: '🥚', scale: 1.0 },
+                    { level: 2, min: 3, emoji: '🐉', scale: 1.06 },
+                    { level: 3, min: 7, emoji: '🐲', scale: 1.12 },
+                    { level: 4, min: 14, emoji: '🔥', scale: 1.18 },
+                    { level: 5, min: 30, emoji: '🪽', scale: 1.24 },
+                    { level: 6, min: 60, emoji: '🐉', scale: 1.32 }
+                ],
+                slime: [
+                    { level: 1, min: 0, emoji: '🫧', scale: 1.0 },
+                    { level: 2, min: 3, emoji: '🟢', scale: 1.06 },
+                    { level: 3, min: 7, emoji: '🟩', scale: 1.12 },
+                    { level: 4, min: 14, emoji: '🧪', scale: 1.18 },
+                    { level: 5, min: 30, emoji: '💚', scale: 1.24 },
+                    { level: 6, min: 60, emoji: '👾', scale: 1.32 }
+                ]
+            };
+
+            return stagesByType[type] || stagesByType.bird;
+        }
+
+        function updateStatsWidget(currentStreak) {
+            const currentEl = document.getElementById('statsCurrent');
+            const bestEl = document.getElementById('statsBest');
+            const freezesEl = document.getElementById('statsFreezes');
+            const petNameEl = document.getElementById('statsPetName');
+            const coinsEl = document.getElementById('coinsAmount');
+            const achUnlockedEl = document.getElementById('achievementsUnlocked');
+            const achTotalEl = document.getElementById('achievementsTotal');
+
+            if (currentEl) currentEl.textContent = String(Number(currentStreak) || 0);
+            if (bestEl) bestEl.textContent = String(Number(localStorage.getItem('bestStreak') || 0) || 0);
+            if (freezesEl) freezesEl.textContent = String(Number(localStorage.getItem('streakFreezes') || 0) || 0);
+            const prefs = readPetPrefs();
+            if (petNameEl) petNameEl.textContent = prefs.name || '—';
+
+            const dash = DashboardStore.getState();
+            if (coinsEl) coinsEl.textContent = String(Number(dash.coins) || 0);
+
+            const unlockedCount = Object.values(dash.unlocked || {}).filter(Boolean).length;
+            if (achUnlockedEl) achUnlockedEl.textContent = String(unlockedCount);
+            if (achTotalEl) achTotalEl.textContent = String(Achievements.length);
+        }
+
+        function updateAchievementsUI(streak) {
+            const list = document.getElementById('achievementsList');
+            const nextEl = document.getElementById('achievementsNext');
+
+            const dash = DashboardStore.getState();
+            if (list) {
+                list.innerHTML = '';
+                for (const a of Achievements) {
+                    const unlocked = !!(dash.unlocked && dash.unlocked[a.id]);
+                    const badge = document.createElement('div');
+                    badge.className = `widget-badge ${unlocked ? 'good' : 'warn'}`;
+                    badge.textContent = unlocked ? `${a.title} ✓` : `${a.title} (${a.min})`;
+                    list.appendChild(badge);
+                }
+            }
+
+            const next = Achievements.find(a => !((dash.unlocked && dash.unlocked[a.id]) || false));
+            if (nextEl) {
+                nextEl.textContent = next ? `Next: ${next.title} at ${next.min}` : 'All unlocked';
+            }
+
+            for (const a of Achievements) {
+                if (streak >= a.min && !(dash.unlocked && dash.unlocked[a.id])) {
+                    DashboardStore.dispatch({ type: 'UNLOCK', id: a.id });
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`Achievement unlocked: ${a.title}`);
+                    }
+                }
+            }
+        }
+
+        function computeDailyReward(streak) {
+            const base = 10;
+            const bonus = clamp(Math.floor((Number(streak) || 0) / 3), 0, 25);
+            return { amount: base + bonus, bonus };
+        }
+
+        function updateDailyUI(streak) {
+            const status = document.getElementById('dailyStatus');
+            const amountEl = document.getElementById('dailyRewardAmount');
+            const bonusEl = document.getElementById('dailyBonus');
+            const btn = document.getElementById('claimDailyBtn');
+
+            const dash = DashboardStore.getState();
+            const today = todayKey();
+            const claimed = dash.lastDailyClaim === today;
+            const reward = computeDailyReward(streak);
+
+            if (amountEl) amountEl.textContent = String(reward.amount);
+            if (bonusEl) bonusEl.textContent = String(reward.bonus);
+
+            if (status) status.textContent = claimed ? 'Already claimed today' : 'Ready to claim';
+            if (btn) {
+                btn.disabled = claimed;
+                btn.style.opacity = claimed ? '0.6' : '1';
+                btn.style.pointerEvents = claimed ? 'none' : 'auto';
+            }
+        }
+
+        window.updatePetWidget = function (streakValue) {
+            const streak = Number(streakValue) || 0;
+            const avatar = document.getElementById('petAvatar');
+            const levelEl = document.getElementById('petLevel');
+            const streakEl = document.getElementById('petStreak');
+
+            const prefs = readPetPrefs();
+            const petNameInput = document.getElementById('petNameInput');
+            const petTypeSelect = document.getElementById('petTypeSelect');
+            const subtitle = document.getElementById('petSubtitle');
+            const progressText = document.getElementById('petProgressText');
+            const nextText = document.getElementById('petNextText');
+            const progressBar = document.getElementById('petProgressBar');
+
+            if (petNameInput && petNameInput.value !== prefs.name) {
+                petNameInput.value = prefs.name;
+            }
+            if (petTypeSelect && petTypeSelect.value !== prefs.type) {
+                petTypeSelect.value = prefs.type;
+            }
+
+            if (subtitle) {
+                subtitle.textContent = `${prefs.name} grows with your streak`;
+            }
+
+            if (streakEl) streakEl.textContent = String(streak);
+
+            const stages = getPetStages(prefs.type);
+
+            let stage = stages[0];
+            for (const s of stages) {
+                if (streak >= s.min) stage = s;
+            }
+
+            if (levelEl) levelEl.textContent = String(stage.level);
+            if (avatar) {
+                avatar.textContent = stage.emoji;
+                avatar.style.transform = `scale(${stage.scale})`;
+            }
+
+            const currentIndex = Math.max(0, stages.findIndex(s => s.level === stage.level));
+            const nextStage = stages[currentIndex + 1] || null;
+            const curMin = stage.min;
+            const nextMin = nextStage ? nextStage.min : (stage.min + 10);
+            const span = Math.max(1, nextMin - curMin);
+            const within = clamp(streak - curMin, 0, span);
+            const pct = Math.round((within / span) * 100);
+
+            if (progressText) {
+                progressText.textContent = `${within} / ${span}`;
+            }
+            if (nextText) {
+                nextText.textContent = nextStage ? `Next: ${nextMin}` : 'MAX';
+            }
+            if (progressBar) {
+                progressBar.style.width = `${nextStage ? pct : 100}%`;
+            }
+
+            updateStatsWidget(streak);
+            updateDailyUI(streak);
+            updateAchievementsUI(streak);
+        };
+
+        const WIDGETS_LAYOUT_KEY = 'betaWidgetsLayoutV2';
+
+        function readWidgetsLayout() {
+            try {
+                const raw = localStorage.getItem(WIDGETS_LAYOUT_KEY);
+                const parsed = raw ? JSON.parse(raw) : null;
+                const order = parsed && Array.isArray(parsed.order) ? parsed.order.filter(Boolean) : [];
+                const hidden = parsed && parsed.hidden && typeof parsed.hidden === 'object' ? parsed.hidden : {};
+                return { order, hidden };
+            } catch {
+                return { order: [], hidden: {} };
+            }
+        }
+
+        function writeWidgetsLayout(next) {
+            localStorage.setItem(WIDGETS_LAYOUT_KEY, JSON.stringify(next));
+        }
+
+        function getWidgetsGrid() {
+            return document.getElementById('widgetsGrid');
+        }
+
+        function getWidgetEls() {
+            const grid = getWidgetsGrid();
+            if (!grid) return [];
+            return Array.from(grid.querySelectorAll('[data-widget-key]'));
+        }
+
+        function getWidgetElByKey(key) {
+            return getWidgetEls().find(el => el.getAttribute('data-widget-key') === key) || null;
+        }
+
+        function computeDefaultOrder() {
+            return getWidgetEls().map(el => el.getAttribute('data-widget-key')).filter(Boolean);
+        }
+
+        function applyWidgetsLayout() {
+            const grid = getWidgetsGrid();
+            if (!grid) return;
+            const layout = readWidgetsLayout();
+            const allKeys = computeDefaultOrder();
+
+            const order = layout.order.length ? layout.order.slice() : allKeys.slice();
+            for (const k of allKeys) {
+                if (!order.includes(k)) order.push(k);
+            }
+
+            for (const key of order) {
+                const el = getWidgetElByKey(key);
+                if (!el) continue;
+                grid.appendChild(el);
+            }
+
+            for (const el of getWidgetEls()) {
+                const key = el.getAttribute('data-widget-key');
+                const isHidden = !!layout.hidden[key];
+                el.style.display = isHidden ? 'none' : '';
+            }
+
+            writeWidgetsLayout({ order, hidden: layout.hidden });
+        }
+
+        function setWidgetHidden(key, hidden) {
+            const layout = readWidgetsLayout();
+            layout.hidden[key] = !!hidden;
+            writeWidgetsLayout(layout);
+            applyWidgetsLayout();
+        }
+
+        function saveCurrentWidgetOrder() {
+            const grid = getWidgetsGrid();
+            if (!grid) return;
+            const layout = readWidgetsLayout();
+            const order = Array.from(grid.children)
+                .map(el => el.getAttribute && el.getAttribute('data-widget-key'))
+                .filter(Boolean);
+            writeWidgetsLayout({ order, hidden: layout.hidden });
+        }
+
+        function openWidgetsModal() {
+            const modal = document.getElementById('widgetsModal');
+            const list = document.getElementById('widgetsModalList');
+            if (!modal || !list) return;
+
+            const defs = [
+                { key: 'pet', icon: '🐾', name: 'Streak Pet', desc: 'Your pet grows with your streak' },
+                { key: 'clock', icon: '🕒', name: 'Clock', desc: 'Time + date' },
+                { key: 'stats', icon: '📈', name: 'Streak Stats', desc: 'Coins, streak, and freezes' },
+                { key: 'daily', icon: '🎁', name: 'Daily Reward', desc: 'Claim coins once per day' },
+                { key: 'achievements', icon: '🏆', name: 'Achievements', desc: 'Unlock streak milestones' },
+                { key: 'actions', icon: '⚡', name: 'Quick Actions', desc: 'Useful buttons' },
+                { key: 'streaks', icon: '🔥', name: 'Streaks', desc: 'Open streak calendar page' }
+            ];
+
+            const layout = readWidgetsLayout();
+            list.innerHTML = '';
+
+            for (const def of defs) {
+                const row = document.createElement('div');
+                row.className = 'widget-picker-item';
+
+                const left = document.createElement('div');
+                left.className = 'widget-picker-left';
+
+                const icon = document.createElement('div');
+                icon.className = 'widget-picker-icon';
+                icon.textContent = def.icon;
+
+                const textWrap = document.createElement('div');
+                const name = document.createElement('div');
+                name.className = 'widget-picker-name';
+                name.textContent = def.name;
+                const desc = document.createElement('div');
+                desc.className = 'widget-picker-desc';
+                desc.textContent = def.desc;
+                textWrap.appendChild(name);
+                textWrap.appendChild(desc);
+
+                left.appendChild(icon);
+                left.appendChild(textWrap);
+
+                const toggle = document.createElement('input');
+                toggle.type = 'checkbox';
+                toggle.className = 'widget-picker-toggle';
+                toggle.checked = !layout.hidden[def.key];
+                toggle.addEventListener('change', function () {
+                    setWidgetHidden(def.key, !toggle.checked);
+                    const next = readWidgetsLayout();
+                    if (toggle.checked && !next.order.includes(def.key)) {
+                        next.order.push(def.key);
+                        writeWidgetsLayout(next);
+                        applyWidgetsLayout();
+                    }
+                });
+
+                row.appendChild(left);
+                row.appendChild(toggle);
+                list.appendChild(row);
+            }
+
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+        }
+
+        function closeWidgetsModal() {
+            const modal = document.getElementById('widgetsModal');
+            if (!modal) return;
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        function initWidgetRemovals() {
+            document.querySelectorAll('[data-remove-widget]').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const key = btn.getAttribute('data-remove-widget');
+                    if (!key) return;
+                    setWidgetHidden(key, true);
+                });
+            });
+        }
+
+        function initWidgetEditMode() {
+            const editBtn = document.getElementById('widgetsEditBtn');
+            if (!editBtn) return { isEdit: () => false };
+            let edit = false;
+
+            const setEdit = (next) => {
+                edit = !!next;
+                document.body.classList.toggle('widgets-edit', edit);
+                editBtn.textContent = edit ? 'Done' : 'Edit';
+            };
+
+            editBtn.addEventListener('click', function () {
+                setEdit(!edit);
+            });
+
+            setEdit(false);
+            return { isEdit: () => edit, setEdit };
+        }
+
+        function initWidgetDragging(editState) {
+            const grid = getWidgetsGrid();
+            if (!grid) return;
+
+            let draggingEl = null;
+            let placeholder = null;
+            let offsetX = 0;
+            let offsetY = 0;
+            let startPointerId = null;
+            let longPressTimer = null;
+            let longPressPointerId = null;
+
+            const isHandle = (target) => {
+                return !!(target && target.closest && target.closest('.widget-header'));
+            };
+
+            const visibleCards = () => getWidgetEls().filter(el => el.style.display !== 'none' && el !== draggingEl);
+
+            const insertPlaceholderNear = (x, y) => {
+                const items = visibleCards();
+                if (!placeholder) return;
+                if (!items.length) {
+                    grid.appendChild(placeholder);
+                    return;
+                }
+
+                let best = null;
+                let bestDist = Infinity;
+                for (const it of items) {
+                    const r = it.getBoundingClientRect();
+                    const cx = r.left + r.width / 2;
+                    const cy = r.top + r.height / 2;
+                    const dist = (cx - x) * (cx - x) + (cy - y) * (cy - y);
+                    if (dist < bestDist) {
+                        bestDist = dist;
+                        best = { el: it, rect: r };
+                    }
+                }
+
+                if (!best) {
+                    grid.appendChild(placeholder);
+                    return;
+                }
+
+                const before = y < (best.rect.top + best.rect.height / 2);
+                grid.insertBefore(placeholder, before ? best.el : best.el.nextSibling);
+            };
+
+            const beginDrag = (el, ev) => {
+                if (!editState.isEdit()) return;
+                const header = ev.target && ev.target.closest ? ev.target.closest('.widget-header') : null;
+                if (!header) return;
+                const key = el.getAttribute('data-widget-key');
+                if (!key) return;
+
+                draggingEl = el;
+                startPointerId = ev.pointerId;
+                draggingEl.setPointerCapture(startPointerId);
+
+                const r = draggingEl.getBoundingClientRect();
+                offsetX = ev.clientX - r.left;
+                offsetY = ev.clientY - r.top;
+
+                placeholder = document.createElement('div');
+                placeholder.className = 'widget-placeholder';
+                placeholder.style.width = `${r.width}px`;
+                placeholder.style.height = `${r.height}px`;
+
+                draggingEl.classList.add('widget-dragging');
+                draggingEl.style.width = `${r.width}px`;
+                draggingEl.style.height = `${r.height}px`;
+                draggingEl.style.position = 'fixed';
+                draggingEl.style.left = `${r.left}px`;
+                draggingEl.style.top = `${r.top}px`;
+                draggingEl.style.zIndex = '10006';
+
+                grid.insertBefore(placeholder, draggingEl.nextSibling);
+
+                ev.preventDefault();
+            };
+
+            const moveDrag = (ev) => {
+                if (!draggingEl || startPointerId !== ev.pointerId) return;
+                const x = ev.clientX;
+                const y = ev.clientY;
+
+                draggingEl.style.left = `${x - offsetX}px`;
+                draggingEl.style.top = `${y - offsetY}px`;
+                insertPlaceholderNear(x, y);
+            };
+
+            const endDrag = (ev) => {
+                if (!draggingEl || startPointerId !== ev.pointerId) return;
+
+                draggingEl.classList.remove('widget-dragging');
+                draggingEl.style.position = '';
+                draggingEl.style.left = '';
+                draggingEl.style.top = '';
+                draggingEl.style.zIndex = '';
+                draggingEl.style.width = '';
+                draggingEl.style.height = '';
+
+                if (placeholder && placeholder.parentNode) {
+                    grid.insertBefore(draggingEl, placeholder);
+                    placeholder.remove();
+                }
+
+                placeholder = null;
+                draggingEl = null;
+                startPointerId = null;
+                saveCurrentWidgetOrder();
+            };
+
+            grid.addEventListener('pointerdown', function (ev) {
+                if (!isHandle(ev.target)) return;
+                const card = ev.target && ev.target.closest ? ev.target.closest('[data-widget-key]') : null;
+                if (!card) return;
+
+                if (!editState.isEdit()) {
+                    if (longPressTimer) clearTimeout(longPressTimer);
+                    longPressPointerId = ev.pointerId;
+                    longPressTimer = setTimeout(function () {
+                        if (longPressPointerId !== ev.pointerId) return;
+                        if (typeof editState.setEdit === 'function') {
+                            editState.setEdit(true);
+                        }
+                        longPressTimer = null;
+                        longPressPointerId = null;
+                    }, 450);
+                    return;
+                }
+
+                beginDrag(card, ev);
+            });
+
+            grid.addEventListener('pointermove', function (ev) {
+                if (!draggingEl) return;
+                moveDrag(ev);
+            });
+
+            grid.addEventListener('pointerup', function (ev) {
+                if (longPressTimer && longPressPointerId === ev.pointerId) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                    longPressPointerId = null;
+                }
+                if (!draggingEl) return;
+                endDrag(ev);
+            });
+
+            grid.addEventListener('pointercancel', function (ev) {
+                if (longPressTimer && longPressPointerId === ev.pointerId) {
+                    clearTimeout(longPressTimer);
+                    longPressTimer = null;
+                    longPressPointerId = null;
+                }
+                if (!draggingEl) return;
+                endDrag(ev);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            updateClock();
+            setInterval(updateClock, 1000);
+
+            const nameInput = document.getElementById('petNameInput');
+            const typeSelect = document.getElementById('petTypeSelect');
+            const applyPrefs = () => {
+                const dash = DashboardStore.getState();
+                const nextName = nameInput ? (nameInput.value || 'Nova').trim().slice(0, 18) : (dash.pet && dash.pet.name) || 'Nova';
+                const nextType = typeSelect ? typeSelect.value : (dash.pet && dash.pet.type) || 'bird';
+                DashboardStore.dispatch({ type: 'SET_PET', name: nextName, petType: nextType });
+                const streakNumber = document.getElementById('streakNumber');
+                window.updatePetWidget(streakNumber ? (Number(streakNumber.textContent) || 0) : 0);
+            };
+
+            if (nameInput) {
+                nameInput.addEventListener('input', function () {
+                    applyPrefs();
+                });
+            }
+
+            if (typeSelect) {
+                typeSelect.addEventListener('change', function () {
+                    applyPrefs();
+                });
+            }
+
+            const streakNumber = document.getElementById('streakNumber');
+            if (streakNumber) {
+                window.updatePetWidget(Number(streakNumber.textContent) || 0);
+            }
+
+            const openStreaksBtn = document.getElementById('openStreaksBtn');
+            if (openStreaksBtn) {
+                openStreaksBtn.addEventListener('click', function () {
+                    window.location.href = 'streaks.html';
+                });
+            }
+
+            const resetPetBtn = document.getElementById('resetPetBtn');
+            if (resetPetBtn) {
+                resetPetBtn.addEventListener('click', function () {
+                    DashboardStore.dispatch({ type: 'SET_PET', name: 'Nova', petType: 'bird' });
+                    const streakNumber = document.getElementById('streakNumber');
+                    window.updatePetWidget(streakNumber ? (Number(streakNumber.textContent) || 0) : 0);
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Pet reset');
+                    }
+                });
+            }
+
+            const resetDashboardBtn = document.getElementById('resetDashboardBtn');
+            if (resetDashboardBtn) {
+                resetDashboardBtn.addEventListener('click', function () {
+                    DashboardStore.dispatch({ type: 'RESET' });
+                    const streakNumber = document.getElementById('streakNumber');
+                    window.updatePetWidget(streakNumber ? (Number(streakNumber.textContent) || 0) : 0);
+                    if (typeof window.showToast === 'function') {
+                        window.showToast('Dashboard reset');
+                    }
+                });
+            }
+
+            const claimDailyBtn = document.getElementById('claimDailyBtn');
+            if (claimDailyBtn) {
+                claimDailyBtn.addEventListener('click', function () {
+                    const streak = streakNumber ? (Number(streakNumber.textContent) || 0) : 0;
+                    const dash = DashboardStore.getState();
+                    const today = todayKey();
+                    if (dash.lastDailyClaim === today) return;
+                    const reward = computeDailyReward(streak);
+                    DashboardStore.dispatch({ type: 'CLAIM_DAILY', amount: reward.amount });
+                    window.updatePetWidget(streak);
+                    if (typeof window.showToast === 'function') {
+                        window.showToast(`Daily reward claimed: +${reward.amount} coins`);
+                    }
+                });
+            }
+
+            const openStreaksCardBtn = document.getElementById('openStreaksCardBtn');
+            if (openStreaksCardBtn) {
+                openStreaksCardBtn.addEventListener('click', function () {
+                    window.location.href = 'streaks.html';
+                });
+            }
+
+            applyWidgetsLayout();
+            initWidgetRemovals();
+            const editState = initWidgetEditMode();
+            initWidgetDragging(editState);
+
+            const addBtn = document.getElementById('widgetsAddBtn');
+            if (addBtn) {
+                addBtn.addEventListener('click', function () {
+                    openWidgetsModal();
+                });
+            }
+
+            const modalClose = document.getElementById('widgetsModalClose');
+            if (modalClose) {
+                modalClose.addEventListener('click', function () {
+                    closeWidgetsModal();
+                });
+            }
+
+            const modal = document.getElementById('widgetsModal');
+            if (modal) {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === modal) closeWidgetsModal();
+                });
+            }
+
+            DashboardStore.subscribe(function () {
+                const streak = streakNumber ? (Number(streakNumber.textContent) || 0) : 0;
+                updateStatsWidget(streak);
+                updateDailyUI(streak);
+                updateAchievementsUI(streak);
+            });
+        });
     </script>
 
     <script>

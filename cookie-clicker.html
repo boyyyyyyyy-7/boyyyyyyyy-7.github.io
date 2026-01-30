@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -275,7 +275,7 @@
         }
 
         .features-list li::before {
-            content: "▸";
+            content: "â–¸";
             position: absolute;
             left: 8px;
             color: rgba(255, 255, 255, 0.6);
@@ -308,14 +308,14 @@
     <div class="container">
         <div class="header">
             <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+                <a href="index.html" class="back-button">â† Back to Games</a>
+                <button class="fullscreen-button" onclick="toggleFullscreen()">â›¶ Fullscreen</button>
             </div>
             <h1 class="game-title">Cookie Clicker</h1>
         </div>
 
         <div class="game-container">
-            <iframe id="gameFrame" src="https://eli-schwartz.github.io/cookieclicker/" class="game-frame"
+            <iframe id="gameFrame" src="https://braydenistallgames.online/cookieclicker/" class="game-frame"
                 allowfullscreen
                 allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
@@ -327,11 +327,11 @@
             <h2 class="description-title">About Cookie Clicker</h2>
 
             <div class="description-section">
-                <h3>🎮 The Original Idle Game</h3>
+                <h3>ðŸŽ® The Original Idle Game</h3>
                 <p>Cookie Clicker pretty much invented the idle game genre, and it's easy to see why it hooked millions
                     of players. You start by clicking a giant cookie. Each click gives you one cookie. Then you spend
                     cookies to buy cursor that click for you. Before long, you're buying grandmas, farms, and eventually
-                    time machines—all devoted to cookie production.</p>
+                    time machinesâ€”all devoted to cookie production.</p>
                 <p>What seems pointless at first becomes weirdly satisfying. Watching your cookies-per-second number
                     climb from single digits to billions creates this feedback loop that's hard to quit. You'll leave it
                     running in another tab, check back an hour later, and get a rush seeing how many cookies piled up
@@ -339,27 +339,27 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 How It Works</h3>
+                <h3>ðŸŽ¯ How It Works</h3>
                 <p>Click the big cookie to generate cookies manually. Use your cookies to buy buildings that produce
                     cookies automatically. Each building type has different costs and production rates. Cursor cheap but
                     slow. Grandmas produce more. Farms even better. And it keeps scaling up.</p>
                 <p>The game also has upgrades that multiply your production. A simple upgrade might double grandma
-                    output. Later upgrades get wild—synergies between building types, golden cookies that drop massive
+                    output. Later upgrades get wildâ€”synergies between building types, golden cookies that drop massive
                     bonuses, even prestige mechanics that let you reset for permanent multipliers.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Strategy Tips</h3>
+                <h3>ðŸ’¡ Strategy Tips</h3>
                 <p>Early game, balance between clicking and buying your first few cursor and grandmas. Don't just spam
-                    buildings—upgrades often give better value. That cheap cursor upgrade doubling production beats
+                    buildingsâ€”upgrades often give better value. That cheap cursor upgrade doubling production beats
                     buying one more cursor.</p>
                 <p>Golden cookies are huge. When one appears, drop everything and click it. The bonuses can skip you
                     ahead hours of passive production. And once you unlock achievements and ascension, start planning
-                    for prestige runs—resetting with permanent boosts beats grinding the same save forever.</p>
+                    for prestige runsâ€”resetting with permanent boosts beats grinding the same save forever.</p>
             </div>
 
             <div class="description-section">
-                <h3>✨ Key Features</h3>
+                <h3>âœ¨ Key Features</h3>
                 <ul class="features-list">
                     <li>Hundreds of upgrades and achievements</li>
                     <li>Multiple building types with unique mechanics</li>
@@ -406,14 +406,13 @@
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
-                button.textContent = '⛶ Exit Fullscreen';
+                button.textContent = 'â›¶ Exit Fullscreen';
             } else {
-                button.textContent = '⛶ Fullscreen';
+                button.textContent = 'â›¶ Fullscreen';
             }
         }
     </script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>
