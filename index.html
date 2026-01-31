@@ -1104,6 +1104,73 @@
         .dev-modal .close-btn:hover {
             color: #f9f9f9;
         }
+
+        /* Floating Share Widget */
+        .share-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 30, 30, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 12px 18px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 9990;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateY(100px);
+            /* Start hidden */
+            opacity: 0;
+            max-width: 90vw;
+        }
+
+        .share-widget.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .share-widget-text {
+            font-size: 0.9rem;
+            color: #f0f0f0;
+            font-weight: 500;
+        }
+
+        .share-widget-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .share-widget-close:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        /* Mobile adjustment for share widget to avoid overlapping with bottom menu/buttons */
+        @media (max-width: 768px) {
+            .share-widget {
+                bottom: 70px;
+                /* Higher up on mobile */
+                right: 50%;
+                transform: translateX(50%) translateY(100px);
+                width: max-content;
+            }
+
+            .share-widget.visible {
+                transform: translateX(50%) translateY(0);
+            }
+        }
     </style>
 </head>
 
@@ -1163,6 +1230,13 @@
         <div class="notification-dot"></div>
     </div>
 
+
+    <!-- Share Widget -->
+    <div class="share-widget" id="shareWidget">
+        <span class="share-widget-text">👋 Enjoying? Share with friends & Press <strong>Ctrl+D</strong> to
+            bookmark!</span>
+        <button class="share-widget-close" id="closeShareWidget" title="Close">×</button>
+    </div>
 
     <!-- Settings menu -->
     <div class="settings-menu" id="settingsMenu">
@@ -2160,6 +2234,7 @@
             initSearch();
             initSettings();
             initStarControls();
+            initShareWidget();
         });
 
         // Fullscreen functionality
@@ -2309,6 +2384,69 @@
 
             // Add event listener for the injection button
             openInjectionBtn.addEventListener('click', openAboutBlank);
+        }
+
+        function initShareWidget() {
+            const widget = document.getElementById('shareWidget');
+            const closeBtn = document.getElementById('closeShareWidget');
+
+            if (!widget || !closeBtn) return;
+
+            // 0. Permanent Dismissal Check
+            // If they already bookmarked or permanently dismissed it, never show again
+            if (localStorage.getItem('userHasBookmarked') === 'true') {
+                return;
+            }
+
+            // 1. Setup Game Card Trackers
+            // When user clicks a game, mark that they are "playing"
+            const gameCards = document.querySelectorAll('.game-card');
+            gameCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    localStorage.setItem('hasPlayedGame', 'true');
+                });
+            });
+
+            // 2. Logic to Show Widget
+            const hasPlayed = localStorage.getItem('hasPlayedGame') === 'true';
+            const lastShown = parseInt(localStorage.getItem('shareWidgetLastShown') || '0');
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000;
+            const timeAllows = (now - lastShown) > oneDay;
+
+            // Show ONLY if:
+            // a) User has played a game (clicked a card and returned)
+            // b) It hasn't been shown in the last 24 hours
+            if (hasPlayed && timeAllows) {
+                setTimeout(() => {
+                    widget.classList.add('visible');
+                    // Record this show time
+                    localStorage.setItem('shareWidgetLastShown', now.toString());
+                    // Reset play flag so they have to play again to see it next time (after 24h)
+                    localStorage.removeItem('hasPlayedGame');
+                }, 1500); // 1.5s delay after landing feels natural
+            }
+
+            // Listen for Ctrl+D (Windows/Linux) or Cmd+D (Mac)
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && (e.key === 'd' || e.key === 'D')) {
+                    // User likely bookmarked; say thanks and close
+                    widget.querySelector('.share-widget-text').innerHTML = "🌟 Thanks for bookmarking!";
+
+                    // Mark as permanently bookmarked so we never show this again
+                    localStorage.setItem('userHasBookmarked', 'true');
+
+                    // Hide after a short delay so they see the thank you
+                    setTimeout(() => {
+                        widget.classList.remove('visible');
+                    }, 2000);
+                }
+            });
+
+            closeBtn.addEventListener('click', () => {
+                widget.classList.remove('visible');
+                // No need to set permanent closed flag, we rely on daily turnover
+            });
         }
 
         // Prevent zoom on double tap for mobile (only prevent if it's a true double tap, not scroll)
