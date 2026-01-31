@@ -275,7 +275,7 @@
         }
 
         .features-list li::before {
-            content: "â–¸";
+            content: "▸";
             position: absolute;
             left: 8px;
             color: rgba(255, 255, 255, 0.6);
@@ -308,8 +308,8 @@
     <div class="container">
         <div class="header">
             <div class="button-container">
-                <a href="index.html" class="back-button">â† Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">â›¶ Fullscreen</button>
+                <a href="index.html" class="back-button">← Back to Games</a>
+                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
             <h1 class="game-title">Slope</h1>
         </div>
@@ -326,27 +326,27 @@
             <h2 class="description-title">About Slope</h2>
 
             <div class="description-section">
-                <h3>ðŸŽ® The Ultimate Speed Run</h3>
+                <h3>🎮 The Ultimate Speed Run</h3>
                 <p>Slope is a thrilling 3D endless runner game where you control a ball rolling down a steep slope. The
                     further you go, the faster you roll. Avoid the red obstacles and stay on the platforms to survive.
                     How far can you go?</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ Mechanics</h3>
+                <h3>🎯 Mechanics</h3>
                 <p>Control the ball using the arrow keys or A/D keys. The game features realistic physics, so you need
                     to be precise with your movements. The course is randomly generated, providing a unique challenge
                     every time you play.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Strategy Tips</h3>
+                <h3>💡 Strategy Tips</h3>
                 <p>Keep your eye on the upcoming path and anticipate turns. Don't move too sharply or you might fall off
                     the edge. Practice makes perfect!</p>
             </div>
 
             <div class="description-section">
-                <h3>âœ¨ Key Features</h3>
+                <h3>✨ Key Features</h3>
                 <ul class="features-list">
                     <li>Fast-paced gameplay</li>
                     <li>Endless runner with increasing difficulty</li>
@@ -390,9 +390,9 @@
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
-                button.textContent = 'â›¶ Exit Fullscreen';
+                button.textContent = '⛶ Exit Fullscreen';
             } else {
-                button.textContent = 'â›¶ Fullscreen';
+                button.textContent = '⛶ Fullscreen';
             }
         }
     </script>
