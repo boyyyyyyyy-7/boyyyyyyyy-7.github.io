@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -329,17 +329,17 @@
             <div class="description-section">
                 <h3>🎮 Underwater Combat Arena</h3>
                 <p>Squid Shooter drops you into underwater arenas where you're battling other players in fast-paced
-                    shooting matches. The theme is obvious—inspired by that show everyone watched—but the gameplay
+                    shooting matches. The theme is obviousâ€”inspired by that show everyone watchedâ€”but the gameplay
                     stands on its own. Quick rounds, simple controls, and enough chaos to keep things interesting.</p>
                 <p>Matches are short, usually a few minutes max. You spawn, grab weapons, and start shooting. The
-                    underwater setting adds some interesting physics—projectiles move differently, jumps feel floaty,
+                    underwater setting adds some interesting physicsâ€”projectiles move differently, jumps feel floaty,
                     and cover matters more when movement is slower. It's not realistic, but it's fun.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 How to Play</h3>
+                <h3>ðŸŽ¯ How to Play</h3>
                 <p>WASD to move, mouse to aim and shoot. Standard shooter controls. You can pick up different weapons
-                    scattered around the map—some rapid-fire, some heavy-hitting. Each weapon has different underwater
+                    scattered around the mapâ€”some rapid-fire, some heavy-hitting. Each weapon has different underwater
                     physics, so switching weapons mid-match changes your strategy.</p>
                 <p>The maps are designed with lots of cover and vertical elements. You're constantly swimming between
                     platforms, using structures to block shots, and trying to flank opponents. The underwater movement
@@ -347,8 +347,8 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Winning Tactics</h3>
-                <p>Keep moving. Standing still underwater makes you an easy target. Use the vertical space—swimming
+                <h3>ðŸ’¡ Winning Tactics</h3>
+                <p>Keep moving. Standing still underwater makes you an easy target. Use the vertical spaceâ€”swimming
                     above or below opponents throws off their aim. And grab weapons frequently. Better guns win fights.
                 </p>
                 <p>Watch the map edges. Players often lurk at spawn points trying to catch new arrivals. Don't swim
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

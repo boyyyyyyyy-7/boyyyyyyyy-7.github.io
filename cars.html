@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -339,8 +339,8 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Control & Balance</h3>
-                <p>Arrow keys control acceleration, braking, and tilt. The tilt controls are critical—they let you
+                <h3>ðŸŽ¯ Control & Balance</h3>
+                <p>Arrow keys control acceleration, braking, and tilt. The tilt controls are criticalâ€”they let you
                     adjust your car's angle mid-air or on steep slopes. Land flat after a jump and you're fine. Land on
                     your roof and you're done. Small tilt adjustments prevent crashes.</p>
                 <p>Different terrains demand different approaches. Smooth roads let you maintain speed. Rocky sections
@@ -349,7 +349,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Driving Smart</h3>
+                <h3>ðŸ’¡ Driving Smart</h3>
                 <p>Control your speed before obstacles, not during them. By the time you're on a steep hill or mid-jump,
                     adjusting speed is too late. Slow down early when approaching tricky sections. This gives you more
                     control over how your car responds.</p>
@@ -411,9 +411,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -339,8 +339,8 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 How It Works</h3>
-                <p>The interface is simple. Browse menus full of items—weapons, vehicles, characters, props, explosives.
+                <h3>ðŸŽ¯ How It Works</h3>
+                <p>The interface is simple. Browse menus full of itemsâ€”weapons, vehicles, characters, props, explosives.
                     Click to spawn them into your sandbox. Then interact however you want. Drop things from heights.
                     Shoot them. Blow them up. Freeze time to arrange elaborate setups, then unpause and watch the chaos
                     unfold.</p>
@@ -350,7 +350,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Ideas to Try</h3>
+                <h3>ðŸ’¡ Ideas to Try</h3>
                 <p>Build obstacle courses for ragdolls. Spawn a character, then create a gauntlet of spinning blades,
                     crushing platforms, and explosives they have to navigate. Bonus points if you use slow-motion to
                     watch the destruction in detail.</p>
@@ -412,9 +412,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

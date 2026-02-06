@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -327,26 +327,26 @@
 
             <div class="description-section">
                 <h3>🎮 Feathered Speed Demon</h3>
-                <p>Crazy Chicken 3D is exactly what it sounds like—you control a chicken sprinting through obstacle
+                <p>Crazy Chicken 3D is exactly what it sounds likeâ€”you control a chicken sprinting through obstacle
                     courses at ridiculous speeds. The 3D graphics are bright and colorful, the levels are packed with
                     traps and jumps, and the whole thing feels like a fever dream. It's absurd in the best way.</p>
                 <p>What makes it fun is how committed it is to the chaos. Your chicken isn't gracefully navigating
-                    obstacles—it's flailing through them at full speed. Sometimes you barely clear a jump. Sometimes you
+                    obstaclesâ€”it's flailing through them at full speed. Sometimes you barely clear a jump. Sometimes you
                     slam face-first into a wall. Either way, it's entertaining.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 How to Play</h3>
+                <h3>ðŸŽ¯ How to Play</h3>
                 <p>Arrow keys or WASD to move, spacebar to jump. The chicken runs automatically, so you're focused on
                     dodging obstacles and timing jumps. The controls are responsive but the speed means you need quick
                     reactions to avoid crashing.</p>
-                <p>Levels throw everything at you—spinning hammers, moving platforms, narrow ledges, sudden drops. The
+                <p>Levels throw everything at youâ€”spinning hammers, moving platforms, narrow ledges, sudden drops. The
                     3D perspective adds depth perception challenges. What looks like a safe landing might actually be
                     too far. Trial and error teaches you the timing.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Survival Tactics</h3>
+                <h3>ðŸ’¡ Survival Tactics</h3>
                 <p>Don't over-jump. Tapping spacebar for small hops works better than always going for maximum height.
                     You need precision more than power. Save big jumps for gaps that actually require them.</p>
                 <p>Watch the path ahead, not your chicken. Looking too close means obstacles surprise you. Focus a few
@@ -407,9 +407,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -330,15 +330,15 @@
                 <p>Granny locks you in her house and gives you five days to escape. Every sound you make brings her
                     closer. Drop an object? She hears it. Step on a creaky floorboard? She's already on her way. The
                     whole game is tense stealth where one mistake can end your run.</p>
-                <p>What makes it scary isn't jump scares—it's the constant dread. You'll be searching a room for keys,
+                <p>What makes it scary isn't jump scaresâ€”it's the constant dread. You'll be searching a room for keys,
                     hear footsteps getting louder, and realize you have maybe three seconds to find a hiding spot before
                     she finds you. That feeling never gets old, it just makes your heart pound harder.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 How to Survive</h3>
-                <p>Move slowly and crouch when possible—it reduces noise. Use WASD to walk and interact with objects.
-                    Your goal is finding items to unlock the front door—keys, weapons, code pieces. They're scattered
+                <h3>ðŸŽ¯ How to Survive</h3>
+                <p>Move slowly and crouch when possibleâ€”it reduces noise. Use WASD to walk and interact with objects.
+                    Your goal is finding items to unlock the front doorâ€”keys, weapons, code pieces. They're scattered
                     throughout the house, often in really inconvenient places.</p>
                 <p>When Granny gets close, hide under beds, in closets, or in the car. You can see her through cracks
                     while hidden. She'll search for a bit, then leave. The trick is knowing when to stay hidden and when
@@ -346,9 +346,9 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Strategy Tips</h3>
+                <h3>ðŸ’¡ Strategy Tips</h3>
                 <p>Memorize where items spawn. They're semi-random, but certain rooms have higher chances of specific
-                    items. Check the basement and attic early—they usually have crucial items, but they're also the
+                    items. Check the basement and attic earlyâ€”they usually have crucial items, but they're also the
                     scariest rooms to search.</p>
                 <p>Drop items strategically to bait Granny. If you drop a vase on the opposite side of the house, she'll
                     go investigate, giving you time to search elsewhere. This trick saves entire runs when used smartly.
@@ -403,9 +403,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

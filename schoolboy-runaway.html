@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -337,22 +337,22 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Sneaking & Strategy</h3>
+                <h3>ðŸŽ¯ Sneaking & Strategy</h3>
                 <p>Move with arrow keys or WASD. Stay out of sight lines when teachers are nearby. Wait behind corners,
                     time your movements between patrol routes, and use distractions when necessary. The goal is reaching
                     the exit without being spotted.</p>
-                <p>Each level adds new obstacles—more teachers, longer patrol routes, locked doors requiring keys. Early
+                <p>Each level adds new obstaclesâ€”more teachers, longer patrol routes, locked doors requiring keys. Early
                     levels teach the basics. Later levels demand you chain multiple stealth moves perfectly to navigate
                     increasingly complex school layouts.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Escape Tips</h3>
+                <h3>ðŸ’¡ Escape Tips</h3>
                 <p>Watch patrol patterns before moving. Teachers follow routes consistently. Learn the pattern, identify
                     the gaps, then move during those windows. Rushing gets you caught. Patience gets you past
                     checkpoints.</p>
                 <p>Use lockers and classroom doors as hiding spots. When a teacher gets too close, duck into cover and
-                    wait. They'll pass, giving you another chance to continue. And always have an exit strategy—know
+                    wait. They'll pass, giving you another chance to continue. And always have an exit strategyâ€”know
                     where you're going before you start moving.</p>
             </div>
 
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

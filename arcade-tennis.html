@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -178,7 +178,7 @@
         }
 
         .features-list li::before {
-            content: "🎾";
+            content: "ðŸŽ¾";
             position: absolute;
             left: 0;
         }
@@ -220,7 +220,7 @@
             <h2 class="description-title">About Arcade Tennis</h2>
 
             <div class="description-section">
-                <h3>🏆 The Ultimate Court Challenge</h3>
+                <h3>ðŸ← The Ultimate Court Challenge</h3>
                 <p>Arcade Tennis brings the high-stakes world of professional tennis to your browser with a vibrant,
                     fast-paced twist. Far from a standard simulation, this game captures the raw energy and split-second
                     decision-making that makes tennis one of the world's most thrilling sports. From the moment you step
@@ -229,12 +229,12 @@
                 <p>What sets Arcade Tennis apart is its accessibility paired with a surprising depth of skill. Whether
                     you're a seasoned sports gamer or just looking for a quick five-minute break, the intuitive
                     mechanics allow you to start smashing aces right away. However, as you progress through more
-                    difficult opponents, you'll realize that winning isn't just about hitting the ball back—it's about
+                    difficult opponents, you'll realize that winning isn't just about hitting the ball backâ€”it's about
                     placement, spin, and wearing down your rival's stamina levels.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎾 How to Play & Controls</h3>
+                <h3>ðŸŽ¾ How to Play & Controls</h3>
                 <p>The controls in Arcade Tennis are designed to be fluid and responsive, ensuring that your on-screen
                     player moves exactly when you want them to. Most players find that using the arrow keys or WASD
                     offers the best precision for positioning. The spacebar or dedicated action keys are used to swing
@@ -247,9 +247,9 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Pro Tips & Strategy</h3>
+                <h3>ðŸ’¡ Pro Tips & Strategy</h3>
                 <p>To truly dominate the court, you need to think two steps ahead. One of the most effective strategies
-                    is "cross-court cornering"—repeatedly hitting the ball to one corner of the baseline to pull your
+                    is "cross-court cornering"â€”repeatedly hitting the ball to one corner of the baseline to pull your
                     opponent wide, then suddenly smashing it to the opposite side once they're out of position. This
                     makes it almost impossible for even the toughest AI to recover in time.</p>
                 <p>Don't just stay glued to the baseline! Sneaking up to the net (the "serve and volley" technique) can
@@ -306,9 +306,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

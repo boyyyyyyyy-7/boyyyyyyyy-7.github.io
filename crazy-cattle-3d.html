@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -327,7 +327,7 @@
 
             <div class="description-section">
                 <h3>🎮 Chaos on Four Legs</h3>
-                <p>Crazy Cattle 3D turns you into a rampaging cow with one goal—smash everything. You're running through
+                <p>Crazy Cattle 3D turns you into a rampaging cow with one goalâ€”smash everything. You're running through
                     farms, towns, and random environments destroying property while physics goes absolutely wild. It's
                     ridiculous and that's the entire point. Watching a cow flip cars and demolish fences never gets old.
                 </p>
@@ -337,8 +337,8 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Controls & Physics</h3>
-                <p>WASD to move your cow, and it handles like you'd expect a rampaging animal to handle—loose and
+                <h3>ðŸŽ¯ Controls & Physics</h3>
+                <p>WASD to move your cow, and it handles like you'd expect a rampaging animal to handleâ€”loose and
                     chaotic. You build speed, crash into things, and bounce off in unpredictable directions. The lack of
                     tight control is part of the fun. You're barely in control.</p>
                 <p>Objects respond realistically to impacts. Hit a fence at full speed and it explodes. Ram a car and it
@@ -347,9 +347,9 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Maximum Destruction</h3>
+                <h3>ðŸ’¡ Maximum Destruction</h3>
                 <p>Momentum is everything. The faster you're moving when you hit objects, the more damage you do. Don't
-                    tap into things—charge full speed. Build up velocity before hitting your targets for maximum chaos.
+                    tap into thingsâ€”charge full speed. Build up velocity before hitting your targets for maximum chaos.
                 </p>
                 <p>Use the terrain. Ramps launch you into the air for aerial attacks on objects. Hills give you speed
                     boosts. And when you're tumbling out of control after a massive crash? Just roll with it. Half the
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

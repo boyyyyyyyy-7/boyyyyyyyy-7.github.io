@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -331,7 +331,7 @@
                     about survival. You're thrust into endless highway traffic moving at insane speeds, and your only
                     goal is to dodge, weave, and stay alive for as long as possible. The tension builds with every
                     second because one tiny mistake means game over.</p>
-                <p>What really hooks you is how simple it starts. The first 30 seconds feel manageable—a few cars here
+                <p>What really hooks you is how simple it starts. The first 30 seconds feel manageableâ€”a few cars here
                     and there, plenty of space to maneuver. But the game ramps up fast. Before you know it, you're
                     threading the needle between trucks, cutting across lanes at the last second, and relying purely on
                     reflexes. That rush when you barely squeeze past a collision? That's what keeps you coming back for
@@ -339,10 +339,10 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 How to Play & Controls</h3>
+                <h3>ðŸŽ¯ How to Play & Controls</h3>
                 <p>The controls are dead simple, which is part of the game's genius. Use your arrow keys or WASD to
                     steer left and right. That's it. Your car automatically accelerates, so you don't need to worry
-                    about speed management—just pure dodging skill.</p>
+                    about speed managementâ€”just pure dodging skill.</p>
                 <p>Your main objective is straightforward: survive as long as you can while racking up points. You earn
                     points based on distance traveled and those heart-stopping near-misses when you barely avoid
                     smashing into another vehicle. The scoring system actually rewards risky play, encouraging you to
@@ -350,12 +350,12 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Tips & Strategy</h3>
+                <h3>ðŸ’¡ Tips & Strategy</h3>
                 <p>Here's what experienced players figure out pretty quickly: stay in the middle lanes when traffic gets
                     heavy. The outer lanes might seem safer, but they trap you against the edge with nowhere to escape.
                     The middle gives you options to dodge in either direction.</p>
                 <p>Don't get greedy with near-miss points early on. Build up your rhythm first, get comfortable with the
-                    speed, then start taking calculated risks. And watch for patterns—traffic isn't completely random.
+                    speed, then start taking calculated risks. And watch for patternsâ€”traffic isn't completely random.
                     Once you recognize the flow, you can anticipate gaps before they appear.</p>
             </div>
 
@@ -367,7 +367,7 @@
                     <li>High score system to compete against yourself</li>
                     <li>Near-miss bonus scoring for risk-takers</li>
                     <li>Clean graphics that keep you focused on the action</li>
-                    <li>No complicated mechanics—pure skill-based gameplay</li>
+                    <li>No complicated mechanicsâ€”pure skill-based gameplay</li>
                 </ul>
             </div>
         </div>
@@ -406,9 +406,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

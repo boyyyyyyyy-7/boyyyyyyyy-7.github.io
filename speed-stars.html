@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -337,7 +337,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Timing & Speed</h3>
+                <h3>ðŸŽ¯ Timing & Speed</h3>
                 <p>Tap or click when the timing indicator hits the perfect zone. Early or late taps still move you
                     forward, but perfect timing gives massive speed boosts. String together perfect taps and you'll
                     unlock even faster speeds through combo bonuses.</p>
@@ -347,12 +347,12 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Perfect Runs</h3>
+                <h3>ðŸ’¡ Perfect Runs</h3>
                 <p>Focus on consistency over perfection initially. Getting 80% good taps beats going for 100% and
                     missing half. As you internalize the rhythm, your accuracy naturally improves. Muscle memory handles
                     timing once you've practiced enough.</p>
                 <p>Use audio cues if available. Visual timing is fine but adding audio creates a stronger rhythm anchor.
-                    And don't panic when you miss a perfect window—one miss doesn't ruin your run. Recover your rhythm
+                    And don't panic when you miss a perfect windowâ€”one miss doesn't ruin your run. Recover your rhythm
                     and keep going.</p>
             </div>
 
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

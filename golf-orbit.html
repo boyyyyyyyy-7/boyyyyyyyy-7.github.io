@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -334,11 +334,11 @@
                     to break your previous records. It's golf meets idle clicker meets physics sandbox.</p>
                 <p>The upgrades are where it gets addictive. Better clubs mean more power. Better balls mean more
                     bounce. Unlock special abilities like jets that activate mid-flight. Eventually you're not just
-                    playing golf—you're launching projectiles into orbit and beyond.</p>
+                    playing golfâ€”you're launching projectiles into orbit and beyond.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 Swing & Upgrade</h3>
+                <h3>ðŸŽ¯ Swing & Upgrade</h3>
                 <p>Click and hold to power up your swing, release to launch. The angle and power determine your initial
                     trajectory. After that, physics takes over. Your ball bounces, skids, and flies based on upgrades
                     and terrain.</p>
@@ -348,12 +348,12 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Distance Tips</h3>
+                <h3>ðŸ’¡ Distance Tips</h3>
                 <p>Aim for slight upward angles early on. Too flat and you hit the ground quickly. Too steep and you
                     waste energy on height instead of distance. Around 30-45 degrees usually works well for maximizing
                     travel.</p>
                 <p>Prioritize bounce and speed upgrades first. They compound with power upgrades to create massive
-                    distances. And always be saving for the next big unlock—special abilities completely change how far
+                    distances. And always be saving for the next big unlockâ€”special abilities completely change how far
                     you can go.</p>
             </div>
 
@@ -405,9 +405,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

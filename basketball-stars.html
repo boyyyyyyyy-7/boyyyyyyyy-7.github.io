@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -329,7 +329,7 @@
             <div class="description-section">
                 <h3>🎮 Pure Skill Basketball</h3>
                 <p>Basketball Stars strips hoops down to quick 1v1 or 2v2 matchups where skill actually matters. No
-                    complicated plays, no managing a full team—just you trying to outplay your opponent with crossovers,
+                    complicated plays, no managing a full teamâ€”just you trying to outplay your opponent with crossovers,
                     blocks, and perfectly timed shots. It's pick-up basketball at its purest.</p>
                 <p>What makes this addictive is how much depth the simple controls hide. You can fake out defenders,
                     steal the ball mid-dribble, block shots at the rim, or nail threes from downtown. Every match feels
@@ -337,23 +337,23 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Controls & Gameplay</h3>
+                <h3>ðŸŽ¯ Controls & Gameplay</h3>
                 <p>Arrow keys move your player. X shoots or steals. Z passes or switches players in 2v2. S triggers a
                     super shot when your meter is full. On offense you can pump fake before shooting, and on defense you
                     can jump to contest shots or steal.</p>
-                <p>Matches are short—first to 11 points or whoever's ahead when time runs out. You can play quick
-                    matches, tournaments, or even practice to work on your timing. The physics feel just right—not too
+                <p>Matches are shortâ€”first to 11 points or whoever's ahead when time runs out. You can play quick
+                    matches, tournaments, or even practice to work on your timing. The physics feel just rightâ€”not too
                     realistic but not cartoonish either.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Pro Tips</h3>
-                <p>Learn the pump fake. Seriously. Hit the shoot button but don't hold it—your player pumps the ball,
+                <h3>ðŸ’¡ Pro Tips</h3>
+                <p>Learn the pump fake. Seriously. Hit the shoot button but don't hold itâ€”your player pumps the ball,
                     and if your defender jumps, you get a wide open shot when they land. This one move wins so many
                     possessions once you get the timing down.</p>
                 <p>On defense, don't spam the steal button. You'll just foul or leave yourself out of position. Wait for
                     your opponent to dribble and time your steal when the ball is furthest from their body. And on
-                    offense, use screens in 2v2 mode—they create easy baskets.</p>
+                    offense, use screens in 2v2 modeâ€”they create easy baskets.</p>
             </div>
 
             <div class="description-section">
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

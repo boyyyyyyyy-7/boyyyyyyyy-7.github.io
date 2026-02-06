@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,20 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
-    <meta name="description"
-        content="A classic endless game where one wrong step can end everything. Jump across roads, rivers, and rails while trying to survive longer each run.">
-    <meta property="og:title" content="Crossy Road - Brayden is tall games">
-    <meta property="og:description"
-        content="A classic endless game where one wrong step can end everything. Jump across roads, rivers, and rails while trying to survive longer each run.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta itemprop="url" content="">
-    <link
-        href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap"
-        rel="stylesheet">
+    <meta name="description" content="Test your clicking speed in this addictive clicker game.">
+    <meta property="og:title" content="Spacebar Clicker - Brayden is tall games">
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-
-    <!-- Microsoft Clarity Analytics -->
     <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
             c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
@@ -28,18 +17,14 @@
             y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
         })(window, document, "clarity", "script", "upbe2dvlo2");
     </script>
-
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-CFTDLXZJZJ');
     </script>
-
-    <title>Crossy Road</title>
+    <title>Spacebar Clicker</title>
     <style>
         * {
             margin: 0;
@@ -57,7 +42,6 @@
             overflow-x: hidden;
         }
 
-        /* Moving Stars Background */
         body::before {
             content: '';
             position: fixed;
@@ -65,12 +49,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent), radial-gradient(1px 1px at 90px 40px, #fff, transparent), radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent), radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
             background-repeat: repeat;
             background-size: 200px 100px;
             animation: moveStars 20s linear infinite;
@@ -88,7 +67,6 @@
             }
         }
 
-        /* Additional star layers for depth */
         body::after {
             content: '';
             position: fixed;
@@ -96,11 +74,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:
-                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
-                radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent),
-                radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
-                radial-gradient(1px 1px at 200px 200px, rgba(255, 255, 255, 0.6), transparent);
+            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent), radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent), radial-gradient(1px 1px at 150px 150px, #ddd, transparent), radial-gradient(1px 1px at 200px 200px, rgba(255, 255, 255, 0.6), transparent);
             background-repeat: repeat;
             background-size: 300px 200px;
             animation: moveStars2 30s linear infinite;
@@ -149,10 +123,6 @@
             height: 56px;
             line-height: 24px;
             box-sizing: border-box;
-        }
-
-        .back-button,
-        .fullscreen-button {
             margin: 0;
         }
 
@@ -196,21 +166,6 @@
             gap: 15px;
         }
 
-        @media (max-width: 768px) {
-            .game-frame {
-                height: 70vh;
-            }
-
-            .game-title {
-                font-size: 2rem;
-            }
-
-            .container {
-                padding: 15px;
-            }
-        }
-
-        /* Description Section Styles */
         .description-container {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -255,50 +210,17 @@
             font-size: 1.05rem;
         }
 
-        .description-section strong {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        .features-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .features-list li {
-            color: rgba(255, 255, 255, 0.85);
-            padding: 8px 0 8px 28px;
-            position: relative;
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
-
-        .features-list li::before {
-            content: "▸";
-            position: absolute;
-            left: 8px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.2rem;
-        }
-
         @media (max-width: 768px) {
-            .description-container {
-                padding: 20px;
-                margin-top: 20px;
+            .game-frame {
+                height: 70vh;
             }
 
-            .description-title {
-                font-size: 1.6rem;
+            .game-title {
+                font-size: 2rem;
             }
 
-            .description-section h3 {
-                font-size: 1.1rem;
-            }
-
-            .description-section p,
-            .features-list li {
-                font-size: 0.95rem;
+            .container {
+                padding: 15px;
             }
         }
     </style>
@@ -311,102 +233,63 @@
                 <a href="index.html" class="back-button">← Back to Games</a>
                 <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
-            <h1 class="game-title">Crossy Road</h1>
+            <h1 class="game-title">Spacebar Clicker</h1>
         </div>
-
         <div class="game-container">
-            <iframe id="gameFrame" src="https://crossy-road.com/crossy-road.embed" class="game-frame" allowfullscreen
-                allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
-            </iframe>
+            <iframe id="gameFrame" src="https://braydenistallgames.online/game/spacebarclicker.html" class="game-frame"
+                allowfullscreen allow="autoplay; fullscreen"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
         </div>
 
-        <!-- Game Description Section -->
         <div class="description-container">
-            <h2 class="description-title">About Crossy Road</h2>
-
+            <h2 class="description-title">About Spacebar Clicker</h2>
             <div class="description-section">
-                <h3>🎮 Modern Frogger with Attitude</h3>
-                <p>Crossy Road took the classic Frogger formula and made it work for the endless runner era. Your
-                    character hops forward automatically, and you tap to jump across roads, rivers, and train tracks.
-                    The voxel art style is charming, and the random obstacles keep every run fresh.</p>
-                <p>What makes it addictive is the constant near-death moments. A car misses you by a pixel. You land on
-                    a log floating down a river just before falling in. These close calls happen every few seconds,
-                    creating this loop of tension and relief that keeps you playing.</p>
+                <h3>🎮 Click Speed Challenge</h3>
+                <p>Test your clicking speed and endurance. The spacebar is your only tool. How fast can you click? How
+                    long can you maintain that speed? It starts simple—just click as fast as possible. But as seconds
+                    turn into minutes, fatigue sets in and consistency becomes the real challenge.</p>
+                <p>What makes this addictive is competing against yourself. You set a record, then immediately want to
+                    beat it. Online leaderboards add another layer—suddenly you're trying to outclick people from around
+                    the world.</p>
             </div>
-
             <div class="description-section">
-                <h3>ðŸŽ¯ Simple Controls, Hard Game</h3>
-                <p>Tap or click to hop forward. Swipe or use arrow keys to move sideways. That's the entire control
-                    scheme. The challenge comes from timing your jumps between moving cars, hopping across floating
-                    logs, and dodging trains that blast through without warning.</p>
-                <p>The screen slowly pushes you forward, so you can't just wait forever for the perfect gap. You need to
-                    commit to moves and trust your reflexes. Hesitation usually gets you killed faster than bold but
-                    slightly risky jumps.</p>
+                <h3>🎯 Endurance & Technique</h3>
+                <p>It's not just about raw speed. Hand positioning matters. Finger strength matters. Some players use
+                    multiple fingers, others hammer with one. Finding the right technique for your hands is part of the
+                    game.</p>
+                <p>The longer the test runs, the more mental discipline kicks in. Maintaining peak speed when your hand
+                    is cramping separates good scores from great ones.</p>
             </div>
-
             <div class="description-section">
-                <h3>ðŸ’¡ Survival Tips</h3>
-                <p>Don't focus too hard on going forward. Sometimes the safe play is moving sideways to find better gaps
-                    in traffic or line up with a log on the river. The game will push you eventually, but you have more
-                    time than you think.</p>
-                <p>Watch for patterns. Train tracks flash before trains come. Cars in one lane all move the same speed.
-                    Rivers have logs flowing at consistent intervals. Once you recognize these patterns, you can predict
-                    safe moments instead of just reacting.</p>
-            </div>
-
-            <div class="description-section">
-                <h3>✨ Key Features</h3>
-                <ul class="features-list">
-                    <li>Endless gameplay with procedural obstacles</li>
-                    <li>Simple one-tap controls</li>
-                    <li>Tons of unlockable characters</li>
-                    <li>Charming voxel graphics</li>
-                    <li>Quick rounds perfect for mobile</li>
-                    <li>Addictive risk-reward gameplay</li>
-                    <li>Leaderboards to compete with friends</li>
-                </ul>
+                <h3>💡 Getting Better</h3>
+                <p>Take breaks. Seriously. Spamming the spacebar for minutes straight will wreck your hand. Use multiple
+                    fingers if the game allows it for better speed. Find a rhythm rather than going all-out
+                    chaotic—sustained speed beats bursts.</p>
+                <p>Practice in short bursts. Ten-second sprints train speed. Longer sessions build endurance. Mix both
+                    for balanced improvement.</p>
             </div>
         </div>
     </div>
-
     <script>
         function toggleFullscreen() {
             const iframe = document.getElementById('gameFrame');
-
             if (!document.fullscreenElement) {
-                // Enter fullscreen
-                if (iframe.requestFullscreen) {
-                    iframe.requestFullscreen();
-                } else if (iframe.webkitRequestFullscreen) {
-                    iframe.webkitRequestFullscreen();
-                } else if (iframe.msRequestFullscreen) {
-                    iframe.msRequestFullscreen();
-                }
+                if (iframe.requestFullscreen) iframe.requestFullscreen();
+                else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+                else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
             } else {
-                // Exit fullscreen
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                } else if (document.webkitExitFullscreen) {
-                    document.webkitExitFullscreen();
-                } else if (document.msExitFullscreen) {
-                    document.msExitFullscreen();
-                }
+                if (document.exitFullscreen) document.exitFullscreen();
+                else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                else if (document.msExitFullscreen) document.msExitFullscreen();
             }
         }
-
-        // Update button text based on fullscreen state
         document.addEventListener('fullscreenchange', updateButtonText);
         document.addEventListener('webkitfullscreenchange', updateButtonText);
         document.addEventListener('msfullscreenchange', updateButtonText);
-
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
-            if (document.fullscreenElement) {
-                button.textContent = '⛶ Exit Fullscreen';
-            } else {
-                button.textContent = '⛶ Fullscreen';
-            }
+            if (document.fullscreenElement) button.textContent = '⛶ Exit Fullscreen';
+            else button.textContent = '⛶ Fullscreen';
         }
     
         // Prevent arrow keys from scrolling the page so they only work for the game

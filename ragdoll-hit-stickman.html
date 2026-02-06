@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -337,9 +337,9 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Fighting Mechanics</h3>
+                <h3>ðŸŽ¯ Fighting Mechanics</h3>
                 <p>Click or tap to attack. Simple controls but timing matters. You need to land hits while avoiding
-                    getting hit yourself. The ragdoll physics mean positioning is huge—hit someone near an edge and
+                    getting hit yourself. The ragdoll physics mean positioning is hugeâ€”hit someone near an edge and
                     they're flying off the map.</p>
                 <p>Different attacks have different knockback effects. Some launch opponents straight up. Others send
                     them flying sideways. Learning which attacks work best in different situations is how you win
@@ -347,7 +347,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Winning Strategy</h3>
+                <h3>ðŸ’¡ Winning Strategy</h3>
                 <p>Use the environment. Edges, ramps, and platforms all amplify the ragdoll physics. Landing hits near
                     hazards means your opponent gets launched into them. Environmental kills are way more satisfying
                     than regular knockouts.</p>
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

@@ -1,13 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-CFTDLXZJZJ');</script>
-    <title>Wave Dash</title>
+    <title>Tetris</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +16,6 @@
             font-family: 'Maven Pro', Arial, sans-serif;
             background: #0a0a0a;
             color: #f9f9f9;
-            line-height: 1.6;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -32,7 +28,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent);
+            background:
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent);
             background-repeat: repeat;
             background-size: 200px 100px;
             animation: moveStars 20s linear infinite;
@@ -57,7 +56,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent);
+            background:
+                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
+                radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent);
             background-repeat: repeat;
             background-size: 300px 200px;
             animation: moveStars2 30s linear infinite;
@@ -108,15 +109,14 @@
         .back-button:hover,
         .fullscreen-button:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            transform: translateY(-2px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px) scale(1.05);
         }
 
         .game-title {
             font-size: 2.5rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 10px;
+            margin: 10px 0;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
@@ -137,20 +137,14 @@
             background: #000;
         }
 
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
-        }
-
         .description-container {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 30px;
             margin-top: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .description-title {
@@ -194,68 +188,50 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
-            </div>
-            <h1 class="game-title">Wave Dash</h1>
+            <a href="index.html" class="back-button">← Back</a>
+            <button class="fullscreen-button" onclick="document.getElementById('gameFrame').requestFullscreen()">⛶
+                Fullscreen</button>
+            <h1 class="game-title">Tetris</h1>
         </div>
         <div class="game-container">
-            <iframe id="gameFrame" src="https://1games.io/embed/wave-dash" class="game-frame" allowfullscreen
-                allow="autoplay; fullscreen"
+            <iframe id="gameFrame" src="https://braydenistallgames.online/game/tetris.html" class="game-frame"
+                allowfullscreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
         </div>
 
+        <!-- Game Description -->
         <div class="description-container">
-            <h2 class="description-title">About Wave Dash</h2>
+            <h2 class="description-title">About Tetris</h2>
+
             <div class="description-section">
-                <h3>🎮 High-Speed Geometric Survival</h3>
-                <p>Wave Dash is an intense, fast-paced arcade game that challenges your timing and precision. You
-                    control a sharp triangular craft as it dashes through narrow tunnels filled with triangular
-                    obstacles. The goal is simple: survive as long as you can without crashing.</p>
-                <p>The game's difficulty scales rapidly, requiring you to think and react in fractions of a second.
-                    Every successful dash feels rewarding as you weave through the chaotic geometric shapes.</p>
+                <h3>🎮 The Legendary Puzzle Game</h3>
+                <p>Tetris is the game that defined puzzle gaming. Blocks fall from the top, and you rotate and position
+                    them to create complete horizontal lines. Fill a line and it disappears, giving you points and more
+                    space. Miss too many placements and the stack reaches the top—game over.</p>
+                <p>What makes Tetris timeless is how simple it seems but how deep the strategy goes. Every piece
+                    placement affects future options. Good players think several pieces ahead, leaving specific gaps for
+                    the perfect block to slide into.</p>
             </div>
+
             <div class="description-section">
-                <h3>🎯 Rhythm and Precision</h3>
-                <p>The key to success in Wave Dash is finding your rhythm. The obstacles move in predictable but
-                    challenging patterns. Mastering the timing of your dashes allows you to navigate even the tightest
-                    gaps.</p>
-                <p>It's not just about speed—it's about knowing when to hold back and when to go all-in. One wrong move
-                    ends your run, forcing you to start over and try to beat your high score.</p>
+                <h3>🎯 Master the Blocks</h3>
+                <p>Seven piece shapes (tetrominoes): I, O, T, S, Z, J, and L. Each one needs different positioning. The
+                    I-piece clears four lines at once if you set it up right (a "Tetris"). The T-piece fits almost
+                    anywhere. The S and Z pieces create annoying gaps if you're not careful.</p>
+                <p>Speed increases as you progress. What started as a relaxed puzzle becomes a frantic test of reflexes
+                    and spatial reasoning. The best players can handle insane speeds by using muscle memory for common
+                    patterns.</p>
             </div>
+
             <div class="description-section">
-                <h3>💡 Mastering the Dash</h3>
-                <p>Focus on the path ahead, not just what's right in front of you. Anticipating the next set of
-                    obstacles allows you to position your craft early for a smooth transition. Keep your inputs short
-                    and deliberate to maintain control.</p>
-                <p>Don't be afraid to fail. Wave Dash is a game of trial and error, and every crash makes your reflexes
-                    sharper for the next attempt. Focus on consistent improvement!</p>
+                <h3>💡 Pro Stacking Strategies</h3>
+                <p>Keep your stack flat. Random peaks create problems fast. Build one side higher and leave a column
+                    open for I-pieces—this lets you score Tetrises for massive points.</p>
+                <p>Don't wait for the perfect piece. If you need an I-block but it's not coming, adapt your strategy.
+                    Clearing singles and doubles keeps you alive while you wait for better opportunities.</p>
             </div>
         </div>
     </div>
-    <script>
-        function toggleFullscreen() {
-            const iframe = document.getElementById('gameFrame');
-            if (!document.fullscreenElement) {
-                if (iframe.requestFullscreen) iframe.requestFullscreen();
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-            }
-        }
-        document.addEventListener('fullscreenchange', () => {
-            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
-        });
-    
-        // Prevent arrow keys from scrolling the page so they only work for the game
-        window.addEventListener("keydown", function(e) {
-            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
-                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
-                    e.preventDefault();
-                }
-            }
-        }, false);
-</script>
     <script src="background-loader.js"></script>
 </body>
 

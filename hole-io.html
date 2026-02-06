@@ -1,13 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
-    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-CFTDLXZJZJ');</script>
-    <title>Wave Dash</title>
+    <title>Hole.io</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +16,6 @@
             font-family: 'Maven Pro', Arial, sans-serif;
             background: #0a0a0a;
             color: #f9f9f9;
-            line-height: 1.6;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
@@ -102,22 +98,13 @@
             font-size: 16px;
             cursor: pointer;
             margin: 0 5px;
-            transition: all 0.3s ease;
-        }
-
-        .back-button:hover,
-        .fullscreen-button:hover {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-            transform: translateY(-2px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .game-title {
             font-size: 2.5rem;
             font-weight: 700;
             color: #fff;
-            margin-bottom: 10px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            margin: 10px 0;
         }
 
         .game-container {
@@ -125,8 +112,6 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .game-frame {
@@ -135,14 +120,6 @@
             border: none;
             border-radius: 10px;
             background: #000;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
         }
 
         .description-container {
@@ -183,10 +160,6 @@
             .game-frame {
                 height: 70vh;
             }
-
-            .game-title {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -194,68 +167,45 @@
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
-            </div>
-            <h1 class="game-title">Wave Dash</h1>
+            <a href="index.html" class="back-button">← Back</a>
+            <button class="fullscreen-button" onclick="document.getElementById('gameFrame').requestFullscreen()">⛶
+                Fullscreen</button>
+            <h1 class="game-title">Hole.io</h1>
         </div>
         <div class="game-container">
-            <iframe id="gameFrame" src="https://1games.io/embed/wave-dash" class="game-frame" allowfullscreen
-                allow="autoplay; fullscreen"
+            <iframe id="gameFrame" src="https://braydenistallgames.online/game/holeio.html" class="game-frame"
+                allowfullscreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
         </div>
 
         <div class="description-container">
-            <h2 class="description-title">About Wave Dash</h2>
+            <h2 class="description-title">About Hole.io</h2>
             <div class="description-section">
-                <h3>🎮 High-Speed Geometric Survival</h3>
-                <p>Wave Dash is an intense, fast-paced arcade game that challenges your timing and precision. You
-                    control a sharp triangular craft as it dashes through narrow tunnels filled with triangular
-                    obstacles. The goal is simple: survive as long as you can without crashing.</p>
-                <p>The game's difficulty scales rapidly, requiring you to think and react in fractions of a second.
-                    Every successful dash feels rewarding as you weave through the chaotic geometric shapes.</p>
+                <h3>🎮 Swallow Everything</h3>
+                <p>You're a black hole moving around a city. Everything smaller than you falls in—trash cans, lamp
+                    posts, cars, people, eventually entire buildings. The more you consume, the bigger you grow. Bigger
+                    holes eat smaller holes. Simple concept, wildly addictive execution.</p>
+                <p>The multiplayer chaos makes it intense. Other players are trying to do the same thing. You're racing
+                    against the clock and against each other to become the biggest hole before time runs out.</p>
             </div>
             <div class="description-section">
-                <h3>🎯 Rhythm and Precision</h3>
-                <p>The key to success in Wave Dash is finding your rhythm. The obstacles move in predictable but
-                    challenging patterns. Mastering the timing of your dashes allows you to navigate even the tightest
-                    gaps.</p>
-                <p>It's not just about speed—it's about knowing when to hold back and when to go all-in. One wrong move
-                    ends your run, forcing you to start over and try to beat your high score.</p>
+                <h3>🎯 Growth Strategy</h3>
+                <p>Start with small objects. Don't waste time chasing things you can't swallow yet. Once you hit a size
+                    threshold, you can suddenly consume cars. Then street signs. Then buildings. Growth accelerates fast
+                    if you target the right objects.</p>
+                <p>Hunt other players when you're bigger than them. They're worth massive points. But stay away from
+                    bigger holes or you become their snack.</p>
             </div>
             <div class="description-section">
-                <h3>💡 Mastering the Dash</h3>
-                <p>Focus on the path ahead, not just what's right in front of you. Anticipating the next set of
-                    obstacles allows you to position your craft early for a smooth transition. Keep your inputs short
-                    and deliberate to maintain control.</p>
-                <p>Don't be afraid to fail. Wave Dash is a game of trial and error, and every crash makes your reflexes
-                    sharper for the next attempt. Focus on consistent improvement!</p>
+                <h3>💡 Win More Matches</h3>
+                <p>Dense areas have more small objects—perfect for early growth. Once you're mid-sized, move to areas
+                    with cars and larger items for faster expansion. Don't get greedy chasing one huge object when you
+                    could be vacuuming up dozens of smaller ones.</p>
+                <p>Watch the leaderboard. If you're dominating, play safe. If you're behind, take risks hunting bigger
+                    players or going for risky areas with large objects.</p>
             </div>
         </div>
     </div>
-    <script>
-        function toggleFullscreen() {
-            const iframe = document.getElementById('gameFrame');
-            if (!document.fullscreenElement) {
-                if (iframe.requestFullscreen) iframe.requestFullscreen();
-            } else {
-                if (document.exitFullscreen) document.exitFullscreen();
-            }
-        }
-        document.addEventListener('fullscreenchange', () => {
-            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
-        });
-    
-        // Prevent arrow keys from scrolling the page so they only work for the game
-        window.addEventListener("keydown", function(e) {
-            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
-                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
-                    e.preventDefault();
-                }
-            }
-        }, false);
-</script>
     <script src="background-loader.js"></script>
 </body>
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -329,7 +329,7 @@
                 <h3>🎮 Horror With Friends</h3>
                 <p>Slender Multiplayer takes the classic Slender Man horror formula and adds other players. You're all
                     exploring a dark map searching for pages while something stalks you. Having teammates makes it less
-                    terrifying at first—but then someone disappears and you realize sticking together might not save
+                    terrifying at firstâ€”but then someone disappears and you realize sticking together might not save
                     you.</p>
                 <p>The multiplayer aspect changes the dynamic. Solo Slender is pure tension. Multiplayer Slender is
                     tension plus coordination. Do you split up to find pages faster? Or stay together for safety? Both
@@ -337,7 +337,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Finding Pages & Surviving</h3>
+                <h3>ðŸŽ¯ Finding Pages & Surviving</h3>
                 <p>WASD to move, mouse to look around. Your flashlight helps you see but also makes you visible. Pages
                     are scattered across the map. Find all of them to escape. Simple objective, terrifying execution.
                 </p>
@@ -347,7 +347,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Survival Tips</h3>
+                <h3>ðŸ’¡ Survival Tips</h3>
                 <p>Communication is key if you're playing with voice chat. Call out page locations. Warn teammates when
                     you see movement. Information sharing dramatically improves survival odds compared to everyone going
                     silent.</p>
@@ -409,9 +409,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

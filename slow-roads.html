@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -8,10 +8,10 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
     <meta name="description"
-        content="A relaxing driving game made to help you unwind. No pressure, no timers—just smooth roads and peaceful vibes.">
+        content="A relaxing driving game made to help you unwind. No pressure, no timersâ€”just smooth roads and peaceful vibes.">
     <meta property="og:title" content="Slow Roads - Brayden is tall games">
     <meta property="og:description"
-        content="A relaxing driving game made to help you unwind. No pressure, no timers—just smooth roads and peaceful vibes.">
+        content="A relaxing driving game made to help you unwind. No pressure, no timersâ€”just smooth roads and peaceful vibes.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta itemprop="url" content="">
@@ -329,14 +329,14 @@
                 <h3>🎮 The Anti-Racing Game</h3>
                 <p>Slow Roads is what happens when someone makes a driving game and removes all the stress. No traffic.
                     No cops. No timers. Just you, a car, and procedurally generated roads stretching to the horizon.
-                    It's designed to be the opposite of every other driving game—pure relaxation.</p>
+                    It's designed to be the opposite of every other driving gameâ€”pure relaxation.</p>
                 <p>The visuals lean minimal and calming. Rolling hills, simple color palettes, and smooth roads that
                     curve naturally through the landscape. Some people leave it running in a second monitor like a
                     screensaver. Others actually drive and zone out. Either way works.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 How It Works</h3>
+                <h3>ðŸŽ¯ How It Works</h3>
                 <p>Arrow keys or WASD to drive. That's it. No boost button, no handbrake, just gentle acceleration and
                     steering. The roads are infinite and procedurally generated, so you'll never hit the same stretch
                     twice. Drive at whatever speed feels right.</p>
@@ -346,7 +346,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Best Ways to Enjoy It</h3>
+                <h3>ðŸ’¡ Best Ways to Enjoy It</h3>
                 <p>Put on music or a podcast and just drive. The game isn't demanding your attention, so it's perfect
                     background activity. Some people use it to think through problems or decompress after work. It's
                     like meditation but with a steering wheel.</p>
@@ -408,9 +408,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

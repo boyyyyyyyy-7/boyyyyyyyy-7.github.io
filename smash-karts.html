@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -328,7 +328,7 @@
             <div class="description-section">
                 <h3>🎮 What Makes This Game Stand Out</h3>
                 <p>Smash Karts takes everything fun about kart racers and cranks it up by letting you blast your
-                    opponents with weapons. It's not enough to just drive fast—you need to grab power-ups, time your
+                    opponents with weapons. It's not enough to just drive fastâ€”you need to grab power-ups, time your
                     attacks, and survive the chaos while still trying to cross the finish line first. Pure mayhem on
                     wheels.</p>
                 <p>The maps are compact arenas filled with boxes containing random weapons. You might get a rocket
@@ -338,8 +338,8 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Controls & How to Play</h3>
-                <p>WASD or arrow keys control your kart. Space bar triggers your current weapon. That's really it—simple
+                <h3>ðŸŽ¯ Controls & How to Play</h3>
+                <p>WASD or arrow keys control your kart. Space bar triggers your current weapon. That's really itâ€”simple
                     controls let you focus on the actual racing and combat. The karts handle arcadey and responsive, so
                     you can drift around corners while lining up shots.</p>
                 <p>Each match throws you into a small arena with other players. Race laps while collecting weapons from
@@ -348,13 +348,13 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Pro Tips</h3>
+                <h3>ðŸ’¡ Pro Tips</h3>
                 <p>Don't tunnel vision on first place. Sometimes the leader is actually the easiest target because
                     everyone else is shooting at them too. Hang around second or third, let others waste their ammo on
                     each other, then make your move on the final lap.</p>
                 <p>Save your best weapons. If you get a rocket or something powerful, don't waste it on someone in last
                     place. Wait until you can knock the leader back or defend yourself when you're in front. And always
-                    grab boxes even if you have a weapon—denying them to others is just as valuable.</p>
+                    grab boxes even if you have a weaponâ€”denying them to others is just as valuable.</p>
             </div>
 
             <div class="description-section">
@@ -410,9 +410,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -336,17 +336,17 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Aiming & Shooting</h3>
+                <h3>ðŸŽ¯ Aiming & Shooting</h3>
                 <p>Mouse controls your aim, click to fire. The crosshair shows where bullets will go. Some weapons have
                     recoil, some have travel time. Learning each weapon's quirks is part of the challenge. You can't
-                    just point and click—you need to lead moving targets and account for distance.</p>
+                    just point and clickâ€”you need to lead moving targets and account for distance.</p>
                 <p>Different challenges demand different approaches. Speed shooting prioritizes quick reactions over
-                    perfect accuracy. Precision challenges are the opposite—every shot needs to count. Survival modes
+                    perfect accuracy. Precision challenges are the oppositeâ€”every shot needs to count. Survival modes
                     throw waves of targets that you need to clear efficiently without missing.</p>
             </div>
 
             <div class="description-section">
-                <h3>💡 Shooting Tips</h3>
+                <h3>ðŸ’¡ Shooting Tips</h3>
                 <p>For moving targets, aim ahead of them, not at them. Bullets take time to reach distant targets. The
                     farther away something is, the more you need to lead your shot. Practice on slower targets first to
                     get a feel for timing.</p>
@@ -408,9 +408,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

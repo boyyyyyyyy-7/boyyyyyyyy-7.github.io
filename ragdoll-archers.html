@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -338,7 +338,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 How to Actually Hit Stuff</h3>
+                <h3>ðŸŽ¯ How to Actually Hit Stuff</h3>
                 <p>Click and drag to aim your bow, then release to shoot. The longer you hold, the more power. Sounds
                     simple, except the recoil from shooting sends your ragdoll tumbling backward, which affects your
                     next shot. You're constantly trying to reposition while your opponent does the same.</p>
@@ -348,7 +348,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Winning Strategy</h3>
+                <h3>ðŸ’¡ Winning Strategy</h3>
                 <p>Aim low rather than high. Headshots are tempting but body shots are way more consistent when
                     everyone's wobbling. A guaranteed hit beats a missed headshot every time. Plus, hitting someone in
                     the legs makes them fall in funnier ways.</p>
@@ -410,9 +410,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

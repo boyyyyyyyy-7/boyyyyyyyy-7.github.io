@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -330,15 +330,15 @@
                 <p>Curve Rush is all about smooth movement through winding tracks. You're sliding along curves,
                     launching off ramps, and trying to maintain momentum through every turn. The physics are tight, the
                     tracks look gorgeous, and landing perfectly after an aerial section feels incredible.</p>
-                <p>What sets it apart is how satisfying the movement feels. You're not just racing—you're flowing. Good
+                <p>What sets it apart is how satisfying the movement feels. You're not just racingâ€”you're flowing. Good
                     runs have a rhythm to them. You transition from curve to straightaway to jump without losing speed.
                     Everything clicks together when you find the perfect line through a section.</p>
             </div>
 
             <div class="description-section">
-                <h3>🎯 Movement & Momentum</h3>
+                <h3>ðŸŽ¯ Movement & Momentum</h3>
                 <p>Arrow keys or tilt controls guide your movement. The game auto-accelerates, so you're focused
-                    entirely on steering and positioning. Curves require smooth inputs—sharp turns kill your speed. The
+                    entirely on steering and positioning. Curves require smooth inputsâ€”sharp turns kill your speed. The
                     goal is maintaining flow through every section.</p>
                 <p>Jumps are where momentum matters most. Hit a ramp at the right angle with good speed and you soar.
                     Hit it wrong and you stumble on landing. The best players chain perfect jumps together, turning
@@ -346,7 +346,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Flow State Tips</h3>
+                <h3>ðŸ’¡ Flow State Tips</h3>
                 <p>Anticipate curves early. By the time you see a sharp turn, it's too late to adjust smoothly. Look
                     ahead, identify the curve, and start your turn before you reach it. Early subtle adjustments beat
                     last-second corrections every time.</p>
@@ -408,9 +408,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

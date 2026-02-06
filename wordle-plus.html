@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
     <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-CFTDLXZJZJ');</script>
-    <title>Wave Dash</title>
+    <title>Wordle+</title>
     <style>
         * {
             margin: 0;
@@ -102,14 +102,12 @@
             font-size: 16px;
             cursor: pointer;
             margin: 0 5px;
-            transition: all 0.3s ease;
         }
 
         .back-button:hover,
         .fullscreen-button:hover {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
             transform: translateY(-2px) scale(1.1);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .game-title {
@@ -126,7 +124,6 @@
             border-radius: 15px;
             padding: 20px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .game-frame {
@@ -183,10 +180,6 @@
             .game-frame {
                 height: 70vh;
             }
-
-            .game-title {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
@@ -198,39 +191,39 @@
                 <a href="index.html" class="back-button">← Back to Games</a>
                 <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
             </div>
-            <h1 class="game-title">Wave Dash</h1>
+            <h1 class="game-title">Wordle+</h1>
         </div>
         <div class="game-container">
-            <iframe id="gameFrame" src="https://1games.io/embed/wave-dash" class="game-frame" allowfullscreen
-                allow="autoplay; fullscreen"
+            <iframe id="gameFrame" src="https://braydenistallgames.online/game/wordle.html" class="game-frame"
+                allowfullscreen
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
         </div>
 
         <div class="description-container">
-            <h2 class="description-title">About Wave Dash</h2>
-            <div class="description-section">
-                <h3>🎮 High-Speed Geometric Survival</h3>
-                <p>Wave Dash is an intense, fast-paced arcade game that challenges your timing and precision. You
-                    control a sharp triangular craft as it dashes through narrow tunnels filled with triangular
-                    obstacles. The goal is simple: survive as long as you can without crashing.</p>
-                <p>The game's difficulty scales rapidly, requiring you to think and react in fractions of a second.
-                    Every successful dash feels rewarding as you weave through the chaotic geometric shapes.</p>
+            <h2 class="description-title">About Wordle+</h2>
+            <div class=" description-section">
+                <h3>🎮 The Word Guessing Phenomenon</h3>
+                <p>Guess the five-letter word in six tries. Each guess gives you feedback: green means right letter,
+                    right position. Yellow means right letter, wrong position. Gray means the letter isn't in the word
+                    at all.</p>
+                <p>The strategy goes deeper than random guesses. Good players start with words that contain common
+                    letters (like STARE or AUDIO) to maximize information from the first guess. Each guess should
+                    eliminate as many possibilities as possible.</p>
             </div>
             <div class="description-section">
-                <h3>🎯 Rhythm and Precision</h3>
-                <p>The key to success in Wave Dash is finding your rhythm. The obstacles move in predictable but
-                    challenging patterns. Mastering the timing of your dashes allows you to navigate even the tightest
-                    gaps.</p>
-                <p>It's not just about speed—it's about knowing when to hold back and when to go all-in. One wrong move
-                    ends your run, forcing you to start over and try to beat your high score.</p>
+                <h3>🎯 Strategic Word Selection</h3>
+                <p>Your first word sets up everything. Choose words with common vowels and high-frequency consonants.
+                    Avoid repeating letters in early guesses—you want maximum coverage.</p>
+                <p>Use yellows wisely. If a letter is yellow, try it in different positions. But focus on letters that
+                    haven't been tested yet. Green letters are locked in—build around them.</p>
             </div>
             <div class="description-section">
-                <h3>💡 Mastering the Dash</h3>
-                <p>Focus on the path ahead, not just what's right in front of you. Anticipating the next set of
-                    obstacles allows you to position your craft early for a smooth transition. Keep your inputs short
-                    and deliberate to maintain control.</p>
-                <p>Don't be afraid to fail. Wave Dash is a game of trial and error, and every crash makes your reflexes
-                    sharper for the next attempt. Focus on consistent improvement!</p>
+                <h3>💡 Winning More Often</h3>
+                <p>Start with a word containing common vowels and consonants. Use yellow letters in different positions.
+                    Avoid repeating gray letters. Think about letter frequency—E, A, R, I, O, T, N, S appear most often
+                    in English words.</p>
+                <p>If you're stuck on guess 4 or 5, slow down. Think through possible words that fit your clues.
+                    Sometimes the answer is a less common word you wouldn't immediately think of.</p>
             </div>
         </div>
     </div>

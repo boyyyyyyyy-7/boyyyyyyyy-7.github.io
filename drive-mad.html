@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -315,8 +315,7 @@
         </div>
 
         <div class="game-container">
-            <iframe id="gameFrame" src="https://gamecollections.me/game/3kh0-assets-main/drive-mad/" class="game-frame"
-                allowfullscreen
+            <iframe id="gameFrame" src="https://braydenistallgames.online/drivemad" class="game-frame" allowfullscreen
                 allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
                 sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
             </iframe>
@@ -328,7 +327,7 @@
 
             <div class="description-section">
                 <h3>🎮 Harder Than It Looks</h3>
-                <p>Drive Mad seems straightforward at first glance—just drive to the finish line. But the physics turn
+                <p>Drive Mad seems straightforward at first glanceâ€”just drive to the finish line. But the physics turn
                     simple levels into nightmare challenges. Your vehicle bounces, tilts, and flips at the slightest
                     mistake. What looks like a basic ramp becomes a death trap when your car lands wrong and tumbles
                     backward.</p>
@@ -339,7 +338,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Controls & Physics</h3>
+                <h3>ðŸŽ¯ Controls & Physics</h3>
                 <p>Arrow keys or WASD control acceleration and braking. Sounds basic, but the real challenge is
                     balancing your car. Too much gas on a ramp and you backflip. Too little and you don't make the jump.
                     You're constantly feathering the throttle trying to keep your vehicle level.</p>
@@ -349,7 +348,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Getting Through Tough Levels</h3>
+                <h3>ðŸ’¡ Getting Through Tough Levels</h3>
                 <p>Speed isn't always the answer. Those levels with delicate balance sections? Creep through them. Full
                     throttle is how you flip and restart. Save your speed for the straightaways where you actually need
                     momentum.</p>
@@ -367,7 +366,7 @@
                     <li>Obstacle courses that test precision</li>
                     <li>Quick retry system for fast attempts</li>
                     <li>Satisfying progression as skills improve</li>
-                    <li>No time limits—take as long as you need</li>
+                    <li>No time limitsâ€”take as long as you need</li>
                 </ul>
             </div>
         </div>
@@ -411,9 +410,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>

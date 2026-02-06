@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -336,7 +336,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Driving & Landing</h3>
+                <h3>ðŸŽ¯ Driving & Landing</h3>
                 <p>Arrow keys or WASD control your vehicle. Gas builds speed, brakes slow you down. You can tilt mid-air
                     to adjust your landing angle. The controls are simple but mastering them takes practice because
                     every ramp demands different timing.</p>
@@ -346,7 +346,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Stunt Tips</h3>
+                <h3>ðŸ’¡ Stunt Tips</h3>
                 <p>Watch the landing zone while airborne. Adjust your angle early, not at the last second. Small
                     corrections mid-flight are way easier to control than big desperate tilts right before impact.
                     Smooth adjustments lead to smooth landings.</p>
@@ -408,9 +408,17 @@
                 button.textContent = '⛶ Fullscreen';
             }
         }
-    </script>
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
     <script src="background-loader.js"></script>
-    <script src="ad-manager.js"></script>
 </body>
 
 </html>
