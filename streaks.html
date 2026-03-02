@@ -1146,7 +1146,7 @@
             let streakActive = true;
             let cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
-            
+
             // To track forgiveness uses during this walk:
             let newForgivenessUses = {};
 
@@ -1166,17 +1166,17 @@
                     } else {
                         // 100% out of freezes. Look at forgiveness.
                         const monthKey = key.substring(0, 7); // YYYY-MM
-                        
+
                         // How many times have we used forgiveness in this month overall?
                         // Past established uses + new uses discovered during this walk.
                         let pastUses = (data.forgivenessData && data.forgivenessData[monthKey]) || 0;
                         let newUses = newForgivenessUses[monthKey] || 0;
-                        
+
                         // We allow 2 saves per month
                         if (pastUses + newUses < 2) {
                             effectiveUsed.add(key);
                             newForgivenessUses[monthKey] = newUses + 1;
-                            
+
                             // Mutate the passed in object so computeStreak can persist it
                             if (!data.pendingForgiveness) data.pendingForgiveness = {};
                             data.pendingForgiveness[monthKey] = pastUses + newUses + 1;
@@ -1202,7 +1202,7 @@
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
             const originalFreezes = Number.isFinite(data.freezes) ? Number(data.freezes) : (data.freezes || 0);
-            
+
             // Pass the data object with forgivenessData
             const tempObj = {
                 visits: Array.from(visits),
@@ -1212,7 +1212,7 @@
             };
 
             const effectiveUsedSet = computeEffectiveUsedSet(tempObj, today);
-            
+
             // Bring back any forgiveness mutation
             if (tempObj.pendingForgiveness) {
                 if (!data.forgivenessData) data.forgivenessData = {};
@@ -1253,7 +1253,7 @@
 
             const effectiveCount = effectiveUsedSet.size;
             const originalUsedCount = originalUsedSet.size;
-            
+
             data.freezes = Math.max(0, originalFreezes - (effectiveCount - originalUsedCount));
             data.usedFreezes = Array.from(effectiveUsedSet).sort();
 
@@ -1331,6 +1331,106 @@
         }
 
 
+        // ── Render the hero stats panel ───────────────────────────────────────
+        function render(data, streak) {
+            if (mainStreakCount) mainStreakCount.textContent = String(streak);
+            if (bestStreak) bestStreak.textContent = String(data.best || 0);
+            if (freezeCount) freezeCount.textContent = String(data.freezes || 0);
+            if (headerFreezeCount) headerFreezeCount.textContent = String(data.freezes || 0);
+
+            if (todayStatus) {
+                const today = normalizeToNoon(new Date());
+                const todayKey = toDayKey(today);
+                const hasVisit = (data.visits || []).some(v => normalizeDayKey(v) === todayKey);
+                if (hasVisit) {
+                    todayStatus.textContent = '✅ Visited today — streak is safe!';
+                    todayStatus.style.background = 'rgba(88,204,2,0.12)';
+                    todayStatus.style.borderColor = 'rgba(88,204,2,0.22)';
+                    todayStatus.style.color = '#d8ffd0';
+                } else {
+                    todayStatus.textContent = "🔴 Haven't visited today yet";
+                    todayStatus.style.background = 'rgba(255,80,80,0.10)';
+                    todayStatus.style.borderColor = 'rgba(255,80,80,0.22)';
+                    todayStatus.style.color = '#ffd0d0';
+                }
+            }
+        }
+
+        // ── Draw the calendar grid for the current month ──────────────────────
+        function updateCalendar(data) {
+            if (!calendarDays || !monthYear) return;
+
+            const visitSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+            const effectiveUsed = computeEffectiveUsedSet(data, new Date());
+
+            const now = new Date();
+            const year = currentYear;
+            const month = currentMonth;
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            monthYear.textContent = `${monthNames[month]} ${year}`;
+
+            const todayKey = toDayKey(normalizeToNoon(now));
+
+            // First day-of-week (0=Sun) of this month
+            const firstDay = new Date(year, month, 1).getDay();
+            // Total days in month
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            // Days in previous month (for padding)
+            const daysInPrev = new Date(year, month, 0).getDate();
+
+            calendarDays.innerHTML = '';
+
+            // Padding cells from previous month
+            for (let i = 0; i < firstDay; i++) {
+                const d = document.createElement('div');
+                d.className = 'day other-month';
+                d.textContent = String(daysInPrev - firstDay + 1 + i);
+                calendarDays.appendChild(d);
+            }
+
+            // Days of the current month
+            for (let date = 1; date <= daysInMonth; date++) {
+                const d = document.createElement('div');
+                d.className = 'day';
+
+                const dayDate = new Date(year, month, date, 12, 0, 0, 0);
+                const dow = dayDate.getDay(); // 0=Sun, 6=Sat
+                const key = toDayKey(dayDate);
+
+                if (dow === 0 || dow === 6) d.classList.add('weekend');
+                if (key === todayKey) d.classList.add('today');
+
+                if (visitSet.has(key)) {
+                    d.classList.add('practiced');
+                } else if (effectiveUsed.has(key)) {
+                    d.classList.add('used-freeze');
+                }
+
+                // Mark Mondays that earned a freeze
+                if (dow === 1) {
+                    d.classList.add('is-monday');
+                    const dot = document.createElement('span');
+                    dot.className = 'monday-dot';
+                    d.appendChild(dot);
+                }
+
+                d.appendChild(document.createTextNode(String(date)));
+                calendarDays.appendChild(d);
+            }
+
+            // Padding cells from next month
+            const totalCells = firstDay + daysInMonth;
+            const remainder = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+            for (let i = 1; i <= remainder; i++) {
+                const d = document.createElement('div');
+                d.className = 'day other-month';
+                d.textContent = String(i);
+                calendarDays.appendChild(d);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             try {
                 let data = loadV2();
@@ -1352,13 +1452,12 @@
 
             // Define refresh function globally for dev mode access
             window.refreshStreak = () => {
-                loadV2((data) => {
-                    if (!data) return;
-                    const computedNext = computeStreak(data, new Date());
-                    saveV2(computedNext.data);
-                    render(computedNext.data, computedNext.streak);
-                    updateCalendar(computedNext.data);
-                });
+                const freshData = loadV2();
+                if (!freshData) return;
+                const computedNext = computeStreak(freshData, new Date());
+                saveV2(computedNext.data);
+                render(computedNext.data, computedNext.streak);
+                updateCalendar(computedNext.data);
             };
 
             if (closeButton) closeButton.addEventListener('click', navigateToHome);
