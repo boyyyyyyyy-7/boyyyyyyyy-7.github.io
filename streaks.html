@@ -784,6 +784,15 @@
                     <div class="legend-item"><span class="dot today"></span> Today</div>
                 </div>
             </div>
+
+            <div style="margin-top: 20px; text-align: center;">
+                <button id="repairBtn"
+                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
+                    ⚙️ Repair Streak System
+                </button>
+                <div id="repairStatus" style="margin-top: 8px; font-size: 0.75rem; color: #58CC02; display: none;">
+                    System repaired!</div>
+            </div>
         </section>
     </main>
 
@@ -807,8 +816,102 @@
         const bestStreak = document.getElementById('bestStreak');
         const todayStatus = document.getElementById('todayStatus');
         const toast = document.getElementById('toast');
+        const repairBtn = document.getElementById('repairBtn');
+        const repairStatusDisplay = document.getElementById('repairStatus');
 
+        // --- GLOABL RENDERING FUNCTIONS ---
+        // (Defined here at the top as window properties to ensure total visibility)
+        window.render = function (data, streak) {
+            console.log('📊 Rendering streak:', streak);
+            if (mainStreakCount) mainStreakCount.textContent = String(streak);
+            if (bestStreak) bestStreak.textContent = String(data.best || 0);
+            if (freezeCount) freezeCount.textContent = String(data.freezes || 0);
+            if (headerFreezeCount) headerFreezeCount.textContent = String(data.freezes || 0);
 
+            if (todayStatus) {
+                const today = normalizeToNoon(new Date());
+                const todayKey = toDayKey(today);
+                const hasVisit = (data.visits || []).some(v => normalizeDayKey(v) === todayKey);
+                if (hasVisit) {
+                    todayStatus.textContent = '✅ Visited today — streak is safe!';
+                    todayStatus.style.background = 'rgba(88,204,2,0.12)';
+                    todayStatus.style.borderColor = 'rgba(88,204,2,0.22)';
+                    todayStatus.style.color = '#d8ffd0';
+                } else {
+                    todayStatus.textContent = "🔴 Haven't visited today yet";
+                    todayStatus.style.background = 'rgba(255,80,80,0.10)';
+                    todayStatus.style.borderColor = 'rgba(255,80,80,0.22)';
+                    todayStatus.style.color = '#ffd0d0';
+                }
+            }
+        };
+
+        window.updateCalendar = function (data) {
+            console.log('📅 Updating calendar...');
+            if (!calendarDays || !monthYear) return;
+
+            const visitSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+            const effectiveUsed = computeEffectiveUsedSet(data, new Date());
+
+            const now = new Date();
+            const year = currentYear;
+            const month = currentMonth;
+
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            monthYear.textContent = `${monthNames[month]} ${year}`;
+
+            const todayKey = toDayKey(normalizeToNoon(now));
+
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrev = new Date(year, month, 0).getDate();
+
+            calendarDays.innerHTML = '';
+
+            for (let i = 0; i < firstDay; i++) {
+                const d = document.createElement('div');
+                d.className = 'day other-month';
+                d.textContent = String(daysInPrev - firstDay + 1 + i);
+                calendarDays.appendChild(d);
+            }
+
+            for (let date = 1; date <= daysInMonth; date++) {
+                const d = document.createElement('div');
+                d.className = 'day';
+                const dayDate = new Date(year, month, date, 12, 0, 0, 0);
+                const dow = dayDate.getDay();
+                const key = toDayKey(dayDate);
+
+                if (dow === 0 || dow === 6) d.classList.add('weekend');
+                if (key === todayKey) d.classList.add('today');
+
+                if (visitSet.has(key)) {
+                    d.classList.add('practiced');
+                } else if (effectiveUsed.has(key)) {
+                    d.classList.add('used-freeze');
+                }
+
+                if (dow === 1) {
+                    d.classList.add('is-monday');
+                    const dot = document.createElement('span');
+                    dot.className = 'monday-dot';
+                    d.appendChild(dot);
+                }
+
+                d.appendChild(document.createTextNode(String(date)));
+                calendarDays.appendChild(d);
+            }
+
+            const totalCells = firstDay + daysInMonth;
+            const remainder = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
+            for (let i = 1; i <= remainder; i++) {
+                const d = document.createElement('div');
+                d.className = 'day other-month';
+                d.textContent = String(i);
+                calendarDays.appendChild(d);
+            }
+        };
 
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
@@ -1011,18 +1114,37 @@
         function loadV2() {
             let parsed = null;
             try {
+                console.log('Attempting to load streak data V2...');
                 const stored = localStorage.getItem(STORAGE_KEY_V2);
                 if (stored) {
+                    console.log('Stored data found. Checking Obfuscator status...');
                     // Try decrypting first
                     if (typeof Obfuscator !== 'undefined') {
+                        console.log('Obfuscator is defined. Attempting decryption...');
                         parsed = Obfuscator.decrypt(stored);
+                        if (parsed) {
+                            console.log('Decryption successful.');
+                        } else {
+                            console.warn('Decryption failed. Falling back to plain JSON parse.');
+                        }
+                    } else {
+                        console.warn('Obfuscator is NOT defined. Attempting plain JSON parse.');
                     }
                     // Fallback to plain JSON if decryption failed or not ready
                     if (!parsed && stored.startsWith('{')) {
+                        console.log('Attempting plain JSON parse...');
                         parsed = JSON.parse(stored);
+                        if (parsed) {
+                            console.log('Plain JSON parse successful.');
+                        } else {
+                            console.warn('Plain JSON parse failed.');
+                        }
                     }
+                } else {
+                    console.log('No stored data found for V2.');
                 }
-            } catch {
+            } catch (e) {
+                console.error('Error loading V2 data:', e);
                 parsed = null;
             }
 
@@ -1037,7 +1159,10 @@
                 checksum: null
             };
 
-            if (!parsed || typeof parsed !== 'object') return base;
+            if (!parsed || typeof parsed !== 'object') {
+                console.log('No valid V2 data parsed. Returning base data.');
+                return base;
+            }
 
             let loadedData = {
                 ...base,
@@ -1052,12 +1177,13 @@
             };
 
             if (!validateStreakData(loadedData)) {
+                console.warn('Loaded V2 data failed validation. Clearing and returning base data.');
                 localStorage.removeItem(STORAGE_KEY_V2);
                 localStorage.removeItem('streakFreezes');
                 localStorage.removeItem('bestStreak');
                 return base;
             }
-
+            console.log('V2 data loaded and validated successfully.');
             return loadedData;
         }
 
@@ -1222,7 +1348,7 @@
             }
 
             let streak = 0;
-            let streakActive = false;
+            let streakActiveForCount = false;
 
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
@@ -1237,10 +1363,10 @@
 
                 if (hasVisit) {
                     streak += 1;
-                    streakActive = true;
-                } else if (hasUsed && streakActive) {
+                    streakActiveForCount = true;
+                } else if (hasUsed && streakActiveForCount) {
                     streak += 1;
-                } else if (!isWeekend && streakActive) {
+                } else if (!isWeekend && streakActiveForCount) {
                     break;
                 } else {
                     if (!isWeekend) break;
@@ -1331,107 +1457,8 @@
         }
 
 
-        // ── Render the hero stats panel ───────────────────────────────────────
-        function render(data, streak) {
-            if (mainStreakCount) mainStreakCount.textContent = String(streak);
-            if (bestStreak) bestStreak.textContent = String(data.best || 0);
-            if (freezeCount) freezeCount.textContent = String(data.freezes || 0);
-            if (headerFreezeCount) headerFreezeCount.textContent = String(data.freezes || 0);
-
-            if (todayStatus) {
-                const today = normalizeToNoon(new Date());
-                const todayKey = toDayKey(today);
-                const hasVisit = (data.visits || []).some(v => normalizeDayKey(v) === todayKey);
-                if (hasVisit) {
-                    todayStatus.textContent = '✅ Visited today — streak is safe!';
-                    todayStatus.style.background = 'rgba(88,204,2,0.12)';
-                    todayStatus.style.borderColor = 'rgba(88,204,2,0.22)';
-                    todayStatus.style.color = '#d8ffd0';
-                } else {
-                    todayStatus.textContent = "🔴 Haven't visited today yet";
-                    todayStatus.style.background = 'rgba(255,80,80,0.10)';
-                    todayStatus.style.borderColor = 'rgba(255,80,80,0.22)';
-                    todayStatus.style.color = '#ffd0d0';
-                }
-            }
-        }
-
-        // ── Draw the calendar grid for the current month ──────────────────────
-        function updateCalendar(data) {
-            if (!calendarDays || !monthYear) return;
-
-            const visitSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            const effectiveUsed = computeEffectiveUsedSet(data, new Date());
-
-            const now = new Date();
-            const year = currentYear;
-            const month = currentMonth;
-
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'];
-            monthYear.textContent = `${monthNames[month]} ${year}`;
-
-            const todayKey = toDayKey(normalizeToNoon(now));
-
-            // First day-of-week (0=Sun) of this month
-            const firstDay = new Date(year, month, 1).getDay();
-            // Total days in month
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            // Days in previous month (for padding)
-            const daysInPrev = new Date(year, month, 0).getDate();
-
-            calendarDays.innerHTML = '';
-
-            // Padding cells from previous month
-            for (let i = 0; i < firstDay; i++) {
-                const d = document.createElement('div');
-                d.className = 'day other-month';
-                d.textContent = String(daysInPrev - firstDay + 1 + i);
-                calendarDays.appendChild(d);
-            }
-
-            // Days of the current month
-            for (let date = 1; date <= daysInMonth; date++) {
-                const d = document.createElement('div');
-                d.className = 'day';
-
-                const dayDate = new Date(year, month, date, 12, 0, 0, 0);
-                const dow = dayDate.getDay(); // 0=Sun, 6=Sat
-                const key = toDayKey(dayDate);
-
-                if (dow === 0 || dow === 6) d.classList.add('weekend');
-                if (key === todayKey) d.classList.add('today');
-
-                if (visitSet.has(key)) {
-                    d.classList.add('practiced');
-                } else if (effectiveUsed.has(key)) {
-                    d.classList.add('used-freeze');
-                }
-
-                // Mark Mondays that earned a freeze
-                if (dow === 1) {
-                    d.classList.add('is-monday');
-                    const dot = document.createElement('span');
-                    dot.className = 'monday-dot';
-                    d.appendChild(dot);
-                }
-
-                d.appendChild(document.createTextNode(String(date)));
-                calendarDays.appendChild(d);
-            }
-
-            // Padding cells from next month
-            const totalCells = firstDay + daysInMonth;
-            const remainder = totalCells % 7 === 0 ? 0 : 7 - (totalCells % 7);
-            for (let i = 1; i <= remainder; i++) {
-                const d = document.createElement('div');
-                d.className = 'day other-month';
-                d.textContent = String(i);
-                calendarDays.appendChild(d);
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
+            console.log('🔄 DOM loaded, initializing streak...');
             try {
                 let data = loadV2();
                 data = migrateLegacyIntoV2(data);
@@ -1440,8 +1467,8 @@
                 data = computed.data;
                 saveV2(data);
 
-                render(data, computed.streak);
-                updateCalendar(data);
+                window.render(data, computed.streak);
+                window.updateCalendar(data);
             } catch (error) {
                 console.error('Streak system error:', error);
                 console.error('Error stack:', error.stack);
@@ -1456,11 +1483,48 @@
                 if (!freshData) return;
                 const computedNext = computeStreak(freshData, new Date());
                 saveV2(computedNext.data);
-                render(computedNext.data, computedNext.streak);
-                updateCalendar(computedNext.data);
+                window.render(computedNext.data, computedNext.streak);
+                window.updateCalendar(computedNext.data);
+            };
+
+            window.repairData = () => {
+                console.log('🛠 Running window.repairData()...');
+                try {
+                    let data = loadV2();
+                    data = migrateLegacyIntoV2(data);
+                    data = recordVisit(data, new Date());
+                    const computed = computeStreak(data, new Date());
+                    saveV2(computed.data);
+                    window.render(computed.data, computed.streak);
+                    window.updateCalendar(computed.data);
+                    if (repairStatusDisplay) {
+                        repairStatusDisplay.style.display = 'block';
+                        repairStatusDisplay.textContent = 'System repaired!';
+                        setTimeout(() => repairStatusDisplay.style.display = 'none', 3000);
+                    }
+                    console.log('✅ Data repair complete!');
+                } catch (e) {
+                    console.error('❌ Data repair failed:', e);
+                    if (repairStatusDisplay) {
+                        repairStatusDisplay.style.display = 'block';
+                        repairStatusDisplay.textContent = 'Repair failed!';
+                        repairStatusDisplay.style.color = '#ff5050';
+                        setTimeout(() => {
+                            repairStatusDisplay.style.display = 'none';
+                            repairStatusDisplay.style.color = '#58CC02'; // Reset color
+                        }, 3000);
+                    }
+                }
             };
 
             if (closeButton) closeButton.addEventListener('click', navigateToHome);
+
+            if (repairBtn) {
+                repairBtn.addEventListener('click', () => {
+                    console.log('🛠 Repair button clicked...');
+                    window.repairData(); // Call the global repair function
+                });
+            }
 
 
             if (prevMonthBtn) {
@@ -1471,7 +1535,7 @@
                         currentYear -= 1;
                     }
                     const data = loadV2();
-                    updateCalendar(data);
+                    window.updateCalendar(data);
                 });
             }
 
@@ -1483,7 +1547,7 @@
                         currentYear += 1;
                     }
                     const data = loadV2();
-                    updateCalendar(data);
+                    window.updateCalendar(data);
                 });
             }
 
