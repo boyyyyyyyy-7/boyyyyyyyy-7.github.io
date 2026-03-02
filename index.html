@@ -1810,6 +1810,8 @@
         // for display and calendar rendering. This simulates the forward walk used
         // by `computeStreak` to ensure visual consistency.
         function computeEffectiveUsedSet(data, date = new Date()) {
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(normalizeToNoon(date));
             const today = normalizeToNoon(date);
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
@@ -1830,6 +1832,7 @@
 
             while (streakActive) {
                 const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
@@ -1900,6 +1903,8 @@
             }
 
             let streak = 0;
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(today);
             let streakActive = false;
 
             const cursor = new Date(today);
@@ -1907,6 +1912,7 @@
 
             while (true) {
                 const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
@@ -1945,6 +1951,8 @@
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const used = computeEffectiveUsedSet(data, today);
 
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(normalizeToNoon(new Date()));
             let activeStreak = 0;
             let streakActive = false;
 

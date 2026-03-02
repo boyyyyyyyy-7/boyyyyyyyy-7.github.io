@@ -785,14 +785,7 @@
                 </div>
             </div>
 
-            <div style="margin-top: 20px; text-align: center;">
-                <button id="repairBtn"
-                    style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
-                    ⚙️ Repair Streak System
-                </button>
-                <div id="repairStatus" style="margin-top: 8px; font-size: 0.75rem; color: #58CC02; display: none;">
-                    System repaired!</div>
-            </div>
+            
         </section>
     </main>
 
@@ -816,8 +809,7 @@
         const bestStreak = document.getElementById('bestStreak');
         const todayStatus = document.getElementById('todayStatus');
         const toast = document.getElementById('toast');
-        const repairBtn = document.getElementById('repairBtn');
-        const repairStatusDisplay = document.getElementById('repairStatus');
+        
 
         // --- GLOABL RENDERING FUNCTIONS ---
         // (Defined here at the top as window properties to ensure total visibility)
@@ -1258,6 +1250,8 @@
         // for display and calendar rendering. This simulates the forward walk used
         // by `computeStreak` to ensure visual consistency.
         function computeEffectiveUsedSet(data, date = new Date()) {
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(normalizeToNoon(date));
             const today = normalizeToNoon(date);
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
@@ -1278,6 +1272,7 @@
 
             while (streakActive) {
                 const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
@@ -1348,6 +1343,8 @@
             }
 
             let streak = 0;
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(today);
             let streakActiveForCount = false;
 
             const cursor = new Date(today);
@@ -1355,6 +1352,7 @@
 
             while (true) {
                 const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
@@ -1393,6 +1391,8 @@
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const used = computeEffectiveUsedSet(data, today);
 
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(normalizeToNoon(new Date()));
             let activeStreak = 0;
             let streakActive = false;
 
@@ -1487,45 +1487,8 @@
                 window.updateCalendar(computedNext.data);
             };
 
-            window.repairData = () => {
-                console.log('🛠 Running window.repairData()...');
-                try {
-                    let data = loadV2();
-                    data = migrateLegacyIntoV2(data);
-                    data = recordVisit(data, new Date());
-                    const computed = computeStreak(data, new Date());
-                    saveV2(computed.data);
-                    window.render(computed.data, computed.streak);
-                    window.updateCalendar(computed.data);
-                    if (repairStatusDisplay) {
-                        repairStatusDisplay.style.display = 'block';
-                        repairStatusDisplay.textContent = 'System repaired!';
-                        setTimeout(() => repairStatusDisplay.style.display = 'none', 3000);
-                    }
-                    console.log('✅ Data repair complete!');
-                } catch (e) {
-                    console.error('❌ Data repair failed:', e);
-                    if (repairStatusDisplay) {
-                        repairStatusDisplay.style.display = 'block';
-                        repairStatusDisplay.textContent = 'Repair failed!';
-                        repairStatusDisplay.style.color = '#ff5050';
-                        setTimeout(() => {
-                            repairStatusDisplay.style.display = 'none';
-                            repairStatusDisplay.style.color = '#58CC02'; // Reset color
-                        }, 3000);
-                    }
-                }
-            };
 
             if (closeButton) closeButton.addEventListener('click', navigateToHome);
-
-            if (repairBtn) {
-                repairBtn.addEventListener('click', () => {
-                    console.log('🛠 Repair button clicked...');
-                    window.repairData(); // Call the global repair function
-                });
-            }
-
 
             if (prevMonthBtn) {
                 prevMonthBtn.addEventListener('click', () => {

@@ -1353,6 +1353,8 @@
             }
 
             let streak = 0;
+            const allVisits = data.visits || [];
+            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(today);
             let streakActive = false;
 
             const cursor = new Date(today);
@@ -1360,6 +1362,7 @@
 
             while (true) {
                 const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
