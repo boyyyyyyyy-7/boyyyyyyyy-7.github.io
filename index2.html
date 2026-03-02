@@ -1314,55 +1314,65 @@
 
             if (today.getDay() === 1) {
                 const weekKey = getWeekKey(today);
-                console.log(`📅 Monday detected! Current week: ${weekKey}, Last freeze week: ${data.lastFreezeWeek}`);
+                console.log(`📅 Monday detected! Current week: ${weekKey}`);
                 if (data.lastFreezeWeek !== weekKey) {
                     data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
                     data.lastFreezeWeek = weekKey;
                     console.log(`❄️ Monday bonus: +1 Freeze (Total: ${data.freezes})`);
-                    showToast('Monday bonus: +1 Freeze');
-                } else {
-                    console.log('❄️ Monday bonus already claimed this week');
+                    if (typeof showToast !== 'undefined') showToast('Monday bonus: +1 Freeze');
                 }
-            } else {
-                console.log(`📅 Day ${today.getDay()} (not Monday, no freeze)`);
             }
-
             return data;
         }
 
         function computeStreak(data, date = new Date()) {
             const today = normalizeToNoon(date);
+
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            let freezesRemaining = Math.max(0, Number(data.freezes) || 0);
-            const newlyUsed = [];
+            const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
+            const originalFreezes = Number.isFinite(data.freezes) ? Number(data.freezes) : (data.freezes || 0);
+            
+            // Pass the data object with forgivenessData
+            const tempObj = {
+                visits: Array.from(visits),
+                usedFreezes: Array.from(originalUsedSet),
+                freezes: originalFreezes,
+                forgivenessData: data.forgivenessData || {}
+            };
+
+            const effectiveUsedSet = computeEffectiveUsedSet(tempObj, today);
+            
+            // Bring back any forgiveness mutation
+            if (tempObj.pendingForgiveness) {
+                if (!data.forgivenessData) data.forgivenessData = {};
+                for (let k in tempObj.pendingForgiveness) {
+                    data.forgivenessData[k] = tempObj.pendingForgiveness[k];
+                }
+            }
+
             let streak = 0;
+            let streakActive = false;
 
             const cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
-
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay() + 1);
-            weekStart.setHours(12, 0, 0, 0);
 
             while (true) {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
-                const isInCurrentWeek = cursor >= weekStart;
 
-                if (visits.has(key)) {
+                const hasVisit = visits.has(key);
+                const hasUsed = effectiveUsedSet.has(key);
+
+                if (hasVisit) {
                     streak += 1;
-                } else if (isWeekend) {
-                } else if (isInCurrentWeek) {
-                    if (freezesRemaining > 0) {
-                        freezesRemaining -= 1;
-                        newlyUsed.push(key);
-                        streak += 1;
-                    } else {
-                        break;
-                    }
-                } else {
+                    streakActive = true;
+                } else if (hasUsed && streakActive) {
+                    streak += 1;
+                } else if (!isWeekend && streakActive) {
                     break;
+                } else {
+                    if (!isWeekend) break;
                 }
 
                 cursor.setDate(cursor.getDate() - 1);
@@ -1370,9 +1380,12 @@
                 if (getDayDiff(cursor, today) > 365) break;
             }
 
-            // Merge newly used freezes with existing ones for calendar display
-            data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyUsed);
-            data.freezes = freezesRemaining;
+            const effectiveCount = effectiveUsedSet.size;
+            const originalUsedCount = originalUsedSet.size;
+            
+            data.freezes = Math.max(0, originalFreezes - (effectiveCount - originalUsedCount));
+            data.usedFreezes = Array.from(effectiveUsedSet).sort();
+
             data.best = Math.max(Number(data.best) || 0, streak);
             return { streak, data };
         }

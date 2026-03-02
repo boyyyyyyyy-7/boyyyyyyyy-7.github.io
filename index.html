@@ -1793,19 +1793,14 @@
 
             if (today.getDay() === 1) {
                 const weekKey = getWeekKey(today);
-                console.log(`📅 Monday detected! Current week: ${weekKey}, Last freeze week: ${data.lastFreezeWeek}`);
+                console.log(`📅 Monday detected! Current week: ${weekKey}`);
                 if (data.lastFreezeWeek !== weekKey) {
                     data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
                     data.lastFreezeWeek = weekKey;
                     console.log(`❄️ Monday bonus: +1 Freeze (Total: ${data.freezes})`);
-                    showToast('Monday bonus: +1 Freeze');
-                } else {
-                    console.log('❄️ Monday bonus already claimed this week');
+                    if (typeof showToast !== 'undefined') showToast('Monday bonus: +1 Freeze');
                 }
-            } else {
-                console.log(`📅 Day ${today.getDay()} (not Monday, no freeze)`);
             }
-
             return data;
         }
 
@@ -1816,73 +1811,66 @@
             const today = normalizeToNoon(date);
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-            const originalUsedCount = originalUsedSet.size;
 
-            // 1. Determine the "Active Window".
-            // Instead of a hard 30-day cut, find the earliest relevant activity.
-            // Scan back until we find a gap > 30 days to ensure we catch the true start.
-            let allDates = [...data.visits, ...data.usedFreezes].map(k => parseDayKey(k)).filter(d => d && d <= today);
-            if (allDates.length === 0) return new Set();
-
-            // Sort dates ascending
-            allDates.sort((a, b) => a - b);
-            const firstDate = allDates[0];
-
-            // Start simulation from the first ever relevant date found, or 365 days back, whichever is earlier.
-            const startLimit = new Date(today);
-            startLimit.setDate(today.getDate() - 365);
-
-            let cursor = new Date(firstDate < startLimit ? firstDate : startLimit);
-            cursor = normalizeToNoon(cursor);
-
-            // Total available freezes (current + historically used)
-            let available = (Number.isFinite(data.freezes) ? data.freezes : (data.freezes || 0)) + originalUsedCount;
+            let available = Number.isFinite(data.freezes) ? data.freezes : (data.freezes || 0);
 
             const effectiveUsed = new Set();
-            let streakActive = false;
+            for (const key of originalUsedSet) {
+                effectiveUsed.add(key);
+            }
 
-            while (cursor <= today) {
+            let streakActive = true;
+            let cursor = new Date(today);
+            cursor.setHours(12, 0, 0, 0);
+            
+            // To track forgiveness uses during this walk:
+            let newForgivenessUses = {};
+
+            while (streakActive) {
                 const key = toDayKey(cursor);
                 const dow = cursor.getDay();
                 const isWeekend = dow === 0 || dow === 6;
 
-                const hasVisit = visitsSet.has(key);
-                const hasOrigUsed = originalUsedSet.has(key);
-
-                if (hasVisit) {
-                    // Green Day
-                    streakActive = true;
-                    // Green overrides Blue, so we do nothing with freeezes
-                } else if (!isWeekend && streakActive) {
-                    // Missed Weekday inside Active Streak (Zone B)
-                    // This is the ONLY place a freeze can occur.
-
-                    if (hasOrigUsed) {
-                        // User previously marked this as used. Verify we can afford it.
-                        effectiveUsed.add(key);
-                        available = Math.max(0, available - 1);
-                    } else if (available > 0) {
-                        // Auto-consume if available to keep streak alive
+                if (visitsSet.has(key)) {
+                    // Visited
+                } else if (originalUsedSet.has(key)) {
+                    // Already frozen
+                } else if (!isWeekend) {
+                    if (available > 0) {
                         effectiveUsed.add(key);
                         available -= 1;
                     } else {
-                        // No freezes left -> Streak Breaks
-                        streakActive = false;
-                    }
-                } else {
-                    // Zone A (Before Start), Inactive, or Weekend
-                    if (!isWeekend) {
-                        // If it's a weekday and we are NOT active, ensure we stay inactive.
-                        streakActive = false;
+                        // 100% out of freezes. Look at forgiveness.
+                        const monthKey = key.substring(0, 7); // YYYY-MM
+                        
+                        // How many times have we used forgiveness in this month overall?
+                        // Past established uses + new uses discovered during this walk.
+                        let pastUses = (data.forgivenessData && data.forgivenessData[monthKey]) || 0;
+                        let newUses = newForgivenessUses[monthKey] || 0;
+                        
+                        // We allow 2 saves per month
+                        if (pastUses + newUses < 2) {
+                            effectiveUsed.add(key);
+                            newForgivenessUses[monthKey] = newUses + 1;
+                            
+                            // Mutate the passed in object so computeStreak can persist it
+                            if (!data.pendingForgiveness) data.pendingForgiveness = {};
+                            data.pendingForgiveness[monthKey] = pastUses + newUses + 1;
+                        } else {
+                            streakActive = false;
+                            break;
+                        }
                     }
                 }
 
-                cursor.setDate(cursor.getDate() + 1);
+                cursor.setDate(cursor.getDate() - 1);
                 cursor.setHours(12, 0, 0, 0);
+                if (getDayDiff(cursor, today) > 365) break;
             }
 
             return effectiveUsed;
         }
+
 
         function computeStreak(data, date = new Date()) {
             const today = normalizeToNoon(date);
@@ -1890,12 +1878,24 @@
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
             const originalFreezes = Number.isFinite(data.freezes) ? Number(data.freezes) : (data.freezes || 0);
-
-            const effectiveUsedSet = computeEffectiveUsedSet({
+            
+            // Pass the data object with forgivenessData
+            const tempObj = {
                 visits: Array.from(visits),
                 usedFreezes: Array.from(originalUsedSet),
-                freezes: originalFreezes
-            }, today);
+                freezes: originalFreezes,
+                forgivenessData: data.forgivenessData || {}
+            };
+
+            const effectiveUsedSet = computeEffectiveUsedSet(tempObj, today);
+            
+            // Bring back any forgiveness mutation
+            if (tempObj.pendingForgiveness) {
+                if (!data.forgivenessData) data.forgivenessData = {};
+                for (let k in tempObj.pendingForgiveness) {
+                    data.forgivenessData[k] = tempObj.pendingForgiveness[k];
+                }
+            }
 
             let streak = 0;
             let streakActive = false;
@@ -1911,15 +1911,12 @@
                 const hasVisit = visits.has(key);
                 const hasUsed = effectiveUsedSet.has(key);
 
-                console.log(`Checking ${key}: weekday=${!isWeekend}, visit=${hasVisit}, freeze=${hasUsed}, active=${streakActive}`);
-
                 if (hasVisit) {
                     streak += 1;
                     streakActive = true;
                 } else if (hasUsed && streakActive) {
                     streak += 1;
                 } else if (!isWeekend && streakActive) {
-                    console.log(`  -> Break streak, no freeze available`);
                     break;
                 } else {
                     if (!isWeekend) break;
@@ -1932,6 +1929,7 @@
 
             const effectiveCount = effectiveUsedSet.size;
             const originalUsedCount = originalUsedSet.size;
+            
             data.freezes = Math.max(0, originalFreezes - (effectiveCount - originalUsedCount));
             data.usedFreezes = Array.from(effectiveUsedSet).sort();
 
