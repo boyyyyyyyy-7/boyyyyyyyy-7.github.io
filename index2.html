@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Meta Information -->
     <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    
+
     <!-- PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0a0a0a">
-    
+
     <!-- SEO and Social Media -->
     <meta property="og:title" content="Brayden is tall games 2">
     <meta property="og:type" content="website">
     <meta property="og:url" content="">
     <meta itemprop="url" content="">
-    
+
     <!-- External Resources -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
     <title>Brayden is tall games 2</title>
     <style>
         @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+
+            0%,
+            100% {
+                opacity: 0.2;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
-        
+
         .star-container {
             position: fixed;
             top: 0;
@@ -40,7 +52,7 @@
             overflow: hidden;
             pointer-events: none;
         }
-        
+
         .star {
             position: absolute;
             border-radius: 50%;
@@ -48,13 +60,32 @@
             will-change: transform, opacity;
             animation: twinkle 3s infinite ease-in-out;
         }
-        
+
         /* Color variations */
-        .star.color1 { background-color: #ffffff; box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8); }
-        .star.color2 { background-color: #a8e6ff; box-shadow: 0 0 15px 3px rgba(168, 230, 255, 0.8); }
-        .star.color3 { background-color: #ffd700; box-shadow: 0 0 15px 3px rgba(255, 215, 0, 0.8); }
-        .star.color4 { background-color: #ff9e9e; box-shadow: 0 0 15px 3px rgba(255, 158, 158, 0.8); }
-        .star.color5 { background-color: #c0ffb3; box-shadow: 0 0 15px 3px rgba(192, 255, 179, 0.8); }
+        .star.color1 {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+        }
+
+        .star.color2 {
+            background-color: #a8e6ff;
+            box-shadow: 0 0 15px 3px rgba(168, 230, 255, 0.8);
+        }
+
+        .star.color3 {
+            background-color: #ffd700;
+            box-shadow: 0 0 15px 3px rgba(255, 215, 0, 0.8);
+        }
+
+        .star.color4 {
+            background-color: #ff9e9e;
+            box-shadow: 0 0 15px 3px rgba(255, 158, 158, 0.8);
+        }
+
+        .star.color5 {
+            background-color: #c0ffb3;
+            box-shadow: 0 0 15px 3px rgba(192, 255, 179, 0.8);
+        }
 
         .snowflake {
             position: fixed;
@@ -70,13 +101,25 @@
         }
 
         @keyframes snowFall {
-            0% { transform: translateY(-10vh); }
-            100% { transform: translateY(110vh); }
+            0% {
+                transform: translateY(-10vh);
+            }
+
+            100% {
+                transform: translateY(110vh);
+            }
         }
 
         @keyframes snowSway {
-            0%, 100% { margin-left: 0; }
-            50% { margin-left: 20px; }
+
+            0%,
+            100% {
+                margin-left: 0;
+            }
+
+            50% {
+                margin-left: 20px;
+            }
         }
     </style>
     <style>
@@ -88,7 +131,7 @@
             --text-light: #f9f9f9;
             --text-dark: #0a0a0a;
             --transition: all 0.3s ease;
-            
+
             /* Theme variables */
             --bg-color: #0a0a0a;
             --card-bg: rgba(30, 30, 30, 0.8);
@@ -106,7 +149,7 @@
             --text-dark: #0a0a0a;
             --primary-color: #4ecdc4;
         }
-        
+
         /* Light Theme */
         .light-theme {
             --bg-color: #f6f7fb;
@@ -173,62 +216,63 @@
         }
 
         html {
-  height: auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-        body {
-            background: var(--bg-color);
-            color: var(--text-light);
-            transition: background-color 0.5s ease;
-        }
-        
-        header {
-            background: var(--header-bg);
-        }
-        
-        .game-card {
-            background: var(--card-bg);
-            border: 1.5px solid var(--card-border);
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        #streakCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.7;
-        }
-        
-        body {
-            font-family: 'Maven Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-light);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            position: relative;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
+            height: auto;
             overflow-y: auto;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-        
-        /* Light Mode Styles */
-        body.light-mode {
-            background: var(--bg-color);
-            color: var(--text-light);
-        }
-        
+            -webkit-overflow-scrolling: touch;
+
+            body {
+                background: var(--bg-color);
+                color: var(--text-light);
+                transition: background-color 0.5s ease;
+            }
+
+            header {
+                background: var(--header-bg);
+            }
+
+            .game-card {
+                background: var(--card-bg);
+                border: 1.5px solid var(--card-border);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            #streakCanvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+                opacity: 0.7;
+            }
+
+            body {
+                font-family: 'Maven Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+                background: var(--bg-color);
+                color: var(--text-light);
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                min-height: 100vh;
+                position: relative;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                overflow-x: hidden;
+                overflow-y: auto;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+
+            /* Light Mode Styles */
+            body.light-mode {
+                background: var(--bg-color);
+                color: var(--text-light);
+            }
+
             /* Settings button styles */
             .settings-btn {
                 position: fixed;
@@ -299,8 +343,15 @@
             }
 
             @keyframes flame-flicker {
-                0% { transform: scale(1); opacity: 1; }
-                100% { transform: scale(1.1); opacity: 0.9; }
+                0% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: scale(1.1);
+                    opacity: 0.9;
+                }
             }
 
             /* Red notification dots */
@@ -327,485 +378,544 @@
             }
 
             @keyframes pulse-dot {
-                0%, 100% { transform: scale(1); opacity: 1; }
-                50% { transform: scale(1.2); opacity: 0.8; }
+
+                0%,
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+
+                50% {
+                    transform: scale(1.2);
+                    opacity: 0.8;
+                }
             }
-        
-        /* Settings menu styles */
-        .settings-menu {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: rgba(78, 205, 196, 0.9);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(78, 205, 196, 0.3);
-            border-radius: 10px;
-            padding: 20px;
-            min-width: 250px;
-            z-index: 1000;
-            transform: translateY(-20px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        }
-        
-        .settings-menu.active {
-            transform: translateY(0);
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .settings-menu h3 {
-            color: #0a0a0a;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-            text-align: center;
-        }
-        
-        .settings-option {
-            margin-bottom: 15px;
-        }
-        
-        .settings-option label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #0a0a0a;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-        
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        
-        .toggle-switch.active {
-            background: #4ecdc4;
-        }
-        
-        .toggle-switch::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background: #fff;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-        
-        .toggle-switch.active::after {
-            transform: translateX(26px);
-        }
-        
-        .settings-menu .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #4ecdc4;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 5px;
-        }
-        
-        .settings-menu .close-btn:hover {
-            color: #f9f9f9;
-        }
-        
-        /* Fullscreen button styles */
-        .fullscreen-btn {
-            position: fixed;
-            top: 20px;
-            right: 90px;
-            background: rgba(78, 205, 196, 0.9);
-            color: #0a0a0a;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .fullscreen-btn:hover {
-            background: rgba(78, 205, 196, 1);
-            transform: scale(1.1);
-        }
-        
-        .fullscreen-btn:active {
-            transform: scale(0.95);
-        }
-        
-        
-        /* Hide fullscreen button on desktop */
-        @media (min-width: 769px) {
+
+            /* Settings menu styles */
+            .settings-menu {
+                position: fixed;
+                top: 80px;
+                right: 20px;
+                background: rgba(78, 205, 196, 0.9);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(78, 205, 196, 0.3);
+                border-radius: 10px;
+                padding: 20px;
+                min-width: 250px;
+                z-index: 1000;
+                transform: translateY(-20px);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            }
+
+            .settings-menu.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .settings-menu h3 {
+                color: #0a0a0a;
+                margin-bottom: 15px;
+                font-size: 1.2em;
+                text-align: center;
+            }
+
+            .settings-option {
+                margin-bottom: 15px;
+            }
+
+            .settings-option label {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: #0a0a0a;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: bold;
+            }
+
+            .toggle-switch {
+                position: relative;
+                width: 50px;
+                height: 24px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 12px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            .toggle-switch.active {
+                background: #4ecdc4;
+            }
+
+            .toggle-switch::after {
+                content: '';
+                position: absolute;
+                top: 2px;
+                left: 2px;
+                width: 20px;
+                height: 20px;
+                background: #fff;
+                border-radius: 50%;
+                transition: transform 0.3s ease;
+            }
+
+            .toggle-switch.active::after {
+                transform: translateX(26px);
+            }
+
+            .settings-menu .close-btn {
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: none;
+                border: none;
+                color: #4ecdc4;
+                font-size: 18px;
+                cursor: pointer;
+                padding: 5px;
+            }
+
+            .settings-menu .close-btn:hover {
+                color: #f9f9f9;
+            }
+
+            /* Fullscreen button styles */
             .fullscreen-btn {
-                display: none;
+                position: fixed;
+                top: 20px;
+                right: 90px;
+                background: rgba(78, 205, 196, 0.9);
+                color: #0a0a0a;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+                cursor: pointer;
+                z-index: 1000;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             }
-        }
-        
-        /* Moving Stars Background - Dark Mode */
-        body::before {
-            content: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: moveStars 20s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        /* Light Mode - White Sky with Black Stars */
-        body.light-mode::before {
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #000, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(0,0,0,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #000, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(0,0,0,0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #333, transparent);
-        }
-        
-        /* Christmas Mode Styles */
-        body.christmas-mode {
-            background: #283747; /* Dark blue background for night sky */
-            color: #f9f9f9;
-            background-attachment: fixed; /* This creates the "sinking" effect */
-            background-size: cover; /* Ensure background covers the entire viewport */
-            background-position: center center; /* Center the background image */
-        }
 
-        body.christmas-mode::before {
-            background: 
-                url('https://www.transparenttextures.com/patterns/christmas-eves.png') repeat, /* Snow pattern */
-                radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.4) 1px, transparent 60px),
-                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.3) 1px, transparent 40px),
-                radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.5) 1px, transparent 80px);
-            background-size: 200px 200px, cover, cover, cover, cover;
-            animation: snowfall 30s linear infinite;
-        }
+            .fullscreen-btn:hover {
+                background: rgba(78, 205, 196, 1);
+                transform: scale(1.1);
+            }
 
-        @keyframes snowfall {
-            0% { background-position: 0 0, 0 0, 0 0, 0 0, 0 0; }
-            100% { background-position: 0 200px, 0 200px, 0 200px, 0 200px, 0 200px; }
-        }
+            .fullscreen-btn:active {
+                transform: scale(0.95);
+            }
 
-        body.christmas-mode::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(4px 4px at 30px 40px, #fff, transparent),
-                radial-gradient(3px 3px at 80px 10px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(5px 5px at 120px 60px, #ddd, transparent),
-                radial-gradient(2px 2px at 180px 90px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(6px 6px at 200px 20px, #eee, transparent);
-            background-repeat: repeat;
-            background-size: 180px 180px; /* Adjust size for more varied flakes */
-            animation: moveSnowflakes 25s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
 
-        @keyframes moveSnowflakes {
-            0% { transform: translateY(0px); opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(200px); opacity: 0; }
-        }
-        
-        @keyframes moveStars {
-            0% { transform: translateX(0px) translateY(0px); }
-            100% { transform: translateX(-200px) translateY(-100px); }
-        }
-        
-        /* Additional star layers for depth */
-        body::after {
-            content: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(1px 1px at 50px 50px, #fff, transparent),
-                radial-gradient(1px 1px at 100px 100px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
-                radial-gradient(1px 1px at 200px 200px, rgba(255,255,255,0.6), transparent);
-            background-repeat: repeat;
-            background-size: 300px 200px;
-            animation: moveStars2 30s linear infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        @keyframes moveStars2 {
-            0% { transform: translateX(0px) translateY(0px); }
-            100% { transform: translateX(-300px) translateY(-200px); }
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        header {
-            background: var(--header-bg);
-            color: var(--text-light);
-            border: 1.5px solid var(--card-border);
-            border-radius: 18px;
-            padding: 60px 0;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(3px) saturate(160%);
-            -webkit-backdrop-filter: blur(3px) saturate(160%);
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
+            /* Hide fullscreen button on desktop */
+            @media (min-width: 769px) {
+                .fullscreen-btn {
+                    display: none;
+                }
+            }
 
-        .light-theme header {
-            box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
-        }
-        
-        /* Fallback for browsers that don't support backdrop-filter */
-        @supports not (backdrop-filter: blur(15px)) {
+            /* Moving Stars Background - Dark Mode */
+            body::before {
+                content: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background:
+                    radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                    radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent),
+                    radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                    radial-gradient(1px 1px at 130px 80px, rgba(255, 255, 255, 0.6), transparent),
+                    radial-gradient(2px 2px at 160px 30px, #ddd, transparent);
+                background-repeat: repeat;
+                background-size: 200px 100px;
+                animation: moveStars 20s linear infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            /* Light Mode - White Sky with Black Stars */
+            body.light-mode::before {
+                background:
+                    radial-gradient(2px 2px at 20px 30px, #000, transparent),
+                    radial-gradient(2px 2px at 40px 70px, rgba(0, 0, 0, 0.8), transparent),
+                    radial-gradient(1px 1px at 90px 40px, #000, transparent),
+                    radial-gradient(1px 1px at 130px 80px, rgba(0, 0, 0, 0.6), transparent),
+                    radial-gradient(2px 2px at 160px 30px, #333, transparent);
+            }
+
+            /* Christmas Mode Styles */
+            body.christmas-mode {
+                background: #283747;
+                /* Dark blue background for night sky */
+                color: #f9f9f9;
+                background-attachment: fixed;
+                /* This creates the "sinking" effect */
+                background-size: cover;
+                /* Ensure background covers the entire viewport */
+                background-position: center center;
+                /* Center the background image */
+            }
+
+            body.christmas-mode::before {
+                background:
+                    url('https://www.transparenttextures.com/patterns/christmas-eves.png') repeat,
+                    /* Snow pattern */
+                    radial-gradient(circle at 15% 15%, rgba(255, 255, 255, 0.4) 1px, transparent 60px),
+                    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.3) 1px, transparent 40px),
+                    radial-gradient(circle at 40% 50%, rgba(255, 255, 255, 0.5) 1px, transparent 80px);
+                background-size: 200px 200px, cover, cover, cover, cover;
+                animation: snowfall 30s linear infinite;
+            }
+
+            @keyframes snowfall {
+                0% {
+                    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+                }
+
+                100% {
+                    background-position: 0 200px, 0 200px, 0 200px, 0 200px, 0 200px;
+                }
+            }
+
+            body.christmas-mode::after {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background:
+                    radial-gradient(4px 4px at 30px 40px, #fff, transparent),
+                    radial-gradient(3px 3px at 80px 10px, rgba(255, 255, 255, 0.8), transparent),
+                    radial-gradient(5px 5px at 120px 60px, #ddd, transparent),
+                    radial-gradient(2px 2px at 180px 90px, rgba(255, 255, 255, 0.6), transparent),
+                    radial-gradient(6px 6px at 200px 20px, #eee, transparent);
+                background-repeat: repeat;
+                background-size: 180px 180px;
+                /* Adjust size for more varied flakes */
+                animation: moveSnowflakes 25s linear infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            @keyframes moveSnowflakes {
+                0% {
+                    transform: translateY(0px);
+                    opacity: 1;
+                }
+
+                50% {
+                    opacity: 0.8;
+                }
+
+                100% {
+                    transform: translateY(200px);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes moveStars {
+                0% {
+                    transform: translateX(0px) translateY(0px);
+                }
+
+                100% {
+                    transform: translateX(-200px) translateY(-100px);
+                }
+            }
+
+            /* Additional star layers for depth */
+            body::after {
+                content: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background:
+                    radial-gradient(1px 1px at 50px 50px, #fff, transparent),
+                    radial-gradient(1px 1px at 100px 100px, rgba(255, 255, 255, 0.8), transparent),
+                    radial-gradient(1px 1px at 150px 150px, #ddd, transparent),
+                    radial-gradient(1px 1px at 200px 200px, rgba(255, 255, 255, 0.6), transparent);
+                background-repeat: repeat;
+                background-size: 300px 200px;
+                animation: moveStars2 30s linear infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            @keyframes moveStars2 {
+                0% {
+                    transform: translateX(0px) translateY(0px);
+                }
+
+                100% {
+                    transform: translateX(-300px) translateY(-200px);
+                }
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                position: relative;
+                z-index: 10;
+            }
+
             header {
                 background: var(--header-bg);
-                box-shadow: 
-                    0 20px 40px rgba(0, 0, 0, 0.4),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                color: var(--text-light);
+                border: 1.5px solid var(--card-border);
+                border-radius: 18px;
+                padding: 60px 0;
+                margin-bottom: 40px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                backdrop-filter: blur(3px) saturate(160%);
+                -webkit-backdrop-filter: blur(3px) saturate(160%);
+                text-align: center;
+                position: relative;
+                z-index: 2;
             }
-        }
-        
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: var(--text-light);
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-        }
 
-        .light-theme h1 {
-            text-shadow: 0 0 18px rgba(0, 0, 0, 0.10);
-        }
-        
-        .game-section {
-            margin: 40px 0;
-        }
-        
-        .section-title {
-            font-size: 2rem;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 30px;
-            text-align: center;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
-        .light-theme .section-title {
-            text-shadow: 0 0 14px rgba(0, 0, 0, 0.08);
-        }
-        
-        .search-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 32px;
-        }
-        .search-input {
-            background: var(--card-bg);
-            border: 1.5px solid var(--card-border);
-            border-radius: 12px;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            color: var(--text-light);
-            outline: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-            backdrop-filter: blur(3px) saturate(160%);
-            -webkit-backdrop-filter: blur(3px) saturate(160%);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            width: 320px;
-            max-width: 90vw;
-        }
-
-        .light-theme .search-input {
-            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
-        }
-        
-        .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.72);
-            opacity: 0.8;
-        }
-        .light-theme .search-input::placeholder {
-            color: rgba(15, 23, 42, 0.55);
-            opacity: 0.9;
-        }
-        .search-input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 4px 16px rgba(78,205,196,0.15);
-        }
-        
-        .game-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 30px;
-            overflow: visible !important;
-        }
-        
-        .game-card {
-            background: var(--card-bg);
-            color: var(--text-light);
-            border: 1.5px solid var(--card-border);
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(3px) saturate(160%);
-            -webkit-backdrop-filter: blur(3px) saturate(160%);
-            text-decoration: none;
-        }
-
-        .light-theme .game-card {
-            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.10);
-        }
-        
-        .game-card:hover, .game-card:focus-visible {
-            background: rgba(255,255,255,0.18);
-            border-color: var(--primary-color);
-            transform: scale(1.08);
-            z-index: 10;
-        }
-
-        .light-theme .game-card:hover, .light-theme .game-card:focus-visible {
-            background: rgba(15, 23, 42, 0.03);
-        }
-        
-        .game-card:active {
-            transform: scale(0.98);
-        }
-        .game-card::after, .game-card:hover::after { display: none !important; }
-        
-        .game-card p {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin: 0;
-            transition: color 0.3s ease;
-        }
-        
-        .game-card:hover p {
-            color: var(--primary-color);
-            text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
-        }
-
-        .light-theme .game-card:hover p {
-            text-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
-        }
-        
-        .divider {
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-            margin: 40px 0;
-            border-radius: 2px;
-            box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
-        }
-        
-        /* Floating animation for cards */
-        /* .game-card:nth-child(odd) { animation: float 6s ease-in-out infinite; } */
-        /* .game-card:nth-child(even) { animation: float 6s ease-in-out infinite reverse; } */
-        /* @keyframes float { ... } */
-        
-        /* Glow effect for header */
-        header::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, rgba(78, 205, 196, 0.2) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            border-radius: 50%;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-        }
-        
-        @media (max-width: 768px) {
-            .game-grid {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
+            .light-theme header {
+                box-shadow: 0 10px 28px rgba(15, 23, 42, 0.10);
             }
-            
+
+            /* Fallback for browsers that don't support backdrop-filter */
+            @supports not (backdrop-filter: blur(15px)) {
+                header {
+                    background: var(--header-bg);
+                    box-shadow:
+                        0 20px 40px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+                }
+            }
+
             h1 {
-                font-size: 2.5rem;
+                font-size: 3.5rem;
+                font-weight: 700;
+                color: var(--text-light);
+                margin-bottom: 20px;
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             }
-            
-            .container {
-                padding: 15px;
+
+            .light-theme h1 {
+                text-shadow: 0 0 18px rgba(0, 0, 0, 0.10);
             }
-            
-            header {
-                padding: 40px 0;
+
+            .game-section {
+                margin: 40px 0;
             }
-            
-            /* Prevent horizontal scroll on mobile */
-            body {
-                overflow-x: hidden;
-                width: 100%;
+
+            .section-title {
+                font-size: 2rem;
+                font-weight: 600;
+                color: var(--text-light);
+                margin-bottom: 30px;
+                text-align: center;
+                text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
             }
-        }
+
+            .light-theme .section-title {
+                text-shadow: 0 0 14px rgba(0, 0, 0, 0.08);
+            }
+
+            .search-box {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 32px;
+            }
+
+            .search-input {
+                background: var(--card-bg);
+                border: 1.5px solid var(--card-border);
+                border-radius: 12px;
+                padding: 12px 20px;
+                font-size: 1.1rem;
+                color: var(--text-light);
+                outline: none;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+                backdrop-filter: blur(3px) saturate(160%);
+                -webkit-backdrop-filter: blur(3px) saturate(160%);
+                transition: border-color 0.2s, box-shadow 0.2s;
+                width: 320px;
+                max-width: 90vw;
+            }
+
+            .light-theme .search-input {
+                box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+            }
+
+            .search-input::placeholder {
+                color: rgba(255, 255, 255, 0.72);
+                opacity: 0.8;
+            }
+
+            .light-theme .search-input::placeholder {
+                color: rgba(15, 23, 42, 0.55);
+                opacity: 0.9;
+            }
+
+            .search-input:focus {
+                border-color: var(--primary-color);
+                box-shadow: 0 4px 16px rgba(78, 205, 196, 0.15);
+            }
+
+            .game-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 32px;
+                margin-top: 30px;
+                overflow: visible !important;
+            }
+
+            .game-card {
+                background: var(--card-bg);
+                color: var(--text-light);
+                border: 1.5px solid var(--card-border);
+                border-radius: 15px;
+                padding: 25px;
+                text-align: center;
+                transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                z-index: 2;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(3px) saturate(160%);
+                -webkit-backdrop-filter: blur(3px) saturate(160%);
+                text-decoration: none;
+            }
+
+            .light-theme .game-card {
+                box-shadow: 0 10px 22px rgba(15, 23, 42, 0.10);
+            }
+
+            .game-card:hover,
+            .game-card:focus-visible {
+                background: rgba(255, 255, 255, 0.18);
+                border-color: var(--primary-color);
+                transform: scale(1.08);
+                z-index: 10;
+            }
+
+            .light-theme .game-card:hover,
+            .light-theme .game-card:focus-visible {
+                background: rgba(15, 23, 42, 0.03);
+            }
+
+            .game-card:active {
+                transform: scale(0.98);
+            }
+
+            .game-card::after,
+            .game-card:hover::after {
+                display: none !important;
+            }
+
+            .game-card p {
+                font-size: 1.2rem;
+                font-weight: 600;
+                margin: 0;
+                transition: color 0.3s ease;
+            }
+
+            .game-card:hover p {
+                color: var(--primary-color);
+                text-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
+            }
+
+            .light-theme .game-card:hover p {
+                text-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
+            }
+
+            .divider {
+                height: 3px;
+                background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+                margin: 40px 0;
+                border-radius: 2px;
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+            }
+
+            /* Floating animation for cards */
+            /* .game-card:nth-child(odd) { animation: float 6s ease-in-out infinite; } */
+            /* .game-card:nth-child(even) { animation: float 6s ease-in-out infinite reverse; } */
+            /* @keyframes float { ... } */
+
+            /* Glow effect for header */
+            header::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 200px;
+                height: 200px;
+                background: radial-gradient(circle, rgba(78, 205, 196, 0.2) 0%, transparent 70%);
+                transform: translate(-50%, -50%);
+                border-radius: 50%;
+                animation: pulse 4s ease-in-out infinite;
+            }
+
+            @keyframes pulse {
+
+                0%,
+                100% {
+                    opacity: 0.5;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+
+                50% {
+                    opacity: 0.8;
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .game-grid {
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 20px;
+                }
+
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                .container {
+                    padding: 15px;
+                }
+
+                header {
+                    padding: 40px 0;
+                }
+
+                /* Prevent horizontal scroll on mobile */
+                body {
+                    overflow-x: hidden;
+                    width: 100%;
+                }
+            }
     </style>
 </head>
+
 <body>
 
-        <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
-        <script>
-            window.resetStreakData = function() {
-                console.log('🔄 Resetting ALL streak data...');
+    <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
+    <script>
+        window.resetStreakData = function () {
+            console.log('🔄 Resetting ALL streak data...');
 
             try {
                 // Clear all streak-related localStorage
@@ -814,133 +924,136 @@
                 localStorage.removeItem('bestStreak');
                 localStorage.removeItem('streakRestoration_v1'); // Also clear restoration flag for testing
 
-                    // Reset display if element exists
-                    const streakNumber = document.getElementById('streakNumber');
-                    if (streakNumber) {
-                        streakNumber.textContent = '0';
-                    }
-
-            console.log('✅ Streak data completely reset!');
-            console.log('🔄 All localStorage keys cleared');
-            console.log('📊 Display updated to show streak: 0');
-
-            // Auto-refresh after a short delay to show the reset
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
-
-            return 'Streak reset complete! Page will refresh automatically...';
-                } catch (error) {
-                    console.error('❌ Error resetting streak data:', error);
-                    return 'Error occurred while resetting streak data.';
+                // Reset display if element exists
+                const streakNumber = document.getElementById('streakNumber');
+                if (streakNumber) {
+                    streakNumber.textContent = '0';
                 }
-            };
 
-            // Confirm function is available
-            console.log('🔧 resetStreakData() function loaded and ready!');
-        </script>
+                console.log('✅ Streak data completely reset!');
+                console.log('🔄 All localStorage keys cleared');
+                console.log('📊 Display updated to show streak: 0');
 
-        <canvas id="streakCanvas"></canvas>
-        <div class="star-container" id="starContainer"></div>
-        <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
-            unblocked games, free online games, browser games, play games online,
-            cool math games unblocked, io games, free browser games, top browser games,
-            no download games, multiplayer browser games, html5 games, instant play games,
-            free puzzle games online, adventure browser games, action browser games,
-            tower defense games free, proxy, roblox unblocked, 3D browser games, platformer games online,
-            idle games free, play games without download, no sign up online games,
-            online game emulators, free game websites, addicting games online,
-            online arcade games, retro games online, safe online games,
-        </div>
+                // Auto-refresh after a short delay to show the reset
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
 
-        <!-- Settings button -->
-        <button class="settings-btn" id="settingsBtn" title="Settings">
-            ⚙️
-            <div class="notification-dot"></div>
-        </button>
+                return 'Streak reset complete! Page will refresh automatically...';
+            } catch (error) {
+                console.error('❌ Error resetting streak data:', error);
+                return 'Error occurred while resetting streak data.';
+            }
+        };
 
-        <!-- Streak display -->
+        // Confirm function is available
+        console.log('🔧 resetStreakData() function loaded and ready!');
+    </script>
+
+    <canvas id="streakCanvas"></canvas>
+    <div class="star-container" id="starContainer"></div>
+    <div style="position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden;">
+        unblocked games, free online games, browser games, play games online,
+        cool math games unblocked, io games, free browser games, top browser games,
+        no download games, multiplayer browser games, html5 games, instant play games,
+        free puzzle games online, adventure browser games, action browser games,
+        tower defense games free, proxy, roblox unblocked, 3D browser games, platformer games online,
+        idle games free, play games without download, no sign up online games,
+        online game emulators, free game websites, addicting games online,
+        online arcade games, retro games online, safe online games,
+    </div>
+
+    <!-- Settings button -->
+    <button class="settings-btn" id="settingsBtn" title="Settings">
+        ⚙️
+        <div class="notification-dot"></div>
+    </button>
+
+    <!-- Streak display -->
     <div class="streak-display" id="streakDisplay" title="Daily Streak">
         <span id="streakNumber">0</span>
         <span class="flame">🔥</span>
         <div class="notification-dot"></div>
     </div>
 
-        
-        <!-- Settings menu -->
-        <div class="settings-menu" id="settingsMenu">
-            <button class="close-btn" id="closeSettings">×</button>
-            <h3>Settings</h3>
 
-            <div class="settings-option">
-                <label>
-                    Auto Inject About:Blank
-                    <div class="toggle-switch" id="injectionToggle">
-                        <input type="checkbox" id="injectionCheckbox" style="display: none;">
-                    </div>
-                </label>
-            </div>
+    <!-- Settings menu -->
+    <div class="settings-menu" id="settingsMenu">
+        <button class="close-btn" id="closeSettings">×</button>
+        <h3>Settings</h3>
 
-            <div class="settings-option">
-                <button id="openInjectionBtn" style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                    Inject Into About:Blank
-                </button>
-            </div>
-
-            <div class="settings-option" style="margin-top: 12px;">
-                <label>
-                    Stars
-                    <div class="toggle-switch" id="starsToggle">
-                        <input type="checkbox" id="starsCheckbox" style="display: none;">
-                    </div>
-                </label>
-            </div>
-
-            <div class="settings-option">
-                <label for="starsCount" style="display:block; margin-bottom: 6px;">Star Amount: <span id="starsCountLabel">200</span></label>
-                <input id="starsCount" type="range" min="50" max="500" step="10" value="200" style="width: 100%;" />
-            </div>
-
-            <div class="settings-option">
-                <label for="starsSpeed" style="display:block; margin-bottom: 6px;">Star Speed</label>
-                <select id="starsSpeed" style="width: 100%; padding: 8px; border-radius: 6px;">
-                    <option value="slow" selected>Slow</option>
-                    <option value="medium">Medium</option>
-                    <option value="fast">Fast</option>
-                </select>
-            </div>
-
-            <div class="settings-option">
-                <label for="starsColor" style="display:block; margin-bottom: 6px;">Star Color</label>
-                <select id="starsColor" style="width: 100%; padding: 8px; border-radius: 6px;">
-                    <option value="multicolor">Multicolor</option>
-                    <option value="white" selected>White</option>
-                    <option value="blue">Blue</option>
-                    <option value="gold">Gold</option>
-                    <option value="pink">Pink</option>
-                    <option value="mint">Mint</option>
-                </select>
-            </div>
-
-            <div class="settings-option">
-                <button id="openBackgroundSettingsBtn" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.12); color: inherit; border: 1px solid rgba(255,255,255,0.18); border-radius: 5px; cursor: pointer; font-weight: 600;">
-                    Background Settings
-                </button>
-            </div>
+        <div class="settings-option">
+            <label>
+                Auto Inject About:Blank
+                <div class="toggle-switch" id="injectionToggle">
+                    <input type="checkbox" id="injectionCheckbox" style="display: none;">
+                </div>
+            </label>
         </div>
 
-        <!-- Fullscreen button for mobile -->
-        <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
-            <span id="fullscreenIcon">⛶</span>
-        </button>
-
-
-        
-                lass="game-card" href="geometry-lite.html">
-                    <p>Geometry Lite</p>
-                </a>
-            </div>
+        <div class="settings-option">
+            <button id="openInjectionBtn"
+                style="width: 100%; padding: 10px; background: #4ecdc4; color: #0a0a0a; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                Inject Into About:Blank
+            </button>
         </div>
+
+        <div class="settings-option" style="margin-top: 12px;">
+            <label>
+                Stars
+                <div class="toggle-switch" id="starsToggle">
+                    <input type="checkbox" id="starsCheckbox" style="display: none;">
+                </div>
+            </label>
+        </div>
+
+        <div class="settings-option">
+            <label for="starsCount" style="display:block; margin-bottom: 6px;">Star Amount: <span
+                    id="starsCountLabel">200</span></label>
+            <input id="starsCount" type="range" min="50" max="500" step="10" value="200" style="width: 100%;" />
+        </div>
+
+        <div class="settings-option">
+            <label for="starsSpeed" style="display:block; margin-bottom: 6px;">Star Speed</label>
+            <select id="starsSpeed" style="width: 100%; padding: 8px; border-radius: 6px;">
+                <option value="slow" selected>Slow</option>
+                <option value="medium">Medium</option>
+                <option value="fast">Fast</option>
+            </select>
+        </div>
+
+        <div class="settings-option">
+            <label for="starsColor" style="display:block; margin-bottom: 6px;">Star Color</label>
+            <select id="starsColor" style="width: 100%; padding: 8px; border-radius: 6px;">
+                <option value="multicolor">Multicolor</option>
+                <option value="white" selected>White</option>
+                <option value="blue">Blue</option>
+                <option value="gold">Gold</option>
+                <option value="pink">Pink</option>
+                <option value="mint">Mint</option>
+            </select>
+        </div>
+
+        <div class="settings-option">
+            <button id="openBackgroundSettingsBtn"
+                style="width: 100%; padding: 10px; background: rgba(255,255,255,0.12); color: inherit; border: 1px solid rgba(255,255,255,0.18); border-radius: 5px; cursor: pointer; font-weight: 600;">
+                Background Settings
+            </button>
+        </div>
+    </div>
+
+    <!-- Fullscreen button for mobile -->
+    <button class="fullscreen-btn" id="fullscreenBtn" title="Toggle Fullscreen">
+        <span id="fullscreenIcon">⛶</span>
+    </button>
+
+
+
+    lass="game-card" href="geometry-lite.html">
+    <p>Geometry Lite</p>
+    </a>
+    </div>
+    </div>
     </div>
 
     <!-- Streak functionality -->
@@ -1106,8 +1219,8 @@
             // Only run on December 18-19, 2025
             const today = new Date();
             const isTargetDate = today.getFullYear() === 2025 &&
-                                today.getMonth() === 11 && // December is month 11 (0-based)
-                                (today.getDate() === 18 || today.getDate() === 19);
+                today.getMonth() === 11 && // December is month 11 (0-based)
+                (today.getDate() === 18 || today.getDate() === 19);
 
             console.log(`📅 Current date: ${today.toDateString()}, Target dates: Dec 18-19, 2025, Is target: ${isTargetDate}`);
 
@@ -1327,14 +1440,83 @@
             return data;
         }
 
+        function computeEffectiveUsedSet(data, date = new Date()) {
+            const today = normalizeToNoon(date);
+            const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+            const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
+            const allVisits = data.visits || [];
+            if (allVisits.length === 0) return { set: new Set(), freezesNew: 0 };
+
+            let earliestVisitStr = allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]);
+            let available = Number.isFinite(data.freezes) ? data.freezes : (data.freezes || 0);
+
+            const effectiveUsed = new Set();
+            for (const key of originalUsedSet) effectiveUsed.add(key);
+
+            let cursor = new Date(today);
+            cursor.setHours(12, 0, 0, 0);
+
+            let pending = []; // Each entry: { key, type: 'freeze' | 'forgiveness' }
+            let freezesNew = 0;
+            let foundBridge = false;
+            let currentForgivenessUses = {};
+
+            for (let i = 0; i < 365; i++) {
+                const key = toDayKey(cursor);
+                if (key < earliestVisitStr) break;
+
+                const hasVisit = visitsSet.has(key);
+                const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+
+                if (hasVisit || originalUsedSet.has(key)) {
+                    foundBridge = true;
+                    // Confirm all pending saves!
+                    pending.forEach(p => {
+                        effectiveUsed.add(p.key);
+                        if (p.type === 'freeze') freezesNew++;
+                    });
+                    pending = [];
+                } else if (!isWeekend) {
+                    let saved = false;
+                    if (available > 0) {
+                        pending.push({ key, type: 'freeze' });
+                        available--;
+                        saved = true;
+                    } else {
+                        const monthKey = key.substring(0, 7);
+                        let pastUses = (data.forgivenessData && data.forgivenessData[monthKey]) || 0;
+                        let newUses = currentForgivenessUses[monthKey] || 0;
+                        if (pastUses + newUses < 2) {
+                            pending.push({ key, type: 'forgiveness' });
+                            currentForgivenessUses[monthKey] = newUses + 1;
+                            saved = true;
+                        }
+                    }
+
+                    if (!saved) break; // Unfillable gap
+                }
+
+                cursor.setDate(cursor.getDate() - 1);
+                cursor.setHours(12, 0, 0, 0);
+            }
+
+            if (foundBridge) {
+                if (!data.pendingForgiveness) data.pendingForgiveness = {};
+                for (let mk in currentForgivenessUses) {
+                    let past = (data.forgivenessData && data.forgivenessData[mk]) || 0;
+                    data.pendingForgiveness[mk] = past + currentForgivenessUses[mk];
+                }
+            }
+
+            return { set: effectiveUsed, freezesNew };
+        }
         function computeStreak(data, date = new Date()) {
             const today = normalizeToNoon(date);
 
             const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
             const originalFreezes = Number.isFinite(data.freezes) ? Number(data.freezes) : (data.freezes || 0);
-            
-            // Pass the data object with forgivenessData
+
             const tempObj = {
                 visits: Array.from(visits),
                 usedFreezes: Array.from(originalUsedSet),
@@ -1342,9 +1524,9 @@
                 forgivenessData: data.forgivenessData || {}
             };
 
-            const effectiveUsedSet = computeEffectiveUsedSet(tempObj, today);
-            
-            // Bring back any forgiveness mutation
+            const result = computeEffectiveUsedSet(tempObj, today);
+            const effectiveUsedSet = result.set;
+
             if (tempObj.pendingForgiveness) {
                 if (!data.forgivenessData) data.forgivenessData = {};
                 for (let k in tempObj.pendingForgiveness) {
@@ -1354,7 +1536,9 @@
 
             let streak = 0;
             const allVisits = data.visits || [];
-            let earliestVisitStr = (allVisits.length > 0) ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : toDayKey(today);
+            if (allVisits.length === 0) return { streak: 0, data };
+
+            let earliestVisitStr = allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]);
             let streakActive = false;
 
             const cursor = new Date(today);
@@ -1385,13 +1569,11 @@
                 if (getDayDiff(cursor, today) > 365) break;
             }
 
-            const effectiveCount = effectiveUsedSet.size;
-            const originalUsedCount = originalUsedSet.size;
-            
-            data.freezes = Math.max(0, originalFreezes - (effectiveCount - originalUsedCount));
+            // Correct subtraction! Only count NEW freezes.
+            data.freezes = Math.max(0, originalFreezes - result.freezesNew);
             data.usedFreezes = Array.from(effectiveUsedSet).sort();
-
             data.best = Math.max(Number(data.best) || 0, streak);
+
             return { streak, data };
         }
 
@@ -1404,7 +1586,7 @@
         }
 
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             let data = loadV2();
             data = migrateLegacyIntoV2(data);
             data = recordVisit(data, new Date());
@@ -1419,7 +1601,7 @@
             }
 
             if (streakDisplay) {
-                streakDisplay.addEventListener('click', function() {
+                streakDisplay.addEventListener('click', function () {
                     window.location.href = 'streaks.html';
                 });
                 streakDisplay.style.cursor = 'pointer';
@@ -1663,13 +1845,13 @@
             if (starContainer) starContainer.style.display = s.enabled ? '' : 'none';
             renderStars(s);
         }
-        
+
         function applySavedBackground() {
             const savedBg = localStorage.getItem('customBackground');
             const bgType = localStorage.getItem('bgType');
-            
+
             if (!savedBg) return;
-            
+
             if (bgType === 'image' || savedBg.startsWith('url')) {
                 document.body.style.backgroundImage = savedBg;
                 document.body.style.backgroundSize = 'cover';
@@ -1686,12 +1868,12 @@
                 document.body.style.backgroundColor = savedBg;
             }
         }
-        
+
         // Function to apply saved theme on page load
         function applySavedTheme() {
             const savedTheme = localStorage.getItem('selectedTheme');
             const savedBg = localStorage.getItem('customBackground');
-            
+
             // Only apply theme if no custom background is set
             if (!savedBg && savedTheme) {
                 handleThemeChange(savedTheme);
@@ -1703,7 +1885,7 @@
                 handleThemeChange('christmas');
             }
         }
-        
+
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
             // Initialize components
@@ -1743,7 +1925,7 @@
                 }
             });
         });
-        
+
         // Make handleThemeChange available globally for settings page
         window.handleThemeChange = handleThemeChange;
 
@@ -1755,32 +1937,32 @@
 
             if (!fullscreenBtn || !fullscreenIcon) return;
 
-            const isFullscreenSupported = () => 
-                document.fullscreenEnabled || 
-                document.webkitFullscreenEnabled || 
-                document.mozFullScreenEnabled || 
+            const isFullscreenSupported = () =>
+                document.fullscreenEnabled ||
+                document.webkitFullscreenEnabled ||
+                document.mozFullScreenEnabled ||
                 document.msFullscreenEnabled;
 
             const enterFullscreen = () => {
                 const elem = document.documentElement;
-                const requestFullscreen = 
+                const requestFullscreen =
                     elem.requestFullscreen ||
                     elem.webkitRequestFullscreen ||
                     elem.mozRequestFullScreen ||
                     elem.msRequestFullscreen;
-                
+
                 if (requestFullscreen) {
                     requestFullscreen.call(elem);
                 }
             };
 
             const exitFullscreen = () => {
-                const exit = 
+                const exit =
                     document.exitFullscreen ||
                     document.webkitExitFullscreen ||
                     document.mozCancelFullScreen ||
                     document.msExitFullscreen;
-                
+
                 if (exit) {
                     exit.call(document);
                 }
@@ -1788,12 +1970,12 @@
 
             const updateFullscreenState = () => {
                 const isFullscreenNow = !!(
-                    document.fullscreenElement || 
-                    document.webkitFullscreenElement || 
-                    document.mozFullScreenElement || 
+                    document.fullscreenElement ||
+                    document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||
                     document.msFullscreenElement
                 );
-                
+
                 isFullscreen = isFullscreenNow;
                 if (fullscreenIcon) {
                     fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
@@ -1838,34 +2020,34 @@
             const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
             const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
             const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
-            
+
             // Toggle switches
             const injectionToggle = document.getElementById('injectionToggle');
-            
+
             // Checkboxes
             const injectionCheckbox = document.getElementById('injectionCheckbox');
-            
+
             // Injection button
             const openInjectionBtn = document.getElementById('openInjectionBtn');
 
             const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
-            
+
             // Update toggle switch visual states
             function updateToggleStates() {
                 injectionToggle.classList.toggle('active', injectionCheckbox.checked);
             }
-            
+
             // Toggle settings menu
             function toggleSettings(event) {
                 event.stopPropagation();
                 settingsMenu.classList.toggle('active');
             }
-            
+
             // Close settings menu
             function closeSettingsMenu() {
                 settingsMenu.classList.remove('active');
             }
-            
+
             // Event listeners
             settingsBtn.addEventListener('click', toggleSettings);
             closeSettings.addEventListener('click', closeSettingsMenu);
@@ -1876,33 +2058,33 @@
                     window.location.href = 'background-settings.html';
                 });
             }
-            
+
             // Close menu when clicking outside
             document.addEventListener('click', (event) => {
-                if (settingsMenu && settingsBtn && 
-                    !settingsMenu.contains(event.target) && 
+                if (settingsMenu && settingsBtn &&
+                    !settingsMenu.contains(event.target) &&
                     !settingsBtn.contains(event.target)) {
                     closeSettingsMenu();
                 }
             });
-            
+
             // Toggle switch functionality
             injectionToggle.addEventListener('click', () => {
                 injectionCheckbox.checked = !injectionCheckbox.checked;
                 updateToggleStates();
                 saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
-                
+
                 // Auto-open about:blank when toggle is enabled
                 // Only if we're not already in an iframe (to prevent loops)
                 if (injectionCheckbox.checked && !window.frameElement) {
                     openAboutBlank();
                 }
             });
-            
+
             // About:Blank injection function
             function openAboutBlank() {
                 const newTab = window.open('about:blank', '_blank');
-                
+
                 if (newTab) {
                     newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
                     newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
@@ -1912,23 +2094,23 @@
                     alert('Popup blocked! Please allow popups for this site.');
                 }
             }
-            
+
             // Auto-open about:blank when toggle is enabled
             function checkAndOpenAboutBlank() {
                 if (injectionCheckbox.checked) {
                     openAboutBlank();
                 }
             }
-            
+
             // Add event listener for the injection button
             openInjectionBtn.addEventListener('click', openAboutBlank);
-            
+
             // Load settings on page load - REMOVED (now handled by background-manager.js)
             // loadSettings();
-            
+
             // Auto-open about:blank if injection is enabled on page load
             // Only if we're not already in an iframe (to prevent loops)
-            setTimeout(function() {
+            setTimeout(function () {
                 if (!window.frameElement) {
                     checkAndOpenAboutBlank();
                 }
@@ -1946,7 +2128,7 @@
         }, false);
 
         // Prevent context menu on long press
-        document.addEventListener('contextmenu', function(e) {
+        document.addEventListener('contextmenu', function (e) {
             e.preventDefault();
         });
 
@@ -1957,280 +2139,39 @@
             }, 3000);
         }
     </script>
-    
-    <!-- Streak Functionality -->
-    
-            
-        
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initialize components
-            initFullscreen();
-            initSearch();
-            initSettings();
-            initStarControls();
-
-            // Apply saved theme
-            applySavedTheme();
 
 
 
-            // Listen for theme and background changes from settings page
-            window.addEventListener('storage', (e) => {
-                if (e.key === 'selectedTheme') {
-                    handleThemeChange(e.newValue);
-                } else if (e.key === 'customBackground' || e.key === 'bgType') {
-                    // If background was changed, apply it
-                    if (e.key === 'customBackground' && e.newValue) {
-                        if (e.newValue.startsWith('url')) {
-                            document.body.style.backgroundImage = e.newValue;
-                            document.body.style.backgroundSize = 'cover';
-                            document.body.style.backgroundPosition = 'center';
-                            document.body.style.backgroundAttachment = 'fixed';
-                            document.body.style.backgroundColor = 'transparent';
-                        } else if (e.newValue.startsWith('linear-gradient')) {
-                            document.body.style.backgroundImage = e.newValue;
-                            document.body.style.backgroundSize = 'cover';
-                            document.body.style.backgroundAttachment = 'fixed';
-                            document.body.style.backgroundColor = 'transparent';
-                        } else {
-                            document.body.style.backgroundImage = 'none';
-                            document.body.style.backgroundColor = e.newValue;
-                        }
-                    }
-                }
-            });
-        });
-        
-        // Make handleThemeChange available globally for settings page
-        window.handleThemeChange = handleThemeChange;
+    // Apply saved theme
+    applySavedTheme();
 
-        // Fullscreen functionality
-        function initFullscreen() {
-            const fullscreenBtn = document.querySelector(AppConfig.selectors.fullscreenBtn);
-            const fullscreenIcon = document.querySelector(AppConfig.selectors.fullscreenIcon);
-            let isFullscreen = false;
 
-            if (!fullscreenBtn || !fullscreenIcon) return;
 
-            const isFullscreenSupported = () => 
-                document.fullscreenEnabled || 
-                document.webkitFullscreenEnabled || 
-                document.mozFullScreenEnabled || 
-                document.msFullscreenEnabled;
 
-            const enterFullscreen = () => {
-                const elem = document.documentElement;
-                const requestFullscreen = 
-                    elem.requestFullscreen ||
-                    elem.webkitRequestFullscreen ||
-                    elem.mozRequestFullScreen ||
-                    elem.msRequestFullscreen;
-                
-                if (requestFullscreen) {
-                    requestFullscreen.call(elem);
-                }
-            };
 
-            const exitFullscreen = () => {
-                const exit = 
-                    document.exitFullscreen ||
-                    document.webkitExitFullscreen ||
-                    document.mozCancelFullScreen ||
-                    document.msExitFullscreen;
-                
-                if (exit) {
-                    exit.call(document);
-                }
-            };
-
-            const updateFullscreenState = () => {
-                const isFullscreenNow = !!(
-                    document.fullscreenElement || 
-                    document.webkitFullscreenElement || 
-                    document.mozFullScreenElement || 
-                    document.msFullscreenElement
-                );
-                
-                isFullscreen = isFullscreenNow;
-                if (fullscreenIcon) {
-                    fullscreenIcon.textContent = isFullscreenNow ? '⛶' : '⛶';
-                }
-            };
-
-            // Event listeners
-            fullscreenBtn.addEventListener('click', () => {
-                isFullscreen ? exitFullscreen() : enterFullscreen();
-            });
-
-            // Fullscreen change events
-            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange']
-                .forEach(event => document.addEventListener(event, updateFullscreenState));
-
-            // Hide button if not supported
-            if (!isFullscreenSupported()) {
-                fullscreenBtn.style.display = 'none';
-            }
-        }
-
-        // Live search filter for game cards
-        function initSearch() {
-            const searchInput = document.querySelector(AppConfig.selectors.searchInput);
-            const gameCards = document.querySelectorAll(AppConfig.selectors.gameCards);
-
-            searchInput.addEventListener('input', () => {
-                const query = searchInput.value.trim().toLowerCase();
-                gameCards.forEach(card => {
-                    const text = card.textContent.trim().toLowerCase();
-                    if (query === "" || text.includes(query)) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        // Settings functionality
-        function initSettings() {
-            const settingsBtn = document.querySelector(AppConfig.selectors.settingsBtn);
-            const settingsMenu = document.querySelector(AppConfig.selectors.settingsMenu);
-            const closeSettings = document.querySelector(AppConfig.selectors.closeSettings);
-            
-            // Toggle switches
-            const injectionToggle = document.getElementById('injectionToggle');
-            
-            // Checkboxes
-            const injectionCheckbox = document.getElementById('injectionCheckbox');
-            
-            // Injection button
-            const openInjectionBtn = document.getElementById('openInjectionBtn');
-
-            const openBackgroundSettingsBtn = document.getElementById('openBackgroundSettingsBtn');
-            
-            // Update toggle switch visual states
-            function updateToggleStates() {
-                injectionToggle.classList.toggle('active', injectionCheckbox.checked);
-            }
-            
-            // Toggle settings menu
-            function toggleSettings(event) {
-                event.stopPropagation();
-                settingsMenu.classList.toggle('active');
-            }
-            
-            // Close settings menu
-            function closeSettingsMenu() {
-                settingsMenu.classList.remove('active');
-            }
-            
-            // Event listeners
-            settingsBtn.addEventListener('click', toggleSettings);
-            closeSettings.addEventListener('click', closeSettingsMenu);
-
-            if (openBackgroundSettingsBtn) {
-                openBackgroundSettingsBtn.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    window.location.href = 'background-settings.html';
-                });
-            }
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', (event) => {
-                if (settingsMenu && settingsBtn && 
-                    !settingsMenu.contains(event.target) && 
-                    !settingsBtn.contains(event.target)) {
-                    closeSettingsMenu();
-                }
-            });
-            
-            // Toggle switch functionality
-            injectionToggle.addEventListener('click', () => {
-                injectionCheckbox.checked = !injectionCheckbox.checked;
-                updateToggleStates();
-                saveBackgroundSetting('injection', injectionCheckbox.checked); // Use the new save function
-                
-                // Auto-open about:blank when toggle is enabled
-                // Only if we're not already in an iframe (to prevent loops)
-                if (injectionCheckbox.checked && !window.frameElement) {
-                    openAboutBlank();
-                }
-            });
-            
-            // About:Blank injection function
-            function openAboutBlank() {
-                const newTab = window.open('about:blank', '_blank');
-                
-                if (newTab) {
-                    newTab.document.write('<html><head><title>Brayden-is-tall-games</title></head><body style="margin:0; padding:0; overflow:hidden;">');
-                    newTab.document.write('<iframe src="https://braydenistallgames.online" style="border:none; width:100vw; height:100vh;"></iframe>');
-                    newTab.document.write('<script src="background-loader.js"><\\/script></body></html>');
-                    newTab.document.close();
-                } else {
-                    alert('Popup blocked! Please allow popups for this site.');
-                }
-            }
-            
-            // Auto-open about:blank when toggle is enabled
-            function checkAndOpenAboutBlank() {
-                if (injectionCheckbox.checked) {
-                    openAboutBlank();
-                }
-            }
-            
-            // Add event listener for the injection button
-            openInjectionBtn.addEventListener('click', openAboutBlank);
-            
-            // Load settings on page load - REMOVED (now handled by background-manager.js)
-            // loadSettings();
-            
-            // Auto-open about:blank if injection is enabled on page load
-            // Only if we're not already in an iframe (to prevent loops)
-            setTimeout(function() {
-                if (!window.frameElement) {
-                    checkAndOpenAboutBlank();
-                }
-            }, 1000); // Wait 1 second after page load
-        }
-
-        // Prevent zoom on double tap for mobile
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Prevent context menu on long press
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-        });
-
-        // Auto-hide fullscreen button after 3 seconds on mobile
-        if (window.innerWidth <= 768) {
-            setTimeout(() => {
-                document.querySelector(AppConfig.selectors.fullscreenBtn).style.opacity = '0.7';
-            }, 3000);
-        }
+    <script>
+        console.log("Secondary cleanup complete.");
     </script>
-    
+
     <!-- Streak Functionality -->
     <script>
         // Streak management
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
         });
     </script>
-    
+
     <!-- Version and Privacy Links -->
-    <div style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
+    <div
+        style="position: fixed; bottom: 10px; left: 10px; z-index: 1000; color: rgba(255, 255, 255, 0.3); font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">
         v0.1
     </div>
     <div style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">
-        <a href="privacy-policy.html" style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy Policy</a>
+        <a href="privacy-policy.html"
+            style="color: rgba(255, 255, 255, 0.3); text-decoration: none; font-size: 0.8rem; font-family: 'Source Code Pro', monospace;">Privacy
+            Policy</a>
     </div>
     <script src="background-manager.js"></script> <!-- Include the new background manager script -->
     <script src="background-loader.js"></script>
 </body>
+
 </html>
