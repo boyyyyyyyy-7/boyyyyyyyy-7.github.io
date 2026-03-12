@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Speed Stars - Free Track and Field Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Mash keys and sprint to glory in Speed Stars! Fast and frantic track and field browser game. Play free online.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Speed Stars - Free Track and Field Game | Brayden is Tall Games","description":"Mash keys and sprint to glory in Speed Stars! Fast and frantic track and field browser game. Play free online.","url":"https://braydenistallgames.online/speed-stars.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Speed Stars","description":"Hit the rhythm right and watch your runner fly down the track.","genre":"Sports","keywords":"sprint, track, reaction","url":"https://braydenistallgames.online/speed-stars.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Speed Stars</h1>
         </div>
@@ -356,7 +359,7 @@
             <h2 class="description-title">About Speed Stars</h2>
 
             <div class="description-section">
-                <h3>🎮 Rhythm Running</h3>
+                <h3>  Rhythm Running</h3>
                 <p>Speed Stars is a running game where timing is everything. You're tapping to build speed and momentum,
                     hitting perfect rhythm windows to accelerate faster. Miss the timing and you slow down. Nail it
                     consistently and you become unstoppable. It's simple mechanically but incredibly satisfying when you
@@ -367,7 +370,7 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ Timing & Speed</h3>
+                <h3>  Timing & Speed</h3>
                 <p>Tap or click when the timing indicator hits the perfect zone. Early or late taps still move you
                     forward, but perfect timing gives massive speed boosts. String together perfect taps and you'll
                     unlock even faster speeds through combo bonuses.</p>
@@ -377,12 +380,12 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Perfect Runs</h3>
+                <h3>  Perfect Runs</h3>
                 <p>Focus on consistency over perfection initially. Getting 80% good taps beats going for 100% and
                     missing half. As you internalize the rhythm, your accuracy naturally improves. Muscle memory handles
                     timing once you've practiced enough.</p>
                 <p>Use audio cues if available. Visual timing is fine but adding audio creates a stronger rhythm anchor.
-                    And don't panic when you miss a perfect windowâ€”one miss doesn't ruin your run. Recover your rhythm
+                    And don't panic when you miss a perfect window one miss doesn't ruin your run. Recover your rhythm
                     and keep going.</p>
             </div>
 
@@ -450,6 +453,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

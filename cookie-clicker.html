@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Cookie Clicker - Free Idle Clicker Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Bake billions of cookies in Cookie Clicker! Build factories, hire grandmas, grow your cookie empire. Free online, no ads.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Cookie Clicker - Free Idle Clicker Game | Brayden is Tall Games","description":"Bake billions of cookies in Cookie Clicker! Build factories, hire grandmas, grow your cookie empire. Free online, no ads.","url":"https://braydenistallgames.online/cookie-clicker.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Cookie Clicker","description":"Bake billions of cookies! Hire grandmas, build factories, and grow your cookie empire.","genre":"Idle","keywords":"clicker, idle, incremental","url":"https://braydenistallgames.online/cookie-clicker.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Cookie Clicker</h1>
         </div>
@@ -357,7 +360,7 @@
             <h2 class="description-title">About Cookie Clicker</h2>
 
             <div class="description-section">
-                <h3>🎮 The Original Idle Game</h3>
+                <h3>  The Original Idle Game</h3>
                 <p>Cookie Clicker pretty much invented the idle game genre, and it's easy to see why it hooked millions
                     of players. You start by clicking a giant cookie. Each click gives you one cookie. Then you spend
                     cookies to buy cursor that click for you. Before long, you're buying grandmas, farms, and eventually
@@ -369,7 +372,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 How It Works</h3>
+                <h3>  How It Works</h3>
                 <p>Click the big cookie to generate cookies manually. Use your cookies to buy buildings that produce
                     cookies automatically. Each building type has different costs and production rates. Cursor cheap but
                     slow. Grandmas produce more. Farms even better. And it keeps scaling up.</p>
@@ -379,13 +382,13 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Strategy Tips</h3>
+                <h3>  Strategy Tips</h3>
                 <p>Early game, balance between clicking and buying your first few cursor and grandmas. Don't just spam
-                    buildingsâ€”upgrades often give better value. That cheap cursor upgrade doubling production beats
+                    buildings upgrades often give better value. That cheap cursor upgrade doubling production beats
                     buying one more cursor.</p>
                 <p>Golden cookies are huge. When one appears, drop everything and click it. The bonuses can skip you
                     ahead hours of passive production. And once you unlock achievements and ascension, start planning
-                    for prestige runsâ€”resetting with permanent boosts beats grinding the same save forever.</p>
+                    for prestige runs resetting with permanent boosts beats grinding the same save forever.</p>
             </div>
 
             <div class="description-section">
@@ -452,6 +455,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

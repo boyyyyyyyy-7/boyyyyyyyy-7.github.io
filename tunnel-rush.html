@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -136,7 +136,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -214,14 +214,17 @@
     <meta name="twitter:title" content="Tunnel Rush - Free Online Speed Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Fly through a neon tunnel at breakneck speed in Tunnel Rush! Dodge obstacles in this free online reflex game.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Tunnel Rush - Free Online Speed Game | Brayden is Tall Games","description":"Fly through a neon tunnel at breakneck speed in Tunnel Rush! Dodge obstacles in this free online reflex game.","url":"https://braydenistallgames.online/tunnel-rush.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Tunnel Rush","description":"Fly through a neon tunnel at breakneck speed. Dodge or die.","genre":"Arcade","keywords":"tunnel, speed, neon","url":"https://braydenistallgames.online/tunnel-rush.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Tunnel Rush</h1>
         </div>
@@ -234,7 +237,7 @@
         <div class="description-container">
             <h2 class="description-title">About Tunnel Rush</h2>
             <div class="description-section">
-                <h3>🎮 High-Speed Dodging</h3>
+                <h3>  High-Speed Dodging</h3>
                 <p>You're racing through a neon tunnel at breakneck speed. Obstacles fly at you from all directions.
                     Your only controls? Move left or right. Sounds simple, but when the speed ramps up and obstacles
                     come in rapid patterns, it becomes an intense test of reflexes.</p>
@@ -243,7 +246,7 @@
                     sequence at high speed feels incredible.</p>
             </div>
             <div class="description-section">
-                <h3>🎯 Pattern Recognition</h3>
+                <h3>  Pattern Recognition</h3>
                 <p>Obstacles aren't random—they follow patterns. Learning to read these patterns is key to surviving
                     high speeds. Some sections require quick left-right-left movements. Others need you to hold one side
                     then slam to the other.</p>
@@ -251,7 +254,7 @@
                     dodge when the tunnel spins. Staying oriented while moving fast is half the challenge.</p>
             </div>
             <div class="description-section">
-                <h3>💡 Survival Tips</h3>
+                <h3>  Survival Tips</h3>
                 <p>Don't overcorrect. Small, precise movements work better than wild swings. Look ahead—obstacles
                     telegraph before they hit you. Focus on the center distance, not right in front of you.</p>
                 <p>When the tunnel rotates, stay calm. Your controls stay the same even when your view shifts. Trust
@@ -282,6 +285,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

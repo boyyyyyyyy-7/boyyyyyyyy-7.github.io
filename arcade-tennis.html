@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -122,7 +122,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -176,7 +176,7 @@
         }
 
         .features-list li::before {
-            content: "ðŸŽ¾";
+            content: " ";
             position: absolute;
             left: 0;
         }
@@ -227,14 +227,17 @@
     <meta name="twitter:title" content="Arcade Tennis - Free Online Tennis Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Serve, volley, and win in Arcade Tennis! Fast-paced browser tennis. Play free online, no download required.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Arcade Tennis - Free Online Tennis Game | Brayden is Tall Games","description":"Serve, volley, and win in Arcade Tennis! Fast-paced browser tennis. Play free online, no download required.","url":"https://braydenistallgames.online/arcade-tennis.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Arcade Tennis","description":"Serve, volley, and win in fast-paced browser tennis. Simple controls, intense rallies.","genre":"Sports","keywords":"tennis, arcade, sports","url":"https://braydenistallgames.online/arcade-tennis.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Arcade Tennis</h1>
         </div>
@@ -246,62 +249,32 @@
             </iframe>
         </div>
 
-        <div class="description-container">
+                <div class="description-container">
             <h2 class="description-title">About Arcade Tennis</h2>
-
             <div class="description-section">
-                <h3>ðŸ← The Ultimate Court Challenge</h3>
-                <p>Arcade Tennis brings the high-stakes world of professional tennis to your browser with a vibrant,
-                    fast-paced twist. Far from a standard simulation, this game captures the raw energy and split-second
-                    decision-making that makes tennis one of the world's most thrilling sports. From the moment you step
-                    onto the digital clay, you'll find yourself locked in intense rallies that demand perfect timing and
-                    strategic foresight.</p>
-                <p>What sets Arcade Tennis apart is its accessibility paired with a surprising depth of skill. Whether
-                    you're a seasoned sports gamer or just looking for a quick five-minute break, the intuitive
-                    mechanics allow you to start smashing aces right away. However, as you progress through more
-                    difficult opponents, you'll realize that winning isn't just about hitting the ball backâ€”it's about
-                    placement, spin, and wearing down your rival's stamina levels.</p>
+                <h3>The Ultimate Court Challenge</h3>
+                <p>Arcade Tennis brings the high-stakes world of professional tennis to your browser with a vibrant, fast-paced twist. Far from a standard simulation, this game captures the raw energy and split-second decision-making that makes tennis one of the world's most thrilling sports.</p>
+                <p>What sets Arcade Tennis apart is its accessibility paired with a surprising depth of skill. Intuitive mechanics allow you to start smashing aces right away, but placement and spin are key to winning.</p>
             </div>
-
             <div class="description-section">
-                <h3>ðŸŽ¾ How to Play & Controls</h3>
-                <p>The controls in Arcade Tennis are designed to be fluid and responsive, ensuring that your on-screen
-                    player moves exactly when you want them to. Most players find that using the arrow keys or WASD
-                    offers the best precision for positioning. The spacebar or dedicated action keys are used to swing
-                    your racket, with the timing of your press determining the power and angle of your shot.</p>
-                <p>Serving is your first opportunity to take control of the point. A well-placed serve can force a weak
-                    return, setting you up for a devastating volley at the net. During the rally, pay close attention to
-                    your player's position relative to the ball; hitting the ball too early or too late will lead to
-                    inaccurate shots that your opponent can easily exploit. Mastery comes from learning how to redirect
-                    the ball's momentum to keep your opponent constantly on the move.</p>
+                <h3>How to Play & Controls</h3>
+                <p>Use the arrow keys or WASD for positioning. The spacebar or dedicated action keys are used to swing your racket, with the timing of your press determining the power and angle of your shot.</p>
             </div>
-
             <div class="description-section">
-                <h3>ðŸ’¡ Pro Tips & Strategy</h3>
-                <p>To truly dominate the court, you need to think two steps ahead. One of the most effective strategies
-                    is "cross-court cornering"â€”repeatedly hitting the ball to one corner of the baseline to pull your
-                    opponent wide, then suddenly smashing it to the opposite side once they're out of position. This
-                    makes it almost impossible for even the toughest AI to recover in time.</p>
-                <p>Don't just stay glued to the baseline! Sneaking up to the net (the "serve and volley" technique) can
-                    be a high-risk-high-reward move. By shortening the distance, you give your opponent less time to
-                    react, but you also leave yourself vulnerable to a well-placed lob. Learn to read your opponent's
-                    animations; often, they will telegraph where they are going to hit the ball a fraction of a second
-                    before they do it, giving you the edge you need to win the set.</p>
+                <h3>Pro Tips & Strategy</h3>
+                <p>To truly dominate the court, you need to think two steps ahead. Use "cross-court cornering" to pull your opponent wide, then suddenly smash it to the opposite side.</p>
             </div>
-
             <div class="description-section">
-                <h3>✨ Game Features</h3>
+                <h3>Game Features</h3>
                 <ul class="features-list">
                     <li>High-intensity, arcade-style tennis physics</li>
-                    <li>Progressive difficulty levels to test your evolving skills</li>
-                    <li>Smooth, butter-soft animations and responsive controls</li>
-                    <li>Dynamic scoring system that rewards strategic placement</li>
-                    <li>Clean, glassmorphic UI that keeps the focus on the court</li>
-                    <li>Accessible gameplay that's easy to learn but hard to master</li>
-                    <li>Optimized for low-latency performance in any browser</li>
+                    <li>Progressive difficulty levels to test your skills</li>
+                    <li>Smooth animations and responsive controls</li>
+                    <li>Dynamic scoring system rewards strategic placement</li>
                 </ul>
             </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -347,6 +320,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

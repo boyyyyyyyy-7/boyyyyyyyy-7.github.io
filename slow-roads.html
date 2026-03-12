@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Slow Roads - Free Scenic Driving Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Unwind with Slow Roads, an endlessly generated scenic driving experience. Chill through beautiful landscapes. Free online.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Slow Roads - Free Scenic Driving Game | Brayden is Tall Games","description":"Unwind with Slow Roads, an endlessly generated scenic driving experience. Chill through beautiful landscapes. Free online.","url":"https://braydenistallgames.online/slow-roads.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Slow Roads","description":"Unwind with an endlessly generated scenic driving experience.","genre":"Simulation","keywords":"driving, chill, procedural","url":"https://braydenistallgames.online/slow-roads.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Slow Roads</h1>
         </div>
@@ -356,17 +359,17 @@
             <h2 class="description-title">About Slow Roads</h2>
 
             <div class="description-section">
-                <h3>🎮 The Anti-Racing Game</h3>
+                <h3>  The Anti-Racing Game</h3>
                 <p>Slow Roads is what happens when someone makes a driving game and removes all the stress. No traffic.
                     No cops. No timers. Just you, a car, and procedurally generated roads stretching to the horizon.
-                    It's designed to be the opposite of every other driving gameâ€”pure relaxation.</p>
+                    It's designed to be the opposite of every other driving game pure relaxation.</p>
                 <p>The visuals lean minimal and calming. Rolling hills, simple color palettes, and smooth roads that
                     curve naturally through the landscape. Some people leave it running in a second monitor like a
                     screensaver. Others actually drive and zone out. Either way works.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ How It Works</h3>
+                <h3>  How It Works</h3>
                 <p>Arrow keys or WASD to drive. That's it. No boost button, no handbrake, just gentle acceleration and
                     steering. The roads are infinite and procedurally generated, so you'll never hit the same stretch
                     twice. Drive at whatever speed feels right.</p>
@@ -376,7 +379,7 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Best Ways to Enjoy It</h3>
+                <h3>  Best Ways to Enjoy It</h3>
                 <p>Put on music or a podcast and just drive. The game isn't demanding your attention, so it's perfect
                     background activity. Some people use it to think through problems or decompress after work. It's
                     like meditation but with a steering wheel.</p>
@@ -449,6 +452,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

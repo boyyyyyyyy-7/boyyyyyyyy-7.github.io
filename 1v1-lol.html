@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="1v1.LOL - Free Online Battle Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Play 1v1.LOL free online. Build, shoot, and outplay opponents in this intense third-person battle game. No download required.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"1v1.LOL - Free Online Battle Game | Brayden is Tall Games","description":"Play 1v1.LOL free online. Build, shoot, and outplay opponents in this intense third-person battle game. No download required.","url":"https://braydenistallgames.online/1v1-lol.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"1v1.LOL","description":"Build, shoot, and outplay opponents in this intense third-person battle game.","genre":"Action","keywords":"build, battle, shooter","url":"https://braydenistallgames.online/1v1-lol.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">1v1.lol</h1>
         </div>
@@ -356,10 +359,10 @@
             <h2 class="description-title">About 1v1.LOL</h2>
 
             <div class="description-section">
-                <h3>🎮 Why Everyone's Playing This</h3>
+                <h3>  Why Everyone's Playing This</h3>
                 <p>1v1.LOL has blown up because it nails the build-and-shoot formula without all the extra stuff that
                     slows other games down. You drop into quick matches where it's just you versus one other player, and
-                    whoever combines better building with better aim wins. No teams to carry, no excusesâ€”just pure
+                    whoever combines better building with better aim wins. No teams to carry, no excuses just pure
                     skill.</p>
                 <p>The building mechanics are what separate good players from great ones. Sure, anyone can shoot, but
                     can you throw up a wall mid-fight to block incoming shots? Can you build a ramp to get high ground
@@ -368,8 +371,8 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ Controls & Gameplay Basics</h3>
-                <p>Movement works like any shooterâ€”WASD to walk around, mouse to aim and shoot. The building hotkeys (Q
+                <h3>  Controls & Gameplay Basics</h3>
+                <p>Movement works like any shooter WASD to walk around, mouse to aim and shoot. The building hotkeys (Q
                     for walls, C for floors, V for stairs, X for roofs) take some getting used to, but once they're in
                     your muscle memory, you'll be cranking 90s like a pro.</p>
                 <p>The edit button (F by default) is huge. You can modify your structures on the fly to create windows
@@ -378,10 +381,10 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Getting Better Fast</h3>
+                <h3>  Getting Better Fast</h3>
                 <p>Start in practice mode. Seriously. Don't jump straight into ranked matches unless you enjoy getting
                     destroyed. Practice mode lets you work on your build speed without pressure. Focus on one building
-                    pattern at a timeâ€”maybe just wall-ramp combos at first, then add more complex edits once those feel
+                    pattern at a time maybe just wall-ramp combos at first, then add more complex edits once those feel
                     automatic.</p>
                 <p>Sensitivity matters more than you think. If you're on mouse and keyboard, experiment with your DPI
                     and in-game sens until you can do a clean 180 without overshooting. Controller players should mess
@@ -451,6 +454,18 @@
             }
         }, false);
 </script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

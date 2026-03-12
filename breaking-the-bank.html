@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -136,7 +136,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -214,14 +214,17 @@
     <meta name="twitter:title" content="Breaking the Bank - Free Heist Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Plan and execute the perfect heist in Breaking the Bank! A free online strategy and action game.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Breaking the Bank - Free Heist Game | Brayden is Tall Games","description":"Plan and execute the perfect heist in Breaking the Bank! A free online strategy and action game.","url":"https://braydenistallgames.online/breaking-the-bank.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Breaking the Bank","description":"Plan and execute the perfect heist in this strategy-action game.","genre":"Strategy","keywords":"heist, strategy, action","url":"https://braydenistallgames.online/breaking-the-bank.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFull screen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Breaking the Bank</h1>
         </div>
@@ -234,7 +237,7 @@
         <div class="description-container">
             <h2 class="description-title">About Breaking the Bank</h2>
             <div class="description-section">
-                <h3>🎮 Interactive Crime Comedy</h3>
+                <h3>  Interactive Crime Comedy</h3>
                 <p>You're trying to rob a bank. Choose between different tools and methods, and watch the results unfold
                     in animated sequences. Some choices lead to success, others to hilarious failures.</p>
                 <p>It's not about skill—it's about discovery. Finding all the different failure animations becomes the
@@ -242,7 +245,7 @@
                 </p>
             </div>
             <div class="description-section">
-                <h3>🎯 Trial & Error Fun</h3>
+                <h3>  Trial & Error Fun</h3>
                 <p>The Stickmin series (which this is part of) is all about experimenting. Try the drill. Try the laser.
                     Try the disguise. Every option has an animated outcome. Most fail in funny ways, but a few succeed.
                 </p>
@@ -250,7 +253,7 @@
                     Even "wrong" choices are rewarding because the failure is entertaining.</p>
             </div>
             <div class="description-section">
-                <h3>💡 Finding All Endings</h3>
+                <h3>  Finding All Endings</h3>
                 <p>Don't worry about failing—the failures are the fun part. Try every option to see all the animations.
                     Some combinations are hidden or require specific sequences.</p>
                 <p>The game is short but replay able. The goal isn't to beat it quickly, but to explore every
@@ -281,6 +284,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

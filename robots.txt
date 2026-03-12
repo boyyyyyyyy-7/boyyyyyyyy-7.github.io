@@ -1,19 +1,15 @@
 User-agent: *
 Allow: /
 
-# Block internal or non-public paths
+# Block non-public or development paths
 Disallow: /ads/
 Disallow: /tracking/
-Disallow: /test
-Disallow: /beta
+Disallow: /test/
 
-# Allow core site assets
+# Allow all HTML pages, styles, and scripts
 Allow: *.html
 Allow: *.css
 Allow: *.js
 
-# Sitemap location
+# Sitemaps
 Sitemap: https://braydenistallgames.online/sitemap.xml
-
-# Crawl delay (ignored by Google, respected by some bots)
-Crawl-delay: 1

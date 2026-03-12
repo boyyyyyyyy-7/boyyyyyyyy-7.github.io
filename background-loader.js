@@ -184,14 +184,97 @@
     }, 1500);
   }
 
-  document.addEventListener('DOMContentLoaded', applyBackground);
+  // --- SECURITY (Sync with index.html) ---
+  const Obfuscator = (() => {
+    const BASE_KEY = "STREAK_SECURE_KEY_V1";
+    function rc4(key, str) {
+      const s = [], res = [];
+      let i, j, x, y;
+      for (i = 0; i < 256; i++) s[i] = i;
+      for (i = 0, j = 0; i < 256; i++) {
+        j = (j + s[i] + key.charCodeAt(i % key.length)) % 256;
+        x = s[i]; s[i] = s[j]; s[j] = x;
+      }
+      i = 0; j = 0;
+      for (y = 0; y < str.length; y++) {
+        i = (i + 1) % 256;
+        j = (j + s[i]) % 256;
+        x = s[i]; s[i] = s[j]; s[j] = x;
+        res.push(String.fromCharCode(str.charCodeAt(y) ^ s[(s[i] + s[j]) % 256]));
+      }
+      return res.join("");
+    }
+    function djb2(str) {
+      let hash = 5381;
+      for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
+      return hash;
+    }
+    return {
+      decrypt: (base64Str) => {
+        try {
+          const raw = atob(base64Str);
+          const salt = raw.substring(0, 4);
+          const encrypted = raw.substring(4);
+          const key = BASE_KEY + salt;
+          const decrypted = rc4(key, encrypted);
+          const lastPipe = decrypted.lastIndexOf('|');
+          if (lastPipe === -1) return null;
+          const json = decrypted.substring(0, lastPipe);
+          const storedChecksum = parseInt(decrypted.substring(lastPipe + 1));
+          if (djb2(json) !== storedChecksum) return null;
+          return JSON.parse(json);
+        } catch (e) { return null; }
+      }
+    };
+  })();
+
+  function syncStreak() {
+    const streakElements = document.querySelectorAll('.streak-count');
+    if (streakElements.length === 0) return;
+
+    try {
+      const stored = localStorage.getItem('streakDataV2');
+      if (stored) {
+        let data = null;
+        if (stored.startsWith('{')) {
+          data = JSON.parse(stored);
+        } else {
+          data = Obfuscator.decrypt(stored);
+        }
+
+        if (data) {
+          // The streak is calculated dynamically on the main page, 
+          // but we can try a basic count of visits or check if the streak was saved
+          // For best accuracy, we'll try to find any saved streak value or just default to 0
+          // Note: index.html calculates it on the fly. We'll show a fallback or 0 if not found.
+          // However, we usually want the CURRENT computed streak.
+          // Since we can't easily run the full logic here without duplicating 500 lines of code,
+          // we'll rely on a shared value if available or show nothing.
+
+          // Let's assume there might be a simpler way or we show "?" if uncertain
+          streakElements.forEach(el => el.textContent = data.currentStreak || data.lastStreak || 0);
+        }
+      }
+    } catch (e) {
+      console.error('Error syncing streak:', e);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    applyBackground();
+    syncStreak();
+  });
   window.addEventListener('storage', (event) => {
     if (['customBackground', 'bgType', 'selectedTheme'].includes(event.key)) {
       applyBackground();
+    }
+    if (event.key === 'streakDataV2') {
+      syncStreak();
     }
   });
 
   // Expose for pages that want to re-run after their own UI interactions
   window.applyUserBackground = applyBackground;
+  window.syncStreakDisplay = syncStreak;
 })();
 

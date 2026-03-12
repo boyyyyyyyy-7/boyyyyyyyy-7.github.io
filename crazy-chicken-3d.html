@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Crazy Chicken 3D - Free Online Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Play Crazy Chicken 3D free online. Hilarious 3D chicken mayhem with physics-based fun. No download required.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Crazy Chicken 3D - Free Online Game | Brayden is Tall Games","description":"Play Crazy Chicken 3D free online. Hilarious 3D chicken mayhem with physics-based fun. No download required.","url":"https://braydenistallgames.online/crazy-chicken-3d.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Crazy Chicken 3D","description":"Race through colorful 3D levels packed with jumps, traps, and surprises.","genre":"Action","keywords":"chicken, 3D, racing","url":"https://braydenistallgames.online/crazy-chicken-3d.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Crazy Chicken 3D</h1>
         </div>
@@ -356,27 +359,17 @@
             <h2 class="description-title">About Crazy Chicken 3D</h2>
 
             <div class="description-section">
-                <h3>🎮 Feathered Speed Demon</h3>
-                <p>Crazy Chicken 3D is exactly what it sounds likeâ€”you control a chicken sprinting through obstacle
-                    courses at ridiculous speeds. The 3D graphics are bright and colorful, the levels are packed with
-                    traps and jumps, and the whole thing feels like a fever dream. It's absurd in the best way.</p>
-                <p>What makes it fun is how committed it is to the chaos. Your chicken isn't gracefully navigating
-                    obstaclesâ€”it's flailing through them at full speed. Sometimes you barely clear a jump. Sometimes you
-                    slam face-first into a wall. Either way, it's entertaining.</p>
-            </div>
-
-            <div class="description-section">
-                <h3>ðŸŽ¯ How to Play</h3>
+                <h3>How to Play</h3>
                 <p>Arrow keys or WASD to move, spacebar to jump. The chicken runs automatically, so you're focused on
                     dodging obstacles and timing jumps. The controls are responsive but the speed means you need quick
                     reactions to avoid crashing.</p>
-                <p>Levels throw everything at youâ€”spinning hammers, moving platforms, narrow ledges, sudden drops. The
+                <p>Levels throw everything at you spinning hammers, moving platforms, narrow ledges, sudden drops. The
                     3D perspective adds depth perception challenges. What looks like a safe landing might actually be
                     too far. Trial and error teaches you the timing.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Survival Tactics</h3>
+                <h3>  Survival Tactics</h3>
                 <p>Don't over-jump. Tapping spacebar for small hops works better than always going for maximum height.
                     You need precision more than power. Save big jumps for gaps that actually require them.</p>
                 <p>Watch the path ahead, not your chicken. Looking too close means obstacles surprise you. Focus a few
@@ -448,6 +441,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

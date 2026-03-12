@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,12 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="icon" href="">
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
     <!-- Microsoft Clarity Analytics -->
     <script type="text/javascript">
@@ -33,7 +33,7 @@
         gtag('config', 'G-CFTDLXZJZJ');
     </script>
 
-    
+
     <link
         href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap"
         rel="stylesheet">
@@ -684,44 +684,48 @@
         }
     </style>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <title>Daily Streaks - Track Your Gaming Streak | Brayden is Tall Games</title>
-    <meta name="description" content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
+    <meta name="description"
+        content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
     <meta name="keywords" content="daily streak, gaming streak, brayden games streaks, daily reward">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://braydenistallgames.online/streaks.html">
     <meta property="og:title" content="Daily Streaks - Track Your Gaming Streak | Brayden is Tall Games">
-    <meta property="og:description" content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
+    <meta property="og:description"
+        content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://braydenistallgames.online/streaks.html">
     <meta property="og:site_name" content="Brayden is Tall Games">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Daily Streaks - Track Your Gaming Streak | Brayden is Tall Games">
-    <meta name="twitter:description" content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Daily Streaks - Track Your Gaming Streak | Brayden is Tall Games","description":"Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.","url":"https://braydenistallgames.online/streaks.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+    <meta name="twitter:description"
+        content="Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.">
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Daily Streaks - Track Your Gaming Streak | Brayden is Tall Games","description":"Track your daily gaming streak at Brayden is Tall Games. Log in each day, earn rewards, keep your streak alive.","url":"https://braydenistallgames.online/streaks.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
     <script>
         window.resetStreakData = function () {
-            console.log('🔄 Resetting ALL streak data...');
+            console.log('  Resetting ALL streak data...');
 
             try {
                 // Clear all streak-related localStorage
@@ -737,8 +741,8 @@
                 }
 
                 console.log('✅ Streak data completely reset!');
-                console.log('🔄 All localStorage keys cleared');
-                console.log('📊 Display updated to show streak: 0');
+                console.log('  All localStorage keys cleared');
+                console.log('  Display updated to show streak: 0');
 
                 // Auto-refresh after a short delay to show the reset
                 setTimeout(() => {
@@ -753,16 +757,17 @@
         };
 
         // Confirm function is available
-        console.log('🔧 resetStreakData() function loaded and ready!');
+        console.log('  resetStreakData() function loaded and ready!');
     </script>
 
     <div class="topbar">
         <button class="icon-btn" id="closeButton" title="Back">←</button>
         <div class="topbar-title">Streak</div>
-        <h1 style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Daily Streak Tracker - Brayden is Tall Games</h1>
+        <h1 style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Daily Streak Tracker - Brayden
+            is Tall Games</h1>
         <div class="topbar-right">
             <div class="pill" title="Freezes">
-                ❄️ <span id="headerFreezeCount">0</span>
+                <span id="headerFreezeCount">0</span>
             </div>
         </div>
     </div>
@@ -771,7 +776,7 @@
         <section class="hero-card">
             <div class="hero-streak">
                 <span id="mainStreakCount">0</span>
-                <span class="flame">🔥</span>
+                <span class="flame"> </span>
             </div>
             <div class="hero-sub">day streak</div>
 
@@ -819,11 +824,6 @@
 
         </section>
     </main>
-    <footer style="text-align:center;padding:20px;opacity:0.5;font-size:0.85rem;">
-        <a href="index.html" style="color:inherit;text-decoration:none;">â† Back to All Games</a>
-        &nbsp;|&nbsp;
-        <a href="background-settings.html" style="color:inherit;text-decoration:none;">Background Settings</a>
-    </footer>
 
 
 
@@ -850,7 +850,7 @@
         // --- GLOABL RENDERING FUNCTIONS ---
         // (Defined here at the top as window properties to ensure total visibility)
         window.render = function (data, streak) {
-            console.log('📊 Rendering streak:', streak);
+            console.log('  Rendering streak:', streak);
             if (mainStreakCount) mainStreakCount.textContent = String(streak);
             if (bestStreak) bestStreak.textContent = String(data.best || 0);
             if (freezeCount) freezeCount.textContent = String(data.freezes || 0);
@@ -866,7 +866,7 @@
                     todayStatus.style.borderColor = 'rgba(88,204,2,0.22)';
                     todayStatus.style.color = '#d8ffd0';
                 } else {
-                    todayStatus.textContent = "🔴 Haven't visited today yet";
+                    todayStatus.textContent = "  Haven't visited today yet";
                     todayStatus.style.background = 'rgba(255,80,80,0.10)';
                     todayStatus.style.borderColor = 'rgba(255,80,80,0.22)';
                     todayStatus.style.color = '#ffd0d0';
@@ -875,7 +875,7 @@
         };
 
         window.updateCalendar = function (data) {
-            console.log('📅 Updating calendar...');
+            console.log('  Updating calendar...');
             if (!calendarDays || !monthYear) return;
 
             const visitSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
@@ -1272,11 +1272,11 @@
 
             if (today.getDay() === 1) {
                 const weekKey = getWeekKey(today);
-                console.log(`📅 Monday detected! Current week: ${weekKey}`);
+                console.log(`  Monday detected! Current week: ${weekKey}`);
                 if (data.lastFreezeWeek !== weekKey) {
                     data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
                     data.lastFreezeWeek = weekKey;
-                    console.log(`❄️ Monday bonus: +1 Freeze (Total: ${data.freezes})`);
+                    console.log(`  Monday bonus: +1 Freeze (Total: ${data.freezes})`);
                     if (typeof showToast !== 'undefined') showToast('Monday bonus: +1 Freeze');
                 }
             }
@@ -1421,13 +1421,15 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('🔄 DOM loaded, initializing streak...');
+            console.log('  DOM loaded, initializing streak...');
             try {
                 let data = loadV2();
                 data = migrateLegacyIntoV2(data);
                 data = recordVisit(data, new Date());
                 const computed = computeStreak(data, new Date());
                 data = computed.data;
+                data.currentStreak = computed.streak;
+                data.lastStreak = computed.streak;
                 saveV2(data);
 
                 window.render(data, computed.streak);
@@ -1580,6 +1582,22 @@
     </script>
 
     <script src="background-loader.js"></script>
+
+    <footer
+        style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html"
+                style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html"
+                style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html"
+                style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

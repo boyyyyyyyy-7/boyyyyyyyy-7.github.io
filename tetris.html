@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -215,14 +215,18 @@
     <meta name="twitter:title" content="Tetris - Free Classic Puzzle Game Online | Brayden is Tall Games">
     <meta name="twitter:description" content="Play the classic Tetris puzzle game free online. Stack tetrominoes, clear lines, beat your high score. No download required.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Tetris - Free Classic Puzzle Game Online | Brayden is Tall Games","description":"Play the classic Tetris puzzle game free online. Stack tetrominoes, clear lines, beat your high score. No download required.","url":"https://braydenistallgames.online/tetris.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Tetris","description":"Stack tetrominoes, clear lines, and beat your high score in the classic puzzle game.","genre":"Puzzle","keywords":"tetris, blocks, puzzle","url":"https://braydenistallgames.online/tetris.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <a href="index.html" class="back-button">← Back</a>
-            <button class="fullscreen-button" onclick="document.getElementById('gameFrame').requestFullscreen()">⛶
-                Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+            </div>
             <h1 class="game-title">Tetris</h1>
         </div>
         <div class="game-container">
@@ -236,7 +240,7 @@
             <h2 class="description-title">About Tetris</h2>
 
             <div class="description-section">
-                <h3>🎮 The Legendary Puzzle Game</h3>
+                <h3>  The Legendary Puzzle Game</h3>
                 <p>Tetris is the game that defined puzzle gaming. Blocks fall from the top, and you rotate and position
                     them to create complete horizontal lines. Fill a line and it disappears, giving you points and more
                     space. Miss too many placements and the stack reaches the top—game over.</p>
@@ -246,7 +250,7 @@
             </div>
 
             <div class="description-section">
-                <h3>🎯 Master the Blocks</h3>
+                <h3>  Master the Blocks</h3>
                 <p>Seven piece shapes (tetrominoes): I, O, T, S, Z, J, and L. Each one needs different positioning. The
                     I-piece clears four lines at once if you set it up right (a "Tetris"). The T-piece fits almost
                     anywhere. The S and Z pieces create annoying gaps if you're not careful.</p>
@@ -256,7 +260,7 @@
             </div>
 
             <div class="description-section">
-                <h3>💡 Pro Stacking Strategies</h3>
+                <h3>  Pro Stacking Strategies</h3>
                 <p>Keep your stack flat. Random peaks create problems fast. Build one side higher and leave a column
                     open for I-pieces—this lets you score Tetrises for massive points.</p>
                 <p>Don't wait for the perfect piece. If you need an I-block but it's not coming, adapt your strategy.
@@ -265,6 +269,18 @@
         </div>
     </div>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

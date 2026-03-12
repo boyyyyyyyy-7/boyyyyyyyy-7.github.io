@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -194,14 +194,18 @@
     <meta name="twitter:title" content="Hole.io - Free Online Hole Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Play Hole.io free online. Control a black hole and swallow everything in the city. Grow bigger than rivals to win. No download needed.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Hole.io - Free Online Hole Game | Brayden is Tall Games","description":"Play Hole.io free online. Control a black hole and swallow everything in the city. Grow bigger than rivals to win. No download needed.","url":"https://braydenistallgames.online/hole-io.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Hole.io","description":"Control a black hole and swallow everything in the city. Grow bigger than rivals to win!","genre":"Action","keywords":"io game, black hole, multiplayer","url":"https://braydenistallgames.online/hole-io.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <a href="index.html" class="back-button">← Back</a>
-            <button class="fullscreen-button" onclick="document.getElementById('gameFrame').requestFullscreen()">⛶
-                Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+            </div>
             <h1 class="game-title">Hole.io</h1>
         </div>
         <div class="game-container">
@@ -213,7 +217,7 @@
         <div class="description-container">
             <h2 class="description-title">About Hole.io</h2>
             <div class="description-section">
-                <h3>🎮 Swallow Everything</h3>
+                <h3>  Swallow Everything</h3>
                 <p>You're a black hole moving around a city. Everything smaller than you falls in—trash cans, lamp
                     posts, cars, people, eventually entire buildings. The more you consume, the bigger you grow. Bigger
                     holes eat smaller holes. Simple concept, wildly addictive execution.</p>
@@ -221,7 +225,7 @@
                     against the clock and against each other to become the biggest hole before time runs out.</p>
             </div>
             <div class="description-section">
-                <h3>🎯 Growth Strategy</h3>
+                <h3>  Growth Strategy</h3>
                 <p>Start with small objects. Don't waste time chasing things you can't swallow yet. Once you hit a size
                     threshold, you can suddenly consume cars. Then street signs. Then buildings. Growth accelerates fast
                     if you target the right objects.</p>
@@ -229,7 +233,7 @@
                     bigger holes or you become their snack.</p>
             </div>
             <div class="description-section">
-                <h3>💡 Win More Matches</h3>
+                <h3>  Win More Matches</h3>
                 <p>Dense areas have more small objects—perfect for early growth. Once you're mid-sized, move to areas
                     with cars and larger items for faster expansion. Don't get greedy chasing one huge object when you
                     could be vacuuming up dozens of smaller ones.</p>
@@ -239,6 +243,18 @@
         </div>
     </div>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

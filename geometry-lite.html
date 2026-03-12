@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Geometry Lite - Free Rhythm Platformer | Brayden is Tall Games">
     <meta name="twitter:description" content="Play Geometry Lite free online. Jump and dash through neon geometry levels synced to the beat. No download needed.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Geometry Lite - Free Rhythm Platformer | Brayden is Tall Games","description":"Play Geometry Lite free online. Jump and dash through neon geometry levels synced to the beat. No download needed.","url":"https://braydenistallgames.online/geometry-lite.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Geometry Lite","description":"Jump and dash through neon geometry levels synced to the beat.","genre":"Rhythm","keywords":"geometry dash, rhythm, platformer","url":"https://braydenistallgames.online/geometry-lite.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Geometry Lite</h1>
         </div>
@@ -356,29 +359,29 @@
             <h2 class="description-title">About Geometry Lite</h2>
 
             <div class="description-section">
-                <h3>🎮 Rhythm Meets Platforming</h3>
+                <h3>  Rhythm Meets Platforming</h3>
                 <p>Geometry Lite (or Geometry Dash) turns platforming into a music game. Your character moves
                     automatically to the beat, and you jump by clicking or tapping. Simple concept, but the execution is
                     brutal. Spikes everywhere. Tight jumps. Split-second timing required. One mistake sends you back to
                     the start.</p>
                 <p>What hooks people is how the music syncs with the obstacles. You're not just memorizing
-                    patternsâ€”you're feeling the rhythm. When you nail a tricky section after dozens of attempts, it
+                    patterns you're feeling the rhythm. When you nail a tricky section after dozens of attempts, it
                     feels like you're playing the song, not just surviving it. That moment when muscle memory kicks in
                     and you flow through a level is unmatched.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ One Button, Infinite Challenge</h3>
+                <h3>  One Button, Infinite Challenge</h3>
                 <p>Click, tap, or press space to jump. That's it. Your cube runs forward automatically. The challenge is
                     timing your jumps to clear spikes, navigate moving platforms, and survive gravity-flipping sections
                     that mess with your head.</p>
-                <p>Later levels add new mechanicsâ€”ship mode where you hold to fly up, ball mode where you flip gravity
+                <p>Later levels add new mechanics ship mode where you hold to fly up, ball mode where you flip gravity
                     with each tap, wave mode with constant flight control. Each mode changes how you think about timing,
                     keeping levels fresh even after hundreds of deaths.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Getting Past the Difficulty</h3>
+                <h3>  Getting Past the Difficulty</h3>
                 <p>Practice mode is your best friend. It lets you place checkpoints so you don't restart the entire
                     level every time. Use it to learn the hardest sections, then try the full run once you've got the
                     muscle memory down.</p>
@@ -451,6 +454,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

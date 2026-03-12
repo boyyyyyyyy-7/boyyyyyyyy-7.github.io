@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Curve Rush - Free Online Speed Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Play Curve Rush free online. Ride the curves at insane speeds and go for the top score. Addictive browser game.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Curve Rush - Free Online Speed Game | Brayden is Tall Games","description":"Play Curve Rush free online. Ride the curves at insane speeds and go for the top score. Addictive browser game.","url":"https://braydenistallgames.online/curve-rush.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Curve Rush","description":"Ride the curves at insane speeds and go for the top score.","genre":"Arcade","keywords":"speed, curves, reflex","url":"https://braydenistallgames.online/curve-rush.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Curve Rush</h1>
         </div>
@@ -356,19 +359,19 @@
             <h2 class="description-title">About Curve Rush</h2>
 
             <div class="description-section">
-                <h3>🎮 Flowing Track Racer</h3>
+                <h3>  Flowing Track Racer</h3>
                 <p>Curve Rush is all about smooth movement through winding tracks. You're sliding along curves,
                     launching off ramps, and trying to maintain momentum through every turn. The physics are tight, the
                     tracks look gorgeous, and landing perfectly after an aerial section feels incredible.</p>
-                <p>What sets it apart is how satisfying the movement feels. You're not just racingâ€”you're flowing. Good
+                <p>What sets it apart is how satisfying the movement feels. You're not just racing you're flowing. Good
                     runs have a rhythm to them. You transition from curve to straightaway to jump without losing speed.
                     Everything clicks together when you find the perfect line through a section.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ Movement & Momentum</h3>
+                <h3>  Movement & Momentum</h3>
                 <p>Arrow keys or tilt controls guide your movement. The game auto-accelerates, so you're focused
-                    entirely on steering and positioning. Curves require smooth inputsâ€”sharp turns kill your speed. The
+                    entirely on steering and positioning. Curves require smooth inputs sharp turns kill your speed. The
                     goal is maintaining flow through every section.</p>
                 <p>Jumps are where momentum matters most. Hit a ramp at the right angle with good speed and you soar.
                     Hit it wrong and you stumble on landing. The best players chain perfect jumps together, turning
@@ -376,7 +379,7 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Flow State Tips</h3>
+                <h3>  Flow State Tips</h3>
                 <p>Anticipate curves early. By the time you see a sharp turn, it's too late to adjust smoothly. Look
                     ahead, identify the curve, and start your turn before you reach it. Early subtle adjustments beat
                     last-second corrections every time.</p>
@@ -449,6 +452,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
     
@@ -188,7 +188,7 @@
 
         .button-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
             gap: 15px;
@@ -332,14 +332,17 @@
     <meta name="twitter:title" content="Granny - Free Online Horror Escape Game | Brayden is Tall Games">
     <meta name="twitter:description" content="Escape from Granny's house in this terrifying survival horror game. Stealth your way out. Play free in your browser.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Granny - Free Online Horror Escape Game | Brayden is Tall Games","description":"Escape from Granny's house in this terrifying survival horror game. Stealth your way out. Play free in your browser.","url":"https://braydenistallgames.online/granny.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Granny","description":"Stay quiet, hide when needed, and escape the house before Granny catches you.","genre":"Horror","keywords":"horror, escape, stealth","url":"https://braydenistallgames.online/granny.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 </head>
 
 <body>
     <div class="container">
         <div class="header">
-            <div class="button-container">
-                <a href="index.html" class="back-button">← Back to Games</a>
-                <button class="fullscreen-button" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
             </div>
             <h1 class="game-title">Granny</h1>
         </div>
@@ -356,19 +359,19 @@
             <h2 class="description-title">About Granny</h2>
 
             <div class="description-section">
-                <h3>🎮 Escape or Get Caught</h3>
+                <h3>  Escape or Get Caught</h3>
                 <p>Granny locks you in her house and gives you five days to escape. Every sound you make brings her
                     closer. Drop an object? She hears it. Step on a creaky floorboard? She's already on her way. The
                     whole game is tense stealth where one mistake can end your run.</p>
-                <p>What makes it scary isn't jump scaresâ€”it's the constant dread. You'll be searching a room for keys,
+                <p>What makes it scary isn't jump scares it's the constant dread. You'll be searching a room for keys,
                     hear footsteps getting louder, and realize you have maybe three seconds to find a hiding spot before
                     she finds you. That feeling never gets old, it just makes your heart pound harder.</p>
             </div>
 
             <div class="description-section">
-                <h3>ðŸŽ¯ How to Survive</h3>
-                <p>Move slowly and crouch when possibleâ€”it reduces noise. Use WASD to walk and interact with objects.
-                    Your goal is finding items to unlock the front doorâ€”keys, weapons, code pieces. They're scattered
+                <h3>  How to Survive</h3>
+                <p>Move slowly and crouch when possible it reduces noise. Use WASD to walk and interact with objects.
+                    Your goal is finding items to unlock the front door keys, weapons, code pieces. They're scattered
                     throughout the house, often in really inconvenient places.</p>
                 <p>When Granny gets close, hide under beds, in closets, or in the car. You can see her through cracks
                     while hidden. She'll search for a bit, then leave. The trick is knowing when to stay hidden and when
@@ -376,9 +379,9 @@
             </div>
 
             <div class="description-section">
-                <h3>ðŸ’¡ Strategy Tips</h3>
+                <h3>  Strategy Tips</h3>
                 <p>Memorize where items spawn. They're semi-random, but certain rooms have higher chances of specific
-                    items. Check the basement and attic earlyâ€”they usually have crucial items, but they're also the
+                    items. Check the basement and attic early they usually have crucial items, but they're also the
                     scariest rooms to search.</p>
                 <p>Drop items strategically to bait Granny. If you drop a vase on the opposite side of the house, she'll
                     go investigate, giving you time to search elsewhere. This trick saves entire runs when used smartly.
@@ -444,6 +447,18 @@
         }, false);
 </script>
     <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
 </body>
 
 </html>
