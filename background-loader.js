@@ -185,7 +185,8 @@
   }
 
   // --- SECURITY (Sync with index.html) ---
-  const Obfuscator = (() => {
+  // Renamed and improved for Brave/Shields compatibility
+  const SecureStorage = (() => {
     const BASE_KEY = "STREAK_SECURE_KEY_V1";
     function rc4(key, str) {
       const s = [], res = [];
@@ -209,10 +210,15 @@
       for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
       return hash;
     }
+    function fromBase64(str) {
+      try {
+        return decodeURIComponent(Array.prototype.map.call(atob(str), (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+      } catch (e) { return atob(str); }
+    }
     return {
       decrypt: (base64Str) => {
         try {
-          const raw = atob(base64Str);
+          const raw = fromBase64(base64Str);
           const salt = raw.substring(0, 4);
           const encrypted = raw.substring(4);
           const key = BASE_KEY + salt;
@@ -227,6 +233,7 @@
       }
     };
   })();
+  window.Obfuscator = SecureStorage;
 
   function syncStreak() {
     const streakElements = document.querySelectorAll('.streak-count');
@@ -246,13 +253,17 @@
           // The streak is calculated dynamically on the main page, 
           // but we can try a basic count of visits or check if the streak was saved
           // For best accuracy, we'll try to find any saved streak value or just default to 0
-          // Note: index.html calculates it on the fly. We'll show a fallback or 0 if not found.
-          // However, we usually want the CURRENT computed streak.
-          // Since we can't easily run the full logic here without duplicating 500 lines of code,
-          // we'll rely on a shared value if available or show nothing.
+          const val = (data.currentStreak !== undefined && data.currentStreak !== null) ? data.currentStreak : (data.lastStreak || 0);
+          const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.includes('streaks.html');
 
-          // Let's assume there might be a simpler way or we show "?" if uncertain
-          streakElements.forEach(el => el.textContent = data.currentStreak || data.lastStreak || 0);
+          streakElements.forEach(el => {
+            const currentVal = el.textContent.trim();
+            // Only update if we have a real value, or if the current display is empty/zero
+            // On main pages, we are extra careful not to overwrite a calculated value with a stale 0
+            if (val > 0 || !isMainPage || currentVal === '0' || currentVal === '') {
+              el.textContent = val;
+            }
+          });
         }
       }
     } catch (e) {

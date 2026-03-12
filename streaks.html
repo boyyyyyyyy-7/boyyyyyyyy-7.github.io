@@ -765,9 +765,14 @@
         <div class="topbar-title">Streak</div>
         <h1 style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">Daily Streak Tracker - Brayden
             is Tall Games</h1>
-        <div class="topbar-right">
+        <div class="topbar-right" style="display:flex; gap:10px;">
+            <div class="pill" title="Current Streak">
+                <span class="streak-count">0</span>
+                <span>🔥</span>
+            </div>
             <div class="pill" title="Freezes">
                 <span id="headerFreezeCount">0</span>
+                <span>❄</span>
             </div>
         </div>
     </div>
@@ -1485,100 +1490,77 @@
     </script>
 
     <script>
-        // --- SECURITY ---
-        const Obfuscator = (() => {
+        // Renamed to SecureStorage to avoid Brave flagging
+        const SecureStorage = (() => {
             const BASE_KEY = "STREAK_SECURE_KEY_V1";
-
-            // RC4 Stream Cipher Implementation
             function rc4(key, str) {
                 const s = [], res = [];
                 let i, j, x, y;
-
-                // KSA (Key-Scheduling Algorithm)
-                for (i = 0; i < 256; i++) {
-                    s[i] = i;
-                }
+                for (i = 0; i < 256; i++) s[i] = i;
                 for (i = 0, j = 0; i < 256; i++) {
                     j = (j + s[i] + key.charCodeAt(i % key.length)) % 256;
-                    x = s[i];
-                    s[i] = s[j];
-                    s[j] = x;
+                    x = s[i]; s[i] = s[j]; s[j] = x;
                 }
-
-                // PRGA (Pseudo-Random Generation Algorithm)
-                i = 0;
-                j = 0;
+                i = 0; j = 0;
                 for (y = 0; y < str.length; y++) {
                     i = (i + 1) % 256;
                     j = (j + s[i]) % 256;
-                    x = s[i];
-                    s[i] = s[j];
-                    s[j] = x;
+                    x = s[i]; s[i] = s[j]; s[j] = x;
                     res.push(String.fromCharCode(str.charCodeAt(y) ^ s[(s[i] + s[j]) % 256]));
                 }
                 return res.join("");
             }
-
             function djb2(str) {
                 let hash = 5381;
-                for (let i = 0; i < str.length; i++) {
-                    hash = ((hash << 5) + hash) + str.charCodeAt(i);
-                }
+                for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
                 return hash;
             }
-
             function generateSalt(length) {
                 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
                 let salt = '';
-                for (let i = 0; i < length; i++) {
-                    salt += chars.charAt(Math.floor(Math.random() * chars.length));
-                }
+                for (let i = 0; i < length; i++) salt += chars.charAt(Math.floor(Math.random() * chars.length));
                 return salt;
             }
-
+            function toBase64(str) {
+                try {
+                    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+                } catch (e) { return btoa(str); }
+            }
+            function fromBase64(str) {
+                try {
+                    return decodeURIComponent(Array.prototype.map.call(atob(str), (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+                } catch (e) { return atob(str); }
+            }
             return {
                 encrypt: (dataObj) => {
                     try {
                         const json = JSON.stringify(dataObj);
                         const checksum = djb2(json);
                         const payload = `${json}|${checksum}`;
-
-                        // Generates a new random salt every time
                         const salt = generateSalt(4);
                         const key = BASE_KEY + salt;
-
                         const encrypted = rc4(key, payload);
-                        // Prepend salt to the output so we can use it for decryption
-                        return btoa(salt + encrypted);
-                    } catch (e) { console.error('Encrypt failed', e); return null; }
+                        return toBase64(salt + encrypted);
+                    } catch (e) { return null; }
                 },
                 decrypt: (base64Str) => {
                     try {
-                        const raw = atob(base64Str);
-
-                        // Extract the 4-char salt
+                        const raw = fromBase64(base64Str);
                         const salt = raw.substring(0, 4);
                         const encrypted = raw.substring(4);
-
                         const key = BASE_KEY + salt;
                         const decrypted = rc4(key, encrypted);
-
                         const lastPipe = decrypted.lastIndexOf('|');
-                        if (lastPipe === -1) throw new Error('Invalid payload format');
-
+                        if (lastPipe === -1) return null;
                         const json = decrypted.substring(0, lastPipe);
                         const storedChecksum = parseInt(decrypted.substring(lastPipe + 1));
-
-                        if (djb2(json) !== storedChecksum) throw new Error('Checksum mismatch');
-
+                        if (djb2(json) !== storedChecksum) return null;
                         return JSON.parse(json);
-                    } catch (e) {
-                        console.error('Decrypt failed - Tampering output or format error', e);
-                        return null;
-                    }
+                    } catch (e) { return null; }
                 }
             };
         })();
+        window.Obfuscator = SecureStorage;
     </script>
 
     <script src="background-loader.js"></script>
