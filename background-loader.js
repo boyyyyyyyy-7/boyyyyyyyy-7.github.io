@@ -235,6 +235,99 @@
   })();
   window.Obfuscator = SecureStorage;
 
+  // Lightweight streak engine for non-main pages
+  const StreakEngine = (() => {
+    function normalizeToNoon(date) {
+      const d = new Date(date);
+      d.setHours(12, 0, 0, 0);
+      return d;
+    }
+    function toDayKey(date) {
+      const d = normalizeToNoon(date);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+    function parseDayKey(key) {
+      if (!key) return null;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(key)) {
+        const d = new Date(`${key}T12:00:00`);
+        return Number.isNaN(d.getTime()) ? null : normalizeToNoon(d);
+      }
+      const legacy = new Date(key);
+      return Number.isNaN(legacy.getTime()) ? null : normalizeToNoon(legacy);
+    }
+    function normalizeDayKey(value) {
+      const parsed = parseDayKey(value);
+      return parsed ? toDayKey(parsed) : null;
+    }
+    function getDayDiff(a, b) {
+      const start = normalizeToNoon(a);
+      const end = normalizeToNoon(b);
+      return Math.round((end - start) / (1000 * 60 * 60 * 24));
+    }
+    function computeEffectiveUsedSet(data, date = new Date()) {
+      const today = normalizeToNoon(date);
+      const todayKey = toDayKey(today);
+      const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+      const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
+      if ((data.visits || []).length === 0) return { set: new Set(), freezesNew: 0 };
+      let earliestVisitStr = data.visits.reduce((min, v) => v < min ? v : min, data.visits[0]);
+      let available = Math.max(0, Number(data.freezes) || 0);
+      let freezesNew = 0;
+      const effectiveUsed = new Set();
+      for (const key of originalUsedSet) effectiveUsed.add(key);
+      let cursor = new Date(today);
+      cursor.setHours(12, 0, 0, 0);
+      let pending = [];
+      while (getDayDiff(cursor, today) < 365) {
+        const key = toDayKey(cursor);
+        if (key < earliestVisitStr) break;
+        const hasVisit = visitsSet.has(key);
+        const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+        if (hasVisit || originalUsedSet.has(key)) {
+          pending.forEach(p => { effectiveUsed.add(p.key); if (p.type === 'freeze' && p.key < todayKey) freezesNew++; });
+          pending = [];
+        } else if (!isWeekend) {
+          if (available > 0) { pending.push({ key: key, type: 'freeze' }); available--; }
+          else if (data.forgivenessData && data.forgivenessData[key]) pending.push({ key: key, type: 'forgiveness' });
+          else break;
+        }
+        cursor.setDate(cursor.getDate() - 1);
+        cursor.setHours(12, 0, 0, 0);
+      }
+      return { set: effectiveUsed, freezesNew: freezesNew };
+    }
+    return {
+      compute: (data) => {
+        const today = normalizeToNoon(new Date());
+        const todayKey = toDayKey(today);
+        const effectiveUsedSet = computeEffectiveUsedSet(data, today).set;
+        let streak = 0;
+        let streakActive = false;
+        const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+        let earliestVisitStr = (data.visits || []).length > 0 ? (data.visits).reduce((min, v) => v < min ? v : min, (data.visits)[0]) : todayKey;
+        let cursor = new Date(today);
+        cursor.setHours(12, 0, 0, 0);
+        while (true) {
+          const key = toDayKey(cursor);
+          if (key < earliestVisitStr) break;
+          const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+          const hasVisit = visitsSet.has(key);
+          const isSaved = effectiveUsedSet.has(key);
+          if (hasVisit) { streak++; streakActive = true; }
+          else if (isSaved && streakActive) { streak++; }
+          else if (!isWeekend && streakActive) break;
+          cursor.setDate(cursor.getDate() - 1);
+          cursor.setHours(12, 0, 0, 0);
+          if (getDayDiff(cursor, today) > 365) break;
+        }
+        return streak;
+      }
+    };
+  })();
+
   function syncStreak() {
     const streakElements = document.querySelectorAll('.streak-count');
     if (streakElements.length === 0) return;
@@ -250,16 +343,11 @@
         }
 
         if (data) {
-          // The streak is calculated dynamically on the main page, 
-          // but we can try a basic count of visits or check if the streak was saved
-          // For best accuracy, we'll try to find any saved streak value or just default to 0
-          const val = (data.currentStreak !== undefined && data.currentStreak !== null) ? data.currentStreak : (data.lastStreak || 0);
+          const val = StreakEngine.compute(data);
           const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.includes('streaks.html');
 
           streakElements.forEach(el => {
             const currentVal = el.textContent.trim();
-            // Only update if we have a real value, or if the current display is empty/zero
-            // On main pages, we are extra careful not to overwrite a calculated value with a stale 0
             if (val > 0 || !isMainPage || currentVal === '0' || currentVal === '') {
               el.textContent = val;
             }
