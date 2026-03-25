@@ -55,8 +55,7 @@
         { name: 'Learn to Fly 2', url: 'learn-to-fly-2.html' },
         { name: 'Learn to Fly Idle', url: 'learn-to-fly-idle.html' },
         { name: 'Raft Wars', url: 'raft-wars.html' },
-        { name: 'Cars', url: 'cars.html' },
-        { name: 'Retro Bowl', url: 'retro-bowl.html' }
+        { name: 'Cars', url: 'cars.html' }
     ];
 
     const T1_URLS = new Set(TIER_1.map(g => g.url));
