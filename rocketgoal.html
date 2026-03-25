@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-CFTDLXZJZJ');</script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: moveStars 20s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes moveStars {
+            0% { transform: translateX(0px) translateY(0px); }
+            100% { transform: translateX(-200px) translateY(-100px); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 300px 200px;
+            animation: moveStars2 30s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes moveStars2 {
+            0% { transform: translateX(0px) translateY(0px); }
+            100% { transform: translateX(-300px) translateY(-200px); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 32px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .back-button:hover,
+        .fullscreen-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            transform: translateY(-2px) scale(1.1);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .description-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .description-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .description-section {
+            margin-bottom: 25px;
+        }
+
+        .description-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .description-section p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .game-frame {
+                height: 70vh;
+            }
+        }
+    </style>
+
+    <title>Rocketgoal | Brayden is Tall Games</title>
+    <meta name="description" content="Play Rocketgoal, the exciting fast-paced 2D soccer game! Boost, flip, and score in this free browser game.">
+    <meta name="keywords" content="rocketgoal, car soccer, soccer game, browser game, free online game, unblocked games for school">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://braydenistallgames.online/rocketgoal.html">
+    <meta property="og:title" content="Rocketgoal | Brayden is Tall Games">
+    <meta property="og:description" content="Play Rocketgoal, the exciting fast-paced 2D soccer game! Boost, flip, and score in this free browser game.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/rocketgoal.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rocketgoal | Brayden is Tall Games">
+    <meta name="twitter:description" content="Play Rocketgoal, the exciting fast-paced 2D soccer game! Boost, flip, and score in this free browser game.">
+    
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Rocketgoal - Free Online Game | Brayden is Tall Games","description":"Play Rocketgoal, the exciting fast-paced 2D soccer game! Boost, flip, and score in this free browser game.","url":"https://braydenistallgames.online/rocketgoal.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Rocketgoal","description":"Score goals using rocket-powered cars in this fast-paced 2D arcade soccer game.","genre":"Sports","keywords":"soccer, cars, multiplayer, arcade","url":"https://braydenistallgames.online/rocketgoal.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Rocketgoal","item":"https://braydenistallgames.online/rocketgoal.html"}]}</script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                <a href="background-settings.html" class="back-button" title="Settings" style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></a>
+            </div>
+            <h1 class="game-title">Rocketgoal</h1>
+        </div>
+        <div class="game-container">
+            <iframe id="gameFrame" src="https://rocketgoal.io/" class="game-frame"
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
+        </div>
+
+        <div class="description-container">
+            <h2 class="description-title">About Rocketgoal</h2>
+            <div class="description-section">
+                <h3>  Rocket-Powered Soccer</h3>
+                <p>Welcome to Rocketgoal, the fast-paced 2D arcade game that combines driving with soccer. Take control of your vehicle, hit the boost, and propel the ball into the opponent's net to score!</p>
+                <p>Use your momentum and aerial flips to outplay the other team in a thrilling battle of skill and timing.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleFullscreen() {
+            const iframe = document.getElementById('gameFrame');
+            if (!document.fullscreenElement) {
+                if (iframe.requestFullscreen) iframe.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+        document.addEventListener('fullscreenchange', () => {
+            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+        });
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+    </script>
+    <script src="background-loader.js"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="background-settings.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="recommendations.js"></script>
+</body>
+
+</html>

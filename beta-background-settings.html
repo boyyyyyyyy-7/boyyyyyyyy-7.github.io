@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
+    <title>Background Settings | Brayden is Tall Games</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-color: #050508;
+            --glass-bg: rgba(10, 10, 15, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.35);
+            --accent: #a855f7;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- IMMERSIVE BACKGROUND --- */
+        #mesh-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+            overflow: hidden;
+        }
+
+        .gradient-sphere {
+            position: absolute;
+            width: 60vmax;
+            height: 60vmax;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .sphere-1 {
+            background: var(--primary);
+            top: -20%;
+            left: -10%;
+            animation: float 20s infinite alternate;
+        }
+
+        .sphere-2 {
+            background: var(--accent);
+            bottom: -20%;
+            right: -10%;
+            animation: float 25s infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            100% {
+                transform: translate(10%, 15%) scale(1.1);
+            }
+        }
+
+        /* --- GLASS UTILITIES --- */
+        .glass-pod {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--card-radius);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- HEADER & NAVIGATION --- */
+        header.glass {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.2);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .beta-tag {
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            background: var(--primary-glow);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 100px;
+            margin-left: 8px;
+            vertical-align: middle;
+            font-weight: 700;
+        }
+
+        /* --- LAYOUT --- */
+        .app-container {
+            max-width: 1400px;
+            margin: 100px auto 40px;
+            padding: 0 32px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 32px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 140px);
+        }
+
+        .sidebar-pod {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        /* --- INPUTS & BUTTONS --- */
+        .search-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: white;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+
+        .btn-premium {
+            padding: 12px 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link {
+            text-align: left;
+            justify-content: flex-start;
+            width: 100%;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-muted);
+        }
+
+        .nav-link.active {
+            background: rgba(56, 189, 248, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* --- MAIN CONTENT & PREVIEW --- */
+        .preview-pod {
+            padding: 24px;
+            margin-bottom: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preview-display {
+            width: 100%;
+            height: 240px;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 16px;
+            transition: 0.5s ease;
+            position: relative;
+        }
+
+        .preview-display::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+        }
+
+        .preview-info {
+            text-align: center;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 1.1rem;
+        }
+
+        /* --- BACKGROUND GRID --- */
+        .grid-header {
+            margin: 32px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid-header h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .grid-header .line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--glass-border), transparent);
+        }
+
+        .background-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .bg-card {
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        .bg-card:hover {
+            transform: scale(1.05) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .bg-card.active {
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .bg-card.case-bg-unlocked {
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            background: rgba(255, 215, 0, 0.03);
+        }
+
+        .bg-card.case-bg-unlocked.active {
+            border: 2px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .bg-thumb {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .bg-label {
+            padding: 16px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: 0.3s;
+        }
+
+        .bg-card:hover .bg-label {
+            color: white;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
+        /* --- TOAST --- */
+        .toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            padding: 16px 24px;
+            background: rgba(10, 10, 15, 0.9);
+            border: 1px solid var(--glass-border);
+            border-radius: 100px;
+            color: white;
+            font-weight: 700;
+            z-index: 5000;
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .toast.active {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                margin-top: 80px;
+            }
+
+            .sidebar {
+                position: static;
+                height: auto;
+            }
+        }
+
+        @keyframes lockShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20%,
+            60% {
+                transform: translateX(-5px);
+            }
+
+            40%,
+            80% {
+                transform: translateX(5px);
+            }
+        }
+
+        .locked-shake {
+            animation: lockShake 0.4s ease-in-out;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="mesh-gradient">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+    </div>
+
+    <header class="glass">
+        <div class="logo">BRAYDEN GAMES <span class="beta-tag">APPEARANCE</span></div>
+        <a href="beta-index.html" class="btn-close"
+            style="text-decoration:none; font-size:1.5rem; color:var(--text-muted);">×</a>
+    </header>
+
+    <div id="toast" class="toast">
+        <span id="toastIcon">🔒</span>
+        <span id="toastMsg">Unlocked!</span>
+    </div>
+
+    <main class="app-container">
+        <aside class="sidebar">
+            <div class="glass-pod sidebar-pod">
+                <div class="sidebar-title">Navigation</div>
+                <div class="nav" id="nav">
+                    <button class="btn-premium nav-link active" data-category="all">All Styles</button>
+                    <button class="btn-premium nav-link" data-category="themes">Premium Themes</button>
+                    <button class="btn-premium nav-link" data-category="colors">Solid Colors</button>
+                    <button class="btn-premium nav-link" data-category="gradients">Gradients</button>
+                    <button class="btn-premium nav-link" data-category="upload">Custom Upload</button>
+                </div>
+            </div>
+
+            <div class="glass-pod sidebar-pod">
+                <div class="sidebar-title">Controls</div>
+                <input id="searchInput" type="text" placeholder="Search backgrounds..." class="search-box"
+                    autocomplete="off" />
+                <button class="btn-premium btn-secondary" id="resetBtn" style="width: 100%;">
+                    Reset to Default
+                </button>
+            </div>
+        </aside>
+
+        <section class="main-panel">
+            <div class="glass-pod preview-pod">
+                <div class="preview-display" id="bgPreview"></div>
+                <div class="preview-info" id="previewLabel">Select a background to preview</div>
+            </div>
+
+            <!-- Categories -->
+            <div class="category active" data-category="themes">
+                <div class="grid-header">
+                    <h2>Premium Themes</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="background-grid">
+                    <div class="bg-card glass-pod" data-theme="classic">
+                        <div class="bg-thumb" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);">
+                        </div>
+                        <div class="bg-label">Classic Dark</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-theme="light">
+                        <div class="bg-thumb" style="background: linear-gradient(135deg, #f6f7fb 0%, #e5e7eb 100%);">
+                        </div>
+                        <div class="bg-label">Light Mode</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-theme="christmas">
+                        <div class="bg-thumb" style="background: linear-gradient(135deg, #1a2b3c 0%, #0d1a26 100%);">
+                            <div
+                                style="position: absolute; inset: 0; background: radial-gradient(circle at 20% 30%, rgba(255,0,0,0.1) 0%, transparent 20%), radial-gradient(circle at 80% 70%, rgba(0,255,0,0.1) 0%, transparent 20%);">
+                            </div>
+                        </div>
+                        <div class="bg-label">Winter Mode</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-theme="newyears">
+                        <div class="bg-thumb" style="background: linear-gradient(135deg, #050510 0%, #1a1030 100%);">
+                            <div
+                                style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(138,43,226,0.2) 0%, transparent 70%);">
+                            </div>
+                        </div>
+                        <div class="bg-label">New Year's Celebration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category active" data-category="colors">
+                <div class="grid-header">
+                    <h2>Solid Colors</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="background-grid">
+                    <div class="bg-card glass-pod" data-bg="#0a0a0a">
+                        <div class="bg-thumb" style="background-color: #0a0a0a"></div>
+                        <div class="bg-label">Dark Black</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-bg="#1a1a1a">
+                        <div class="bg-thumb" style="background-color: #1a1a1a"></div>
+                        <div class="bg-label">Dark Gray</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-bg="#0d1b2a">
+                        <div class="bg-thumb" style="background-color: #0d1b2a"></div>
+                        <div class="bg-label">Navy Blue</div>
+                    </div>
+                    <div class="bg-card glass-pod" data-bg="#0b1320">
+                        <div class="bg-thumb" style="background-color: #0b1320"></div>
+                        <div class="bg-label">Midnight</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category active" data-category="gradients">
+                <div class="grid-header">
+                    <h2>Gradients & Unlocks</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="background-grid" id="gradientsContainer">
+                    <!-- Standard Gradients -->
+                    <div class="bg-card glass-pod" data-bg="linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)">
+                        <div class="bg-thumb" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)">
+                        </div>
+                        <div class="bg-label">Deep Space</div>
+                    </div>
+                    <!-- Dynamically injected items will go here -->
+                </div>
+            </div>
+
+            <div class="category" data-category="upload">
+                <div class="grid-header">
+                    <h2>Custom Upload</h2>
+                    <div class="line"></div>
+                </div>
+                <div class="glass-pod" style="padding: 40px; text-align: center;">
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">Personalize your experience with a custom
+                        image.</p>
+                    <label class="btn-premium btn-primary" style="display: inline-flex; cursor: pointer;">
+                        Choose Image
+                        <input type="file" id="bg-upload" accept="image/*" style="display: none;">
+                    </label>
+                    <div id="preview-container" style="margin-top: 32px; display: none;">
+                        <div id="image-preview"
+                            style="max-width: 400px; height: 200px; margin: 0 auto 20px; border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border);">
+                        </div>
+                        <button id="apply-bg" class="btn-premium btn-primary" style="margin: 0 auto;">Use This
+                            Image</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let bgOptions = Array.from(document.querySelectorAll('.bg-card'));
+            const bgUpload = document.getElementById('bg-upload');
+            const previewContainer = document.getElementById('preview-container');
+            const imagePreview = document.getElementById('image-preview');
+            const applyBgBtn = document.getElementById('apply-bg');
+            const bgPreview = document.getElementById('bgPreview');
+            const previewLabel = document.getElementById('previewLabel');
+            const searchInput = document.getElementById('searchInput');
+            const resetBtn = document.getElementById('resetBtn');
+            const nav = document.getElementById('nav');
+            const categories = Array.from(document.querySelectorAll('.category'));
+
+            let uploadedImage = null;
+            let currentCategory = 'all';
+            let searchTerm = '';
+
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+            let toastTimeout;
+
+            window.showToast = (msg, icon = '🔒') => {
+                if (!toast) return;
+                if (toastMsg) toastMsg.textContent = msg;
+                if (toastIcon) toastIcon.textContent = icon;
+                toast.classList.add('active');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('active');
+                }, 3000);
+            };
+
+            const getBgType = (bgValue) => {
+                if (!bgValue) return null;
+                if (bgValue.startsWith('url')) return 'image';
+                if (bgValue.startsWith('linear-gradient')) return 'gradient';
+                return 'color';
+            };
+
+            const setPreviewLabel = (text) => {
+                if (!previewLabel) return;
+                previewLabel.textContent = text || 'Select a background to preview';
+            };
+
+            const applyPreviewTheme = (theme) => {
+                if (!bgPreview) return;
+                bgPreview.style.backgroundImage = 'none';
+                bgPreview.style.backgroundColor = 'transparent';
+                bgPreview.style.background = '';
+
+                if (theme === 'classic') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)';
+                    setPreviewLabel('Theme: Classic Dark');
+                } else if (theme === 'light') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #f6f7fb 0%, #e5e7eb 100%)';
+                    setPreviewLabel('Theme: Light');
+                } else if (theme === 'christmas') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #1a2b3c 0%, #0d1a26 100%)';
+                    setPreviewLabel('Theme: Winter Mode');
+                } else if (theme === 'newyears') {
+                    bgPreview.style.background = 'linear-gradient(135deg, #050510 0%, #1a1030 100%)';
+                    setPreviewLabel('Theme: New Year\'s Celebration 🎇');
+                }
+
+                bgPreview.style.backgroundSize = 'cover';
+                bgPreview.style.backgroundPosition = 'center';
+            };
+
+            const applyPreviewBackground = (bgValue) => {
+                if (!bgPreview) return;
+                bgPreview.style.background = '';
+
+                if (bgValue.startsWith('url')) {
+                    bgPreview.style.backgroundImage = bgValue;
+                    bgPreview.style.backgroundSize = 'cover';
+                    bgPreview.style.backgroundPosition = 'center';
+                    bgPreview.style.backgroundColor = 'transparent';
+                    setPreviewLabel('Custom: Image');
+                } else if (bgValue.startsWith('linear-gradient')) {
+                    bgPreview.style.backgroundImage = bgValue;
+                    bgPreview.style.backgroundSize = 'cover';
+                    bgPreview.style.backgroundColor = 'transparent';
+                    setPreviewLabel('Custom: Gradient');
+                } else {
+                    bgPreview.style.backgroundImage = 'none';
+                    bgPreview.style.backgroundColor = bgValue;
+                    setPreviewLabel('Custom: Solid Color');
+                }
+            };
+
+            const setActiveOption = () => {
+                const savedTheme = localStorage.getItem('selectedTheme');
+                const savedBg = localStorage.getItem('customBackground');
+
+                bgOptions.forEach(opt => opt.classList.remove('active'));
+
+                if (savedTheme) {
+                    bgOptions
+                        .filter(opt => opt.getAttribute('data-theme') === savedTheme)
+                        .forEach(opt => opt.classList.add('active'));
+                    return;
+                }
+
+                if (savedBg) {
+                    bgOptions
+                        .filter(opt => opt.getAttribute('data-bg') === savedBg)
+                        .forEach(opt => opt.classList.add('active'));
+                }
+            };
+
+            const applyToStorageTheme = (theme) => {
+                localStorage.setItem('selectedTheme', theme);
+                localStorage.removeItem('customBackground');
+                localStorage.removeItem('bgType');
+                applyPreviewTheme(theme);
+                setActiveOption();
+                if (window.applyUserBackground) window.applyUserBackground();
+            };
+
+            const applyToStorageBackground = (bgValue) => {
+                localStorage.removeItem('selectedTheme');
+                localStorage.setItem('customBackground', bgValue);
+                localStorage.setItem('bgType', getBgType(bgValue));
+                applyPreviewBackground(bgValue);
+                setActiveOption();
+                if (window.applyUserBackground) window.applyUserBackground();
+            };
+
+            // --- LOAD WON AND LOCKED BACKGROUNDS ---
+            const caseBGs = [
+                { name: 'Neon BG', value: 'linear-gradient(135deg, #050510 0%, #a855f7 100%)' },
+                { name: 'Red Glow BG', value: 'linear-gradient(135deg, #2a0a1a 0%, #ff4d4d 100%)' },
+                { name: 'Teal Glow BG', value: 'linear-gradient(135deg, #0a2a24 0%, #38bdf8 100%)' },
+                { name: 'Forest BG', value: 'linear-gradient(135deg, #06150f 0%, #1f7a5a 100%)' },
+                { name: 'Cyberpunk BG', value: 'linear-gradient(135deg, #ff007f 0%, #0b0b2a 50%, #00f0ff 100%)' },
+                { name: 'Inferno BG', value: 'linear-gradient(135deg, #ff4500 0%, #8b0000 100%)' },
+                { name: 'Matrix BG', value: 'linear-gradient(135deg, #001f00 0%, #00ff00 100%)' },
+                { name: 'Ocean BG', value: 'linear-gradient(135deg, #020024 0%, #090979 40%, #00d4ff 100%)' },
+                { name: 'Cosmic BG', value: 'linear-gradient(135deg, #2c3e50 0%, #fd746c 100%)' },
+                { name: 'Gold BG', value: 'linear-gradient(135deg, #FFD700 0%, #ff8c00 100%)' }
+            ];
+
+            const unlockedBGs = JSON.parse(localStorage.getItem('betaUnlockedBGs') || '[]');
+            const gradientsContainer = document.getElementById('gradientsContainer');
+
+            if (gradientsContainer) {
+                caseBGs.forEach((bgDef) => {
+                    const isUnlocked = unlockedBGs.includes(bgDef.value);
+                    const opt = document.createElement('div');
+                    opt.className = 'bg-card glass-pod';
+                    if (isUnlocked) {
+                        opt.setAttribute('data-bg', bgDef.value);
+                        opt.classList.add('case-bg-unlocked');
+                    } else {
+                        opt.style.opacity = '0.6';
+                    }
+
+                    const previewStyle = `background: ${bgDef.value};`;
+
+                    opt.innerHTML = `
+                        <div class="bg-thumb" style="${previewStyle}">
+                            ${!isUnlocked ? '<div class="lock-overlay">🔒</div>' : ''}
+                        </div>
+                        <div class="bg-label" style="${isUnlocked ? 'color: #FFD700; font-weight: 800;' : ''}">${bgDef.name}</div>
+                    `;
+
+                    opt.addEventListener('click', () => {
+                        if (isUnlocked) {
+                            applyToStorageBackground(bgDef.value);
+                        } else {
+                            opt.classList.remove('locked-shake');
+                            void opt.offsetWidth;
+                            opt.classList.add('locked-shake');
+                            showToast(`${bgDef.name} is Locked! Win it from an Epic Case.`, '🔒');
+                        }
+                    });
+
+                    gradientsContainer.appendChild(opt);
+                });
+            }
+
+            bgOptions = Array.from(document.querySelectorAll('.bg-card'));
+
+            const updateCategoryVisibility = () => {
+                categories.forEach(section => {
+                    const c = section.getAttribute('data-category');
+                    const show = currentCategory === 'all' ? (c !== 'upload') : c === currentCategory;
+                    section.classList.toggle('active', !!show);
+                });
+            };
+
+            const updateSearchVisibility = () => {
+                const term = searchTerm.trim().toLowerCase();
+                const visibleSections = categories.filter(s => s.classList.contains('active'));
+
+                visibleSections.forEach(section => {
+                    const tiles = Array.from(section.querySelectorAll('.bg-card'));
+                    tiles.forEach(tile => {
+                        const name = tile.querySelector('.bg-label')?.textContent || '';
+                        const ok = !term || name.toLowerCase().includes(term);
+                        tile.style.display = ok ? '' : 'none';
+                    });
+                });
+            };
+
+            const setCategory = (category) => {
+                currentCategory = category;
+                const buttons = Array.from(nav.querySelectorAll('.nav-link'));
+                buttons.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-category') === category));
+                updateCategoryVisibility();
+                updateSearchVisibility();
+            };
+
+            bgOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const theme = option.getAttribute('data-theme');
+                    if (theme) {
+                        applyToStorageTheme(theme);
+                        return;
+                    }
+                    const bgValue = option.getAttribute('data-bg');
+                    if (bgValue) {
+                        applyToStorageBackground(bgValue);
+                    }
+                });
+            });
+
+            if (nav) {
+                nav.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.nav-link');
+                    if (!btn) return;
+                    const category = btn.getAttribute('data-category') || 'all';
+                    setCategory(category);
+                });
+            }
+
+            if (searchInput) {
+                searchInput.addEventListener('input', () => {
+                    searchTerm = searchInput.value;
+                    updateSearchVisibility();
+                });
+            }
+
+            if (resetBtn) {
+                resetBtn.addEventListener('click', () => {
+                    localStorage.removeItem('customBackground');
+                    localStorage.removeItem('bgType');
+                    localStorage.setItem('selectedTheme', 'classic'); // Classic is default for Aether
+                    applyPreviewTheme('classic');
+                    setActiveOption();
+                    showToast('Settings Reset', '✨');
+                });
+            }
+
+            if (bgUpload) {
+                bgUpload.addEventListener('change', (e) => {
+                    const file = e.target.files && e.target.files[0];
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        uploadedImage = String(event.target.result || '');
+                        imagePreview.style.backgroundImage = `url(${uploadedImage})`;
+                        imagePreview.style.backgroundSize = 'cover';
+                        imagePreview.style.backgroundPosition = 'center';
+                        previewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            if (applyBgBtn) {
+                applyBgBtn.addEventListener('click', () => {
+                    if (!uploadedImage) return;
+                    applyToStorageBackground(`url(${uploadedImage})`);
+                    showToast('Background Applied!', '🖼️');
+                });
+            }
+
+            const savedTheme = localStorage.getItem('selectedTheme');
+            const savedBg = localStorage.getItem('customBackground');
+            if (savedTheme) {
+                applyPreviewTheme(savedTheme);
+            } else if (savedBg) {
+                applyPreviewBackground(savedBg);
+            } else {
+                applyPreviewTheme('classic');
+            }
+
+            setActiveOption();
+            setCategory('all');
+        });
+    </script>
+    <script src="background-loader.js"></script>
+</body>
+
+</html>
