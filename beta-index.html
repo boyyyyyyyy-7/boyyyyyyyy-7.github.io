@@ -1583,11 +1583,9 @@
             const todayKey = toDayKey(today);
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-            const allVisits = data.visits || [];
-
-            if (allVisits.length === 0) return { set: new Set(), freezesNew: 0 };
-
-            let earliestVisitStr = allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]);
+            const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+            if (normalizedVisitsArr.length === 0) return { set: new Set(), freezesNew: 0 };
+            let earliestVisitStr = normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]);
             let available = Math.max(0, Number(data.freezes) || 0);
 
             let freezesNew = 0;
@@ -1651,8 +1649,8 @@
             let streakActive = false;
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
 
-            const allVisits = data.visits || [];
-            let earliestVisitStr = allVisits.length > 0 ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : todayKey;
+            const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+            let earliestVisitStr = normalizedVisitsArr.length > 0 ? normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]) : todayKey;
 
             let cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);

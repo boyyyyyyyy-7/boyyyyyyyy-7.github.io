@@ -272,8 +272,9 @@
       const todayKey = toDayKey(today);
       const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
       const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-      if ((data.visits || []).length === 0) return { set: new Set(), freezesNew: 0 };
-      let earliestVisitStr = data.visits.reduce((min, v) => v < min ? v : min, data.visits[0]);
+      const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+      if (normalizedVisitsArr.length === 0) return { set: new Set(), freezesNew: 0 };
+      let earliestVisitStr = normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]);
       let available = Math.max(0, Number(data.freezes) || 0);
       let freezesNew = 0;
       const effectiveUsed = new Set();
@@ -290,24 +291,37 @@
           pending.forEach(p => { effectiveUsed.add(p.key); if (p.type === 'freeze' && p.key < todayKey) freezesNew++; });
           pending = [];
         } else if (!isWeekend) {
-          if (available > 0) { pending.push({ key: key, type: 'freeze' }); available--; }
-          else if (data.forgivenessData && data.forgivenessData[key]) pending.push({ key: key, type: 'forgiveness' });
-          else break;
+          if (key === todayKey) {
+            pending.push({ key: key, type: 'grace' });
+          } else if (available > 0) { 
+            pending.push({ key: key, type: 'freeze' }); available--; 
+          } else if (data.forgivenessData && data.forgivenessData[key]) {
+            pending.push({ key: key, type: 'forgiveness' });
+          } else break;
         }
+        if (pending.length > 7) break;
         cursor.setDate(cursor.getDate() - 1);
         cursor.setHours(12, 0, 0, 0);
       }
       return { set: effectiveUsed, freezesNew: freezesNew };
     }
+    function recordVisit(data, date) {
+      const key = toDayKey(normalizeToNoon(date));
+      const visits = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+      if (!visits.includes(key)) visits.push(key);
+      return Object.assign({}, data, { visits: visits });
+    }
     return {
+      recordVisit: recordVisit,
       compute: (data) => {
         const today = normalizeToNoon(new Date());
         const todayKey = toDayKey(today);
         const effectiveUsedSet = computeEffectiveUsedSet(data, today).set;
         let streak = 0;
         let streakActive = false;
-        const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-        let earliestVisitStr = (data.visits || []).length > 0 ? (data.visits).reduce((min, v) => v < min ? v : min, (data.visits)[0]) : todayKey;
+        const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+        const visitsSet = new Set(normalizedVisitsArr);
+        let earliestVisitStr = normalizedVisitsArr.length > 0 ? normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]) : todayKey;
         let cursor = new Date(today);
         cursor.setHours(12, 0, 0, 0);
         while (true) {
@@ -316,9 +330,14 @@
           const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
           const hasVisit = visitsSet.has(key);
           const isSaved = effectiveUsedSet.has(key);
-          if (hasVisit) { streak++; streakActive = true; }
-          else if (isSaved && streakActive) { streak++; }
-          else if (!isWeekend && streakActive) break;
+          if (hasVisit) {
+            streak++; 
+            streakActive = true; 
+          } else if (isSaved) {
+            if (streakActive) streak++;
+          } else if (!isWeekend) {
+            if (key !== todayKey || streakActive) break;
+          }
           cursor.setDate(cursor.getDate() - 1);
           cursor.setHours(12, 0, 0, 0);
           if (getDayDiff(cursor, today) > 365) break;
@@ -343,14 +362,11 @@
         }
 
         if (data) {
+          data = StreakEngine.recordVisit(data, new Date());
           const val = StreakEngine.compute(data);
-          const isMainPage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/') || window.location.pathname.includes('streaks.html');
-
+          // Always update all streak elements on all pages with the real computed value
           streakElements.forEach(el => {
-            const currentVal = el.textContent.trim();
-            if (val > 0 || !isMainPage || currentVal === '0' || currentVal === '') {
-              el.textContent = val;
-            }
+            el.textContent = val;
           });
         }
       }

@@ -1699,8 +1699,16 @@
             if (data.best < 0 || data.best > 10000) return false;
             if (!Array.isArray(data.visits) || !Array.isArray(data.usedFreezes)) return false;
 
-            const visitSet = new Set(data.visits);
-            if (visitSet.size !== data.visits.length) return false;
+            // Normalize visits before checking for duplicates to avoid false positives
+            // when legacy format and ISO format represent the same day
+            const normalizedVisits = data.visits.map(v => {
+                try {
+                    const d = parseDayKey(v);
+                    return d ? toDayKey(d) : null;
+                } catch { return null; }
+            }).filter(Boolean);
+            const visitSet = new Set(normalizedVisits);
+            if (visitSet.size !== normalizedVisits.length) return false;
 
             const now = new Date();
             const maxFutureDays = 2; // More lenient for potential clock drift / Brave fuzzing
@@ -1817,9 +1825,7 @@
             };
 
             if (!validateStreakData(loadedData)) {
-                localStorage.removeItem(STORAGE_KEY_V2);
-                localStorage.removeItem('streakFreezes');
-                localStorage.removeItem('bestStreak');
+                console.warn('Streak data failed validation — falling back to base safely (not wiping storage)');
                 return base;
             }
 
@@ -1895,11 +1901,10 @@
             const todayKey = toDayKey(today);
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
             const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-            const allVisits = data.visits || [];
+            const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+            if (normalizedVisitsArr.length === 0) return { set: new Set(), freezesNew: 0 };
 
-            if (allVisits.length === 0) return { set: new Set(), freezesNew: 0 };
-
-            let earliestVisitStr = allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]);
+            let earliestVisitStr = normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]);
             let available = Math.max(0, Number(data.freezes) || 0);
 
             let freezesNew = 0;
@@ -1929,7 +1934,9 @@
                     });
                     pending = [];
                 } else if (!isWeekend) {
-                    if (available > 0) {
+                    if (key === todayKey) {
+                        pending.push({ key: key, type: 'grace' });
+                    } else if (available > 0) {
                         pending.push({ key: key, type: 'freeze' });
                         available--;
                     } else if (data.forgivenessData && data.forgivenessData[key]) {
@@ -1963,8 +1970,8 @@
             let streakActive = false;
             const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
 
-            const allVisits = data.visits || [];
-            let earliestVisitStr = allVisits.length > 0 ? allVisits.reduce((min, v) => v < min ? v : min, allVisits[0]) : todayKey;
+            const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+            let earliestVisitStr = normalizedVisitsArr.length > 0 ? normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]) : todayKey;
 
             let cursor = new Date(today);
             cursor.setHours(12, 0, 0, 0);
@@ -1980,10 +1987,12 @@
                 if (hasVisit) {
                     streak++;
                     streakActive = true;
-                } else if (isSaved && streakActive) {
-                    streak++;
-                } else if (!isWeekend && streakActive) {
-                    break;
+                } else if (isSaved) {
+                    if (streakActive) streak++;
+                } else if (!isWeekend) {
+                    if (key !== todayKey || streakActive) {
+                        break;
+                    }
                 }
 
                 cursor.setDate(cursor.getDate() - 1);
