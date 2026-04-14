@@ -210,12 +210,34 @@
       for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash) + str.charCodeAt(i);
       return hash;
     }
+    function generateSalt(length) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let salt = '';
+      for (let i = 0; i < length; i++) salt += chars.charAt(Math.floor(Math.random() * chars.length));
+      return salt;
+    }
+    function toBase64(str) {
+      try {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode('0x' + p1)));
+      } catch (e) { return btoa(str); }
+    }
     function fromBase64(str) {
       try {
         return decodeURIComponent(Array.prototype.map.call(atob(str), (c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
       } catch (e) { return atob(str); }
     }
     return {
+      encrypt: (dataObj) => {
+        try {
+          const json = JSON.stringify(dataObj);
+          const checksum = djb2(json);
+          const payload = `${json}|${checksum}`;
+          const salt = generateSalt(4);
+          const key = BASE_KEY + salt;
+          const encrypted = rc4(key, payload);
+          return toBase64(salt + encrypted);
+        } catch (e) { return null; }
+      },
       decrypt: (base64Str) => {
         try {
           const raw = fromBase64(base64Str);
