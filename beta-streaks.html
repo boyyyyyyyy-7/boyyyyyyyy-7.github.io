@@ -1408,9 +1408,11 @@
                 console.log('Attempting to load streak data V2...');
                 const stored = localStorage.getItem(STORAGE_KEY_V2);
                 if (stored) {
-                    console.log('Stored data found. Checking Obfuscator status...');
-                    // Try decrypting first
-                    if (typeof Obfuscator !== 'undefined') {
+                    console.log('Stored data found.');
+                    if (stored.startsWith('{')) {
+                        console.log('Plain JSON loaded via fallback.');
+                        parsed = JSON.parse(stored);
+                    } else if (typeof Obfuscator !== 'undefined') {
                         console.log('Obfuscator is defined. Attempting decryption...');
                         parsed = Obfuscator.decrypt(stored);
                         if (parsed) {
@@ -2264,7 +2266,7 @@
         })();
     </script>
 
-    <script src="background-loader.js"></script>
+    <script src="background-loader.js?v=S3.9"></script>
 </body>
 
 </html>
