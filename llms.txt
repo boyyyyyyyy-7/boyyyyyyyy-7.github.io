@@ -12,13 +12,19 @@
 Brayden Is Tall Games is a free online gaming website offering a curated collection of browser-based games. Games load instantly and do not require downloads or accounts. The platform focuses on accessibility, performance, and simple user experience.
 
 ## Game Categories
-- Action Games (1v1.lol, Smash Karts, Drive Mad)
-- Puzzle Games (Cookie Clicker, Geometry Lite)
-- Racing Games (Traffic Road, Speed Stars, Slow Roads)
-- Multiplayer Games (Slender Multiplayer, 1v1.lol)
-- Arcade Games (Crossy Road, Basketball Stars)
-- Horror Games (Granny)
-- Sandbox Games (Melon Sandbox)
+- Action Games (1v1.lol, Smash Karts, Drive Mad, Shell Shockers)
+- Puzzle Games (Cookie Clicker, Geometry Lite, Wordle+, Tetris)
+- Racing Games (Traffic Road, Speed Stars, Slow Roads, Curve Rush)
+- Multiplayer Games (Slender Multiplayer, 1v1.lol, Shell Shockers)
+- Arcade Games (Crossy Road, Slope, Tunnel Rush, Stack)
+- Horror Games (Granny, Schoolboy Runaway)
+- Sandbox Games (Melon Sandbox, Sand Game, Fluid Simulator)
+- Idle/Clicker Games (Cookie Clicker, Spacebar Clicker, Chill Guy Clicker, Learn to Fly Idle)
+
+## Discovery Resources
+- Sitemap: https://braydenistallgames.online/sitemap.xml
+- Robots: https://braydenistallgames.online/robots.txt
+- Web App Manifest: https://braydenistallgames.online/manifest.json
 
 ## Key Features
 - Free to play

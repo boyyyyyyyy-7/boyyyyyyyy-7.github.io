@@ -1,0 +1,29 @@
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    will-change: transform, opacity;
+    animation: twinkle 3s infinite ease-in-out;
+}
+
+.star.color1 { background-color: #ffffff; box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8); }
+.star.color2 { background-color: #a8e6ff; box-shadow: 0 0 15px 3px rgba(168, 230, 255, 0.8); }
+.star.color3 { background-color: #ffd700; box-shadow: 0 0 15px 3px rgba(255, 215, 0, 0.8); }
+.star.color4 { background-color: #ff9e9e; box-shadow: 0 0 15px 3px rgba(255, 158, 158, 0.8); }
+.star.color5 { background-color: #c0ffb3; box-shadow: 0 0 15px 3px rgba(192, 255, 179, 0.8); }

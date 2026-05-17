@@ -1,0 +1,27 @@
+{
+  "name": "Brayden is Tall Games",
+  "short_name": "BIT Games",
+  "description": "Free unblocked HTML5 games for school. Slope, 1v1.lol, Tunnel Rush, Cookie Clicker and more — no downloads, works on Chromebooks.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "lang": "en-US",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "img/flame-icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/flame-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

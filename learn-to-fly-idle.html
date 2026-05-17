@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,57 +25,7 @@
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: moveStars 20s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-200px) translateY(-100px);
-            }
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent);
-            background-repeat: repeat;
-            background-size: 300px 200px;
-            animation: moveStars2 30s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars2 {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-300px) translateY(-200px);
-            }
-        }
-
-        .container {
+.container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
@@ -183,23 +133,7 @@
         }
     </style>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <title>Learn to Fly Idle | Brayden is Tall Games</title>
+<title>Learn to Fly Idle | Brayden is Tall Games</title>
     <meta name="description" content="Build the ultimate flying machine in Learn to Fly Idle! An addictive idle incremental game. Free online.">
     <meta name="keywords" content="learn to fly idle, idle game, incremental game, penguin idle, unblocked games for school">
     <meta name="robots" content="index, follow">
@@ -211,6 +145,15 @@
     <meta property="og:site_name" content="Brayden is Tall Games">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta name="twitter:title" content="Learn to Fly Idle | Brayden is Tall Games">
+    <meta name="twitter:description" content="Build the ultimate flying machine in Learn to Fly Idle! An addictive idle incremental game. Free online.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Brayden is Tall Games">
+    <link rel="apple-touch-icon" href="img/flame-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
     <meta name="twitter:title" content="Learn to Fly Idle | Brayden is Tall Games">
     <meta name="twitter:description" content="Build the ultimate flying machine in Learn to Fly Idle! An addictive idle incremental game. Free online.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Learn to Fly Idle - Free Idle Game | Brayden is Tall Games","description":"Build the ultimate flying machine in Learn to Fly Idle! An addictive idle incremental game. Free online.","url":"https://braydenistallgames.online/learn-to-fly-idle.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
@@ -218,6 +161,8 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Learn to Fly Idle","description":"Build the ultimate flying machine in this idle incremental game.","genre":"Idle","keywords":"idle, penguin, incremental","url":"https://braydenistallgames.online/learn-to-fly-idle.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Learn to Fly Idle","item":"https://braydenistallgames.online/learn-to-fly-idle.html"}]}</script>
+    <link rel="stylesheet" href="stars.css?v=1">
+
 </head>
 
 <body>
@@ -240,7 +185,7 @@
             <h2 class="description-title">About Learn to Fly Idle</h2>
             <div class="description-section">
                 <h3>  Smash Targets Automatically</h3>
-                <p>Welcome to the incremental side of the flight journey! In Learn to Fly Idle, you don't fly—you shoot.
+                <p>Welcome to the incremental side of the flight journey! In Learn to Fly Idle, you don't flyâ€”you shoot.
                     Destroy giant snowballs, icicles, and snowmen to earn coins and research points while your penguin
                     works tirelessly in the background.</p>
                 <p>Buy cannons, automate your shooting, and watch the numbers climb. Perfect for fans of idle and
@@ -257,7 +202,7 @@
             <div class="description-section">
                 <h3>  Idle Mastery</h3>
                 <p>Focus on Damage and Fire Rate early on to clear early stages quickly. Don't forget about the "Gold
-                    per Hit" upgrades—they provide the base for your automated income empire.</p>
+                    per Hit" upgradesâ€”they provide the base for your automated income empire.</p>
                 <p>Check back often to spend your accumulated research points. The most powerful bonuses are often
                     hidden deeper in the tech tree, so plan your path accordingly!</p>
             </div>
@@ -273,7 +218,7 @@
             }
         }
         document.addEventListener('fullscreenchange', () => {
-            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? 'â›¶ Exit Fullscreen' : 'â›¶ Fullscreen';
         });
     
         // Prevent arrow keys from scrolling the page so they only work for the game
@@ -299,6 +244,8 @@
         <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
     </footer>
     <script src="recommendations.js"></script>
+    <script src="stars.js?v=1"></script>
+
 </body>
 
 </html>

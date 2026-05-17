@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,57 +25,7 @@
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: moveStars 20s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-200px) translateY(-100px);
-            }
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent);
-            background-repeat: repeat;
-            background-size: 300px 200px;
-            animation: moveStars2 30s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars2 {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-300px) translateY(-200px);
-            }
-        }
-
-        .container {
+.container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
@@ -183,23 +133,7 @@
         }
     </style>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <title>Raft Wars | Brayden is Tall Games</title>
+<title>Raft Wars | Brayden is Tall Games</title>
     <meta name="description" content="Defend your raft from enemies in Raft Wars! Turn-based shooting strategy. Play free online, no download.">
     <meta name="keywords" content="raft wars, raft game, shooting strategy, turn based game, unblocked games for school">
     <meta name="robots" content="index, follow">
@@ -211,6 +145,15 @@
     <meta property="og:site_name" content="Brayden is Tall Games">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta name="twitter:title" content="Raft Wars | Brayden is Tall Games">
+    <meta name="twitter:description" content="Defend your raft from enemies in Raft Wars! Turn-based shooting strategy. Play free online, no download.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Brayden is Tall Games">
+    <link rel="apple-touch-icon" href="img/flame-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
     <meta name="twitter:title" content="Raft Wars | Brayden is Tall Games">
     <meta name="twitter:description" content="Defend your raft from enemies in Raft Wars! Turn-based shooting strategy. Play free online, no download.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Raft Wars - Free Online Strategy Game | Brayden is Tall Games","description":"Defend your raft from enemies in Raft Wars! Turn-based shooting strategy. Play free online, no download.","url":"https://braydenistallgames.online/raft-wars.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
@@ -218,6 +161,8 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Raft Wars","description":"Defend your raft and treasure with turn-based shooting strategy.","genre":"Strategy","keywords":"raft, shooting, turn-based","url":"https://braydenistallgames.online/raft-wars.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Raft Wars","item":"https://braydenistallgames.online/raft-wars.html"}]}</script>
+    <link rel="stylesheet" href="stars.css?v=1">
+
 </head>
 
 <body>
@@ -257,7 +202,7 @@
             <div class="description-section">
                 <h3>  Winning Battles</h3>
                 <p>Aim for direct hits to knock enemies off rafts in one shot. If you can't hit directly, aim near
-                    them—close explosions still do damage. Prioritize dangerous enemies first.</p>
+                    themâ€”close explosions still do damage. Prioritize dangerous enemies first.</p>
                 <p>Upgrade your crew size early. More team members mean more shots per turn, which means faster
                     victories and less damage taken. Better offense is better defense.</p>
             </div>
@@ -273,7 +218,7 @@
             }
         }
         document.addEventListener('fullscreenchange', () => {
-            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? 'â›¶ Exit Fullscreen' : 'â›¶ Fullscreen';
         });
     
         // Prevent arrow keys from scrolling the page so they only work for the game
@@ -299,6 +244,8 @@
         <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
     </footer>
     <script src="recommendations.js"></script>
+    <script src="stars.js?v=1"></script>
+
 </body>
 
 </html>

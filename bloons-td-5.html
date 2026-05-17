@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -25,57 +25,7 @@
             overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(2px 2px at 20px 30px, #eee, transparent), radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.8), transparent);
-            background-repeat: repeat;
-            background-size: 200px 100px;
-            animation: moveStars 20s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-200px) translateY(-100px);
-            }
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(1px 1px at 50px 50px, #fff, transparent);
-            background-repeat: repeat;
-            background-size: 300px 200px;
-            animation: moveStars2 30s linear infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes moveStars2 {
-            0% {
-                transform: translateX(0px) translateY(0px);
-            }
-
-            100% {
-                transform: translateX(-300px) translateY(-200px);
-            }
-        }
-
-        .container {
+.container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
@@ -183,23 +133,7 @@
         }
     </style>
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-    <title>Bloons TD 5 | Brayden is Tall Games</title>
+<title>Bloons TD 5 | Brayden is Tall Games</title>
     <meta name="description" content="Pop balloons and defend in Bloons TD 5! Place towers, unlock upgrades, survive endless waves. Free online tower defense.">
     <meta name="keywords" content="bloons td 5, tower defense, bloons game, free online game, unblocked games for school">
     <meta name="robots" content="index, follow">
@@ -211,6 +145,15 @@
     <meta property="og:site_name" content="Brayden is Tall Games">
     <meta property="og:locale" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta name="twitter:title" content="Bloons TD 5 | Brayden is Tall Games">
+    <meta name="twitter:description" content="Pop balloons and defend in Bloons TD 5! Place towers, unlock upgrades, survive endless waves. Free online tower defense.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Brayden is Tall Games">
+    <link rel="apple-touch-icon" href="img/flame-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
     <meta name="twitter:title" content="Bloons TD 5 | Brayden is Tall Games">
     <meta name="twitter:description" content="Pop balloons and defend in Bloons TD 5! Place towers, unlock upgrades, survive endless waves. Free online tower defense.">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bloons TD 5 - Free Online Tower Defense | Brayden is Tall Games","description":"Pop balloons and defend in Bloons TD 5! Place towers, unlock upgrades, survive endless waves. Free online tower defense.","url":"https://braydenistallgames.online/bloons-td-5.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
@@ -218,6 +161,8 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Bloons Tower Defense 5","description":"Pop balloons and defend your base! Place towers and survive endless waves.","genre":"Strategy","keywords":"tower defense, bloons, strategy","url":"https://braydenistallgames.online/bloons-td-5.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Bloons TD 5","item":"https://braydenistallgames.online/bloons-td-5.html"}]}</script>
+    <link rel="stylesheet" href="stars.css?v=1">
+
 </head>
 
 <body>
@@ -257,7 +202,7 @@
             </div>
             <div class="description-section">
                 <h3>  Popping Tips</h3>
-                <p>Build a diverse defense to handle specialized bloons—you'll need "Camo Detection" for invisible
+                <p>Build a diverse defense to handle specialized bloonsâ€”you'll need "Camo Detection" for invisible
                     bloons and "Sharp Shots" or fire for lead-coated ones. Don't forget about the Monkey Village to
                     boost surrounding towers!</p>
                 <p>Save up for powerful abilities to clear the screen during chaotic late-game rounds. A well-timed
@@ -275,7 +220,7 @@
             }
         }
         document.addEventListener('fullscreenchange', () => {
-            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? 'â›¶ Exit Fullscreen' : 'â›¶ Fullscreen';
         });
     
         // Prevent arrow keys from scrolling the page so they only work for the game
@@ -301,6 +246,8 @@
         <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
     </footer>
     <script src="recommendations.js"></script>
+    <script src="stars.js?v=1"></script>
+
 </body>
 
 </html>

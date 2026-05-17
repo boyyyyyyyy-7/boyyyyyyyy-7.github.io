@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -248,7 +248,7 @@
         }
 
         .day.used-freeze::after {
-            content: '❄';
+            content: 'â„';
             position: absolute;
             bottom: 4px;
             right: 4px;
@@ -356,8 +356,7 @@
             }
         }
 
-
-        /* Temp Menu */
+/* Temp Menu */
         .temp-menu-btn {
             position: fixed;
             top: 15px;
@@ -688,13 +687,15 @@
             display: inline-flex;
         }
     </style>
+    <link rel="stylesheet" href="stars.css?v=1">
+
 </head>
 
 <body>
     <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
     <script>
         window.resetStreakData = function () {
-            console.log('🔄 Resetting ALL streak data...');
+            console.log('ðŸ”„ Resetting ALL streak data...');
 
             try {
                 // Clear all streak-related localStorage
@@ -709,9 +710,9 @@
                     mainStreakCount.textContent = '0';
                 }
 
-                console.log('✅ Streak data completely reset!');
-                console.log('🔄 All localStorage keys cleared');
-                console.log('📊 Display updated to show streak: 0');
+                console.log('âœ… Streak data completely reset!');
+                console.log('ðŸ”„ All localStorage keys cleared');
+                console.log('ðŸ“Š Display updated to show streak: 0');
 
                 // Auto-refresh after a short delay to show the reset
                 setTimeout(() => {
@@ -720,21 +721,21 @@
 
                 return 'Streak reset complete! Page will refresh automatically...';
             } catch (error) {
-                console.error('❌ Error resetting streak data:', error);
+                console.error('âŒ Error resetting streak data:', error);
                 return 'Error occurred while resetting streak data.';
             }
         };
 
         // Confirm function is available
-        console.log('🔧 resetStreakData() function loaded and ready!');
+        console.log('ðŸ”§ resetStreakData() function loaded and ready!');
     </script>
 
     <div class="topbar">
-        <button class="icon-btn" id="closeButton" title="Back">←</button>
+        <button class="icon-btn" id="closeButton" title="Back">â†</button>
         <div class="topbar-title">Streak</div>
         <div class="topbar-right">
             <div class="pill" title="Freezes">
-                ❄️ <span id="headerFreezeCount">0</span>
+                â„ï¸ <span id="headerFreezeCount">0</span>
             </div>
         </div>
     </div>
@@ -743,7 +744,7 @@
         <section class="hero-card">
             <div class="hero-streak">
                 <span id="mainStreakCount">0</span>
-                <span class="flame">🔥</span>
+                <span class="flame">ðŸ”¥</span>
             </div>
             <div class="hero-sub">day streak</div>
 
@@ -758,7 +759,7 @@
                 </div>
             </div>
 
-            <div class="today-status" id="todayStatus">Loading…</div>
+            <div class="today-status" id="todayStatus">Loadingâ€¦</div>
             <div class="rule">Visit weekdays to maintain your streak. Weekends are optional but count if visited.
                 Freezes save missed weekdays.</div>
         </section>
@@ -766,9 +767,9 @@
         <section class="calendar-card">
             <div class="calendar">
                 <div class="month-header">
-                    <button class="month-nav" id="prevMonth" title="Previous month">‹</button>
+                    <button class="month-nav" id="prevMonth" title="Previous month">â€¹</button>
                     <div class="month-title" id="monthYear">Month Year</div>
-                    <button class="month-nav" id="nextMonth" title="Next month">›</button>
+                    <button class="month-nav" id="nextMonth" title="Next month">â€º</button>
                 </div>
                 <div class="weekdays">
                     <div>Sun</div>
@@ -790,12 +791,9 @@
         </section>
     </main>
 
+<!-- Floating Toggle Button (Aeroglass) -->
 
-
-    <!-- Floating Toggle Button (Aeroglass) -->
-
-
-    <div class="toast" id="toast"></div>
+<div class="toast" id="toast"></div>
 
     <script>
         const STORAGE_KEY_V2 = 'streakDataV2';
@@ -811,17 +809,14 @@
         const todayStatus = document.getElementById('todayStatus');
         const toast = document.getElementById('toast');
 
-
-
-        let currentDate = new Date();
+let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
 
         let lastSaveTime = 0;
         const SAVE_COOLDOWN = 1000;
 
-
-        function isRateLimited() {
+function isRateLimited() {
             const now = Date.now();
             if (now - lastSaveTime < SAVE_COOLDOWN) {
                 return true;
@@ -1010,8 +1005,7 @@
             return true;
         }
 
-
-        function loadV2() {
+function loadV2() {
             let parsed = null;
             try {
                 const stored = localStorage.getItem(STORAGE_KEY_V2);
@@ -1318,8 +1312,7 @@
                     el.title = 'Used a freeze on this day';
                 }
 
-
-                calendarDays.appendChild(el);
+calendarDays.appendChild(el);
             }
         }
 
@@ -1380,8 +1373,7 @@
             return false;
         }
 
-
-        function resetOnlyStreak(data) {
+function resetOnlyStreak(data) {
             data.visits = [];
             data.usedFreezes = [];
             data.best = 0;
@@ -1404,8 +1396,7 @@
             localStorage.removeItem('lastFreezeDateStr');
         }
 
-
-        document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
             try {
                 let data = loadV2();
                 data = migrateLegacyIntoV2(data);
@@ -1437,8 +1428,7 @@
 
             if (closeButton) closeButton.addEventListener('click', navigateToHome);
 
-
-            if (prevMonthBtn) {
+if (prevMonthBtn) {
                 prevMonthBtn.addEventListener('click', () => {
                     currentMonth -= 1;
                     if (currentMonth < 0) {
@@ -1462,10 +1452,11 @@
                 });
             }
 
-
-
-        });
+});
     </script>
+
+    <script src="stars.js?v=1"></script>
+
 
 </body>
 

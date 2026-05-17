@@ -1,15 +1,59 @@
+# robots.txt for https://braydenistallgames.online
+# Last updated: 2026-05-17
+
 User-agent: *
 Allow: /
 
-# Block non-public or development paths
-Disallow: /ads/
-Disallow: /tracking/
-Disallow: /test/
+# Block dev / preview / backup paths
+Disallow: /beta-
+Disallow: /test
+Disallow: /Test_
+Disallow: /*.backup$
+Disallow: /*.zip$
+Disallow: /*.log$
+Disallow: /boyyyyyyyy-7.github.io-main/
+Disallow: /AIMapApp/
+Disallow: /Ant%20escape/
+Disallow: /dist/
 
-# Allow all HTML pages, styles, and scripts
-Allow: *.html
-Allow: *.css
-Allow: *.js
+# Explicitly allow critical resources
+Allow: /*.html$
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /img/
+Allow: /assets/
+Allow: /game/
 
-# Sitemaps
+# Block aggressive AI scrapers (training-only crawlers) — keep helpful ones
+User-agent: GPTBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+# Allow major search engines explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Allow AdSense crawler (required for ad serving)
+User-agent: Mediapartners-Google
+Allow: /
+
 Sitemap: https://braydenistallgames.online/sitemap.xml
+Host: https://braydenistallgames.online
