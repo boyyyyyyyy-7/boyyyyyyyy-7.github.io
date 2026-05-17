@@ -1,0 +1,419 @@
+/* ============================================================
+   BITG Streak System — Version 3 Styles
+   braydenistallgames.online
+
+   All selectors are prefixed with .bitg- to guarantee zero
+   conflicts with any existing site styles.
+
+   Components:
+     1. .bitg-milestone  — large card notification (bottom-right)
+     2. .bitg-toast      — small pill notification (bottom-center)
+
+   Emoji rendering:
+     The .bitg-emoji utility class forces a proper emoji font
+     stack so 🔥 ⚡ 💎 👑 🧊 🏆 all render in full color on
+     every platform — Windows, Mac, Chromebook, Android, iOS.
+   ============================================================ */
+
+
+/* ──────────────────────────────────────────────
+   EMOJI FONT STACK
+   Forces color emoji on every OS. Without this,
+   Windows can render some emojis as flat outlines
+   when the parent font is set to Orbitron etc.
+   ────────────────────────────────────────────── */
+
+.bitg-emoji {
+  font-family:
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji',
+    'EmojiOne Color',
+    'Twemoji Mozilla',
+    sans-serif !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Ensures the glyph itself has color, not the parent text color */
+  color: initial;
+  -webkit-font-feature-settings: 'liga';
+  font-feature-settings: 'liga';
+}
+
+
+/* ──────────────────────────────────────────────
+   MILESTONE NOTIFICATION CARD
+   Premium glassmorphism card with animated
+   gradient border and glow. Slides in from the
+   bottom-right on streak milestones.
+   ────────────────────────────────────────────── */
+
+.bitg-milestone {
+  /* Fixed to the viewport, above everything else on the page */
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+
+  /* Inner layout */
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  padding: 20px 44px 20px 22px; /* extra right padding leaves room for close btn */
+
+  /* Premium dark glass background */
+  background:
+    linear-gradient(135deg,
+      rgba(20, 12, 30, 0.92) 0%,
+      rgba(8, 8, 18, 0.92) 100%);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border-radius: 20px;
+
+  /* Multi-layer shadow + inner highlight */
+  box-shadow:
+    0 14px 50px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+
+  /* Card itself has no border; the glow border lives in ::before */
+  border: none;
+
+  /* Entry animation */
+  animation: bitg-card-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Animated gradient border (lives behind the card) */
+.bitg-milestone::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  border-radius: 21px;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    #ff8c00,
+    #ffd700,
+    #ff8c00,
+    #ff4500,
+    #ffd700,
+    #ff8c00
+  );
+  /* Mask trick — only the border edge is visible */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0.65;
+  animation: bitg-border-spin 4s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Soft outer glow that pulses (lives even further behind) */
+.bitg-milestone::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 26px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 140, 0, 0.35) 0%,
+    rgba(255, 140, 0, 0) 70%
+  );
+  filter: blur(10px);
+  z-index: -2;
+  pointer-events: none;
+  animation: bitg-glow-pulse 2.4s ease-in-out infinite;
+}
+
+/* Exit animation — class added by JS just before removal */
+.bitg-milestone--exit {
+  animation: bitg-card-out 0.42s ease-in both;
+}
+
+@keyframes bitg-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(36px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes bitg-card-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+}
+
+@keyframes bitg-border-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes bitg-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+/* ── Large emoji on the left ────────────────── */
+.bitg-milestone__icon {
+  font-size: 2.6rem;
+  line-height: 1;
+  flex-shrink: 0;
+  /* Inherits the emoji font stack from .bitg-emoji */
+  filter: drop-shadow(0 0 12px rgba(255, 180, 50, 0.55));
+  animation: bitg-icon-bounce 2.2s ease-in-out infinite;
+}
+
+@keyframes bitg-icon-bounce {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50%      { transform: translateY(-4px) rotate(4deg); }
+}
+
+/* ── Title + body text column ────────────────── */
+.bitg-milestone__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.bitg-milestone__title {
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  /* Animated gold gradient text */
+  background: linear-gradient(
+    90deg,
+    #ffd700 0%,
+    #ffb347 30%,
+    #ffd700 60%,
+    #fff3a0 80%,
+    #ffd700 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: bitg-title-shimmer 3.5s linear infinite;
+}
+
+@keyframes bitg-title-shimmer {
+  from { background-position: 0% center;   }
+  to   { background-position: 200% center; }
+}
+
+.bitg-milestone__body {
+  font-family: 'Maven Pro', 'Arial', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+}
+
+/* ── Streak counter badge on the right ───────── */
+.bitg-milestone__streak {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 140, 0, 0.25),
+    rgba(255, 69, 0, 0.15)
+  );
+  border: 1px solid rgba(255, 180, 50, 0.35);
+
+  font-family: 'Orbitron', 'Arial Black', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffb347;
+  text-shadow: 0 0 18px rgba(255, 140, 0, 0.7);
+}
+
+.bitg-milestone__streak-num {
+  /* Just the number */
+  font-variant-numeric: tabular-nums;
+}
+
+.bitg-milestone__streak-flame {
+  /* The 🔥 emoji — flicker animation */
+  font-size: 1rem;
+  animation: bitg-flame-flicker 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes bitg-flame-flicker {
+  0%   { transform: scale(1)    rotate(-2deg); opacity: 1;    filter: drop-shadow(0 0 4px #ff6b00); }
+  50%  { transform: scale(1.1)  rotate( 3deg); opacity: 0.95; filter: drop-shadow(0 0 8px #ff8c00); }
+  100% { transform: scale(1.05) rotate(-1deg); opacity: 1;    filter: drop-shadow(0 0 6px #ff4500); }
+}
+
+/* ── Close button (top-right corner) ─────────── */
+.bitg-milestone__close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.bitg-milestone__close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  transform: scale(1.1) rotate(90deg);
+}
+
+
+/* ──────────────────────────────────────────────
+   SIMPLE TOAST PILL
+   Used for small messages like the Monday bonus.
+   Slides up from the bottom-center.
+   ────────────────────────────────────────────── */
+
+.bitg-toast {
+  position: fixed;
+  bottom: 26px;
+  left: 50%;
+  z-index: 9998;
+
+  /* Hidden starting position — JS adds .bitg-toast--visible */
+  transform: translateX(-50%) translateY(18px);
+  opacity: 0;
+  transition:
+    opacity 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  white-space: nowrap;
+  pointer-events: none;
+
+  /* Glass background */
+  background: linear-gradient(
+    135deg,
+    rgba(20, 12, 30, 0.94) 0%,
+    rgba(8, 8, 18, 0.94) 100%);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(120, 180, 255, 0.2);
+  border-radius: 999px;
+  box-shadow:
+    0 6px 28px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(80, 140, 255, 0.15);
+
+  /* Text */
+  font-family: 'Maven Pro', 'Arial', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.bitg-toast--visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+
+/* ──────────────────────────────────────────────
+   RESPONSIVE — MOBILE & SMALL SCREENS
+   Chromebooks and phones get edge-aligned cards.
+   ────────────────────────────────────────────── */
+
+@media (max-width: 520px) {
+  .bitg-milestone {
+    bottom: 14px;
+    right: 14px;
+    left: 14px;
+    width: auto;
+    border-radius: 16px;
+    padding: 16px 40px 16px 18px;
+    gap: 12px;
+  }
+
+  .bitg-milestone::before {
+    border-radius: 17px;
+  }
+
+  .bitg-milestone__icon {
+    font-size: 2.1rem;
+  }
+
+  .bitg-milestone__title {
+    font-size: 0.74rem;
+  }
+
+  .bitg-milestone__body {
+    font-size: 0.78rem;
+  }
+
+  .bitg-milestone__streak {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+  }
+
+  .bitg-toast {
+    font-size: 0.8rem;
+    padding: 11px 18px;
+    white-space: normal;
+    text-align: center;
+    max-width: calc(100% - 32px);
+    line-height: 1.3;
+  }
+}
+
+
+/* ──────────────────────────────────────────────
+   REDUCED MOTION — accessibility
+   Disable spins, pulses, and bounces for users
+   who prefer reduced motion.
+   ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .bitg-milestone,
+  .bitg-milestone--exit,
+  .bitg-milestone::before,
+  .bitg-milestone::after,
+  .bitg-milestone__icon,
+  .bitg-milestone__title,
+  .bitg-milestone__streak-flame,
+  .bitg-toast {
+    animation: none !important;
+    transition-duration: 0.15s !important;
+  }
+}

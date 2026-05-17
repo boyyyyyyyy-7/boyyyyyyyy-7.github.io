@@ -1,0 +1,51 @@
+# CLAUDE CONTEXT: Brayden is Tall Games
+
+## 1. WHO I AM
+- **Name**: Brayden
+- **Site**: braydenistallgames.online
+- **Purpose**: An unblocked games site designed specifically for school students.
+- **Goals**: Grow traffic to 10k monthly active users, successfully monetize with Google AdSense, and drive continuous SEO growth.
+
+## 2. THE FULL CODEBASE
+- **Site Version**: ~vS3.9 (Identified via `<script src="background-loader.js?v=S3.9"></script>` in `index.html`).
+- **Architecture & Patterns**:
+  - **Tech Stack**: Pure vanilla HTML/CSS/JS. No heavy frameworks (no React, Vue, Tailwind).
+  - **Aesthetic**: Premium dark space theme utilizing `body::before` and `body::after` radial-gradient animations ("moving stars") across almost all pages.
+  - **Game Pages (`[game-name].html`)**: Template-based (approx 80+ files). Each contains a standard header (Back to Games, Fullscreen toggle), an `iframe` pointing to the game source, and a detailed SEO-friendly description section at the bottom (About, Mechanics, Features).
+  - **Global UX Fixes**: A global script exists to prevent arrow keys (`ArrowUp`, `ArrowDown`, `ArrowLeft`, `ArrowRight`) and `Space` from scrolling the page when a game is active, ensuring inputs only affect the iframe.
+- **Key Files & Folders**:
+  - `index.html`: Main landing page. Contains a responsive grid of game cards sorted strategically by "🔥 Hot", "✨ New", and regular games.
+  - `background-loader.js`: Critical shared script loaded on every page. Handles dynamic backgrounds and the legacy v2 streak system logic.
+  - `ad-manager.js`: Centralized script for handling Google AdSense injections.
+  - `sitemap.xml`, `robots.txt`: Managed closely for SEO indexing.
+  - `/game`, `/assets`, `/img`, `/js`: Standard asset directories.
+  - `/Ant escape`: Source folder for the site's exclusive in-house HTML5 game.
+  - `beta-index.html`, `beta-streaks.html`: Development/staging files used for testing new layouts.
+
+## 3. THE STREAK SYSTEM (Current Legacy State)
+- **How it works**: Currently baked heavily into `background-loader.js`. It runs on page load, gets the current date, and checks if the user visited today. If not, it logs the visit. It calculates the consecutive day streak by iterating backwards through the stored visit history array, including logic to skip weekends.
+- **The "0 🔥" Counter**: Displayed at the top of game pages and in the navigation. It reads the computed streak from `localStorage` and updates DOM elements (`.streak-count` or `#streakNumber`) to show the user's current consecutive daily visits.
+- **LocalStorage Keys Touched**:
+  - `streakDataV2` (Contains a JSON object with `version`, `visits` array, `freezes`, and `best` streak).
+  - `streakFreezes` (Standalone string/integer tracking available streak freezes).
+- **Known Bugs (CRITICAL)**: The system is notoriously buggy and needs a full rebuild. Because it relies heavily on client-side time calculations that incorrectly mix UTC and local time concepts, streaks often reset at the wrong time (e.g., 8 PM instead of Midnight). The backwards-iteration calculation is fragile and prone to failure.
+
+## 4. MY PLANS (Your Immediate Task)
+- **Action**: Rebuild the streak system as **v3 from scratch** in pure vanilla JS.
+- **Requirements**:
+  - **Timezone Fix**: Make it 100% reliable using the user's **local date** (Midnight to Midnight local time), absolutely no UTC logic, to prevent early resets.
+  - **Namespace Keys**: Use strict, prefixed `localStorage` keys to prevent collisions with old data:
+    - `bitg_streak`
+    - `bitg_milestones`
+    - `bitg_freeze`
+  - **Milestone Notifications**: Implement a UI notification system that triggers dynamically when users hit 3, 7, 14, and 30-day streak milestones.
+  - **Deliverables**: Output the new logic into clean, isolated files:
+    - `streak.js`
+    - `streak.css`
+    - `README-streak.md` (Include step-by-step documentation on how Brayden can rip out the old v2 logic from `background-loader.js` and implement this new v3 system across the site).
+
+## 5. ANYTHING ELSE (Context for Claude)
+- **Target Audience Considerations**: School students play on underpowered Chromebooks on restricted school networks. Keep JavaScript performant and lightweight. 
+- **UI Consistency**: When building the new milestone notifications, match the site's premium aesthetic. Use dark gradients, glassmorphism (`backdrop-filter: blur(10px)`), `border-radius`, and subtle entry/exit animations. Use semantic HTML.
+- **Code Style**: Write clean, heavily commented vanilla JavaScript. Since this is an educational/indie project, readable code is highly valued.
+- **Security**: Ensure that if you touch any iframes, they maintain aggressive `sandbox` attributes (`allow-scripts allow-same-origin`) to prevent malicious third-party ads from breaking out of the game containers.

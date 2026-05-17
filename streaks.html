@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -42,16 +42,53 @@
     <link
         href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Maven+Pro:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Base Styles */
+        /* Base Styles — premium dark space aesthetic to match the rest of the site.
+           !important is needed because background-loader.js sets inline body styles
+           per the user's theme; this page always uses its own dedicated theme. */
         body {
-            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
-            background-color: #2D3E50;
+            font-family: 'Maven Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             margin: 0;
             padding: 0;
             min-height: 100vh;
             transition: all 0.3s ease;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(80, 40, 140, 0.25) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(40, 80, 160, 0.20) 0%, transparent 50%),
+                linear-gradient(135deg, #050510 0%, #0a0a1f 50%, #0c0820 100%) !important;
+            background-attachment: fixed !important;
+            background-color: #050510 !important;
+            overflow-x: hidden;
+        }
+
+        /* Subtle drifting star field in the background */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 23% 17%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 67% 41%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1.5px 1.5px at 12% 73%, rgba(180,200,255,0.6), transparent),
+                radial-gradient(1px 1px at 88% 28%, rgba(255,220,180,0.55), transparent),
+                radial-gradient(1px 1px at 45% 88%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1.5px 1.5px at 91% 64%, rgba(200,180,255,0.6), transparent),
+                radial-gradient(1px 1px at 36% 32%, rgba(255,255,255,0.45), transparent),
+                radial-gradient(1px 1px at 78% 81%, rgba(255,255,255,0.55), transparent);
+            background-size: 600px 600px;
+            pointer-events: none;
+            z-index: 0;
+            animation: streak-stars-drift 120s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes streak-stars-drift {
+            from { background-position: 0 0; }
+            to   { background-position: 600px 600px; }
         }
 
         .container {
@@ -162,51 +199,69 @@
 
         /* Calendar Styles */
         .calendar {
-            background: rgba(255, 255, 255, 0.05);
+            background: transparent;
             border-radius: 10px;
-            padding: 15px;
-            margin: 0 0 30px;
+            padding: 0;
+            margin: 0;
         }
 
         .month-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .month-title {
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .month-nav {
-            background: none;
-            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.7);
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             cursor: pointer;
-            padding: 0 10px;
-            transition: color 0.2s;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
         }
 
         .month-nav:hover {
             color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .month-nav:active {
+            transform: scale(0.92);
+            background: rgba(255, 255, 255, 0.18);
+            transition-duration: 0.05s;
         }
 
         .weekdays {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             text-align: center;
-            margin-bottom: 10px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.45);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
         }
 
         .days {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 6px;
         }
 
         .day {
@@ -214,53 +269,74 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 5px;
-            font-size: 0.9rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
             position: relative;
-            transition: all 0.2s;
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+                        background-color 0.2s ease,
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease;
             overflow: visible;
             z-index: 0;
             isolation: isolate;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
         }
 
         .day:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: scale(1.08);
             z-index: 5;
         }
 
+        .day:active {
+            transform: scale(0.94);
+            transition-duration: 0.06s;
+        }
+
         .day.weekend {
-            background-color: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.015);
+            color: rgba(255, 255, 255, 0.35);
         }
 
         .day.practiced {
-            background-color: rgba(88, 204, 2, 0.2) !important;
-            color: #58CC02 !important;
-            font-weight: 500;
+            background: linear-gradient(135deg, rgba(88, 204, 2, 0.35), rgba(60, 160, 0, 0.20)) !important;
+            border: 1px solid rgba(88, 204, 2, 0.5) !important;
+            color: #d8ffb0 !important;
+            font-weight: 700;
+            box-shadow: 0 0 14px rgba(88, 204, 2, 0.25);
             z-index: 2;
         }
 
         .day.used-freeze {
-            background-color: rgba(66, 135, 245, 0.3) !important;
-            color: #4287f5 !important;
+            background: linear-gradient(135deg, rgba(66, 135, 245, 0.40), rgba(40, 100, 200, 0.20)) !important;
+            border: 1px solid rgba(120, 180, 255, 0.5) !important;
+            color: #c8e0ff !important;
+            font-weight: 700;
+            box-shadow: 0 0 14px rgba(66, 135, 245, 0.25);
             position: relative;
             z-index: 2;
         }
 
         .day.used-freeze::after {
-            content: 'â„';
+            content: '❄';
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;
             position: absolute;
-            bottom: 4px;
-            right: 4px;
+            bottom: 3px;
+            right: 3px;
             width: 18px;
             height: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1;
-            background: rgba(10, 16, 24, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(10, 16, 24, 0.9);
+            border: 1px solid rgba(120, 180, 255, 0.4);
             border-radius: 999px;
             z-index: 6;
             pointer-events: none;
@@ -268,11 +344,18 @@
         }
 
         .day.today {
-            border: 2px solid #4ecdc4;
+            border: 2px solid #4ecdc4 !important;
+            box-shadow: 0 0 18px rgba(78, 205, 196, 0.5), 0 0 0 1px rgba(78, 205, 196, 0.3) inset;
+            animation: today-pulse 2.4s ease-in-out infinite;
+        }
+
+        @keyframes today-pulse {
+            0%, 100% { box-shadow: 0 0 14px rgba(78, 205, 196, 0.4), 0 0 0 1px rgba(78, 205, 196, 0.3) inset; }
+            50%      { box-shadow: 0 0 24px rgba(78, 205, 196, 0.7), 0 0 0 1px rgba(78, 205, 196, 0.5) inset; }
         }
 
         .day.other-month {
-            opacity: 0.3;
+            opacity: 0.25;
         }
 
         .monday-dot {
@@ -465,22 +548,24 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 64px;
+            height: 68px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 14px;
-            background: rgba(10, 16, 24, 0.68);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            padding: 0 18px;
+            background: linear-gradient(180deg, rgba(8, 8, 20, 0.85) 0%, rgba(8, 8, 20, 0.65) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
             z-index: 9000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .topbar-title {
-            font-weight: 800;
-            font-size: 1.15rem;
-            letter-spacing: 0.3px;
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 0.02em;
+            color: #ffffff;
         }
 
         .topbar-right {
@@ -492,127 +577,213 @@
         .icon-btn {
             appearance: none;
             border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             color: #fff;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.15s ease, background 0.15s ease;
+            font-size: 1.1rem;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
         }
 
         .icon-btn:hover {
-            background: rgba(255, 255, 255, 0.10);
-            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 16px rgba(80, 140, 255, 0.25);
+        }
+
+        .icon-btn:active {
+            transform: translateY(0) scale(0.94);
+            background: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) inset;
+            transition-duration: 0.05s;
         }
 
         .pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
+            padding: 9px 16px;
             border-radius: 999px;
-            background: rgba(66, 135, 245, 0.16);
-            border: 1px solid rgba(66, 135, 245, 0.35);
+            background: linear-gradient(135deg, rgba(66, 135, 245, 0.25), rgba(40, 100, 200, 0.15));
+            border: 1px solid rgba(120, 180, 255, 0.4);
             color: #e8f1ff;
             font-weight: 700;
             font-size: 0.95rem;
             position: relative;
             z-index: 9001;
+            box-shadow: 0 0 20px rgba(66, 135, 245, 0.15), 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+            cursor: default;
+        }
+
+        .pill:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 0 28px rgba(66, 135, 245, 0.30), 0 6px 16px rgba(0, 0, 0, 0.35);
+        }
+
+        /* Emoji rendering — force the cross-platform color emoji font */
+        .emoji {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif !important;
+            font-style: normal;
+            line-height: 1;
         }
 
         .page {
-            max-width: 980px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 110px 16px 40px;
+            padding: 110px 16px 60px;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-card,
         .calendar-card {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.10);
-            border-radius: 18px;
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.30);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            background: linear-gradient(135deg,
+                rgba(20, 14, 32, 0.78) 0%,
+                rgba(10, 10, 22, 0.78) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 22px;
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.45),
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+                0 1px 0 rgba(255, 255, 255, 0.08) inset;
+            backdrop-filter: blur(14px) saturate(160%);
+            -webkit-backdrop-filter: blur(14px) saturate(160%);
             overflow: hidden;
+            position: relative;
+        }
+
+        /* Soft glow halo around each card */
+        .hero-card::before,
+        .calendar-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 24px;
+            background: radial-gradient(ellipse at top, rgba(255, 140, 0, 0.18), transparent 60%);
+            opacity: 0.6;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .calendar-card::before {
+            background: radial-gradient(ellipse at top, rgba(80, 140, 255, 0.15), transparent 60%);
         }
 
         .hero-card {
-            padding: 18px 18px 14px;
-            margin-bottom: 16px;
+            padding: 32px 24px 22px;
+            margin-bottom: 20px;
         }
 
         .hero-streak {
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            font-size: 56px;
+            gap: 14px;
+            font-size: 84px;
             font-weight: 900;
             line-height: 1;
+            margin-bottom: 4px;
+        }
+
+        .hero-streak #mainStreakCount {
+            color: #ffffff;
+            font-variant-numeric: tabular-nums;
         }
 
         .hero-streak .flame {
-            font-size: 38px;
+            font-size: 64px;
+            filter: drop-shadow(0 0 14px rgba(255, 100, 0, 0.7));
         }
 
         .hero-sub {
             text-align: center;
-            opacity: 0.80;
-            margin-top: 6px;
-            margin-bottom: 14px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
+            opacity: 0.75;
+            margin-top: 8px;
+            margin-bottom: 22px;
+            font-weight: 500;
+            font-size: 1.05rem;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .hero-stats {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
         .stat {
-            background: rgba(0, 0, 0, 0.22);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2));
+            border: 1px solid rgba(255, 255, 255, 0.06);
             border-radius: 14px;
-            padding: 10px 12px;
+            padding: 14px 16px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .stat:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .stat .label {
             font-size: 12px;
-            opacity: 0.75;
+            opacity: 0.6;
             font-weight: 700;
-            letter-spacing: 0.35px;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
 
         .stat .value {
-            margin-top: 4px;
-            font-size: 22px;
-            font-weight: 900;
+            margin-top: 6px;
+            font-size: 28px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Stat numbers stay clean white per Brayden's preference */
+        .hero-stats .stat .value {
+            color: #ffffff;
         }
 
         .today-status {
-            background: rgba(88, 204, 2, 0.12);
-            border: 1px solid rgba(88, 204, 2, 0.22);
+            background: linear-gradient(135deg, rgba(88, 204, 2, 0.18), rgba(40, 140, 60, 0.10));
+            border: 1px solid rgba(88, 204, 2, 0.35);
             color: #d8ffd0;
             border-radius: 14px;
-            padding: 10px 12px;
+            padding: 12px 16px;
             font-weight: 700;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            box-shadow: 0 0 24px rgba(88, 204, 2, 0.12);
+            font-family: 'Maven Pro', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .today-status.broken {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.18), rgba(160, 40, 30, 0.10));
+            border-color: rgba(231, 76, 60, 0.35);
+            color: #ffd0c8;
+            box-shadow: 0 0 24px rgba(231, 76, 60, 0.12);
         }
 
         .rule {
             text-align: center;
-            opacity: 0.78;
-            font-size: 0.95rem;
+            opacity: 0.6;
+            font-size: 0.85rem;
             margin-bottom: 4px;
+            line-height: 1.5;
+            max-width: 460px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .calendar-card {
@@ -628,35 +799,47 @@
         .legend {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 12px;
-            opacity: 0.9;
+            gap: 14px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            justify-content: center;
+            opacity: 0.85;
+            font-family: 'Maven Pro', sans-serif;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.82rem;
         }
 
         .legend-item {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .dot {
             width: 10px;
             height: 10px;
             border-radius: 999px;
+            box-shadow: 0 0 8px currentColor;
         }
 
         .dot.visit {
             background: #58CC02;
+            color: #58CC02;
         }
 
         .dot.freeze {
             background: #4287f5;
+            color: #4287f5;
         }
 
         .dot.today {
             background: #4ecdc4;
+            color: #4ecdc4;
         }
 
         .day.today {
@@ -695,7 +878,7 @@
     <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
     <script>
         window.resetStreakData = function () {
-            console.log('ðŸ”„ Resetting ALL streak data...');
+            console.log('🔄 Resetting ALL streak data...');
 
             try {
                 // Clear all streak-related localStorage
@@ -710,9 +893,9 @@
                     mainStreakCount.textContent = '0';
                 }
 
-                console.log('âœ… Streak data completely reset!');
-                console.log('ðŸ”„ All localStorage keys cleared');
-                console.log('ðŸ“Š Display updated to show streak: 0');
+                console.log('✅ Streak data completely reset!');
+                console.log('🔄 All localStorage keys cleared');
+                console.log('📊 Display updated to show streak: 0');
 
                 // Auto-refresh after a short delay to show the reset
                 setTimeout(() => {
@@ -721,21 +904,21 @@
 
                 return 'Streak reset complete! Page will refresh automatically...';
             } catch (error) {
-                console.error('âŒ Error resetting streak data:', error);
+                console.error('âŒ Error resetting streak data:', error);
                 return 'Error occurred while resetting streak data.';
             }
         };
 
         // Confirm function is available
-        console.log('ðŸ”§ resetStreakData() function loaded and ready!');
+        console.log('🔧 resetStreakData() function loaded and ready!');
     </script>
 
     <div class="topbar">
-        <button class="icon-btn" id="closeButton" title="Back">â†</button>
+        <button class="icon-btn" id="closeButton" title="Back">←</button>
         <div class="topbar-title">Streak</div>
         <div class="topbar-right">
             <div class="pill" title="Freezes">
-                â„ï¸ <span id="headerFreezeCount">0</span>
+                <span class="emoji">❄️</span> <span id="headerFreezeCount">0</span>
             </div>
         </div>
     </div>
@@ -744,7 +927,7 @@
         <section class="hero-card">
             <div class="hero-streak">
                 <span id="mainStreakCount">0</span>
-                <span class="flame">ðŸ”¥</span>
+                <span class="flame emoji">🔥</span>
             </div>
             <div class="hero-sub">day streak</div>
 
@@ -759,7 +942,7 @@
                 </div>
             </div>
 
-            <div class="today-status" id="todayStatus">Loadingâ€¦</div>
+            <div class="today-status" id="todayStatus">Loading…</div>
             <div class="rule">Visit weekdays to maintain your streak. Weekends are optional but count if visited.
                 Freezes save missed weekdays.</div>
         </section>
@@ -767,9 +950,9 @@
         <section class="calendar-card">
             <div class="calendar">
                 <div class="month-header">
-                    <button class="month-nav" id="prevMonth" title="Previous month">â€¹</button>
+                    <button class="month-nav" id="prevMonth" title="Previous month">‹</button>
                     <div class="month-title" id="monthYear">Month Year</div>
-                    <button class="month-nav" id="nextMonth" title="Next month">â€º</button>
+                    <button class="month-nav" id="nextMonth" title="Next month">›</button>
                 </div>
                 <div class="weekdays">
                     <div>Sun</div>
