@@ -1190,13 +1190,22 @@
            =================================================================== */
         document.addEventListener('DOMContentLoaded', () => {
             try {
+                // background-loader.js (loaded synchronously in <head>) must have
+                // defined StreakEngine. If it didn't — e.g. an old/cached copy is
+                // served, or the file 404s — degrade gracefully instead of showing
+                // a scary "Error" in place of the streak number.
+                if (!window.StreakEngine) throw new Error('StreakEngine unavailable — background-loader.js is missing or out of date');
                 const data   = window.StreakEngine.load();
                 const streak = window.StreakEngine.compute(data);
                 render(data, streak);
                 updateCalendar(data);
             } catch (err) {
                 console.error('Streak page display error:', err);
-                if (mainStreakCount) mainStreakCount.textContent = 'Error';
+                if (mainStreakCount) mainStreakCount.textContent = '–';
+                if (todayStatus) {
+                    todayStatus.textContent = 'Couldn’t load your streak — please refresh the page.';
+                    todayStatus.classList.add('broken');
+                }
             }
 
             // Dev helper: call window.refreshStreak() in the console to redraw
