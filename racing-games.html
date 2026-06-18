@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
+    <style>
+        /* ===================================================================
+           CATEGORY HUB PAGE — shared layout for all "<genre> games" pages.
+           site-theme.css adds the polish (card borders, hover lift, badge
+           skins, moving-star background); this block only supplies the BASE
+           layout those classes need (the homepage works the same way).
+           A custom .hub-wrap is used instead of .container so the site-wide
+           content-card styling doesn't squeeze the grid into a narrow box.
+           =================================================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .hub-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 84px 20px 20px;   /* top pad clears the floating streak/settings chips */
+            position: relative;
+            z-index: 2;
+        }
+
+        .hub-back {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .hub-back:hover { text-decoration: underline; }
+
+        .hub-hero { text-align: center; margin-bottom: 36px; }
+        .hub-hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            text-shadow: 0 0 22px rgba(255, 255, 255, 0.15);
+        }
+        .hub-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 1.08rem;
+        }
+
+        /* Base grid + card layout (site-theme.css skins these on top) */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+        .game-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px 12px;
+            min-height: 104px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 15px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .game-card p { margin: 0; font-size: 1.1rem; font-weight: 600; }
+        .new-badge, .hot-badge {
+            position: absolute;
+            top: 8px; right: 8px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        /* Long-form supporting copy + the "other categories" cross-link row */
+        .info-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 28px 30px;
+            margin-bottom: 30px;
+        }
+        .info-section h2 {
+            color: #4ecdc4;
+            font-size: 1.5rem;
+            margin-bottom: 14px;
+        }
+        .info-section p { color: rgba(255, 255, 255, 0.82); margin-bottom: 12px; }
+
+        .cat-nav { text-align: center; margin-bottom: 10px; }
+        .cat-nav h2 { color: #fff; font-size: 1.3rem; margin-bottom: 16px; }
+        .cat-nav a {
+            display: inline-block;
+            margin: 6px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .cat-nav a:hover { background: rgba(78, 205, 196, 0.15); border-color: #4ecdc4; }
+
+        @media (max-width: 768px) {
+            .hub-wrap { padding-top: 70px; }
+            .hub-hero h1 { font-size: 2rem; }
+            .game-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+
+    <title>Racing Games Unblocked — Free Driving Games for School</title>
+    <meta name="description" content="Play the best racing &amp; driving games unblocked at school — Drive Mad, Traffic Road, Slow Roads &amp; more. Free, no download, Chromebook-friendly.">
+    <meta name="keywords" content="racing games unblocked, driving games unblocked, unblocked racing games for school, drive mad unblocked, traffic road unblocked, free car games, chromebook racing games">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://braydenistallgames.online/racing-games.html">
+    <meta property="og:title" content="Racing Games Unblocked — Free Driving Games for School">
+    <meta property="og:description" content="The best free racing &amp; driving games you can play unblocked at school — Drive Mad, Traffic Road, Slow Roads and more. No download required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/racing-games.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games — Racing Games">
+    <meta name="twitter:title" content="Racing Games Unblocked — Free Driving Games for School">
+    <meta name="twitter:description" content="Free racing &amp; driving games, unblocked and no download — Drive Mad, Traffic Road, Slow Roads and more.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <link rel="apple-touch-icon" href="img/flame-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Racing Games Unblocked","description":"A collection of free racing and driving games you can play unblocked at school, no download required.","url":"https://braydenistallgames.online/racing-games.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"},"mainEntity":{"@type":"ItemList","name":"Racing Games","itemListElement":[{"@type":"ListItem","position":1,"name":"Drive Mad","url":"https://braydenistallgames.online/drive-mad.html"},{"@type":"ListItem","position":2,"name":"Traffic Road","url":"https://braydenistallgames.online/traffic-road.html"},{"@type":"ListItem","position":3,"name":"Slow Roads","url":"https://braydenistallgames.online/slow-roads.html"},{"@type":"ListItem","position":4,"name":"Ramp Xtreme","url":"https://braydenistallgames.online/ramp-xtreme.html"},{"@type":"ListItem","position":5,"name":"Escape Road 2","url":"https://braydenistallgames.online/escape-road-2.html"},{"@type":"ListItem","position":6,"name":"Escape Road","url":"https://braydenistallgames.online/escape-road.html"},{"@type":"ListItem","position":7,"name":"Cars","url":"https://braydenistallgames.online/cars.html"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Racing Games","item":"https://braydenistallgames.online/racing-games.html"}]}</script>
+
+    <link rel="stylesheet" href="stars.css?v=1">
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
+</head>
+
+<body>
+    <div class="hub-wrap">
+        <a href="index.html" class="hub-back">&#8592; All Games</a>
+
+        <div class="hub-hero">
+            <h1>Racing Games Unblocked</h1>
+            <p>Start your engines. These are the best free <strong>racing and driving games</strong> you can play
+                unblocked at school — instant-loading browser games that run smoothly on Chromebooks and locked-down
+                school WiFi, with no downloads, installs, or accounts.</p>
+        </div>
+
+        <div class="game-grid">
+            <a aria-label="Play Drive Mad Unblocked" class="game-card" href="drive-mad.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Drive Mad</p>
+            </a>
+            <a aria-label="Play Traffic Road Unblocked" class="game-card" href="traffic-road.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Traffic Road</p>
+            </a>
+            <a aria-label="Play Slow Roads Unblocked" class="game-card" href="slow-roads.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Slow Roads</p>
+            </a>
+            <a aria-label="Play Ramp Xtreme Unblocked" class="game-card" href="ramp-xtreme.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Ramp Xtreme</p>
+            </a>
+            <a aria-label="Play Escape Road 2 Unblocked" class="game-card" href="escape-road-2.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Escape Road 2</p>
+            </a>
+            <a aria-label="Play Escape Road Unblocked" class="game-card" href="escape-road.html"><p>Escape Road</p></a>
+            <a aria-label="Play Cars Unblocked" class="game-card" href="cars.html"><p>Cars</p></a>
+        </div>
+
+        <div class="info-section">
+            <h2>Why play racing games at school?</h2>
+            <p>Racing games are perfect for a quick break between classes: a single run takes a minute or two, the
+                controls are simple (usually just the arrow keys), and there's nothing to install. Because every game
+                here is built in HTML5 and runs entirely in your browser, they load instantly and won't trip the
+                download blockers on a school network or a managed Chromebook.</p>
+            <p>If you want pure chaos, <a href="drive-mad.html">Drive Mad</a> turns simple obstacle courses into
+                physics nightmares, while <a href="traffic-road.html">Traffic Road</a> and
+                <a href="escape-road-2.html">Escape Road 2</a> are all about weaving through traffic without crashing.
+                Prefer something calmer? <a href="slow-roads.html">Slow Roads</a> is an endless, relaxing drive through
+                procedurally generated scenery — great for unwinding. Whatever your mood, all of them are free and
+                ready to play right now.</p>
+        </div>
+
+        <nav class="cat-nav" aria-label="Browse other game categories">
+            <h2>Browse more categories</h2>
+            <a href="io-games.html">.io &amp; Multiplayer</a>
+            <a href="running-games.html">Running &amp; Skill</a>
+            <a href="clicker-games.html">Clicker &amp; Idle</a>
+            <a href="index.html">All Games</a>
+        </nav>
+    </div>
+
+    <script src="background-loader.js?v=S3.9"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="stars.js?v=1"></script>
+    <script src="settings-panel.js"></script>
+</body>
+
+</html>

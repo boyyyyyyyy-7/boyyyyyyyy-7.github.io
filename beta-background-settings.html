@@ -27,7 +27,7 @@
     <title>Background Settings | Brayden is Tall Games</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"></noscript>
 
     <style>
         :root {
@@ -440,6 +440,7 @@
         }
     </style>
 
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
 </head>
 
 <body>
@@ -451,11 +452,11 @@
     <header class="glass">
         <div class="logo">BRAYDEN GAMES <span class="beta-tag">APPEARANCE</span></div>
         <a href="beta-index.html" class="btn-close"
-            style="text-decoration:none; font-size:1.5rem; color:var(--text-muted);">×</a>
+            style="text-decoration:none; font-size:1.5rem; color:var(--text-muted);">�</a>
     </header>
 
     <div id="toast" class="toast">
-        <span id="toastIcon">🔒</span>
+        <span id="toastIcon">??</span>
         <span id="toastMsg">Unlocked!</span>
     </div>
 
@@ -613,7 +614,7 @@
             const toastIcon = document.getElementById('toastIcon');
             let toastTimeout;
 
-            window.showToast = (msg, icon = '🔒') => {
+            window.showToast = (msg, icon = '??') => {
                 if (!toast) return;
                 if (toastMsg) toastMsg.textContent = msg;
                 if (toastIcon) toastIcon.textContent = icon;
@@ -653,7 +654,7 @@
                     setPreviewLabel('Theme: Winter Mode');
                 } else if (theme === 'newyears') {
                     bgPreview.style.background = 'linear-gradient(135deg, #050510 0%, #1a1030 100%)';
-                    setPreviewLabel('Theme: New Year\'s Celebration 🎇');
+                    setPreviewLabel('Theme: New Year\'s Celebration ??');
                 }
 
                 bgPreview.style.backgroundSize = 'cover';
@@ -753,7 +754,7 @@
 
                     opt.innerHTML = `
                         <div class="bg-thumb" style="${previewStyle}">
-                            ${!isUnlocked ? '<div class="lock-overlay">🔒</div>' : ''}
+                            ${!isUnlocked ? '<div class="lock-overlay">??</div>' : ''}
                         </div>
                         <div class="bg-label" style="${isUnlocked ? 'color: #FFD700; font-weight: 800;' : ''}">${bgDef.name}</div>
                     `;
@@ -765,7 +766,7 @@
                             opt.classList.remove('locked-shake');
                             void opt.offsetWidth;
                             opt.classList.add('locked-shake');
-                            showToast(`${bgDef.name} is Locked! Win it from an Epic Case.`, '🔒');
+                            showToast(`${bgDef.name} is Locked! Win it from an Epic Case.`, '??');
                         }
                     });
 
@@ -842,7 +843,7 @@
                     localStorage.setItem('selectedTheme', 'classic'); // Classic is default for Aether
                     applyPreviewTheme('classic');
                     setActiveOption();
-                    showToast('Settings Reset', '✨');
+                    showToast('Settings Reset', '?');
                 });
             }
 
@@ -867,7 +868,7 @@
                 applyBgBtn.addEventListener('click', () => {
                     if (!uploadedImage) return;
                     applyToStorageBackground(`url(${uploadedImage})`);
-                    showToast('Background Applied!', '🖼️');
+                    showToast('Background Applied!', '???');
                 });
             }
 

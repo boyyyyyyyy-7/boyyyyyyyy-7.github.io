@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-<link
-        href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap"
-        rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet"></noscript>
 
     <!-- Microsoft Clarity Analytics -->
     <script type="text/javascript">
@@ -207,6 +205,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
     <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta property="og:image:width" content="192">
+    <meta property="og:image:height" content="192">
     <meta name="twitter:title" content="Arcade Tennis Unblocked | Brayden is Tall Games">
     <meta name="twitter:description" content="Serve and volley in Arcade Tennis Unblocked. The best free browser tennis game online.">
     <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
@@ -223,6 +223,7 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Arcade Tennis Unblocked","item":"https://braydenistallgames.online/arcade-tennis.html"}]}</script>
     <link rel="stylesheet" href="stars.css?v=1">
 
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
 </head>
 
 <body>
@@ -235,15 +236,7 @@
                         style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
                 <div style='display:flex; gap:10px;'><a href='index.html' class='back-button'>&#8592; Back</a><button
                         class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
-                <a href="background-settings.html" class="back-button" title="Settings"
-                    style="padding:16px; width:56px; display:flex; align-items:center; justify-content:center;"><svg
-                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path
-                            d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                        </path>
-                    </svg></a>
+                
             </div>
             <h1 class="game-title">Arcade Tennis Unblocked</h1>
         </div>
@@ -316,9 +309,9 @@
         function updateButtonText() {
             const button = document.querySelector('.fullscreen-button');
             if (document.fullscreenElement) {
-                button.textContent = 'â›¶ Exit Fullscreen';
+                button.textContent = '⛶ Exit Fullscreen';
             } else {
-                button.textContent = 'â›¶ Fullscreen';
+                button.textContent = '⛶ Fullscreen';
             }
         }
 
@@ -338,8 +331,7 @@
         <div style="margin-bottom:12px;">
             <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
             <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
-            <a href="background-settings.html"
-                style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Settings</a>
+            
             <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
             <a href="privacy-policy.html"
                 style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
@@ -351,6 +343,7 @@
     <script src="recommendations.js"></script>
     <script src="stars.js?v=1"></script>
 
+<script src="settings-panel.js"></script>
 </body>
 
 </html>

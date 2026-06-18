@@ -1,86 +1,122 @@
-// recommendations.js - Tier-weighted game recommendation engine
-(function() {
-    const TIER_1 = [
-        { name: 'Arcade Tennis', url: 'arcade-tennis.html' },
-        { name: 'Cookie Clicker', url: 'cookie-clicker.html' },
-        { name: 'Agario Minigame', url: 'agario-minigame.html' },
-        { name: 'Slope', url: 'slope.html' },
-        { name: 'Rocketgoal', url: 'rocketgoal.html' },
-        { name: 'Stickman Hook', url: 'stickman-hook.html' },
-        { name: 'Stack', url: 'stack.html' },
-        { name: 'Paper.io 2', url: 'paper-io-2.html' },
-        { name: 'Burrito Bison', url: 'burrito-bison.html' },
-        { name: 'Hole.io', url: 'hole-io.html' },
-        { name: 'Tunnel Rush', url: 'tunnel-rush.html' },
-        { name: 'Bloons TD 5', url: 'bloons-td-5.html' },
-        { name: 'Crazy Cattle 3D', url: 'crazy-cattle-3d.html' },
-        { name: 'Curve Rush', url: 'curve-rush.html' },
-        { name: 'Drive Mad', url: 'drive-mad.html' },
-        { name: 'Escape Road 2', url: 'escape-road-2.html' },
-        { name: 'Smash Karts', url: 'smash-karts.html' },
-        { name: 'Speed Stars', url: 'speed-stars.html' },
-        { name: 'Ragdoll Archers', url: 'ragdoll-archers.html' },
-        { name: 'Slow Roads', url: 'slow-roads.html' },
-        { name: 'Golf Orbit', url: 'golf-orbit.html' },
-        { name: 'Traffic Road', url: 'traffic-road.html' },
-        { name: 'Granny', url: 'granny.html' },
-        { name: 'Cowboy Safari', url: 'cowboy-safari.html' },
-        { name: 'Slope Rider', url: 'slope-rider.html' },
-        { name: 'Ramp Xtreme', url: 'ramp-xtreme.html' }
+// recommendations.js — related-games engine (v2)
+//
+// What changed in v2 and WHY (SEO + UX):
+//   • DETERMINISTIC instead of random. v1 used Math.random(), so every page
+//     load showed a different set of links. Search engines then saw an
+//     unstable internal-link graph (different links each crawl), which dilutes
+//     how link signals flow between pages. v2 always renders the same links for
+//     a given page, so the link graph is stable and crawlable.
+//   • TOPICAL. v2 recommends same-GENRE games first (e.g. a racing game links
+//     to other racing games). Topical internal linking is one of the strongest
+//     on-site SEO signals and is also better for players.
+//   • COMPLETE. v1's tier lists were missing several live games (Trash Pandas,
+//     Front Wars, Ant Escape, Squid Shooter…), so those pages were
+//     never recommended anywhere. v2's GAMES list is the single source of truth
+//     for every current game — add a new game in ONE place and it joins the
+//     recommendation graph automatically.
+//
+// HOW TO EXTEND: add one row to GAMES below. `genre` controls which games it is
+// grouped with; `hot` controls the badge (🔥 Hot vs ⭐ Popular) and gives it
+// priority when filling out a row. That's it — no other file needs touching.
+(function () {
+    // ---- Single source of truth: every live game, its genre, and hot flag ----
+    const GAMES = [
+        // io / multiplayer
+        { name: '1v1.lol',              url: '1v1-lol.html',              genre: 'io',       hot: false },
+        { name: 'Agario Minigame',      url: 'agario-minigame.html',      genre: 'io',       hot: true  },
+        { name: 'Hole.io',              url: 'hole-io.html',              genre: 'io',       hot: true  },
+        { name: 'Paper.io 2',           url: 'paper-io-2.html',           genre: 'io',       hot: true  },
+        { name: 'Smash Karts',          url: 'smash-karts.html',          genre: 'io',       hot: true  },
+        // runner / arcade endless
+        { name: 'Slope',                url: 'slope.html',                genre: 'runner',   hot: true  },
+        { name: 'Slope Rider',          url: 'slope-rider.html',          genre: 'runner',   hot: true  },
+        { name: 'Tunnel Rush',          url: 'tunnel-rush.html',          genre: 'runner',   hot: true  },
+        { name: 'Curve Rush',           url: 'curve-rush.html',           genre: 'runner',   hot: true  },
+        { name: 'Wave Dash',            url: 'wave-dash.html',            genre: 'runner',   hot: false },
+        { name: 'Geometry Lite',        url: 'geometry-lite.html',        genre: 'runner',   hot: false },
+        { name: 'Speed Stars',          url: 'speed-stars.html',          genre: 'runner',   hot: true  },
+        // racing / driving
+        { name: 'Drive Mad',            url: 'drive-mad.html',            genre: 'racing',   hot: true  },
+        { name: 'Traffic Road',         url: 'traffic-road.html',         genre: 'racing',   hot: true  },
+        { name: 'Cars',                 url: 'cars.html',                 genre: 'racing',   hot: false },
+        { name: 'Escape Road',          url: 'escape-road.html',          genre: 'racing',   hot: false },
+        { name: 'Escape Road 2',        url: 'escape-road-2.html',        genre: 'racing',   hot: true  },
+        { name: 'Slow Roads',           url: 'slow-roads.html',           genre: 'racing',   hot: true  },
+        { name: 'Ramp Xtreme',          url: 'ramp-xtreme.html',          genre: 'racing',   hot: true  },
+        // physics / skill
+        { name: 'Stickman Hook',        url: 'stickman-hook.html',        genre: 'physics',  hot: true  },
+        { name: 'Burrito Bison',        url: 'burrito-bison.html',        genre: 'physics',  hot: true  },
+        { name: 'Raft Wars',            url: 'raft-wars.html',            genre: 'physics',  hot: false },
+        { name: 'Ragdoll Archers',      url: 'ragdoll-archers.html',      genre: 'physics',  hot: true  },
+        { name: 'Ragdoll Hit Stickman', url: 'ragdoll-hit-stickman.html', genre: 'physics',  hot: false },
+        { name: 'Trash Pandas',         url: 'trash-pandas.html',         genre: 'physics',  hot: false },
+        // clicker / incremental
+        { name: 'Cookie Clicker',       url: 'cookie-clicker.html',       genre: 'clicker',  hot: true  },
+        { name: 'Spacebar Clicker',     url: 'spacebar-clicker.html',     genre: 'clicker',  hot: false },
+        { name: 'Chill Guy Clicker',    url: 'chill-guy-clicker.html',    genre: 'clicker',  hot: false },
+        { name: 'Breaking the Bank',    url: 'breaking-the-bank.html',    genre: 'clicker',  hot: false },
+        // idle / progression
+        { name: 'Duck Life 3',          url: 'duck-life-3.html',          genre: 'idle',     hot: false },
+        { name: 'Learn to Fly',         url: 'learn-to-fly-1.html',       genre: 'idle',     hot: false },
+        { name: 'Learn to Fly 2',       url: 'learn-to-fly-2.html',       genre: 'idle',     hot: false },
+        { name: 'Learn to Fly Idle',    url: 'learn-to-fly-idle.html',    genre: 'idle',     hot: false },
+        // sandbox / simulation
+        { name: 'Sand Game',            url: 'sand-game.html',            genre: 'sandbox',  hot: false },
+        { name: 'Fluid Simulator',      url: 'fluid-simulator.html',      genre: 'sandbox',  hot: false },
+        { name: 'Melon Sandbox',        url: 'melon-sandbox.html',        genre: 'sandbox',  hot: false },
+        { name: 'Minecraft',            url: 'minecraft.html',            genre: 'sandbox',  hot: false },
+        // shooter
+        { name: 'Shell Shockers',       url: 'shell-shockers.html',       genre: 'shooter',  hot: false },
+        { name: 'Squid Shooter',        url: 'squid-shooter.html',        genre: 'shooter',  hot: false },
+        { name: 'Cowboy Safari',        url: 'cowboy-safari.html',        genre: 'shooter',  hot: true  },
+        // horror / escape
+        { name: 'Granny',               url: 'granny.html',               genre: 'horror',   hot: true  },
+        { name: 'Schoolboy Runaway',    url: 'schoolboy-runaway.html',    genre: 'horror',   hot: false },
+        { name: 'Slender Multiplayer',  url: 'slender-multiplayer.html',  genre: 'horror',   hot: false },
+        // 3d animal action
+        { name: 'Crazy Cattle 3D',      url: 'crazy-cattle-3d.html',      genre: '3d',       hot: true  },
+        { name: 'Crazy Chicken 3D',     url: 'crazy-chicken-3d.html',     genre: '3d',       hot: false },
+        { name: 'Crazy Kitty 3D',       url: 'crazy-kitty-3d.html',       genre: '3d',       hot: false },
+        // sports
+        { name: 'Arcade Tennis',        url: 'arcade-tennis.html',        genre: 'sports',   hot: true  },
+        { name: 'Golf Orbit',           url: 'golf-orbit.html',           genre: 'sports',   hot: true  },
+        { name: 'Rocketgoal',           url: 'rocketgoal.html',           genre: 'sports',   hot: true  },
+        // strategy
+        { name: 'Bloons TD 5',          url: 'bloons-td-5.html',          genre: 'strategy', hot: true  },
+        { name: 'Front Wars',           url: 'front-wars.html',           genre: 'strategy', hot: false },
+        // arcade
+        { name: 'Crossy Road',          url: 'crossy-road.html',          genre: 'arcade',   hot: false },
+        { name: 'Stack',                url: 'stack.html',                genre: 'arcade',   hot: true  },
+        { name: 'Ant Escape',           url: 'ant-escape.html',           genre: 'arcade',   hot: false },
+        // puzzle / word
+        { name: 'Tetris',               url: 'tetris.html',               genre: 'puzzle',   hot: false },
+        { name: 'Wordle+',              url: 'wordle-plus.html',          genre: 'puzzle',   hot: false }
     ];
 
-    const TIER_2 = [
-        { name: 'Spacebar Clicker', url: 'spacebar-clicker.html' },
-        { name: 'Sand Game', url: 'sand-game.html' },
-        { name: 'Fluid Simulator', url: 'fluid-simulator.html' },
-        { name: 'Ragdoll Hit Stickman', url: 'ragdoll-hit-stickman.html' },
-        { name: 'Geometry Lite', url: 'geometry-lite.html' },
-        { name: 'Crossy Road', url: 'crossy-road.html' },
-        { name: 'Escape Road', url: 'escape-road.html' },
-        { name: 'Schoolboy Runaway', url: 'schoolboy-runaway.html' },
-        { name: 'Slender Multiplayer', url: 'slender-multiplayer.html' },
-        { name: 'Crazy Chicken 3D', url: 'crazy-chicken-3d.html' },
-        { name: 'Crazy Kitty 3D', url: 'crazy-kitty-3d.html' },
-        { name: 'Wave Dash', url: 'wave-dash.html' },
-        { name: 'Melon Sandbox', url: 'melon-sandbox.html' },
-        { name: 'Chill Guy Clicker', url: 'chill-guy-clicker.html' },
-        { name: 'Shell Shockers', url: 'shell-shockers.html' },
-        { name: 'Minecraft', url: 'minecraft.html' },
-        { name: '1v1.lol', url: '1v1-lol.html' },
-        { name: 'Tetris', url: 'tetris.html' },
-        { name: 'Wordle Plus', url: 'wordle-plus.html' },
-        { name: 'Breaking the Bank', url: 'breaking-the-bank.html' },
-        { name: 'Duck Life 3', url: 'duck-life-3.html' },
-        { name: 'Learn to Fly', url: 'learn-to-fly-1.html' },
-        { name: 'Learn to Fly 2', url: 'learn-to-fly-2.html' },
-        { name: 'Learn to Fly Idle', url: 'learn-to-fly-idle.html' },
-        { name: 'Raft Wars', url: 'raft-wars.html' },
-        { name: 'Cars', url: 'cars.html' }
-    ];
+    const NUM_PICKS = 4;
 
-    const T1_URLS = new Set(TIER_1.map(g => g.url));
-    const currentPage = window.location.pathname.split('/').pop();
+    // Which page are we on? (e.g. "drive-mad.html")
+    const currentSlug = window.location.pathname.split('/').pop() || 'index.html';
+    const current = GAMES.find(g => g.url === currentSlug);
+    const currentGenre = current ? current.genre : null;
 
-    let recentGames = [];
-    try { recentGames = JSON.parse(localStorage.getItem('bgt_recentGames')) || []; } catch(e) {}
+    // Personalisation for real visitors: skip games they just played. Crawlers
+    // have an empty localStorage, so they always get the deterministic default.
+    let recentUrls = [];
+    try { recentUrls = (JSON.parse(localStorage.getItem('bgt_recentGames')) || []).map(g => g.url); } catch (e) {}
+    const exclude = new Set([currentSlug, ...recentUrls]);
 
-    const recentCount = Math.min(recentGames.length, 4);
-    const tier1Chance = Math.min(0.55 + (recentCount * 0.035), 0.65);
-    const recentUrls = recentGames.map(g => g.url);
-    const filtered1 = TIER_1.filter(g => g.url !== currentPage && !recentUrls.includes(g.url));
-    const filtered2 = TIER_2.filter(g => g.url !== currentPage && !recentUrls.includes(g.url));
+    // Build the pick order deterministically:
+    //   1) same-genre games (topical cluster),
+    //   2) then hot games from other genres,
+    //   3) then the remaining games.
+    // Array order is preserved throughout, so the output is identical every load.
+    const sameGenre = GAMES.filter(g => g.genre === currentGenre && !exclude.has(g.url));
+    const otherGames = GAMES.filter(g => g.genre !== currentGenre && !exclude.has(g.url));
+    const hotOthers = otherGames.filter(g => g.hot);
+    const coldOthers = otherGames.filter(g => !g.hot);
 
-    const picks = [];
-    const usedUrls = new Set();
-    for (let i = 0; i < 4; i++) {
-        const roll = Math.random();
-        let pool = (roll < tier1Chance && filtered1.length > 0) ? filtered1 : (filtered2.length > 0 ? filtered2 : filtered1);
-        const remaining = pool.filter(g => !usedUrls.has(g.url));
-        if (remaining.length === 0) continue;
-        const pick = remaining[Math.floor(Math.random() * remaining.length)];
-        picks.push(pick);
-        usedUrls.add(pick.url);
-    }
+    const picks = [...sameGenre, ...hotOthers, ...coldOthers].slice(0, NUM_PICKS);
 
     if (picks.length > 0) {
         document.addEventListener('DOMContentLoaded', () => {
@@ -223,8 +259,8 @@
                 card.className = 'bgt-rec-card';
 
                 const badge = document.createElement('div');
-                badge.className = T1_URLS.has(game.url) ? 'bgt-badge bgt-badge-hot' : 'bgt-badge bgt-badge-pop';
-                badge.innerHTML = T1_URLS.has(game.url) ? '<span>🔥</span> Hot' : '<span>⭐</span> Popular';
+                badge.className = game.hot ? 'bgt-badge bgt-badge-hot' : 'bgt-badge bgt-badge-pop';
+                badge.innerHTML = game.hot ? '<span>🔥</span> Hot' : '<span>⭐</span> Popular';
                 card.appendChild(badge);
 
                 const p = document.createElement('p');

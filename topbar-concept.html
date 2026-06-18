@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Bar Concept — Minimal</title>
+    <!-- Internal design concept, not a real page — keep it out of search results. -->
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===================================================================
+           APPLE-INSPIRED MINIMAL TOP BAR
+           - Thin, translucent, frosted glass
+           - Light typography, generous spacing
+           - No bold accent colors — subtlety wins
+           =================================================================== */
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bar-h: 52px;
+            --text: rgba(255, 255, 255, 0.92);
+            --text-dim: rgba(255, 255, 255, 0.55);
+            --text-faint: rgba(255, 255, 255, 0.35);
+            --hairline: rgba(255, 255, 255, 0.08);
+            --hover-bg: rgba(255, 255, 255, 0.06);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+            background:
+                radial-gradient(ellipse at 20% 0%, rgba(80, 40, 140, 0.20) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 100%, rgba(40, 80, 160, 0.18) 0%, transparent 50%),
+                linear-gradient(135deg, #050510 0%, #0a0a1f 50%, #0c0820 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            padding-top: var(--bar-h);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* === THE BAR ===================================================== */
+        .nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--bar-h);
+            z-index: 9000;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 0 20px;
+            background: rgba(10, 10, 18, 0.72);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border-bottom: 1px solid var(--hairline);
+        }
+
+        /* === LEFT — LOGO ================================================ */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            padding: 6px 8px;
+            border-radius: 7px;
+            transition: background 0.18s ease;
+        }
+        .nav-brand:hover { background: var(--hover-bg); }
+
+        .nav-brand-mark {
+            /* Fill nearly the entire bar height; leave a hair of breathing room */
+            width: calc(var(--bar-h) - 8px);
+            height: calc(var(--bar-h) - 8px);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-brand-mark img {
+            width: 100%; height: 100%;
+            display: block;
+            object-fit: contain;
+            filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+        }
+
+        /* === CENTER — NAV ITEMS ========================================= */
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .nav-link {
+            position: relative;
+            color: var(--text-dim);
+            font-size: 13.5px;
+            font-weight: 400;
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: 7px;
+            transition: color 0.18s ease, background 0.18s ease;
+        }
+        .nav-link:hover {
+            color: var(--text);
+            background: var(--hover-bg);
+        }
+        .nav-link.active {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+            font-weight: 500;
+        }
+
+        /* === RIGHT — STATS + ACTIONS ==================================== */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 4px;
+        }
+
+        .nav-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 10px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            background: transparent;
+            cursor: default;
+            transition: background 0.18s ease;
+        }
+        .nav-stat:hover { background: var(--hover-bg); }
+
+        .nav-stat .ico {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+            font-size: 13px;
+            line-height: 1;
+            opacity: 0.95;
+        }
+
+        .nav-icon-btn {
+            width: 32px; height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            background: transparent;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            transition: color 0.18s ease, background 0.18s ease;
+            margin-left: 4px;
+        }
+        .nav-icon-btn:hover {
+            color: var(--text);
+            background: var(--hover-bg);
+        }
+        .nav-icon-btn svg { width: 16px; height: 16px; }
+
+        /* === DEMO BODY ================================================== */
+        .demo {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 64px 24px;
+        }
+
+        .demo h1 {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+
+        .demo .lead {
+            font-size: 17px;
+            color: var(--text-dim);
+            line-height: 1.55;
+            margin-bottom: 36px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--hairline);
+            border-radius: 14px;
+            padding: 24px 26px;
+            margin-bottom: 16px;
+        }
+
+        .card h2 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .card li {
+            padding: 7px 0;
+            font-size: 14px;
+            color: var(--text-dim);
+            display: flex;
+            gap: 10px;
+        }
+        .card li::before {
+            content: '·';
+            color: var(--text-faint);
+            font-weight: 700;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .nav { grid-template-columns: auto 1fr auto; padding: 0 12px; }
+            .nav-center { gap: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .nav-link { padding: 7px 10px; font-size: 13px; }
+            .nav-brand span:not(.nav-brand-mark) { display: none; }
+        }
+    </style>
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
+</head>
+<body>
+
+    <nav class="nav">
+        <!-- Left: brand -->
+        <div class="nav-left">
+            <a class="nav-brand" href="#">
+                <span class="nav-brand-mark"><img src="img/logo-b.png" alt="B"></span>
+                <span>Brayden Games</span>
+            </a>
+        </div>
+
+        <!-- Center: nav items — Play sits in the middle position -->
+        <div class="nav-center">
+            <a class="nav-link" href="#">Library</a>
+            <a class="nav-link" href="#">Themes</a>
+            <a class="nav-link active" href="#">Play</a>
+            <a class="nav-link" href="#">Streak</a>
+            <a class="nav-link" href="#">About</a>
+        </div>
+
+        <!-- Right: streak + settings -->
+        <div class="nav-right">
+            <div class="nav-stat" title="Current streak">
+                <span class="ico">🔥</span>
+                <span>12</span>
+            </div>
+            <button class="nav-icon-btn" title="Settings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <main class="demo">
+        <h1>A quieter bar.</h1>
+        <p class="lead">Thin. Translucent. Light typography. No bold accent colors competing for attention — the site's content does the talking, the bar just holds the navigation.</p>
+
+        <div class="card">
+            <h2>What changed</h2>
+            <ul>
+                <li>52px tall instead of 64px — sits lighter on every page</li>
+                <li>Frosted glass background (heavy backdrop blur) like macOS menus</li>
+                <li>Inter / SF Pro at 13.5px, regular weight — no uppercase shouting</li>
+                <li>Active page is a subtle white tint, not a colored underline</li>
+                <li>Streak and freeze chips are quiet — just text + small emoji</li>
+                <li>Single hairline border at the bottom, no gradient seams</li>
+                <li>Logo is a tiny 22px bordered "BG" — minimal, not a centerpiece</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>If you want to push further</h2>
+            <ul>
+                <li>Drop the wordmark entirely — just the BG square</li>
+                <li>Make the bar fully transparent (no background tint)</li>
+                <li>Move streak/freeze into a dropdown to clean the right side</li>
+                <li>Add an avatar / profile circle on the far right</li>
+            </ul>
+        </div>
+    </main>
+
+</body>
+</html>

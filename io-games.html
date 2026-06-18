@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
+    <style>
+        /* ===================================================================
+           CATEGORY HUB PAGE — shared layout for all "<genre> games" pages.
+           site-theme.css adds the polish (card borders, hover lift, badge
+           skins, moving-star background); this block only supplies the BASE
+           layout those classes need (the homepage works the same way).
+           A custom .hub-wrap is used instead of .container so the site-wide
+           content-card styling doesn't squeeze the grid into a narrow box.
+           =================================================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .hub-wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 84px 20px 20px;   /* top pad clears the floating streak/settings chips */
+            position: relative;
+            z-index: 2;
+        }
+
+        .hub-back {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: #4ecdc4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .hub-back:hover { text-decoration: underline; }
+
+        .hub-hero { text-align: center; margin-bottom: 36px; }
+        .hub-hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            text-shadow: 0 0 22px rgba(255, 255, 255, 0.15);
+        }
+        .hub-hero p {
+            max-width: 760px;
+            margin: 0 auto;
+            color: rgba(255, 255, 255, 0.82);
+            font-size: 1.08rem;
+        }
+
+        /* Base grid + card layout (site-theme.css skins these on top) */
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+        .game-card {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 25px 12px;
+            min-height: 104px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 15px;
+            color: #fff;
+            text-decoration: none;
+        }
+        .game-card p { margin: 0; font-size: 1.1rem; font-weight: 600; }
+        .new-badge, .hot-badge {
+            position: absolute;
+            top: 8px; right: 8px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        /* Long-form supporting copy + the "other categories" cross-link row */
+        .info-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 14px;
+            padding: 28px 30px;
+            margin-bottom: 30px;
+        }
+        .info-section h2 {
+            color: #4ecdc4;
+            font-size: 1.5rem;
+            margin-bottom: 14px;
+        }
+        .info-section p { color: rgba(255, 255, 255, 0.82); margin-bottom: 12px; }
+
+        .cat-nav { text-align: center; margin-bottom: 10px; }
+        .cat-nav h2 { color: #fff; font-size: 1.3rem; margin-bottom: 16px; }
+        .cat-nav a {
+            display: inline-block;
+            margin: 6px;
+            padding: 10px 18px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .cat-nav a:hover { background: rgba(78, 205, 196, 0.15); border-color: #4ecdc4; }
+
+        @media (max-width: 768px) {
+            .hub-wrap { padding-top: 70px; }
+            .hub-hero h1 { font-size: 2rem; }
+            .game-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+
+    <title>.io Games Unblocked — Free Multiplayer Games for School</title>
+    <meta name="description" content="Play the best .io &amp; multiplayer games unblocked at school — Paper.io 2, Hole.io, Smash Karts, 1v1.lol &amp; more. Free, no download, Chromebook-friendly.">
+    <meta name="keywords" content="io games unblocked, multiplayer games unblocked, paper.io 2 unblocked, hole.io unblocked, smash karts unblocked, 1v1.lol unblocked, shell shockers unblocked, free multiplayer browser games for school">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://braydenistallgames.online/io-games.html">
+    <meta property="og:title" content=".io Games Unblocked — Free Multiplayer Games for School">
+    <meta property="og:description" content="The best free .io &amp; multiplayer games you can play unblocked at school — Paper.io 2, Hole.io, Smash Karts, 1v1.lol and more. No download required.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/io-games.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games — .io Games">
+    <meta name="twitter:title" content=".io Games Unblocked — Free Multiplayer Games for School">
+    <meta name="twitter:description" content="Free .io &amp; multiplayer games, unblocked and no download — Paper.io 2, Hole.io, Smash Karts and more.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <link rel="apple-touch-icon" href="img/flame-icon.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":".io Games Unblocked","description":"A collection of free .io and multiplayer games you can play unblocked at school, no download required.","url":"https://braydenistallgames.online/io-games.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"},"mainEntity":{"@type":"ItemList","name":".io Games","itemListElement":[{"@type":"ListItem","position":1,"name":"Paper.io 2","url":"https://braydenistallgames.online/paper-io-2.html"},{"@type":"ListItem","position":2,"name":"Hole.io","url":"https://braydenistallgames.online/hole-io.html"},{"@type":"ListItem","position":3,"name":"Smash Karts","url":"https://braydenistallgames.online/smash-karts.html"},{"@type":"ListItem","position":4,"name":"1v1.lol","url":"https://braydenistallgames.online/1v1-lol.html"},{"@type":"ListItem","position":5,"name":"Agario Minigame","url":"https://braydenistallgames.online/agario-minigame.html"},{"@type":"ListItem","position":6,"name":"Shell Shockers","url":"https://braydenistallgames.online/shell-shockers.html"}]}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":".io Games","item":"https://braydenistallgames.online/io-games.html"}]}</script>
+
+    <link rel="stylesheet" href="stars.css?v=1">
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
+</head>
+
+<body>
+    <div class="hub-wrap">
+        <a href="index.html" class="hub-back">&#8592; All Games</a>
+
+        <div class="hub-hero">
+            <h1>.io Games Unblocked</h1>
+            <p>Jump into the arena. These are the best free <strong>.io and multiplayer games</strong> you can play
+                unblocked at school — fast, competitive browser games that load instantly on Chromebooks and locked-down
+                school WiFi, with no downloads, installs, or accounts to slow you down.</p>
+        </div>
+
+        <div class="game-grid">
+            <a aria-label="Play Paper.io 2 Unblocked" class="game-card" href="paper-io-2.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Paper.io 2</p>
+            </a>
+            <a aria-label="Play Hole.io Unblocked" class="game-card" href="hole-io.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Hole.io</p>
+            </a>
+            <a aria-label="Play Smash Karts Unblocked" class="game-card" href="smash-karts.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Smash Karts</p>
+            </a>
+            <a aria-label="Play Agario Minigame Unblocked" class="game-card" href="agario-minigame.html">
+                <div class="hot-badge"><span>&#128293;</span> Hot</div><p>Agario Minigame</p>
+            </a>
+            <a aria-label="Play 1v1.lol Unblocked" class="game-card" href="1v1-lol.html"><p>1v1.lol</p></a>
+            <a aria-label="Play Shell Shockers Unblocked" class="game-card" href="shell-shockers.html"><p>Shell Shockers</p></a>
+        </div>
+
+        <div class="info-section">
+            <h2>What are .io games?</h2>
+            <p>".io games" are quick, competitive multiplayer games — named after the .io web domain where the genre
+                took off with hits like Agar.io and Paper.io. The idea is simple: drop into a shared arena, grow bigger
+                or outlast everyone else, and climb the leaderboard. Rounds are short and there's no setup, which makes
+                them ideal for a few minutes of fun between classes.</p>
+            <p>Want territory control? <a href="paper-io-2.html">Paper.io 2</a> is all about claiming the map without
+                getting cut off. Feeling destructive? <a href="hole-io.html">Hole.io</a> lets you swallow an entire
+                city, and <a href="smash-karts.html">Smash Karts</a> turns it into a kart battle royale. For shooters,
+                <a href="1v1-lol.html">1v1.lol</a> and <a href="shell-shockers.html">Shell Shockers</a> bring the
+                build-and-blast and egg-FPS chaos. All free, all unblocked, all instant.</p>
+        </div>
+
+        <nav class="cat-nav" aria-label="Browse other game categories">
+            <h2>Browse more categories</h2>
+            <a href="racing-games.html">Racing &amp; Driving</a>
+            <a href="running-games.html">Running &amp; Skill</a>
+            <a href="clicker-games.html">Clicker &amp; Idle</a>
+            <a href="index.html">All Games</a>
+        </nav>
+    </div>
+
+    <script src="background-loader.js?v=S3.9"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            <a href="about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="stars.js?v=1"></script>
+    <script src="settings-panel.js"></script>
+</body>
+
+</html>

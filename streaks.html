@@ -6,15 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="referrer" content="strict-origin-when-cross-origin">
-    <link rel="icon" href="">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <meta name="description"
         content="The challenging endless runner game! Test your reflexes and timing in this fast-paced arcade adventure. How long can you maintain your streak?">
     <meta property="og:title" content="Streak - Brayden is tall games">
     <meta property="og:description"
         content="The challenging endless runner game! Test your reflexes and timing in this fast-paced arcade adventure. How long can you maintain your streak?">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="">
-    <meta itemprop="url" content="">
+    <meta property="og:url" content="https://braydenistallgames.online/streaks.html">
+    <meta itemprop="url" content="https://braydenistallgames.online/streaks.html">
+    <link rel="canonical" href="https://braydenistallgames.online/streaks.html">
+    <meta name="robots" content="index, follow">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Daily Streak — Brayden is Tall Games">
+    <meta name="twitter:description" content="Track your daily play streak on Brayden is Tall Games — keep it alive and beat your best run!">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Daily Streak — Brayden is Tall Games","description":"Track your daily play streak on Brayden is Tall Games — keep it alive and beat your best run.","url":"https://braydenistallgames.online/streaks.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
 
     <!-- Microsoft Clarity Analytics -->
     <script type="text/javascript">
@@ -35,8 +44,10 @@
         gtag('config', 'G-CFTDLXZJZJ');
     </script>
 
-    <!-- Load streak engine FIRST so Obfuscator/StreakEngine are available to all scripts below -->
-    <script src="background-loader.js?v=S3.9"></script>
+    <!-- Load streak engine FIRST so window.StreakEngine / window.Obfuscator are
+         available to all scripts below. syncStreak() runs on DOMContentLoaded
+         and records today's visit + saves before the page script fires. -->
+    <script src="background-loader.js?v=S4.0"></script>
 
     <title>Streak - Brayden is tall games</title>
     <link
@@ -872,45 +883,25 @@
     </style>
     <link rel="stylesheet" href="stars.css?v=1">
 
+    <!-- Shared theme: loads LAST so its refinements win over the styles above. -->
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
 </head>
 
 <body>
-    <!-- IMMEDIATE GLOBAL RESET FUNCTION - Available right away in console -->
+    <!-- Dev helper: call resetStreakData() in the browser console to wipe all data -->
     <script>
         window.resetStreakData = function () {
-            console.log('🔄 Resetting ALL streak data...');
-
             try {
-                // Clear all streak-related localStorage
-                localStorage.removeItem('streakDataV2');
-                localStorage.removeItem('streakFreezes');
-                localStorage.removeItem('bestStreak');
-                localStorage.removeItem('streakRestoration_v1'); // Also clear restoration flag for testing
-
-                // Reset display if element exists
-                const mainStreakCount = document.getElementById('mainStreakCount');
-                if (mainStreakCount) {
-                    mainStreakCount.textContent = '0';
-                }
-
-                console.log('✅ Streak data completely reset!');
-                console.log('🔄 All localStorage keys cleared');
-                console.log('📊 Display updated to show streak: 0');
-
-                // Auto-refresh after a short delay to show the reset
-                setTimeout(() => {
-                    location.reload();
-                }, 1000);
-
-                return 'Streak reset complete! Page will refresh automatically...';
-            } catch (error) {
-                console.error('âŒ Error resetting streak data:', error);
-                return 'Error occurred while resetting streak data.';
+                ['streakDataV2', 'streakFreezes', 'bestStreak',
+                 'practicedDays', 'usedFreezes', 'dailyStreak', 'lastVisitDate']
+                    .forEach(k => localStorage.removeItem(k));
+                setTimeout(() => location.reload(), 800);
+                return 'Streak reset — page will reload.';
+            } catch (e) {
+                console.error('Reset failed', e);
+                return 'Reset failed — see console.';
             }
         };
-
-        // Confirm function is available
-        console.log('🔧 resetStreakData() function loaded and ready!');
     </script>
 
     <div class="topbar">
@@ -924,6 +915,8 @@
     </div>
 
     <main class="page">
+        <!-- Page heading for SEO + screen readers (visually hidden; the hero card is the visual title). -->
+        <h1 style="position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Daily Streak — Brayden is Tall Games</h1>
         <section class="hero-card">
             <div class="hero-streak">
                 <span id="mainStreakCount">0</span>
@@ -979,47 +972,32 @@
 <div class="toast" id="toast"></div>
 
     <script>
-        const STORAGE_KEY_V2 = 'streakDataV2';
-        const closeButton = document.getElementById('closeButton');
-        const mainStreakCount = document.getElementById('mainStreakCount');
-        const monthYear = document.getElementById('monthYear');
-        const prevMonthBtn = document.getElementById('prevMonth');
-        const nextMonthBtn = document.getElementById('nextMonth');
-        const calendarDays = document.getElementById('calendarDays');
-        const headerFreezeCount = document.getElementById('headerFreezeCount');
-        const freezeCount = document.getElementById('freezeCount');
-        const bestStreak = document.getElementById('bestStreak');
-        const todayStatus = document.getElementById('todayStatus');
-        const toast = document.getElementById('toast');
+        /* ===================================================================
+           STREAK PAGE — display-only script
+           All streak computation and storage is handled by window.StreakEngine
+           (loaded from background-loader.js before this page's scripts run).
+           This script only handles the calendar UI and page display.
+           =================================================================== */
 
-let currentDate = new Date();
-        let currentYear = currentDate.getFullYear();
+        // --- DOM refs ---
+        const closeButton       = document.getElementById('closeButton');
+        const mainStreakCount   = document.getElementById('mainStreakCount');
+        const monthYear         = document.getElementById('monthYear');
+        const prevMonthBtn      = document.getElementById('prevMonth');
+        const nextMonthBtn      = document.getElementById('nextMonth');
+        const calendarDays      = document.getElementById('calendarDays');
+        const headerFreezeCount = document.getElementById('headerFreezeCount');
+        const freezeCount       = document.getElementById('freezeCount');
+        const bestStreak        = document.getElementById('bestStreak');
+        const todayStatus       = document.getElementById('todayStatus');
+        const toast             = document.getElementById('toast');
+
+        // Calendar navigation state
+        let currentDate  = new Date();
+        let currentYear  = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
 
-        let lastSaveTime = 0;
-        const SAVE_COOLDOWN = 1000;
-
-function isRateLimited() {
-            const now = Date.now();
-            if (now - lastSaveTime < SAVE_COOLDOWN) {
-                return true;
-            }
-            lastSaveTime = now;
-            return false;
-        }
-
-        function detectSuspiciousActivity(data) {
-            const currentStreak = computeStreak(data, new Date()).streak;
-            if (currentStreak > 500) {
-                return true;
-            }
-
-            if (data.freezes > 100) {
-                return true;
-            }
-
-            return false;
-        }
+        // --- Date helpers (used for calendar rendering only) ---
 
         function normalizeToNoon(date) {
             const d = new Date(date);
@@ -1029,8 +1007,8 @@ function isRateLimited() {
 
         function toDayKey(date) {
             const d = normalizeToNoon(date);
-            const y = d.getFullYear();
-            const m = String(d.getMonth() + 1).padStart(2, '0');
+            const y   = d.getFullYear();
+            const m   = String(d.getMonth() + 1).padStart(2, '0');
             const day = String(d.getDate()).padStart(2, '0');
             return `${y}-${m}-${day}`;
         }
@@ -1052,19 +1030,7 @@ function isRateLimited() {
 
         function getDayDiff(a, b) {
             const msPerDay = 1000 * 60 * 60 * 24;
-            const start = normalizeToNoon(a);
-            const end = normalizeToNoon(b);
-            return Math.round((end - start) / msPerDay);
-        }
-
-        function getWeekKey(date) {
-            const d = normalizeToNoon(date);
-            const day = d.getDay();
-            const diffToMonday = (day + 6) % 7;
-            const monday = new Date(d);
-            monday.setDate(d.getDate() - diffToMonday);
-            monday.setHours(12, 0, 0, 0);
-            return toDayKey(monday);
+            return Math.round((normalizeToNoon(b) - normalizeToNoon(a)) / msPerDay);
         }
 
         function showToast(message) {
@@ -1074,480 +1040,140 @@ function isRateLimited() {
             window.setTimeout(() => toast.classList.remove('active'), 3500);
         }
 
-        function mergeDayKeys(existing, add) {
-            const set = new Set((existing || []).map(normalizeDayKey).filter(Boolean));
-            const incoming = Array.isArray(add) ? add : [add];
-            incoming.map(normalizeDayKey).filter(Boolean).forEach(k => set.add(k));
-            return Array.from(set).sort();
-        }
+        /* computeEffectiveUsedSet — forward-walking simulation used exclusively
+           for calendar rendering to determine which past days should show as
+           freeze-protected (blue). Walks from the earliest visit up to today,
+           auto-consuming freezes on missed weekdays inside an active streak.
+           Returns a Set of YYYY-MM-DD strings for freeze-covered days.           */
+        function computeEffectiveUsedSet(data, date) {
+            const today = normalizeToNoon(date || new Date());
+            const visitsSet     = new Set((data.visits     || []).map(normalizeDayKey).filter(Boolean));
+            const originalUsed  = new Set((data.usedFreezes|| []).map(normalizeDayKey).filter(Boolean));
 
-        const XOR_KEY = "StreakSecure2024!@#$%^&*()_+-=[]{}|;:,.<>?";
-
-        function xorCrypt(text, key) {
-            let result = '';
-            for (let i = 0; i < text.length; i++) {
-                const textChar = text.charCodeAt(i);
-                const keyChar = key.charCodeAt(i % key.length);
-                result += String.fromCharCode(textChar ^ keyChar);
-            }
-            return result;
-        }
-
-        function getDeviceFingerprint() {
-            const fingerprint = [
-                navigator.userAgent,
-                navigator.language,
-                screen.width + 'x' + screen.height,
-                new Date().getTimezoneOffset(),
-                navigator.platform
-            ].join('|');
-
-            let hash = 0;
-            for (let i = 0; i < fingerprint.length; i++) {
-                const char = fingerprint.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return Math.abs(hash).toString();
-        }
-
-        function getRollingSeed() {
-            const now = new Date();
-            const dateStr = now.toISOString().split('T')[0];
-            const deviceId = getDeviceFingerprint();
-
-            let seed = 0;
-            const seedStr = dateStr + deviceId;
-            for (let i = 0; i < seedStr.length; i++) {
-                seed += seedStr.charCodeAt(i) * (i + 1);
-            }
-            return seed;
-        }
-
-        function generateChecksum(data) {
-            const seed = getRollingSeed();
-            const str = JSON.stringify({
-                visits: data.visits,
-                freezes: data.freezes,
-                usedFreezes: data.usedFreezes,
-                lastFreezeWeek: data.lastFreezeWeek,
-                best: data.best
-            });
-
-            let hash = seed;
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-
-            return seed.toString() + '_' + hash.toString();
-        }
-
-        function validateChecksum(data, storedChecksum) {
-            if (!storedChecksum || !storedChecksum.includes('_')) return false;
-
-            const [storedSeed, storedHash] = storedChecksum.split('_');
-            const currentSeed = getRollingSeed();
-
-            if (parseInt(storedSeed) !== currentSeed) return false;
-
-            const expectedHash = generateChecksum(data).split('_')[1];
-            return storedHash === expectedHash;
-        }
-
-        function validateStreakData(data) {
-            if (data.freezes < 0 || data.freezes > 1000) return false;
-            if (data.best < 0 || data.best > 10000) return false;
-            if (!Array.isArray(data.visits) || !Array.isArray(data.usedFreezes)) return false;
-
-            const visitSet = new Set(data.visits);
-            if (visitSet.size !== data.visits.length) return false;
-
-            const now = new Date();
-            const maxFutureDays = 1;
-            for (const visit of data.visits) {
-                try {
-                    const visitDate = parseDayKey(visit);
-                    if (!visitDate) return false;
-                    if (visitDate > new Date(now.getTime() + maxFutureDays * 24 * 60 * 60 * 1000)) return false;
-                } catch {
-                    return false;
-                }
-            }
-
-            for (const freeze of data.usedFreezes) {
-                try {
-                    const freezeDate = parseDayKey(freeze);
-                    if (!freezeDate) return false;
-                } catch {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-function loadV2() {
-            let parsed = null;
-            try {
-                const stored = localStorage.getItem(STORAGE_KEY_V2);
-                if (stored) {
-                    if (stored.startsWith('{')) {
-                        parsed = JSON.parse(stored);
-                    } else if (typeof Obfuscator !== 'undefined') {
-                        parsed = Obfuscator.decrypt(stored);
-                    }
-                }
-            } catch {
-                parsed = null;
-            }
-
-            const base = {
-                version: 2,
-                visits: [],
-                freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
-                usedFreezes: [],
-                lastFreezeWeek: null,
-                best: Number(localStorage.getItem('bestStreak') || 0) || 0,
-                checksum: null
-            };
-
-            if (!parsed || typeof parsed !== 'object') return base;
-
-            let loadedData = {
-                ...base,
-                version: 2,
-                visits: Array.isArray(parsed.visits) ? parsed.visits : base.visits,
-                freezes: Number.isFinite(parsed.freezes) ? parsed.freezes : base.freezes,
-                usedFreezes: Array.isArray(parsed.usedFreezes) ? parsed.usedFreezes : base.usedFreezes,
-                lastFreezeWeek: typeof parsed.lastFreezeWeek === 'string' ? parsed.lastFreezeWeek : base.lastFreezeWeek,
-                best: Number.isFinite(parsed.best) ? parsed.best : base.best,
-                checksum: parsed.checksum || null
-            };
-
-            if (!validateStreakData(loadedData)) {
-                localStorage.removeItem(STORAGE_KEY_V2);
-                localStorage.removeItem('streakFreezes');
-                localStorage.removeItem('bestStreak');
-                return base;
-            }
-
-            return loadedData;
-        }
-
-        function saveV2(data) {
-            if (isRateLimited()) return;
-
-            if (detectSuspiciousActivity(data)) {
-                return;
-            }
-
-            if (!validateStreakData(data)) {
-                return;
-            }
-
-            try {
-                if (typeof Obfuscator !== 'undefined') {
-                    const secure = Obfuscator.encrypt(data);
-                    localStorage.setItem(STORAGE_KEY_V2, secure);
-                } else {
-                    localStorage.setItem(STORAGE_KEY_V2, JSON.stringify(data));
-                }
-            } catch (e) {
-                console.error('Save failed', e);
-            }
-
-            localStorage.setItem('streakFreezes', String(data.freezes));
-            localStorage.setItem('bestStreak', String(data.best));
-        }
-
-        function migrateLegacyIntoV2(data) {
-            const practiced = (() => {
-                try {
-                    return JSON.parse(localStorage.getItem('practicedDays') || '[]');
-                } catch {
-                    return [];
-                }
-            })();
-
-            const used = (() => {
-                try {
-                    return JSON.parse(localStorage.getItem('usedFreezes') || '[]');
-                } catch {
-                    return [];
-                }
-            })();
-
-            data.visits = mergeDayKeys(data.visits, practiced);
-            data.usedFreezes = mergeDayKeys(data.usedFreezes, used);
-
-            return data;
-        }
-
-        function recordVisit(data, date = new Date()) {
-            const today = normalizeToNoon(date);
-            const key = toDayKey(today);
-            data.visits = mergeDayKeys(data.visits, key);
-
-            if (today.getDay() === 1) {
-                const weekKey = getWeekKey(today);
-                if (data.lastFreezeWeek !== weekKey) {
-                    data.freezes += 1;
-                    data.lastFreezeWeek = weekKey;
-                    showToast('Monday bonus: +1 Freeze');
-                }
-            }
-
-            return data;
-        }
-
-        function computeStreak(data, date = new Date()) {
-            const today = normalizeToNoon(date);
-
-            // Build sets from stored data
-            const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-            const originalFreezes = Number.isFinite(data.freezes) ? Number(data.freezes) : (data.freezes || 0);
-
-            // Determine which used-freeze days are actually valid according to
-            // the reactive rule (created only when a missed weekday occurs while
-            // the streak is active). This simulation does not mutate `data`.
-            const effectiveUsedSet = computeEffectiveUsedSet({
-                visits: Array.from(visits),
-                usedFreezes: Array.from(originalUsedSet),
-                freezes: originalFreezes
-            }, today);
-
-            // Count the streak using visits + the effective used set.
-            let streak = 0;
-            let streakActive = false;
-
-            const cursor = new Date(today);
-            cursor.setHours(12, 0, 0, 0);
-
-            while (true) {
-                const key = toDayKey(cursor);
-                const dow = cursor.getDay();
-                const isWeekend = dow === 0 || dow === 6;
-
-                const hasVisit = visits.has(key);
-                const hasUsed = effectiveUsedSet.has(key);
-
-                console.log(`Checking ${key}: weekday=${!isWeekend}, visit=${hasVisit}, freeze=${hasUsed}, active=${streakActive}`);
-
-                if (hasVisit) {
-                    streak += 1;
-                    streakActive = true;
-                    console.log(`  -> Green day, streak=${streak}`);
-                } else if (hasUsed && streakActive) {
-                    streak += 1;
-                    console.log(`  -> Existing freeze day (valid), streak=${streak}`);
-                } else if (!isWeekend && streakActive) {
-                    // Missed weekday during active streak but not covered by the
-                    // effective set -> break
-                    console.log(`  -> Break streak, no freeze available`);
-                    break;
-                } else {
-                    // Weekend or before streak started
-                    console.log(`  -> No action (weekend or inactive)`);
-                    if (!isWeekend) break;
-                }
-
-                cursor.setDate(cursor.getDate() - 1);
-                cursor.setHours(12, 0, 0, 0);
-                if (getDayDiff(cursor, today) > 365) break;
-            }
-
-            // Reconcile stored used/freezes to match the effective result.
-            const effectiveCount = effectiveUsedSet.size;
-            const originalUsedCount = originalUsedSet.size;
-            data.freezes = Math.max(0, originalFreezes - (effectiveCount - originalUsedCount));
-            data.usedFreezes = Array.from(effectiveUsedSet).sort();
-
-            console.log(`Final streak: ${streak}`);
-            data.best = Math.max(Number(data.best) || 0, streak);
-            return { streak, data };
-        }
-
-        // Compute the set of used-freeze day keys that should be considered "valid"
-        // for display and calendar rendering. This simulates the forward walk used
-        // by `computeStreak` to ensure visual consistency.
-        function computeEffectiveUsedSet(data, date = new Date()) {
-            const today = normalizeToNoon(date);
-            const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            const originalUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
-            const originalUsedCount = originalUsedSet.size;
-
-            // 1. Determine the "Active Window".
-            // Instead of a hard 30-day cut, find the earliest relevant activity.
-            // Scan back until we find a gap > 30 days to ensure we catch the true start.
-            let allDates = [...data.visits, ...data.usedFreezes].map(k => parseDayKey(k)).filter(d => d && d <= today);
+            // Collect all known activity dates that are not in the future
+            let allDates = [...(data.visits || []), ...(data.usedFreezes || [])]
+                .map(k => parseDayKey(k))
+                .filter(d => d && d <= today);
             if (allDates.length === 0) return new Set();
 
-            // Sort dates ascending
             allDates.sort((a, b) => a - b);
-            const firstDate = allDates[0];
-
-            // Start simulation from the first ever relevant date found, or 365 days back, whichever is earlier.
+            const firstDate  = allDates[0];
             const startLimit = new Date(today);
             startLimit.setDate(today.getDate() - 365);
 
-            let cursor = new Date(firstDate < startLimit ? firstDate : startLimit);
-            cursor = normalizeToNoon(cursor);
+            // Start from whichever is earlier: the user's first activity or 365 days ago
+            let cursor = normalizeToNoon(firstDate < startLimit ? firstDate : startLimit);
 
-            // Total available freezes (current + historically used)
-            let available = (Number.isFinite(data.freezes) ? data.freezes : (data.freezes || 0)) + originalUsedCount;
-
-            const effectiveUsed = new Set();
+            // Available freezes = current stock + ones already consumed (they may be re-validated)
+            let available   = Math.max(0, Number(data.freezes) || 0) + originalUsed.size;
+            const effective = new Set();
             let streakActive = false;
 
             while (cursor <= today) {
-                const key = toDayKey(cursor);
-                const dow = cursor.getDay();
-                const isWeekend = dow === 0 || dow === 6;
-
-                const hasVisit = visitsSet.has(key);
-                const hasOrigUsed = originalUsedSet.has(key);
+                const key       = toDayKey(cursor);
+                const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+                const hasVisit  = visitsSet.has(key);
+                const hasUsed   = originalUsed.has(key);
 
                 if (hasVisit) {
-                    // Green Day
+                    // Visited — streak is alive
                     streakActive = true;
-                    // Green overrides Blue, so we do nothing with freeezes
                 } else if (!isWeekend && streakActive) {
-                    // Missed Weekday inside Active Streak (Zone B)
-                    // This is the ONLY place a freeze can occur.
-
-                    if (hasOrigUsed) {
-                        // User previously marked this as used. Verify we can afford it.
-                        effectiveUsed.add(key);
+                    // Missed weekday inside an active streak — try to cover it
+                    if (hasUsed || available > 0) {
+                        effective.add(key);
                         available = Math.max(0, available - 1);
-                    } else if (available > 0) {
-                        // Auto-consume if available to keep streak alive
-                        effectiveUsed.add(key);
-                        available -= 1;
                     } else {
-                        // No freezes left -> Streak Breaks
+                        // No freeze available — streak breaks
                         streakActive = false;
                     }
-                } else {
-                    // Zone A (Before Start), Inactive, or Weekend
-                    if (!isWeekend) {
-                        // If it's a weekday and we are NOT active, ensure we stay inactive.
-                        streakActive = false;
-                    }
+                } else if (!isWeekend) {
+                    // Missed weekday before the streak started — reset
+                    streakActive = false;
                 }
+                // Weekends: no action either way
 
                 cursor.setDate(cursor.getDate() + 1);
                 cursor.setHours(12, 0, 0, 0);
             }
 
-            return effectiveUsed;
+            return effective;
         }
 
+        /* updateCalendar — renders the month grid using data from StreakEngine. */
         function updateCalendar(data) {
-            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                'July', 'August', 'September', 'October', 'November', 'December'];
-            monthYear.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+            const MONTHS = ['January','February','March','April','May','June',
+                            'July','August','September','October','November','December'];
+            monthYear.textContent  = `${MONTHS[currentMonth]} ${currentYear}`;
             calendarDays.innerHTML = '';
 
             const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const firstDay    = new Date(currentYear, currentMonth, 1).getDay();
 
+            // Empty cells before the 1st
             for (let i = 0; i < firstDay; i++) {
-                const emptyDay = document.createElement('div');
-                emptyDay.className = 'day other-month';
-                calendarDays.appendChild(emptyDay);
+                const empty = document.createElement('div');
+                empty.className = 'day other-month';
+                calendarDays.appendChild(empty);
             }
 
-            const today = normalizeToNoon(new Date());
+            const today    = normalizeToNoon(new Date());
             const todayKey = toDayKey(today);
-            const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            // Use the effective used-freeze set for rendering so we don't show
-            // blue days that were stored historically but are invalid per the
-            // reactive rule.
-            const used = computeEffectiveUsedSet(data, today);
+            const visits   = new Set((data.visits      || []).map(normalizeDayKey).filter(Boolean));
+            const used     = computeEffectiveUsedSet(data, today);
 
             for (let day = 1; day <= daysInMonth; day++) {
-                const el = document.createElement('div');
-                el.className = 'day';
+                const el      = document.createElement('div');
+                el.className  = 'day';
                 el.textContent = String(day);
 
                 const dateKey = toDayKey(new Date(currentYear, currentMonth, day));
                 const dateObj = normalizeToNoon(new Date(currentYear, currentMonth, day));
-                const dow = dateObj.getDay();
+                const dow     = dateObj.getDay();
 
+                // Monday gets a red dot and tooltip (Monday bonus freeze)
                 if (dow === 1) {
                     el.classList.add('is-monday');
-                    if (!el.title) el.title = 'Monday - +1 Freeze';
-                    const mondayDot = document.createElement('div');
-                    mondayDot.className = 'monday-dot';
-                    el.appendChild(mondayDot);
+                    el.title = 'Monday - +1 Freeze';
+                    const dot = document.createElement('div');
+                    dot.className = 'monday-dot';
+                    el.appendChild(dot);
                 }
 
                 if (dow === 0 || dow === 6) el.classList.add('weekend');
-                if (dateKey === todayKey) el.classList.add('today');
+                if (dateKey === todayKey)    el.classList.add('today');
 
                 if (visits.has(dateKey)) {
                     el.classList.add('practiced');
                 } else if (used.has(dateKey)) {
                     el.classList.add('practiced', 'used-freeze');
-                    el.title = 'Used a freeze on this day';
+                    el.title = 'Freeze used on this day';
                 }
 
-calendarDays.appendChild(el);
+                calendarDays.appendChild(el);
             }
         }
 
+        /* render — updates all streak display elements.
+           Uses the streak value returned by StreakEngine.compute() — the same
+           algorithm used on every game page — so the number is always consistent. */
         function render(data, streak) {
-            // Calculate active days (weekdays with visits or freezes) for display
-            const activeStreak = calculateActiveStreak(data);
-            mainStreakCount.textContent = String(activeStreak);
-            bestStreak.textContent = String(data.best || 0);
+            mainStreakCount.textContent   = String(streak);
+            bestStreak.textContent        = String(data.best    || 0);
             headerFreezeCount.textContent = String(data.freezes || 0);
-            freezeCount.textContent = String(data.freezes || 0);
+            freezeCount.textContent       = String(data.freezes || 0);
 
-            const todayKey = toDayKey(new Date());
-            const visitedToday = (data.visits || []).includes(todayKey);
-            todayStatus.textContent = visitedToday ? 'Today is counted (you visited)' : 'Today is not counted yet';
-        }
+            // Normalise today's key the same way StreakEngine does before comparing
+            const todayKey    = toDayKey(new Date());
+            const visitedToday = (data.visits || []).map(normalizeDayKey).includes(todayKey);
 
-        function calculateActiveStreak(data) {
-            const today = normalizeToNoon(new Date());
-            const visits = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
-            const used = computeEffectiveUsedSet(data, today);
-
-            let activeStreak = 0;
-            let streakActive = false;
-
-            const cursor = new Date(today);
-            cursor.setHours(12, 0, 0, 0);
-
-            while (true) {
-                const key = toDayKey(cursor);
-                const dow = cursor.getDay();
-                const isWeekend = dow === 0 || dow === 6;
-
-                if (visits.has(key)) {
-                    // Green day - counts as active
-                    activeStreak += 1;
-                    streakActive = true;
-                } else if (!isWeekend && used.has(key) && streakActive) {
-                    // Blue day - counts as active
-                    activeStreak += 1;
-                } else if (!isWeekend && !visits.has(key) && !used.has(key)) {
-                    // Missed weekday without freeze - break active streak
-                    break;
-                }
-                // Weekends don't count toward active streak but don't break it
-
-                cursor.setDate(cursor.getDate() - 1);
-                cursor.setHours(12, 0, 0, 0);
-
-                if (getDayDiff(cursor, today) > 365) break;
+            if (visitedToday) {
+                todayStatus.textContent = 'Today is counted ✓ (you visited)';
+                todayStatus.classList.remove('broken');
+            } else {
+                todayStatus.textContent = 'Today is not counted yet — visit any game!';
+                todayStatus.classList.add('broken');
             }
-
-            return activeStreak;
         }
 
         function navigateToHome(e) {
@@ -1556,91 +1182,55 @@ calendarDays.appendChild(el);
             return false;
         }
 
-function resetOnlyStreak(data) {
-            data.visits = [];
-            data.usedFreezes = [];
-            data.best = 0;
-            saveV2(data);
-
-            localStorage.removeItem('dailyStreak');
-            localStorage.removeItem('lastVisitDate');
-            localStorage.removeItem('practicedDays');
-            localStorage.removeItem('usedFreezes');
-        }
-
-        function resetAll(data) {
-            resetOnlyStreak(data);
-            data.freezes = 0;
-            data.lastFreezeWeek = null;
-            saveV2(data);
-
-            localStorage.removeItem('streakFreezes');
-            localStorage.removeItem('lastFreezeDate');
-            localStorage.removeItem('lastFreezeDateStr');
-        }
-
-document.addEventListener('DOMContentLoaded', () => {
+        /* ===================================================================
+           BOOT — background-loader.js registers its DOMContentLoaded first
+           (it's a synchronous <script> in <head>), so by the time this fires
+           syncStreak() has already run: today's visit is recorded and saved.
+           We just load the result and display it.
+           =================================================================== */
+        document.addEventListener('DOMContentLoaded', () => {
             try {
-                let data = loadV2();
-                data = migrateLegacyIntoV2(data);
-                data = recordVisit(data, new Date());
-                const computed = computeStreak(data, new Date());
-                data = computed.data;
-                saveV2(data);
-
-                render(data, computed.streak);
+                const data   = window.StreakEngine.load();
+                const streak = window.StreakEngine.compute(data);
+                render(data, streak);
                 updateCalendar(data);
-            } catch (error) {
-                console.error('Streak system error:', error);
-                console.error('Error stack:', error.stack);
-                // Fallback: show basic error state
-                const mainStreakCount = document.getElementById('mainStreakCount');
+            } catch (err) {
+                console.error('Streak page display error:', err);
                 if (mainStreakCount) mainStreakCount.textContent = 'Error';
             }
 
-            // Define refresh function globally for dev mode access
+            // Dev helper: call window.refreshStreak() in the console to redraw
             window.refreshStreak = () => {
-                loadV2((data) => {
-                    if (!data) return;
-                    const computedNext = computeStreak(data, new Date());
-                    saveV2(computedNext.data);
-                    render(computedNext.data, computedNext.streak);
-                    updateCalendar(computedNext.data);
-                });
+                const data   = window.StreakEngine.load();
+                const streak = window.StreakEngine.compute(data);
+                render(data, streak);
+                updateCalendar(data);
             };
 
             if (closeButton) closeButton.addEventListener('click', navigateToHome);
 
-if (prevMonthBtn) {
+            if (prevMonthBtn) {
                 prevMonthBtn.addEventListener('click', () => {
                     currentMonth -= 1;
-                    if (currentMonth < 0) {
-                        currentMonth = 11;
-                        currentYear -= 1;
-                    }
-                    const data = loadV2();
-                    updateCalendar(data);
+                    if (currentMonth < 0) { currentMonth = 11; currentYear -= 1; }
+                    updateCalendar(window.StreakEngine.load());
                 });
             }
 
             if (nextMonthBtn) {
                 nextMonthBtn.addEventListener('click', () => {
                     currentMonth += 1;
-                    if (currentMonth > 11) {
-                        currentMonth = 0;
-                        currentYear += 1;
-                    }
-                    const data = loadV2();
-                    updateCalendar(data);
+                    if (currentMonth > 11) { currentMonth = 0; currentYear += 1; }
+                    updateCalendar(window.StreakEngine.load());
                 });
             }
-
-});
+        });
     </script>
 
     <script src="stars.js?v=1"></script>
 
 
+<script src="settings-panel.js"></script>
 </body>
 
 </html>

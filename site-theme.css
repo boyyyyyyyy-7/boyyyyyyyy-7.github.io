@@ -1,0 +1,684 @@
+/* ============================================================================
+   SITE-THEME.CSS  —  vL1.0
+   ----------------------------------------------------------------------------
+   The ONE shared stylesheet for Brayden is Tall Games.
+
+   WHAT THIS FILE DOES
+   Every page links this file LAST in <head>. Because it loads after each
+   page's own <style> block, any rule here with the same "specificity"
+   (same kind of selector) wins the tie. That lets this file refine the look
+   of every page without editing each page's old CSS.
+
+   WHAT THIS FILE DOES NOT DO
+   No functionality. No layout rewrites. It only polishes colors, borders,
+   shadows, motion, and small details. If you delete this file the site
+   still works — it just looks less fancy.
+
+   HOW TO BUILD ON TOP OF IT
+   - All design "tokens" (sizes, colors) live in :root below with the
+     --bgt- prefix (bgt = Brayden's Games Theme). Change a token once and
+     it updates everywhere.
+   - Where a page already defines theme variables (like --card-bg on
+     index.html), we reference THOSE first and fall back to our token:
+        var(--card-bg, var(--bgt-glass))
+     so the 8 color themes (ocean, sunset, forest...) keep working.
+   - New page? Just link this file last in <head> and use the classes.
+
+   SECTIONS (search for the number):
+     [1] Design tokens
+     [2] Quiet global details (selection, scrollbar, focus rings)
+     [3] Entrance animations
+     [4] Index page refinements (hero header, search, game cards, badges)
+     [5] Floating UI (streak pill, settings button)
+     [6] Game page shell (back button, game frame card, description card)
+     [7] Footers
+     [8] Small shared helpers (.topbar-logo, .site-logo)
+     [9] Reduced motion — accessibility & low-end Chromebook safety net
+   ========================================================================== */
+
+
+/* ===========================================================================
+   [1] DESIGN TOKENS
+   One place for every size and color this theme uses.
+   ======================================================================== */
+:root {
+    /* Corner roundness scale — pick from these 4, never invent new ones.
+       s = chips & small buttons, m = inputs & buttons, l = cards,
+       xl = hero / biggest containers. */
+    --bgt-radius-s: 8px;
+    --bgt-radius-m: 12px;
+    --bgt-radius-l: 16px;
+    --bgt-radius-xl: 22px;
+
+    /* Spacing scale (margins/paddings) — multiples of 4 keep things aligned */
+    --bgt-space-1: 4px;
+    --bgt-space-2: 8px;
+    --bgt-space-3: 16px;
+    --bgt-space-4: 24px;
+    --bgt-space-5: 32px;
+    --bgt-space-6: 40px;
+
+    /* Hairlines — the thin 1px borders that make cards feel expensive */
+    --bgt-hairline: rgba(255, 255, 255, 0.08);
+    --bgt-hairline-strong: rgba(255, 255, 255, 0.16);
+
+    /* Frosted glass backgrounds (dark, slightly blue so it feels "spacey") */
+    --bgt-glass: rgba(16, 18, 28, 0.62);
+    --bgt-glass-strong: rgba(13, 15, 24, 0.78);
+
+    /* Text tiers — bright for titles, dim for body, faint for hints */
+    --bgt-text: rgba(255, 255, 255, 0.92);
+    --bgt-text-dim: rgba(255, 255, 255, 0.62);
+    --bgt-text-faint: rgba(255, 255, 255, 0.38);
+
+    /* Accent color — reuses the page's --primary-color when it has one
+       (so the ocean/sunset/etc. themes recolor the accent automatically) */
+    --bgt-accent: var(--primary-color, #4ecdc4);
+
+    /* Motion — one shared easing + speed so everything moves the same way.
+       The cubic-bezier is a gentle "settle" curve (fast start, soft stop). */
+    --bgt-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --bgt-speed: 180ms;
+
+    /* The soft glow used under hovered cards */
+    --bgt-glow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Light theme flips the hairlines/text to dark-on-light.
+   (index.html adds .light-theme to <body> when that theme is picked.) */
+.light-theme {
+    --bgt-hairline: rgba(15, 23, 42, 0.10);
+    --bgt-hairline-strong: rgba(15, 23, 42, 0.18);
+    --bgt-glass: rgba(255, 255, 255, 0.72);
+    --bgt-glass-strong: rgba(255, 255, 255, 0.86);
+    --bgt-text: rgba(15, 23, 42, 0.92);
+    --bgt-text-dim: rgba(15, 23, 42, 0.62);
+    --bgt-text-faint: rgba(15, 23, 42, 0.38);
+}
+
+
+/* ===========================================================================
+   [2] QUIET GLOBAL DETAILS
+   The small stuff users feel but rarely notice.
+   ======================================================================== */
+
+/* Text selection — theme-tinted instead of the default harsh blue */
+::selection {
+    background: rgba(78, 205, 196, 0.30);
+    color: #ffffff;
+}
+.light-theme ::selection {
+    color: #0f172a;
+}
+
+/* Custom scrollbar — thin, rounded, translucent (WebKit/Chromium first,
+   which is what school Chromebooks run) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 999px;
+    /* The transparent border acts as padding so the thumb looks inset */
+    border: 3px solid transparent;
+    background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.28);
+    background-clip: padding-box;
+    border: 3px solid transparent;
+}
+/* Firefox's two-property version of the same idea */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+}
+
+/* Keyboard focus ring — visible, theme-colored, only for keyboard users.
+   :focus-visible means mouse clicks do NOT show the ring, tabbing does. */
+:focus-visible {
+    outline: 2px solid var(--bgt-accent);
+    outline-offset: 2px;
+    border-radius: var(--bgt-radius-s);
+}
+
+/* Crisper text rendering everywhere */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* ===========================================================================
+   [3] ENTRANCE ANIMATIONS
+   Content gently fades up as the page loads. "backwards" fill means the
+   element is invisible during its delay instead of flashing first.
+   ======================================================================== */
+@keyframes bgt-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Big page sections drift in once */
+header,
+.game-section,
+.game-container,
+.description-container,
+.hero-card,
+.calendar-card {
+    animation: bgt-fade-up 0.45s var(--bgt-ease) backwards;
+}
+
+/* Game cards: first ten stagger in one-by-one (0.03s apart), the rest share
+   one later slot — they're below the fold anyway so nobody sees the cutoff */
+.game-grid .game-card {
+    animation: bgt-fade-up 0.5s var(--bgt-ease) backwards;
+    animation-delay: 0.32s;
+}
+.game-grid .game-card:nth-child(1)  { animation-delay: 0.03s; }
+.game-grid .game-card:nth-child(2)  { animation-delay: 0.06s; }
+.game-grid .game-card:nth-child(3)  { animation-delay: 0.09s; }
+.game-grid .game-card:nth-child(4)  { animation-delay: 0.12s; }
+.game-grid .game-card:nth-child(5)  { animation-delay: 0.15s; }
+.game-grid .game-card:nth-child(6)  { animation-delay: 0.18s; }
+.game-grid .game-card:nth-child(7)  { animation-delay: 0.21s; }
+.game-grid .game-card:nth-child(8)  { animation-delay: 0.24s; }
+.game-grid .game-card:nth-child(9)  { animation-delay: 0.27s; }
+.game-grid .game-card:nth-child(10) { animation-delay: 0.30s; }
+
+
+/* ===========================================================================
+   [4] INDEX PAGE REFINEMENTS
+   These selectors match classes that already exist in index.html, so this
+   file quietly re-skins them. (Loads later in <head> = wins the tie.)
+   ======================================================================== */
+
+/* Clear the floating chips. The streak pill and settings gear are fixed to
+   the viewport corners (they end ~70px down). Without this, the hero card
+   slides up underneath them and the corners overlap. ":has(> header)" only
+   matches index.html's wrapper — game pages use .header (a class), so they
+   are not affected by this rule. */
+.container:has(> header) {
+    padding-top: 84px;
+}
+
+/* Hero header — keep the page's theme color but add the premium details:
+   hairline border, inner top highlight (the bright 1px line on the top
+   edge that makes glass "catch the light"), and a softer shadow. */
+header {
+    border: 1px solid var(--card-border, var(--bgt-hairline));
+    border-radius: var(--bgt-radius-xl);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.35),               /* soft depth */
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);        /* top highlight */
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+}
+
+/* Page title: lighter weight + tighter letters = modern, not shouty */
+header h1 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);   /* softer glow */
+    margin-bottom: 10px;
+}
+
+/* Section headings: smaller glow, slightly dimmer = content stands out */
+.section-title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-shadow: 0 0 22px rgba(255, 255, 255, 0.12);
+}
+
+/* Search box — frosted, with a glowing focus ring instead of a hard border */
+.search-input {
+    border: 1px solid var(--card-border, var(--bgt-hairline));
+    border-radius: var(--bgt-radius-m);
+    transition:
+        border-color var(--bgt-speed) var(--bgt-ease),
+        box-shadow var(--bgt-speed) var(--bgt-ease),
+        transform var(--bgt-speed) var(--bgt-ease);
+}
+.search-input:hover {
+    border-color: var(--bgt-hairline-strong);
+}
+.search-input:focus {
+    border-color: var(--bgt-accent);
+    /* The "ring": a wide, very transparent shadow in the accent color */
+    box-shadow: 0 0 0 4px rgba(78, 205, 196, 0.15);
+}
+
+/* Game cards — the heart of the site.
+   Old look: 1.5px border + big scale(1.08) jump on hover.
+   New look: 1px hairline, inner top highlight, and a small LIFT
+   (move up 3px + tiny scale) with a soft glow. Calmer and classier. */
+.game-card {
+    border: 1px solid var(--card-border, var(--bgt-hairline));
+    border-radius: var(--bgt-radius-l);
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease),
+        background-color var(--bgt-speed) var(--bgt-ease),
+        box-shadow var(--bgt-speed) var(--bgt-ease);
+}
+
+.game-card:hover,
+.game-card:focus-visible {
+    /* Small lift, not a big zoom. Quieter background than the old 18% white. */
+    background: rgba(255, 255, 255, 0.10);
+    transform: translateY(-3px) scale(1.02);
+    border-color: var(--bgt-hairline-strong);
+    box-shadow:
+        var(--bgt-glow),
+        0 0 18px rgba(78, 205, 196, 0.10),               /* faint accent halo */
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Press-down feel on click — quick so it feels snappy, not laggy */
+.game-card:active {
+    transform: translateY(-1px) scale(0.99);
+    transition-duration: 60ms;
+}
+
+/* Card titles shouldn't glow hard on hover — keep the color shift only */
+.game-card:hover p {
+    text-shadow: 0 0 14px rgba(78, 205, 196, 0.30);
+}
+
+/* Badges (Hot / New / Recent) — quieter "chip" style.
+   Old: loud solid gradients that pulse forever (distracting + costs CPU).
+   New: translucent tinted background, hairline border, colored text,
+   no infinite animation. */
+.hot-badge,
+.new-badge,
+.recent-badge {
+    animation: none;                 /* stop the forever-pulse */
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    padding: 3px 9px;
+    border-radius: 999px;            /* full pill */
+    box-shadow: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+/* All cards share one minimum height, tall enough that the centered game
+   name naturally clears the badge corners. Titles stay dead-center on every
+   card (no lopsided "forehead" padding on badge cards). */
+.game-card {
+    min-height: 104px;
+}
+
+.hot-badge {
+    background: rgba(255, 99, 72, 0.16);
+    border: 1px solid rgba(255, 99, 72, 0.35);
+    color: #ffb3a6;
+}
+.new-badge {
+    background: rgba(52, 211, 153, 0.14);
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    color: #a8f0d4;
+}
+.recent-badge {
+    background: rgba(129, 140, 248, 0.16);
+    border: 1px solid rgba(129, 140, 248, 0.35);
+    color: #c7cdfb;
+}
+
+/* Divider line — was 3px with a glow; a 1px hairline gradient reads cleaner */
+.divider {
+    height: 1px;
+    box-shadow: none;
+    opacity: 0.7;
+}
+
+
+/* ===========================================================================
+   [5] FLOATING UI — the streak pill (top-left) and settings gear (top-right)
+   Restyled from solid teal blocks to quiet frosted chips that match the
+   minimal topbar concept. The !important flags are needed because the old
+   index.html styles use !important — same flag + loading later = we win.
+   ======================================================================== */
+.streak-display {
+    background: var(--bgt-glass-strong) !important;
+    color: var(--bgt-text) !important;
+    border: 1px solid var(--bgt-hairline-strong) !important;
+    border-radius: 999px !important;
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+    font-weight: 700 !important;
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease) !important;
+}
+.streak-display:hover {
+    background: var(--bgt-glass-strong) !important;
+    border-color: rgba(78, 205, 196, 0.45) !important;
+    transform: translateY(-1px) !important;
+}
+/* The streak number inside the pill should be bright, not black */
+#streakNumber {
+    color: var(--bgt-text) !important;
+}
+
+/* Settings gear button — same frosted treatment */
+.settings-btn {
+    background: var(--bgt-glass-strong);
+    color: var(--bgt-accent);
+    border: 1px solid var(--bgt-hairline-strong);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease),
+        box-shadow var(--bgt-speed) var(--bgt-ease);
+}
+.settings-btn:hover {
+    background: var(--bgt-glass-strong);
+    border-color: rgba(78, 205, 196, 0.45);
+    transform: translateY(-1px) scale(1.06);
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.40),
+        0 0 18px rgba(78, 205, 196, 0.18);
+}
+.settings-btn:active {
+    transform: scale(0.96);
+    transition-duration: 60ms;
+}
+
+/* The floating gear injected by settings-panel.js on every page (.sp-btn).
+   Its styles are added at RUNTIME (after this file loads), so plain
+   .sp-btn here would lose. Writing it as button.sp-btn gives the selector
+   higher specificity, which beats document order. */
+button.sp-btn {
+    background: var(--bgt-glass-strong);
+    color: var(--bgt-accent);
+    border: 1px solid var(--bgt-hairline-strong);
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(16px) saturate(150%);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+button.sp-btn:hover {
+    background: var(--bgt-glass-strong);
+    border-color: rgba(78, 205, 196, 0.45);
+    transform: translateY(-1px) scale(1.06);
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.40),
+        0 0 18px rgba(78, 205, 196, 0.18);
+}
+button.sp-btn:active {
+    transform: scale(0.96);
+}
+
+/* On pages with a fixed topbar (streaks), the default 55px floating gear
+   pokes past the bar's bottom edge and looks broken. Shrink it to the same
+   42px size as the bar's other buttons and align it inside the bar, so it
+   reads as part of the topbar instead of floating over it. */
+body:has(.topbar) button.sp-btn {
+    top: 13px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    border-radius: 12px;     /* match the topbar's .icon-btn squares */
+}
+
+
+/* ===========================================================================
+   [6] GAME PAGE SHELL
+   Every game page shares these classes (.back-button, .game-container,
+   .description-container ...). Restyling them here re-skins ALL game pages
+   at once. The iframe itself is untouched.
+   ======================================================================== */
+
+/* Reserve room for the floating settings gear (55px wide + 15px from the
+   right edge). Without this the gear sits on top of the Fullscreen button. */
+.header .button-container {
+    margin-right: 70px;
+}
+
+/* Top buttons (streak chip, back, fullscreen) — quiet frosted chips */
+.back-button,
+.fullscreen-button {
+    background: var(--bgt-glass);
+    border: 1px solid var(--bgt-hairline);
+    border-radius: var(--bgt-radius-m);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease),
+        background-color var(--bgt-speed) var(--bgt-ease),
+        box-shadow var(--bgt-speed) var(--bgt-ease);
+}
+.back-button:hover,
+.fullscreen-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--bgt-hairline-strong);
+    /* Lift instead of the old grow-to-1.1 zoom */
+    transform: translateY(-2px);
+    box-shadow:
+        0 8px 20px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.back-button:active,
+.fullscreen-button:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 60ms;
+}
+
+/* Game title above the frame — same calm treatment as the index hero */
+.game-title {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.14);
+}
+
+/* The card holding the game iframe */
+.game-container {
+    border: 1px solid var(--bgt-hairline);
+    border-radius: var(--bgt-radius-l);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.40),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+.game-frame {
+    border-radius: var(--bgt-radius-m);
+}
+
+/* The "About this game" card below the frame */
+.description-container {
+    border: 1px solid var(--bgt-hairline);
+    border-radius: var(--bgt-radius-l);
+    box-shadow:
+        0 14px 40px rgba(0, 0, 0, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+}
+.description-title {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.12);
+}
+
+/* Feature list arrows pick up the accent color */
+.features-list li::before {
+    color: var(--bgt-accent);
+}
+
+
+/* ===========================================================================
+   [6b] INFO PAGES (about, contact, privacy, terms)
+   These pages are one glass card with a "← Back to Home" link at the top.
+   The :has() selector means: "a .container that directly contains a
+   .back-link" — so this can never accidentally hit index.html or game
+   pages (their .container wrappers don't have a .back-link child).
+   ======================================================================== */
+.container:has(> .back-link) {
+    /* Start below the floating settings gear so it never covers the card */
+    margin-top: 64px;
+    border: 1px solid var(--bgt-hairline);
+    border-radius: var(--bgt-radius-xl);
+    box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.35),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px) saturate(150%);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    animation: bgt-fade-up 0.45s var(--bgt-ease) backwards;
+}
+
+/* "← Back to Home" becomes a small frosted chip instead of a bare link */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--bgt-glass);
+    border: 1px solid var(--bgt-hairline);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease),
+        background-color var(--bgt-speed) var(--bgt-ease);
+}
+.back-link:hover {
+    text-decoration: none;          /* chip moves instead of underlining */
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--bgt-hairline-strong);
+    transform: translateY(-1px);
+}
+.back-link:active {
+    transform: translateY(0) scale(0.97);
+    transition-duration: 60ms;
+}
+
+/* Callout boxes inside info pages — hairline + soft accent edge */
+.highlight-box,
+.contact-box,
+.info-section {
+    border: 1px solid var(--bgt-hairline);
+    border-left: 3px solid var(--bgt-accent);
+    border-radius: var(--bgt-radius-m);
+}
+
+
+/* ===========================================================================
+   [6c] BACKGROUND-SETTINGS PAGE
+   Small lifts and rings on the theme picker tiles.
+   ======================================================================== */
+.background-option {
+    border-radius: var(--bgt-radius-m);
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease),
+        box-shadow var(--bgt-speed) var(--bgt-ease);
+}
+.background-option:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: var(--bgt-glow);
+}
+.nav-btn {
+    border-radius: var(--bgt-radius-m);
+    transition:
+        transform var(--bgt-speed) var(--bgt-ease),
+        background-color var(--bgt-speed) var(--bgt-ease),
+        border-color var(--bgt-speed) var(--bgt-ease);
+}
+.nav-btn:active {
+    transform: scale(0.97);
+    transition-duration: 60ms;
+}
+
+
+/* ===========================================================================
+   [7] FOOTERS
+   Game page footers use inline styles on their links, so !important is the
+   only way to restyle them from a stylesheet. Used narrowly, on purpose.
+   ======================================================================== */
+footer a {
+    color: var(--bgt-text-dim) !important;
+    transition: color var(--bgt-speed) var(--bgt-ease);
+}
+footer a:hover {
+    color: var(--bgt-text) !important;
+}
+
+
+/* ===========================================================================
+   [8] SMALL SHARED HELPERS
+   ======================================================================== */
+
+/* The "B" logo inside the index hero header */
+.site-logo {
+    height: 56px;
+    width: auto;
+    display: block;
+    margin: 14px auto 2px;
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
+    user-select: none;
+    pointer-events: none;
+}
+
+/* On pages with a fixed topbar (streaks), the settings gear sits inside
+   the bar at the far right (42px wide at right:12px — see section [5]).
+   This nudges the freeze pill left so the two never touch. */
+.topbar .topbar-right {
+    margin-right: 48px;
+}
+
+/* The "B" logo inside a page topbar (streaks page) */
+.topbar-logo {
+    height: 24px;
+    width: auto;
+    display: inline-block;
+    vertical-align: -4px;
+    margin-right: 8px;
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.40));
+    user-select: none;
+    pointer-events: none;
+}
+
+
+/* ===========================================================================
+   [9] REDUCED MOTION — the accessibility + weak-Chromebook safety net.
+   If the device asks for less motion, EVERYTHING goes still:
+   our animations, the old pulse effects, star twinkles, all of it.
+   ======================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

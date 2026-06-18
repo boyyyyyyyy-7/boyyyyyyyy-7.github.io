@@ -1,12 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<script>
-    // Debug logging removed for production
-</script>
 
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
-
     <!-- Meta Information -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +15,8 @@
     <meta name="theme-color" content="#0a0a0a">
 
     <!-- Primary SEO -->
-    <title>Brayden is Tall Games — Free Unblocked Games for School (2026)</title>
-    <meta name="description" content="Play 80+ free unblocked games for school on Brayden is Tall Games. Slope, 1v1.lol, Tunnel Rush, Cookie Clicker, Drive Mad, Crazy Cattle 3D and more — no downloads, works on Chromebooks and school WiFi.">
+    <title>Brayden is Tall Games — Free Unblocked Games for School</title>
+    <meta name="description" content="Play 80+ free unblocked games for school — Slope, 1v1.lol, Tunnel Rush, Cookie Clicker, Drive Mad & more. No downloads, works on Chromebooks and school WiFi.">
     <meta name="keywords" content="unblocked games, unblocked games for school, unblocked games 66, unblocked games 76, unblocked games 911, free online games, Chromebook games, Slope unblocked, 1v1.lol unblocked, Tunnel Rush unblocked, Cookie Clicker unblocked, browser games, HTML5 games, no download games, Brayden is Tall Games">
     <meta name="author" content="Brayden is Tall Games">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -33,7 +28,7 @@
     <link rel="canonical" href="https://braydenistallgames.online/">
 
     <!-- Favicons & Icons -->
-    <link rel="icon" type="image/png" href="img/flame-icon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="shortcut icon" type="image/png" href="img/flame-icon.png">
     <link rel="apple-touch-icon" href="img/flame-icon.png">
     <link rel="manifest" href="manifest.json">
@@ -46,6 +41,8 @@
     <meta property="og:url" content="https://braydenistallgames.online/">
     <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
     <meta property="og:image:alt" content="Brayden is Tall Games logo">
+    <meta property="og:image:width" content="192">
+    <meta property="og:image:height" content="192">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card -->
@@ -54,12 +51,11 @@
     <meta name="twitter:description" content="80+ free unblocked games that work on Chromebooks and school WiFi. Slope, 1v1.lol, Tunnel Rush, Cookie Clicker and more — no downloads required.">
     <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
 
-    <!-- Performance hints -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://www.clarity.ms">
+    <!-- Performance hints: early connection to all third-party origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="dns-prefetch" href="https://www.clarity.ms">
 
     <!-- Structured data: Website + Organization + SearchAction + ItemList of top games + FAQ -->
     <script type="application/ld+json">
@@ -149,13 +145,15 @@
 
 
 
-    <!-- External Resources -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
+    <!-- Fonts: non-render-blocking async load (media=print trick).
+         Falls back to system fonts until loaded — no layout shift, no blocking. -->
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Orbitron:wght@400;500&display=swap"
+          rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;700&family=Orbitron:wght@400;500&display=swap" rel="stylesheet">
+    </noscript>
 
-    <!-- Microsoft Clarity Analytics -->
+    <!-- Microsoft Clarity Analytics (async by design) -->
     <script type="text/javascript">
         (function (c, l, a, r, i, t, y) {
             c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
@@ -164,14 +162,17 @@
         })(window, document, "clarity", "script", "upbe2dvlo2");
     </script>
 
-    <script src="background-loader.js?v=S3.9"></script>
+    <!-- Google Analytics (async — was missing the script tag on this page) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-CFTDLXZJZJ');
     </script>
+
+    <!-- Background + streak engine: synchronous so background applies before paint -->
+    <script src="background-loader.js?v=S4.0"></script>
 
 
     <style>
@@ -524,7 +525,7 @@
             }
         }
 
-        /* Red notification dots */
+        /* Red notification dots — hidden by default, shown via JS when meaningful */
         .notification-dot {
             position: absolute;
             top: -2px;
@@ -537,6 +538,7 @@
             box-shadow: 0 0 6px rgba(255, 71, 87, 0.8);
             animation: pulse-dot 2s ease-in-out infinite;
             z-index: 10001;
+            display: none; /* JS controls visibility */
         }
 
         .settings-btn .notification-dot {
@@ -2239,6 +2241,32 @@
                 transform: translateX(50%) translateY(0);
             }
         }
+
+        /* ── Reduced-motion: respect OS/browser preference (critical for low-end Chromebooks) ── */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            /* Keep the streak pill transition so it doesn't flash */
+            .streak-display { transition: background 0.1s ease !important; }
+            /* Keep settings drawer slide so it's usable */
+            .settings-menu { transition: transform 0.1s ease, visibility 0.1s ease !important; }
+        }
+
+        /* ── content-visibility: let browser skip offscreen game cards during paint ── */
+        .games-section {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 2000px; /* approximate height of the game list */
+        }
+
+        /* ── GPU hints for fixed overlays so compositing is cheaper ── */
+        .streak-display,
+        .settings-btn,
+        .settings-menu {
+            will-change: transform;
+        }
     </style>
 
 
@@ -2252,52 +2280,9 @@
 
 
 
-
-
-
-
-
-    <title>Brayden is Tall Games</title>
-    <meta name="description"
-        content="Play the best unblocked games for school at Brayden is Tall Games. Enjoy popular hits like Slope, 1v1.lol, and Cookie Clicker completely free and safe.">
-    <meta name="keywords"
-        content="unblocked games for school, unblocked games premium, classroom 6x, free online games, browser games">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://braydenistallgames.online/">
-    <meta property="og:title" content="Brayden is Tall Games">
-    <meta property="og:description" content="Play top-rated unblocked games for school at Brayden is Tall Games. Zero downloads, safe for Chromebooks, and perfectly tuned for speed.">
-    <meta property="og:image" content="https://braydenistallgames.online/img/gams.png">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://braydenistallgames.online/">
-    <meta property="og:site_name" content="Brayden is Tall Games">
-    <meta property="og:locale" content="en_US">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Brayden is Tall Games">
-    <meta name="twitter:description" content="The ultimate destination for unblocked games for school. Play Slope, Geometry Lite, and more for free.">
-    <meta name="twitter:image" content="https://braydenistallgames.online/img/gams.png">
-    <script
-        type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Brayden is Tall Games","alternateName":"Unblocked Games Brayden","url":"https://braydenistallgames.online/","description":"Ultimate hub for unblocked games for school. Play 100+ free browser games."}</script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "How do I play unblocked games at school?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Simply visit our site through your web browser! All our games are built on HTML5, meaning they run entirely on the web without needing Administrator privileges or software installation."
-        }
-      }, {
-        "@type": "Question",
-        "name": "What are the best free unblocked games?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "The most popular choices include Slope, 1v1.lol, and Cookie Clicker. We constantly update our catalog to bring you the highest quality titles."
-        }
-      }]
-    }
-    </script>
+    <!-- Shared theme: loads LAST so its refinements win over the styles above.
+         One file restyles the whole site — see site-theme.css for the guide. -->
+    <link rel="stylesheet" href="site-theme.css?v=L1.4">
 </head>
 
 <body>
@@ -2788,8 +2773,7 @@
 
     <div class="container">
         <header>
-            <h1>Brayden is Tall Games</h1>
-            <p style="color: rgba(255, 255, 255, 0.15); margin-top: 0px; font-size: 1rem; font-weight: 400; user-select: none;">Unblocked Games for School</p>
+            <h1>Brayden is Tall Games <span style="display:block; margin-top: 2px; font-size: 1rem; font-weight: 400; color: rgba(255, 255, 255, 0.45); user-select: none;">Free Unblocked Games for School</span></h1>
         </header>
 
         <div class="game-section">
@@ -2798,6 +2782,15 @@
             <div class="search-box">
                 <input class="search-input" type="text" placeholder="Search games..." />
             </div>
+
+            <!-- Browse-by-category links: internal links to the genre hub pages
+                 (each targets "<genre> games unblocked" searches). -->
+            <nav class="category-bar" aria-label="Browse games by category" style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:0 0 26px;">
+                <a href="racing-games.html" style="padding:10px 18px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;text-decoration:none;font-weight:600;">🏎️ Racing</a>
+                <a href="io-games.html" style="padding:10px 18px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;text-decoration:none;font-weight:600;">🎯 .io &amp; Multiplayer</a>
+                <a href="running-games.html" style="padding:10px 18px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;text-decoration:none;font-weight:600;">🏃 Running &amp; Skill</a>
+                <a href="clicker-games.html" style="padding:10px 18px;border-radius:12px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;text-decoration:none;font-weight:600;">🍪 Clicker &amp; Idle</a>
+            </nav>
 
             <div class="game-grid">
                 <a aria-label="Play Front Wars Unblocked" class="game-card" href="front-wars.html">
@@ -2966,6 +2959,19 @@
                 <a aria-label="Play Ramp Xtreme Unblocked" class="game-card" href="ramp-xtreme.html">
                     <p>Ramp Xtreme</p>
                 </a>
+                <a aria-label="Play Melon Sandbox Unblocked" class="game-card" href="melon-sandbox.html">
+                    <p>Melon Sandbox</p>
+                </a>
+                <a aria-label="Play Schoolboy Runaway Unblocked" class="game-card" href="schoolboy-runaway.html">
+                    <p>Schoolboy Runaway</p>
+                </a>
+                <a aria-label="Play Squid Shooter Unblocked" class="game-card" href="squid-shooter.html">
+                    <p>Squid Shooter</p>
+                </a>
+                <a aria-label="Play Trash Pandas: Junkyard Run (Beta) Unblocked" class="game-card" href="trash-pandas.html">
+                    <div class="new-badge" style="background:rgba(250,204,21,0.16);border-color:rgba(250,204,21,0.4);color:#fde68a;">🧪 Beta</div>
+                    <p>Trash Pandas</p>
+                </a>
 
             </div>
         </div>
@@ -2973,33 +2979,64 @@
     </div>
 
     <script>
-        // Centralized Streak Management UI
-        // Uses the globally exposed StreakEngine from background-loader.js
+        // ─── Toast Notification ───────────────────────────────────────────────────
+        // Shared by streak engine (Monday bonus) and any other site feature that
+        // needs a brief status message.  The #toast element + CSS already exist.
+        window.showToast = function (message, duration) {
+            duration = duration || 3000;
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+            toast.textContent = message;
+            toast.classList.add('active');
+            clearTimeout(window._toastTimer);
+            window._toastTimer = setTimeout(function () {
+                toast.classList.remove('active');
+            }, duration);
+        };
+
+        // ─── Streak Display ───────────────────────────────────────────────────────
+        // Navigates to the full streak stats page when clicked.
         function handleStreakClick() {
             window.location.href = 'streaks.html';
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-            const streakNumber = document.getElementById('streakNumber');
+            const streakNumber  = document.getElementById('streakNumber');
             const streakDisplay = document.getElementById('streakDisplay');
+            const streakDot     = streakDisplay ? streakDisplay.querySelector('.notification-dot') : null;
+
+            // Milestones that earn a notification dot badge
+            const MILESTONE_DAYS = [7, 14, 30, 60, 100, 200, 365];
 
             function updateUI() {
-                if (typeof StreakEngine !== 'undefined') {
-                    const data = StreakEngine.load();
-                    const val = StreakEngine.compute(data);
-                    if (streakNumber) streakNumber.textContent = String(val);
+                if (typeof StreakEngine === 'undefined') return;
+
+                const data = StreakEngine.load();
+                const val  = StreakEngine.compute(data);
+
+                // Update displayed count
+                if (streakNumber) streakNumber.textContent = String(val);
+
+                // Show the notification dot only when the streak just hit a milestone
+                // (i.e. today's value is exactly on a milestone number).
+                if (streakDot) {
+                    const isMilestone = val > 0 && MILESTONE_DAYS.includes(val);
+                    streakDot.style.display = isMilestone ? 'block' : 'none';
                 }
             }
 
+            // Run once immediately (background-loader already recorded today's visit)
             updateUI();
-            
+
+            // Make the pill clickable
             if (streakDisplay) {
                 streakDisplay.addEventListener('click', handleStreakClick);
                 streakDisplay.style.cursor = 'pointer';
                 streakDisplay.style.pointerEvents = 'auto';
             }
 
-            window.addEventListener('storage', (e) => {
+            // Keep in sync if another tab updates streak data
+            window.addEventListener('storage', function (e) {
                 if (e.key === 'streakDataV2') updateUI();
             });
         });
@@ -3473,7 +3510,7 @@
 color: rgba(255, 255, 255, 0.3);
 font-size: 0.8rem;
 font-family: 'Orbitron', sans-serif;">
-        vS4.4
+        vL1.0
     </div>
 
     <!-- 2026 SEO Semantic Text Block & FAQ -->
@@ -3610,6 +3647,19 @@ font-family: 'Orbitron', sans-serif;">
                 }
             });
         });
+    </script>
+
+    <!-- Service Worker registration — enables offline/cache-first loading on Chromebooks -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                    .catch(function (err) {
+                        // Registration failed — site still works, just without caching
+                        console.warn('SW registration failed:', err);
+                    });
+            });
+        }
     </script>
 </body>
 
