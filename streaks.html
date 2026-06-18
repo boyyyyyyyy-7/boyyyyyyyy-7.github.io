@@ -1175,7 +1175,7 @@
                 todayStatus.textContent = 'Today is counted ✓ (you visited)';
                 todayStatus.classList.remove('broken');
             } else {
-                todayStatus.textContent = 'Today is not counted yet — visit any game!';
+                todayStatus.textContent = 'Today is not counted yet — just open the site to count it!';
                 todayStatus.classList.add('broken');
             }
         }
@@ -1193,22 +1193,43 @@
            We just load the result and display it.
            =================================================================== */
         document.addEventListener('DOMContentLoaded', () => {
-            try {
-                // background-loader.js (loaded synchronously in <head>) must have
-                // defined StreakEngine. If it didn't — e.g. an old/cached copy is
-                // served, or the file 404s — degrade gracefully instead of showing
-                // a scary "Error" in place of the streak number.
-                if (!window.StreakEngine) throw new Error('StreakEngine unavailable — background-loader.js is missing or out of date');
-                const data   = window.StreakEngine.load();
+            // Render the streak. Records today's visit too, so simply opening the
+            // site counts — no game required (recordVisit is idempotent).
+            function bootStreak() {
+                let data = window.StreakEngine.load();
+                data = window.StreakEngine.recordVisit(data);
+                data = window.StreakEngine.consumeFreezesIfNeeded(data);
                 const streak = window.StreakEngine.compute(data);
+                data.best = Math.max(Number(data.best) || 0, streak);
+                window.StreakEngine.save(data);
                 render(data, streak);
                 updateCalendar(data);
-            } catch (err) {
-                console.error('Streak page display error:', err);
+            }
+            function streakFailed() {
                 if (mainStreakCount) mainStreakCount.textContent = '–';
                 if (todayStatus) {
                     todayStatus.textContent = 'Couldn’t load your streak — please refresh the page.';
                     todayStatus.classList.add('broken');
+                }
+            }
+            try {
+                if (!window.StreakEngine) throw new Error('StreakEngine not yet available');
+                bootStreak();
+            } catch (err) {
+                console.error('Streak page display error:', err);
+                // SELF-HEAL: the engine isn't loaded (an old/cached background-loader.js that
+                // never exposed it, or a cached/blocked streak-engine.js). Pull a fresh,
+                // cache-busted copy on demand and retry once — so the page recovers on its
+                // own instead of getting stuck asking the user to refresh.
+                if (!window.__streakRetried) {
+                    window.__streakRetried = true;
+                    const s = document.createElement('script');
+                    s.src = 'streak-engine.js?fresh=' + Date.now();
+                    s.onload  = () => { try { bootStreak(); } catch (e) { console.error(e); streakFailed(); } };
+                    s.onerror = streakFailed;
+                    document.head.appendChild(s);
+                } else {
+                    streakFailed();
                 }
             }
 
