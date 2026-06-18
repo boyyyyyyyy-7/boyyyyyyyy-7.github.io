@@ -48,6 +48,10 @@
          available to all scripts below. syncStreak() runs on DOMContentLoaded
          and records today's visit + saves before the page script fires. -->
     <script src="background-loader.js?v=S4.0"></script>
+    <!-- Safety net: if the deployed background-loader.js is an old build that defines
+         StreakEngine privately but never sets window.StreakEngine, this provides an
+         identical engine so the streak still loads. No-ops when the global already exists. -->
+    <script src="streak-engine.js?v=1"></script>
 
     <title>Streak - Brayden is tall games</title>
     <link
