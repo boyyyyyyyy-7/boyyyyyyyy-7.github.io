@@ -1,0 +1,140 @@
+<body style="width:100vw;height:100vh;margin:0;padding:0">
+<script>
+// ============================================================
+//  SharedObject Persistence Fix
+//
+//  Ruffle keys Flash SharedObjects (the in-game save system)
+//  by the SWF's URL. We load SWFs via blob: URLs which get a
+//  fresh random UUID on every page load — so without this fix,
+//  Ruffle writes saves to a different key each session and the
+//  player loses their progress every time they refresh.
+//
+//  We patch Storage.prototype to detect any localStorage key
+//  containing a blob URL we created, and rewrite that portion
+//  to a stable per-game identifier passed via ?swf=<id>.
+//
+//  Works for every game that uses this player (Learn to Fly,
+//  Bloons TD, Duck Life, Tetris, etc.) — they just need to
+//  pass ?swf=<unique-id> in the iframe URL.
+// ============================================================
+(function () {
+    var urlParams = new URLSearchParams(window.location.search);
+    // Stable per-game ID. Falls back to a constant if the wrapper
+    // page hasn't been updated yet — better than no persistence at all.
+    var swfId = urlParams.get('swf') || 'legacy_unmarked';
+    var STABLE_PATH = '__bitg_swf_save__/' + swfId;
+
+    // Track every blob URL we create so we can recognise them
+    // in localStorage keys later, regardless of internal format.
+    var ourBlobURLs = new Set();
+    var origCreateObjectURL = URL.createObjectURL.bind(URL);
+    URL.createObjectURL = function (obj) {
+        var url = origCreateObjectURL(obj);
+        ourBlobURLs.add(url);
+        return url;
+    };
+
+    // Rewrite any localStorage key that contains a blob URL we
+    // generated (or any blob URL at all, as a safety net) so it
+    // becomes stable across reloads.
+    function stabilize(key) {
+        if (typeof key !== 'string') return key;
+        var out = key;
+        ourBlobURLs.forEach(function (blobURL) {
+            if (out.indexOf(blobURL) !== -1) {
+                out = out.split(blobURL).join(STABLE_PATH);
+            }
+        });
+        // Safety net: catch any blob:scheme://host/uuid pattern we missed
+        out = out.replace(/blob:[a-z]+:\/\/[^\/]+\/[a-f0-9-]+/gi, STABLE_PATH);
+        return out;
+    }
+
+    // Patch the Storage prototype so the rewrite applies to every
+    // call site, including Ruffle's WASM-driven internals.
+    var origSet    = Storage.prototype.setItem;
+    var origGet    = Storage.prototype.getItem;
+    var origRemove = Storage.prototype.removeItem;
+    Storage.prototype.setItem    = function (k, v) { return origSet.call(this, stabilize(k), v); };
+    Storage.prototype.getItem    = function (k)    { return origGet.call(this, stabilize(k)); };
+    Storage.prototype.removeItem = function (k)    { return origRemove.call(this, stabilize(k)); };
+
+    // Expose for diagnostics
+    window.__BITG_SAVE_PATH__ = STABLE_PATH;
+    console.log('[BITG SaveFix] SharedObject keys will be normalized to:', STABLE_PATH);
+})();
+</script>
+<script src="dd0be85ee9c2092132d1.wasm.js"></script>
+<script src="c1c1a8b2293497a31e49.wasm.js"></script>
+<script src="ruffle.js"></script>
+<script>
+function loadScripts(scripts, callback){
+  var loadedCount = 0;
+  function scriptLoaded(){
+    loadedCount++ ;
+    if(loadedCount === scripts.length){
+      callback(null);
+    }
+  }
+  scripts.forEach(function (script){
+    var scriptTag = document.createElement('script');
+    scriptTag.src = script;
+    scriptTag.onload = scriptLoaded;
+    scriptTag.onerror = function() {
+      callback(new Error('Failed to load script: ' + script));
+    };
+    document.head.appendChild(scriptTag);
+  });
+}
+
+function dataURLtoBlobURL(dataURL){
+  try {
+    var byteString = atob(dataURL.split(',')[1]);
+    var mime = dataURL.split(',')[0].split(':')[0];
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (i = 0; i < byteString.length; i++){
+      ia[i] = byteString.charCodeAt(i);
+    }
+    var blob = new Blob([ab], {
+      type : mime
+    });
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    alert('Failed to convert data URL to Blob URL');
+    console.error('Failed to convert data URL to Blob URL:', error);
+  }
+}
+
+const urlParams = new URLSearchParams(window.location.search);
+const channel = (urlParams.get('channel') || 'swf_channel');
+
+document.title = channel;
+
+const bc = new BroadcastChannel(channel);
+
+bc.onmessage = (event) => {
+    var eventType = (event.data.type);
+    var eventData = (event.data.data);
+
+   if (eventType == 'swf') {
+    var dataURL = eventData;
+    var blobURL = dataURLtoBlobURL(dataURL);
+    var embed = document.createElement('embed');
+    embed.width = '100%';
+    embed.height = '100%';
+    embed.name = 'plugin';
+    embed.id = 'plugin';
+    embed.type = 'application/x-shockwave-flash'
+    embed.src = blobURL;
+    document.body.appendChild(embed);
+    bc.postMessage({type: 'close'});
+    bc.close();
+   }
+
+   if (eventType == 'close') {
+    bc.close();
+   }
+};
+</script>
+</body>
