@@ -71,12 +71,17 @@
             padding: 0;
             min-height: 100vh;
             transition: all 0.3s ease;
+            /* Match the rest of the site's near-black base (#0a0a0a) instead of
+               the old purple/indigo gradient, which made this the only page
+               with a different base color. The two faint teal radials keep a
+               little depth and tie into the site's teal accent, but stay low
+               enough opacity that the page still reads as near-black. */
             background:
-                radial-gradient(ellipse at 20% 0%, rgba(80, 40, 140, 0.25) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 100%, rgba(40, 80, 160, 0.20) 0%, transparent 50%),
-                linear-gradient(135deg, #050510 0%, #0a0a1f 50%, #0c0820 100%) !important;
+                radial-gradient(ellipse at 20% 0%, rgba(78, 205, 196, 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 100%, rgba(78, 205, 196, 0.05) 0%, transparent 55%),
+                #0a0a0a !important;
             background-attachment: fixed !important;
-            background-color: #050510 !important;
+            background-color: #0a0a0a !important;
             overflow-x: hidden;
         }
 
@@ -888,7 +893,7 @@
     <link rel="stylesheet" href="stars.css?v=1">
 
     <!-- Shared theme: loads LAST so its refinements win over the styles above. -->
-    <link rel="stylesheet" href="site-theme.css?v=L1.4">
+    <link rel="stylesheet" href="site-theme.css?v=L1.5">
 </head>
 
 <body>

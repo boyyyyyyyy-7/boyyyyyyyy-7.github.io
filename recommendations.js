@@ -32,14 +32,12 @@
         { name: 'Slope Rider',          url: 'slope-rider.html',          genre: 'runner',   hot: true  },
         { name: 'Tunnel Rush',          url: 'tunnel-rush.html',          genre: 'runner',   hot: true  },
         { name: 'Curve Rush',           url: 'curve-rush.html',           genre: 'runner',   hot: true  },
-        { name: 'Wave Dash',            url: 'wave-dash.html',            genre: 'runner',   hot: false },
         { name: 'Geometry Lite',        url: 'geometry-lite.html',        genre: 'runner',   hot: false },
         { name: 'Speed Stars',          url: 'speed-stars.html',          genre: 'runner',   hot: true  },
         // racing / driving
         { name: 'Drive Mad',            url: 'drive-mad.html',            genre: 'racing',   hot: true  },
         { name: 'Traffic Road',         url: 'traffic-road.html',         genre: 'racing',   hot: true  },
         { name: 'Cars',                 url: 'cars.html',                 genre: 'racing',   hot: false },
-        { name: 'Escape Road',          url: 'escape-road.html',          genre: 'racing',   hot: false },
         { name: 'Escape Road 2',        url: 'escape-road-2.html',        genre: 'racing',   hot: true  },
         { name: 'Slow Roads',           url: 'slow-roads.html',           genre: 'racing',   hot: true  },
         { name: 'Ramp Xtreme',          url: 'ramp-xtreme.html',          genre: 'racing',   hot: true  },
@@ -53,7 +51,6 @@
         // clicker / incremental
         { name: 'Cookie Clicker',       url: 'cookie-clicker.html',       genre: 'clicker',  hot: true  },
         { name: 'Spacebar Clicker',     url: 'spacebar-clicker.html',     genre: 'clicker',  hot: false },
-        { name: 'Chill Guy Clicker',    url: 'chill-guy-clicker.html',    genre: 'clicker',  hot: false },
         { name: 'Breaking the Bank',    url: 'breaking-the-bank.html',    genre: 'clicker',  hot: false },
         // idle / progression
         { name: 'Duck Life 3',          url: 'duck-life-3.html',          genre: 'idle',     hot: false },
@@ -63,20 +60,14 @@
         // sandbox / simulation
         { name: 'Sand Game',            url: 'sand-game.html',            genre: 'sandbox',  hot: false },
         { name: 'Fluid Simulator',      url: 'fluid-simulator.html',      genre: 'sandbox',  hot: false },
-        { name: 'Melon Sandbox',        url: 'melon-sandbox.html',        genre: 'sandbox',  hot: false },
-        { name: 'Minecraft',            url: 'minecraft.html',            genre: 'sandbox',  hot: false },
         // shooter
-        { name: 'Shell Shockers',       url: 'shell-shockers.html',       genre: 'shooter',  hot: false },
-        { name: 'Squid Shooter',        url: 'squid-shooter.html',        genre: 'shooter',  hot: false },
         { name: 'Cowboy Safari',        url: 'cowboy-safari.html',        genre: 'shooter',  hot: true  },
         // horror / escape
         { name: 'Granny',               url: 'granny.html',               genre: 'horror',   hot: true  },
-        { name: 'Schoolboy Runaway',    url: 'schoolboy-runaway.html',    genre: 'horror',   hot: false },
         { name: 'Slender Multiplayer',  url: 'slender-multiplayer.html',  genre: 'horror',   hot: false },
         // 3d animal action
         { name: 'Crazy Cattle 3D',      url: 'crazy-cattle-3d.html',      genre: '3d',       hot: true  },
         { name: 'Crazy Chicken 3D',     url: 'crazy-chicken-3d.html',     genre: '3d',       hot: false },
-        { name: 'Crazy Kitty 3D',       url: 'crazy-kitty-3d.html',       genre: '3d',       hot: false },
         // sports
         { name: 'Arcade Tennis',        url: 'arcade-tennis.html',        genre: 'sports',   hot: true  },
         { name: 'Golf Orbit',           url: 'golf-orbit.html',           genre: 'sports',   hot: true  },

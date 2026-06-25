@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 100" fill="none">
+  <defs>
+    <linearGradient id="b-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#ffffff"/>
+      <stop offset="55%" stop-color="#f2f2f2"/>
+      <stop offset="100%" stop-color="#bdbdbd"/>
+    </linearGradient>
+  </defs>
+  <path
+    fill="url(#b-grad)"
+    fill-rule="evenodd"
+    stroke="#ffffff"
+    stroke-width="0.6"
+    d="
+      M 6 3 L 48 3 C 64 3, 70 13, 70 24 C 70 35, 63 42, 56 44
+      C 66 46, 73 53, 73 66 C 73 84, 62 97, 46 97 L 6 97 Z
+      M 18 17 L 18 41 L 46 41 C 52 41, 56 34, 56 27 C 56 20, 52 17, 46 17
+      L 30 17 L 18 28 Z
+      M 18 57 L 18 83 L 46 83 C 55 83, 60 76, 60 69 C 60 61, 55 57, 46 57 Z
+    "/>
+</svg>

@@ -1,5 +1,5 @@
 (function () {
-  const DEFAULT_THEME = 'christmas';
+  const DEFAULT_THEME = 'classic';
   const THEME_BACKGROUNDS = {
     classic: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
     light: 'linear-gradient(135deg, #f6f7fb 0%, #e5e7eb 100%)',
@@ -62,9 +62,13 @@
       document.head.appendChild(themeStyle);
     }
 
+    // Skip particle effects entirely when the OS/browser requests reduced motion.
+    // This is critical on low-end Chromebooks where snow/fireworks can tank performance.
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Handle special effects like snow or sparkles
     if (savedTheme === 'christmas') {
-      if (window.initSnow) window.initSnow();
+      if (!prefersReducedMotion && window.initSnow) window.initSnow();
       stopFireworks(); // Stop fireworks if switching to Christmas
       themeStyle.textContent = '';
     } else if (savedTheme === 'newyears') {
@@ -85,7 +89,7 @@
           z-index: 1;
         }
       `;
-      initFireworks();
+      if (!prefersReducedMotion) initFireworks();
     } else {
       if (window.clearSnow) window.clearSnow();
       stopFireworks();
@@ -185,7 +189,6 @@
   }
 
   // --- SECURITY (Sync with index.html) ---
-  // Renamed and improved for Brave/Shields compatibility
   const SecureStorage = (() => {
     const BASE_KEY = "STREAK_SECURE_KEY_V1";
     function rc4(key, str) {
@@ -257,8 +260,10 @@
   })();
   window.Obfuscator = SecureStorage;
 
-  // Lightweight streak engine for non-main pages
+  // Sitewide Streak Engine
   const StreakEngine = (() => {
+    const STORAGE_KEY_V2 = 'streakDataV2';
+
     function normalizeToNoon(date) {
       const d = new Date(date);
       d.setHours(12, 0, 0, 0);
@@ -288,6 +293,19 @@
       const start = normalizeToNoon(a);
       const end = normalizeToNoon(b);
       return Math.round((end - start) / (1000 * 60 * 60 * 24));
+    }
+    function validateStreakData(data) {
+      if (!data) return false;
+      if (data.freezes < 0 || data.freezes > 1000) return false;
+      if (data.best < 0 || data.best > 10000) return false;
+      if (!Array.isArray(data.visits) || !Array.isArray(data.usedFreezes)) return false;
+      return true;
+    }
+    function mergeDayKeys(existing, add) {
+      const set = new Set((existing || []).map(normalizeDayKey).filter(Boolean));
+      const incoming = Array.isArray(add) ? add : [add];
+      incoming.map(normalizeDayKey).filter(Boolean).forEach(k => set.add(k));
+      return Array.from(set).sort();
     }
     function computeEffectiveUsedSet(data, date = new Date()) {
       const today = normalizeToNoon(date);
@@ -327,71 +345,150 @@
       }
       return { set: effectiveUsed, freezesNew: freezesNew };
     }
-    function recordVisit(data, date) {
-      const key = toDayKey(normalizeToNoon(date));
-      const visits = (data.visits || []).map(normalizeDayKey).filter(Boolean);
-      if (!visits.includes(key)) visits.push(key);
-      return Object.assign({}, data, { visits: visits });
+    function computeStreakValue(data) {
+      const today = normalizeToNoon(new Date());
+      const todayKey = toDayKey(today);
+      const result = computeEffectiveUsedSet(data, today);
+      const effectiveUsedSet = result.set;
+      let streak = 0;
+      let streakActive = false;
+      const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+      const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
+      if (normalizedVisitsArr.length === 0) return 0;
+      let earliestVisitStr = normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]);
+      let cursor = new Date(today);
+      cursor.setHours(12, 0, 0, 0);
+      while (true) {
+        const key = toDayKey(cursor);
+        if (key < earliestVisitStr) break;
+        const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
+        const hasVisit = visitsSet.has(key);
+        const isSaved = effectiveUsedSet.has(key);
+        if (hasVisit) {
+          streak++; streakActive = true; 
+        } else if (isSaved) {
+          if (streakActive) streak++;
+        } else if (!isWeekend) {
+          if (key !== todayKey || streakActive) break;
+        }
+        cursor.setDate(cursor.getDate() - 1);
+        cursor.setHours(12, 0, 0, 0);
+        if (getDayDiff(cursor, today) > 365) break;
+      }
+      return streak;
+    }
+    function getWeekKey(date) {
+      const d = normalizeToNoon(date);
+      const day = d.getDay();
+      const diffToMonday = (day + 6) % 7;
+      const monday = new Date(d);
+      monday.setDate(d.getDate() - diffToMonday);
+      monday.setHours(12, 0, 0, 0);
+      return toDayKey(monday);
+    }
+    function migrateLegacyIntoV2(data) {
+      const practiced = (() => {
+        try { return JSON.parse(localStorage.getItem('practicedDays') || '[]'); } catch { return []; }
+      })();
+      const used = (() => {
+        try { return JSON.parse(localStorage.getItem('usedFreezes') || '[]'); } catch { return []; }
+      })();
+      data.visits = mergeDayKeys(data.visits, practiced);
+      data.usedFreezes = mergeDayKeys(data.usedFreezes, used);
+      return data;
     }
     return {
-      recordVisit: recordVisit,
-      compute: (data) => {
+      load: () => {
+        let parsed = null;
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY_V2);
+          if (stored) {
+            if (stored.startsWith('{')) parsed = JSON.parse(stored);
+            else parsed = SecureStorage.decrypt(stored);
+          }
+        } catch (e) { console.error('Load failed', e); }
+        const base = {
+          version: 2, visits: [], freezes: Number(localStorage.getItem('streakFreezes') || 0) || 0,
+          usedFreezes: [], lastFreezeWeek: null, best: Number(localStorage.getItem('bestStreak') || 0) || 0,
+          forgivenessData: {}, checksum: null
+        };
+        if (!parsed) return base;
+        const loaded = { ...base, ...parsed };
+        return validateStreakData(loaded) ? loaded : base;
+      },
+      save: (data) => {
+        if (!validateStreakData(data)) return;
+        try {
+          const secure = SecureStorage.encrypt(data);
+          localStorage.setItem(STORAGE_KEY_V2, secure);
+          localStorage.setItem('streakFreezes', String(data.freezes));
+          localStorage.setItem('bestStreak', String(data.best));
+        } catch (e) { console.error('Save failed', e); }
+      },
+      migrateLegacy: migrateLegacyIntoV2,
+      recordVisit: (data) => {
+        const today = normalizeToNoon(new Date());
+        const key = toDayKey(today);
+        data.visits = mergeDayKeys(data.visits, key);
+        
+        // Monday Bonus Logic
+        if (today.getDay() === 1) {
+          const weekKey = getWeekKey(today);
+          if (data.lastFreezeWeek !== weekKey) {
+            data.freezes = Math.max(0, Number(data.freezes) || 0) + 1;
+            data.lastFreezeWeek = weekKey;
+            console.log('Monday бонус: +1 Freeze');
+            if (window.showToast) window.showToast('Monday bonus: +1 Freeze');
+          }
+        }
+        return data;
+      },
+      compute: computeStreakValue,
+      // Persist any freeze days that were auto-consumed since the last save.
+      // Must be called after recordVisit so today's visit is already in data.visits.
+      consumeFreezesIfNeeded: (data) => {
         const today = normalizeToNoon(new Date());
         const todayKey = toDayKey(today);
-        const effectiveUsedSet = computeEffectiveUsedSet(data, today).set;
-        let streak = 0;
-        let streakActive = false;
-        const normalizedVisitsArr = (data.visits || []).map(normalizeDayKey).filter(Boolean);
-        const visitsSet = new Set(normalizedVisitsArr);
-        let earliestVisitStr = normalizedVisitsArr.length > 0 ? normalizedVisitsArr.reduce((min, v) => v < min ? v : min, normalizedVisitsArr[0]) : todayKey;
-        let cursor = new Date(today);
-        cursor.setHours(12, 0, 0, 0);
-        while (true) {
-          const key = toDayKey(cursor);
-          if (key < earliestVisitStr) break;
-          const isWeekend = cursor.getDay() === 0 || cursor.getDay() === 6;
-          const hasVisit = visitsSet.has(key);
-          const isSaved = effectiveUsedSet.has(key);
-          if (hasVisit) {
-            streak++; 
-            streakActive = true; 
-          } else if (isSaved) {
-            if (streakActive) streak++;
-          } else if (!isWeekend) {
-            if (key !== todayKey || streakActive) break;
+        const { set: effectiveUsed } = computeEffectiveUsedSet(data, today);
+
+        const visitsSet = new Set((data.visits || []).map(normalizeDayKey).filter(Boolean));
+        const alreadyUsedSet = new Set((data.usedFreezes || []).map(normalizeDayKey).filter(Boolean));
+
+        const newlyConsumed = [];
+        for (const key of effectiveUsed) {
+          // Only persist past missed-weekdays that were covered — not visits, not already-saved, not today's grace
+          if (!visitsSet.has(key) && !alreadyUsedSet.has(key) && key !== todayKey) {
+            newlyConsumed.push(key);
           }
-          cursor.setDate(cursor.getDate() - 1);
-          cursor.setHours(12, 0, 0, 0);
-          if (getDayDiff(cursor, today) > 365) break;
         }
-        return streak;
+
+        if (newlyConsumed.length > 0) {
+          data.usedFreezes = mergeDayKeys(data.usedFreezes, newlyConsumed);
+          data.freezes = Math.max(0, (Number(data.freezes) || 0) - newlyConsumed.length);
+        }
+
+        return data;
       }
     };
   })();
+  window.StreakEngine = StreakEngine;
 
   function syncStreak() {
     const streakElements = document.querySelectorAll('.streak-count');
-    if (streakElements.length === 0) return;
-
+    
     try {
-      const stored = localStorage.getItem('streakDataV2');
-      if (stored) {
-        let data = null;
-        if (stored.startsWith('{')) {
-          data = JSON.parse(stored);
-        } else {
-          data = Obfuscator.decrypt(stored);
-        }
-
-        if (data) {
-          data = StreakEngine.recordVisit(data, new Date());
-          const val = StreakEngine.compute(data);
-          // Always update all streak elements on all pages with the real computed value
-          streakElements.forEach(el => {
-            el.textContent = val;
-          });
-        }
+      let data = StreakEngine.load();
+      data = StreakEngine.recordVisit(data);
+      data = StreakEngine.consumeFreezesIfNeeded(data);
+      const val = StreakEngine.compute(data);
+      data.best = Math.max(data.best || 0, val);
+      StreakEngine.save(data);
+      
+      if (streakElements.length > 0) {
+        streakElements.forEach(el => { el.textContent = val; });
       }
+      const streakNumber = document.getElementById('streakNumber');
+      if (streakNumber) streakNumber.textContent = val;
     } catch (e) {
       console.error('Error syncing streak:', e);
     }

@@ -1,5 +1,5 @@
 /* ============================================================================
-   SITE-THEME.CSS  —  vL1.0
+   SITE-THEME.CSS  —  vL1.5
    ----------------------------------------------------------------------------
    The ONE shared stylesheet for Brayden is Tall Games.
 
@@ -553,8 +553,26 @@ body:has(.topbar) button.sp-btn {
     animation: bgt-fade-up 0.45s var(--bgt-ease) backwards;
 }
 
-/* "← Back to Home" becomes a small frosted chip instead of a bare link */
-.back-link {
+/* Info-page MAIN TITLE: bring it in line with the rest of the site — a bright
+   white title with a soft glow — instead of the teal each info page hard-codes
+   inline (h1 { color:#4ecdc4 }). This matches the homepage hero (header h1) and
+   the game-page .game-title. Subheadings (h2) are left teal on purpose: teal
+   section headers are a shared pattern (the hubs use them too), so only the
+   single top-level <h1> needs unifying. One rule fixes all four info pages. */
+.container:has(> .back-link) h1 {
+    color: var(--bgt-text);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.14);
+}
+
+/* The "← Back ..." link becomes a small frosted chip instead of a bare text
+   link. The info pages use ".back-link" and the category hubs use ".hub-back";
+   styling both together means every back control across the site reads the same
+   (same pill shape, hairline, hover lift). The teal text color each page sets
+   is left untouched, so the chips keep the accent. */
+.back-link,
+.hub-back {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -569,13 +587,15 @@ body:has(.topbar) button.sp-btn {
         border-color var(--bgt-speed) var(--bgt-ease),
         background-color var(--bgt-speed) var(--bgt-ease);
 }
-.back-link:hover {
+.back-link:hover,
+.hub-back:hover {
     text-decoration: none;          /* chip moves instead of underlining */
     background: rgba(255, 255, 255, 0.08);
     border-color: var(--bgt-hairline-strong);
     transform: translateY(-1px);
 }
-.back-link:active {
+.back-link:active,
+.hub-back:active {
     transform: translateY(0) scale(0.97);
     transition-duration: 60ms;
 }

@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<!-- Stop the browser serving a stale cached copy -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>✨ Loot Box ✨</title>
+<style>
+/* =========================================================================
+   LOOT BOX — a self-contained, juicy loot-box opening experience.
+   Single file. No frameworks. No external assets. No internet required.
+   Visuals = CSS/SVG/emoji. Sound = Web Audio API. Particles = <canvas>.
+   ========================================================================= */
+
+:root{
+  --bg-0:#0b0a1f;
+  --bg-1:#171436;
+  --ink:#eef1ff;
+  --ink-dim:#9aa0c8;
+  --tier:#7fd0ff;        /* current pull's tier color (set by JS)        */
+  --tier-glow:#bfeaff;   /* lighter halo of the current tier (set by JS) */
+  --panel:rgba(255,255,255,.04);
+  --panel-edge:rgba(255,255,255,.10);
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(1200px 800px at 50% -10%, #2a2466 0%, transparent 60%),
+    radial-gradient(900px 700px at 110% 110%, #3a1d5e 0%, transparent 55%),
+    linear-gradient(160deg, var(--bg-1), var(--bg-0));
+  overflow-x:hidden;
+  min-height:100%;
+}
+
+/* Full-screen particle layer — sits above content, never blocks clicks. */
+#fx{position:fixed; inset:0; z-index:5; pointer-events:none}
+
+/* Burst flash that whites-out the screen on crack-open. */
+#flash{position:fixed; inset:0; z-index:6; background:#fff; opacity:0;
+  pointer-events:none; transition:opacity .45s ease-out}
+
+/* Everything that should jiggle during a screen-shake lives in here. */
+#shake{position:relative; z-index:1; min-height:100%;
+  display:flex; flex-direction:column; align-items:center;
+  padding:18px 16px 60px; will-change:transform}
+
+/* ----- Header / title ----- */
+header{width:100%; max-width:760px; text-align:center; margin-bottom:6px}
+h1{
+  margin:6px 0 2px; font-size:clamp(28px,7vw,52px); letter-spacing:.06em;
+  font-weight:800;
+  background:linear-gradient(90deg,#ffd86b,#ff7ad9,#7fd0ff,#ffd86b);
+  background-size:300% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:titleShimmer 6s linear infinite;
+  text-shadow:0 0 30px rgba(127,208,255,.25);
+}
+@keyframes titleShimmer{to{background-position:300% 0}}
+.subtitle{color:var(--ink-dim); font-size:13px; margin:0 0 10px}
+
+/* ----- Stats bar (total opened, pity, per-tier counts) ----- */
+#stats{width:100%; max-width:760px; display:flex; flex-wrap:wrap;
+  gap:8px; justify-content:center; align-items:center; margin-bottom:6px}
+.stat-pill{background:var(--panel); border:1px solid var(--panel-edge);
+  border-radius:999px; padding:6px 12px; font-size:13px; color:var(--ink-dim)}
+.stat-pill b{color:var(--ink)}
+.pity-pill{display:inline-flex; align-items:center; gap:5px}
+.pity-bar{width:56px; height:7px; border-radius:4px; background:rgba(255,255,255,.14); overflow:hidden}
+#pityFill{display:block; height:100%; width:0; border-radius:4px;
+  background:linear-gradient(90deg,#b362ff,#ff3d81); transition:width .45s ease}
+#tierStats{display:flex; flex-wrap:wrap; gap:6px; justify-content:center}
+.tier-chip{display:inline-flex; align-items:center; gap:6px;
+  border-radius:999px; padding:5px 10px; font-size:12px; font-weight:600;
+  background:rgba(255,255,255,.05); border:1px solid currentColor}
+.tier-chip .dot{width:8px;height:8px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 8px currentColor}
+.tier-chip .rate{opacity:.7; font-weight:500}
+.tier-chip .cnt{color:var(--ink)}
+
+/* ----- The stage where the box opens ----- */
+#stage{
+  position:relative; width:100%; max-width:640px; height:340px;
+  display:flex; align-items:center; justify-content:center;
+  perspective:700px; margin:6px 0 4px;
+}
+
+/* Spinning light-rays behind a high-tier reveal. */
+#rays{position:absolute; width:560px; height:560px; left:50%; top:50%;
+  margin:-280px 0 0 -280px; pointer-events:none; opacity:0;
+  transition:opacity .5s ease; animation:spin 9s linear infinite;
+  background:repeating-conic-gradient(from 0deg,
+     transparent 0 7deg, rgba(255,255,255,.10) 7deg 14deg);
+  -webkit-mask:radial-gradient(circle, #000 12%, transparent 62%);
+          mask:radial-gradient(circle, #000 12%, transparent 62%);
+  filter:drop-shadow(0 0 30px var(--tier-glow));
+}
+#rays.on{opacity:.9}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* The floating wrapper carries the idle bob; jitter is applied to .box. */
+.box-wrap{animation:float 3.2s ease-in-out infinite; transition:opacity .25s ease}
+.box-wrap.hidden{opacity:0; pointer-events:none}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+
+/* ----- The loot box itself (pure CSS) ----- */
+.box{position:relative; width:170px; height:150px; transform-style:preserve-3d}
+
+.box__beam{position:absolute; left:50%; bottom:46px; width:90px; height:220px;
+  margin-left:-45px; transform-origin:bottom center; transform:scaleY(0);
+  opacity:0; transition:opacity .35s ease, transform .35s ease;
+  background:linear-gradient(to top, var(--tier-glow), transparent 80%);
+  -webkit-mask:linear-gradient(to top, #000, transparent);
+          mask:linear-gradient(to top, #000, transparent);
+  filter:blur(2px)}
+.box.open .box__beam{opacity:.85; transform:scaleY(1)}
+
+.box__base{position:absolute; left:10px; bottom:0; width:150px; height:100px;
+  border-radius:10px; overflow:hidden;
+  background:
+    linear-gradient(180deg,#5a48a6,#3a2a6b 70%,#2b1f52);
+  box-shadow:inset 0 -10px 18px rgba(0,0,0,.45),
+             inset 0 6px 10px rgba(255,255,255,.12),
+             0 14px 26px rgba(0,0,0,.45)}
+/* vertical ribbon on the body */
+.box__base::before{content:""; position:absolute; left:50%; top:0; bottom:0;
+  width:26px; margin-left:-13px;
+  background:linear-gradient(180deg,#ffd66b,#e8a83a);
+  box-shadow:inset 0 0 6px rgba(0,0,0,.3)}
+
+.box__seam{position:absolute; left:6px; right:6px; top:-3px; height:6px;
+  border-radius:4px; background:var(--tier);
+  box-shadow:0 0 6px var(--tier), 0 0 14px var(--tier-glow);
+  opacity:.25; transition:opacity .2s}
+
+.box__lock{position:absolute; left:50%; top:34px; transform:translateX(-50%);
+  font-size:22px; color:#ffe9a8; text-shadow:0 0 8px var(--tier-glow); z-index:3}
+
+.box__lid{position:absolute; left:0; top:6px; width:170px; height:52px;
+  border-radius:12px 12px 7px 7px; transform-origin:50% 100%;
+  transition:transform .45s cubic-bezier(.34,1.56,.5,1), opacity .45s;
+  background:linear-gradient(180deg,#6b56bd,#4a3890);
+  box-shadow:inset 0 5px 10px rgba(255,255,255,.16),
+             inset 0 -8px 12px rgba(0,0,0,.35),
+             0 6px 14px rgba(0,0,0,.35)}
+/* horizontal ribbon across the lid */
+.box__lid::before{content:""; position:absolute; left:50%; top:0; bottom:0;
+  width:26px; margin-left:-13px;
+  background:linear-gradient(180deg,#ffe07a,#e8a83a)}
+.box.open .box__lid{transform:translateY(-8px) rotateX(-118deg)}
+
+/* sweeping glint */
+.box__shine{position:absolute; inset:0; overflow:hidden; border-radius:12px;
+  pointer-events:none}
+.box__shine::after{content:""; position:absolute; top:-40%; left:-60%;
+  width:50%; height:180%; transform:rotate(18deg);
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent);
+  animation:glint 4.5s ease-in-out infinite}
+@keyframes glint{0%,72%{left:-60%}88%,100%{left:140%}}
+
+/* charging state: seam flares and pulses while the box "powers up" */
+.box.charging .box__seam{opacity:1; animation:seamPulse .25s ease-in-out infinite alternate}
+@keyframes seamPulse{from{filter:brightness(1)}to{filter:brightness(2.2)}}
+
+/* once opened, fade the box so the prize takes the spotlight */
+.box.emptied{opacity:.18; transition:opacity .4s ease}
+
+/* ----- CS:GO-style spinner reel ----- */
+#reelWindow{position:absolute; left:0; right:0; top:50%; height:158px;
+  transform:translateY(-50%); overflow:hidden; opacity:0; pointer-events:none;
+  transition:opacity .25s ease;
+  -webkit-mask:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent);
+          mask:linear-gradient(90deg, transparent, #000 13%, #000 87%, transparent)}
+#reelWindow.show{opacity:1}
+#reel{display:flex; gap:10px; height:100%; align-items:center; will-change:transform;
+  padding:0 4px}
+.card{flex:0 0 120px; width:120px; height:132px; border-radius:12px; position:relative;
+  display:flex; align-items:center; justify-content:center; overflow:hidden;
+  background:linear-gradient(160deg, rgba(255,255,255,.07), rgba(0,0,0,.3));
+  border:3px solid var(--c); box-shadow:inset 0 0 26px -10px var(--c)}
+.card::after{content:""; position:absolute; left:0; right:0; bottom:0; height:5px;
+  background:var(--c); box-shadow:0 0 10px var(--c)}
+.card-ic{font-size:56px; line-height:1; filter:drop-shadow(0 3px 6px rgba(0,0,0,.45))}
+/* freeze = the held "hit-stop" pose snapped on impact (no transition) */
+.card.freeze{transform:scale(1.34); filter:brightness(1.6) saturate(1.15);
+  box-shadow:0 0 46px var(--c); transition:none; z-index:4}
+/* lit = the punch-zoom settling out of the freeze */
+.card.lit{box-shadow:0 0 34px var(--c), inset 0 0 34px -8px var(--c); z-index:4;
+  animation:winPulse .55s cubic-bezier(.2,1.3,.4,1) forwards}
+@keyframes winPulse{0%{transform:scale(1.34)}55%{transform:scale(.99)}100%{transform:scale(1.08)}}
+.card.lit .card-ic{animation:itemBob 2.2s ease-in-out infinite}
+@keyframes itemBob{50%{transform:translateY(-6px)}}
+/* lit-plain = static highlight for reduced-motion (no scale/bob) */
+.card.lit-plain{box-shadow:0 0 30px var(--c), inset 0 0 30px -8px var(--c); z-index:4}
+
+/* the centre ticker / pointer */
+#ticker{position:absolute; left:50%; top:6px; bottom:6px; width:3px; margin-left:-1.5px;
+  background:linear-gradient(#ffd86b,#ff7ad9); box-shadow:0 0 12px #ffd86b;
+  border-radius:3px; z-index:3}
+#ticker::before,#ticker::after{content:""; position:absolute; left:50%;
+  transform:translateX(-50%); border-left:9px solid transparent; border-right:9px solid transparent}
+#ticker::before{top:-6px; border-top:12px solid #ffd86b}
+#ticker::after{bottom:-6px; border-bottom:12px solid #ffd86b}
+
+/* ----- Result banner (shown after the reel lands) ----- */
+.item{position:absolute; left:50%; bottom:2px; transform:translateX(-50%) scale(0);
+  display:flex; align-items:center; gap:10px; opacity:0; pointer-events:none;
+  background:rgba(0,0,0,.4); border:1px solid var(--panel-edge); border-radius:999px;
+  padding:8px 18px; white-space:nowrap; backdrop-filter:blur(3px)}
+.item.show{animation:bannerPop .5s cubic-bezier(.2,1.4,.4,1) forwards}
+@keyframes bannerPop{
+  0%{transform:translateX(-50%) scale(0); opacity:0}
+  60%{transform:translateX(-50%) scale(1.12); opacity:1}
+  100%{transform:translateX(-50%) scale(1); opacity:1}}
+.item .r-ic{font-size:30px; filter:drop-shadow(0 0 10px var(--tier-glow))}
+.item .r-nm{font-size:18px; font-weight:800}
+.item .r-tier{font-size:12px; font-weight:800; letter-spacing:.12em;
+  text-transform:uppercase; text-shadow:0 0 10px currentColor}
+
+/* ----- The big juicy OPEN button ----- */
+#openBtn{margin-top:8px; cursor:pointer; user-select:none; border:0;
+  padding:16px 46px; border-radius:16px; font-size:22px; font-weight:800;
+  letter-spacing:.08em; color:#241a05;
+  background:linear-gradient(180deg,#ffe27a,#ffb020);
+  box-shadow:0 8px 0 #c87f12, 0 14px 22px rgba(0,0,0,.4),
+             inset 0 2px 4px rgba(255,255,255,.6);
+  transition:transform .08s ease, box-shadow .08s ease, filter .2s}
+#openBtn:hover{filter:brightness(1.05)}
+#openBtn:active{transform:translateY(5px);
+  box-shadow:0 3px 0 #c87f12, 0 6px 12px rgba(0,0,0,.4),
+             inset 0 2px 4px rgba(255,255,255,.6)}
+#openBtn:disabled{filter:saturate(.6) brightness(.85); cursor:default}
+
+/* ----- Inventory ----- */
+#inv-wrap{width:100%; max-width:760px; margin-top:26px}
+.inv-head{display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px}
+.inv-head h2{margin:0; font-size:18px; letter-spacing:.04em}
+.inv-head button{background:var(--panel); border:1px solid var(--panel-edge);
+  color:var(--ink-dim); border-radius:8px; padding:6px 10px; cursor:pointer;
+  font-size:12px}
+.inv-head button:hover{color:var(--ink)}
+#inventory{display:grid; gap:10px;
+  grid-template-columns:repeat(auto-fill,minmax(86px,1fr))}
+.inv-empty{color:var(--ink-dim); font-size:14px; grid-column:1/-1;
+  text-align:center; padding:24px 0}
+.inv-tile{position:relative; aspect-ratio:1; border-radius:12px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:4px; padding:6px; text-align:center;
+  background:rgba(255,255,255,.04);
+  border:2px solid var(--c); box-shadow:0 0 14px -4px var(--c), inset 0 0 22px -10px var(--c);
+  animation:tilePop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes tilePop{from{transform:scale(.6); opacity:0}}
+.inv-tile .ic{font-size:34px; line-height:1}
+.inv-tile .nm{font-size:10px; color:var(--ink-dim); line-height:1.15;
+  max-width:100%; overflow:hidden; text-overflow:ellipsis;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical}
+.inv-tile .badge{position:absolute; top:-7px; right:-7px; min-width:20px;
+  height:20px; padding:0 5px; border-radius:999px; font-size:11px; font-weight:800;
+  display:flex; align-items:center; justify-content:center; color:#101018;
+  background:var(--c); box-shadow:0 0 8px var(--c)}
+.inv-tile.is-new{box-shadow:0 0 20px -2px var(--c), inset 0 0 22px -8px var(--c)}
+.inv-tile .new-badge{position:absolute; top:-7px; left:-7px; background:#fff; color:#101018;
+  font-size:9px; font-weight:900; letter-spacing:.05em; padding:2px 5px; border-radius:6px;
+  box-shadow:0 0 8px #fff; animation:newBlink .8s steps(2,end) infinite}
+@keyframes newBlink{50%{opacity:.35}}
+
+/* ----- Recent-drops feed ----- */
+#dropsWrap{display:flex; gap:6px; justify-content:center; align-items:center;
+  flex-wrap:wrap; min-height:34px; margin-top:8px}
+.drop{width:32px; height:32px; border-radius:8px; display:flex; align-items:center;
+  justify-content:center; font-size:18px; background:rgba(255,255,255,.04);
+  border:2px solid var(--c); box-shadow:0 0 10px -2px var(--c);
+  animation:dropIn .4s cubic-bezier(.2,1.4,.4,1)}
+@keyframes dropIn{from{transform:translateX(-14px) scale(.4); opacity:0}}
+
+/* ----- Rarity "slam" announcement (Epic+) ----- */
+#slam{position:fixed; inset:0; z-index:65; display:flex; align-items:center;
+  justify-content:center; pointer-events:none; opacity:0}
+#slam.show{animation:slamIn 1.5s ease forwards}
+#slam .word{font-size:clamp(46px,15vw,150px); font-weight:900; letter-spacing:.03em;
+  color:var(--slam,#fff); text-shadow:0 0 36px currentColor, 0 8px 26px rgba(0,0,0,.55);
+  -webkit-text-stroke:2px rgba(255,255,255,.22); white-space:nowrap}
+@keyframes slamIn{
+  0%{opacity:0; transform:scale(2.6); filter:blur(10px)}
+  12%{opacity:1; transform:scale(.9); filter:blur(0)}
+  20%{transform:scale(1.06)}
+  30%{transform:scale(1)}
+  80%{opacity:1; transform:scale(1)}
+  100%{opacity:0; transform:scale(1.12)}}
+
+/* ----- Mute toggle (fixed corner) ----- */
+#muteBtn{position:fixed; top:12px; right:12px; z-index:70; cursor:pointer;
+  width:42px; height:42px; border-radius:50%; border:1px solid var(--panel-edge);
+  background:var(--panel); color:var(--ink); font-size:18px;
+  display:flex; align-items:center; justify-content:center; backdrop-filter:blur(4px)}
+
+/* Respect users who ask for less motion: kill idle loops & the big shakes,
+   and turn the rarity slam into a simple fade. The reveal still happens fast. */
+@media (prefers-reduced-motion: reduce){
+  .box-wrap, .box__shine::after, h1, #rays,
+  .card.lit, .card.lit .card-ic, .drop, .inv-tile{ animation:none !important }
+  #slam.show{ animation:slamFade .9s ease forwards }
+  @keyframes slamFade{0%{opacity:0}15%,75%{opacity:1}100%{opacity:0}}
+}
+
+@media (max-width:480px){
+  #stage{height:300px}
+  .box{transform:scale(.9)}
+  .card{flex-basis:96px; width:96px; height:108px}
+  .card-ic{font-size:44px}
+  #reelWindow{height:128px}
+}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div id="flash"></div>
+<div id="slam" aria-hidden="true"></div>
+
+<div id="shake">
+  <header>
+    <h1>LOOT&nbsp;BOX</h1>
+    <p class="subtitle">🎰 SPIN THE CASE — tap OPEN! · v4 (full juice)</p>
+    <div id="stats">
+      <span class="stat-pill">Opened: <b id="totalCount">0</b></span>
+      <span class="stat-pill pity-pill">Pity <b id="pityCount">0</b>/<span id="pityMax">10</span>
+        <span class="pity-bar"><span id="pityFill"></span></span></span>
+      <span id="tierStats"></span>
+    </div>
+    <div id="dropsWrap" title="Your recent drops"></div>
+  </header>
+
+  <div id="stage">
+    <div id="rays"></div>
+    <div class="box-wrap" id="boxWrap">
+      <div class="box" id="box">
+        <div class="box__beam"></div>
+        <div class="box__base">
+          <div class="box__seam"></div>
+          <div class="box__lock">◆</div>
+        </div>
+        <div class="box__lid"></div>
+        <div class="box__shine"></div>
+      </div>
+    </div>
+    <div id="reelWindow">
+      <div id="reel"></div>
+      <div id="ticker"></div>
+    </div>
+    <div class="item" id="item"></div>
+  </div>
+
+  <button id="openBtn">OPEN</button>
+
+  <div id="inv-wrap">
+    <div class="inv-head">
+      <h2>🎒 Inventory</h2>
+      <button id="resetBtn" title="Clear all progress">🗑 Reset</button>
+    </div>
+    <div id="inventory"></div>
+  </div>
+</div>
+
+<button id="muteBtn" title="Mute / unmute">🔊</button>
+
+<script>
+"use strict";
+/* =========================================================================
+   CONFIG  — everything tweakable lives here.
+   Want new items, new odds, new tiers? Edit this block, nothing else.
+   ========================================================================= */
+const CONFIG = {
+  // Pity: after `interval` opens with nothing `floorTier`-or-better,
+  // the next open is GUARANTEED to be at least `floorTier`.
+  pity: { interval: 10, floorTier: "epic" },
+
+  // CS:GO-style spinner. winIndex = which card in the strip is your prize.
+  // baseSpin = glide time (ms); each tier up adds tierSpinAdd for extra tension.
+  reel: { count: 64, winIndex: 58, baseSpin: 5400, tierSpinAdd: 500 },
+
+  /* Tiers, ordered LOW → HIGH. `weight` is the drop chance in %
+     (the five weights below sum to 100). Each tier also defines how big
+     its "moment" is: build-up length, shake, particle count, etc. */
+  tiers: [
+    { id:"common",    label:"Common",    weight:60, color:"#b8c2cc", glow:"#e8edf2",
+      buildUp:850,  shake:6,  particles:26,  confetti:false, rays:false, fireworks:false,
+      chime:[523.25, 659.25] },
+    { id:"rare",      label:"Rare",      weight:25, color:"#3da9fc", glow:"#9fd6ff",
+      buildUp:1050, shake:11, particles:46,  confetti:false, rays:false, fireworks:false,
+      chime:[523.25, 659.25, 783.99] },
+    { id:"epic",      label:"Epic",      weight:10, color:"#b362ff", glow:"#dcb0ff",
+      buildUp:1400, shake:17, particles:80,  confetti:true,  rays:true,  fireworks:false,
+      chime:[523.25, 659.25, 783.99, 1046.50] },
+    { id:"legendary", label:"Legendary", weight:4,  color:"#ffb020", glow:"#ffdd8f",
+      buildUp:1800, shake:26, particles:120, confetti:true,  rays:true,  fireworks:false,
+      chime:[523.25, 659.25, 783.99, 1046.50, 1318.51] },
+    { id:"mythic",    label:"Mythic",    weight:1,  color:"#ff3d81", glow:"#ffc2dd",
+      buildUp:2200, shake:38, particles:190, confetti:true,  rays:true,  fireworks:true,
+      chime:[523.25, 659.25, 783.99, 1046.50, 1318.51, 1567.98] },
+  ],
+
+  /* The prize pool for each tier. Each item is { name, icon }.
+     Icons are plain emoji so there are zero asset dependencies. */
+  items: {
+    common: [
+      {name:"Rusty Spoon", icon:"🥄"}, {name:"Single Sock", icon:"🧦"},
+      {name:"Smooth Pebble", icon:"🪨"}, {name:"Bent Paperclip", icon:"📎"},
+      {name:"Old Boot", icon:"🥾"}, {name:"Stale Cracker", icon:"🍘"},
+      {name:"Used Tissue", icon:"🤧"}, {name:"Twig", icon:"🥢"},
+    ],
+    rare: [
+      {name:"Lucky Coin", icon:"🪙"}, {name:"Magic Bean", icon:"🫘"},
+      {name:"Rubber Duck", icon:"🦆"}, {name:"Mystery Key", icon:"🗝️"},
+      {name:"Trusty Compass", icon:"🧭"}, {name:"Glow Mushroom", icon:"🍄"},
+      {name:"Pocket Telescope", icon:"🔭"},
+    ],
+    epic: [
+      {name:"Crystal Skull", icon:"💀"}, {name:"Phoenix Feather", icon:"🪶"},
+      {name:"Enchanted Shield", icon:"🛡️"}, {name:"Potion of Power", icon:"🧪"},
+      {name:"Storm Trident", icon:"🔱"}, {name:"Wizard Hat", icon:"🎩"},
+    ],
+    legendary: [
+      {name:"Dragon Egg", icon:"🐉"}, {name:"Excalibur", icon:"⚔️"},
+      {name:"Galaxy Orb", icon:"🔮"}, {name:"Golden Crown", icon:"👑"},
+      {name:"Infinity Glove", icon:"🧤"}, {name:"Sacred Diamond", icon:"💎"},
+    ],
+    mythic: [
+      {name:"Cosmic Unicorn", icon:"🦄"}, {name:"Pet Black Hole", icon:"🕳️"},
+      {name:"Wish Genie", icon:"🧞"}, {name:"Rainbow Phoenix", icon:"🐦‍🔥"},
+      {name:"Last Slice of Pizza", icon:"🍕"}, {name:"1,000,000 IQ Brain", icon:"🧠"},
+    ],
+  },
+};
+
+/* =========================================================================
+   SAVED STATE  — persisted to localStorage so progress survives refresh.
+   ========================================================================= */
+const SAVE_KEY = "lootbox_save_v1";
+const state = {
+  totalOpened: 0,
+  tierCounts: {},       // { common: 3, rare: 1, ... }
+  inventory: {},        // { "Lucky Coin": {icon, tier, count} }
+  pitySince: 0,         // opens since last floor-or-better pull
+  recent: [],           // last few pulls for the drops feed: [{icon, tier}]
+  muted: false,
+};
+
+function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify(state)); }catch(e){} }
+function load(){
+  try{
+    const s = JSON.parse(localStorage.getItem(SAVE_KEY));
+    if(s) Object.assign(state, s);
+  }catch(e){}
+  // Make sure every tier has a counter even if config changed since last save.
+  CONFIG.tiers.forEach(t=>{ if(state.tierCounts[t.id]==null) state.tierCounts[t.id]=0; });
+  if(!Array.isArray(state.recent)) state.recent = [];
+}
+
+/* =========================================================================
+   SOUND  — all audio synthesised on the fly with the Web Audio API.
+   ========================================================================= */
+const Sound = {
+  ctx:null, master:null, charge:null,
+  ensure(){
+    if(!this.ctx){
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = state.muted ? 0 : 0.6;
+      this.master.connect(this.ctx.destination);
+    }
+    if(this.ctx.state === "suspended") this.ctx.resume();
+  },
+  setMuted(m){ if(this.master) this.master.gain.value = m ? 0 : 0.6; },
+
+  // One short enveloped note.
+  tone(freq, when, dur, type="sine", vol=0.3){
+    this.ensure();
+    const t = this.ctx.currentTime + when;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.linearRampToValueAtTime(vol, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    o.connect(g); g.connect(this.master);
+    o.start(t); o.stop(t + dur + 0.03);
+  },
+
+  click(){ this.tone(680,0,0.07,"square",0.22); this.tone(900,0.03,0.07,"square",0.14); },
+
+  // Crisp blip as each card clicks past the ticker.
+  tick(){ this.tone(1100,0,0.022,"square",0.05); },
+
+  // Airy whoosh as the spinner kicks off (filtered noise sweeping up).
+  whoosh(){
+    this.ensure();
+    const t = this.ctx.currentTime, dur = 0.5;
+    const buf = this.ctx.createBuffer(1, this.ctx.sampleRate*dur, this.ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for(let i=0;i<d.length;i++){ d[i] = Math.random()*2-1; }
+    const src = this.ctx.createBufferSource(); src.buffer = buf;
+    const f = this.ctx.createBiquadFilter(); f.type="bandpass"; f.Q.value=0.8;
+    f.frequency.setValueAtTime(300, t); f.frequency.exponentialRampToValueAtTime(2200, t+dur);
+    const g = this.ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.12, t+0.06);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+    src.connect(f); f.connect(g); g.connect(this.master); src.start(t);
+  },
+
+  // Rising "powering up" hum that lasts the whole build-up.
+  startCharge(ms){
+    this.ensure();
+    const t = this.ctx.currentTime, end = t + ms/1000;
+    const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+    o.type = "sawtooth";
+    o.frequency.setValueAtTime(70, t);
+    o.frequency.exponentialRampToValueAtTime(440, end);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(0.16, end);
+    o.connect(g); g.connect(this.master); o.start(t);
+    this.charge = {o, g};
+  },
+  stopCharge(){
+    if(!this.charge) return;
+    const t = this.ctx.currentTime, {o, g} = this.charge;
+    g.gain.cancelScheduledValues(t);
+    g.gain.setValueAtTime(g.gain.value, t);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08);
+    o.stop(t + 0.1);
+    this.charge = null;
+  },
+
+  // The crack-open: filtered noise burst + a deep boom. Louder for big pulls.
+  burst(intensity){
+    this.ensure();
+    const t = this.ctx.currentTime, dur = 0.4;
+    const buf = this.ctx.createBuffer(1, this.ctx.sampleRate*dur, this.ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<data.length;i++){ data[i] = (Math.random()*2-1) * Math.pow(1-i/data.length, 2); }
+    const src = this.ctx.createBufferSource(); src.buffer = buf;
+    const filt = this.ctx.createBiquadFilter(); filt.type="lowpass"; filt.frequency.value=2400;
+    const g = this.ctx.createGain(); g.gain.value = Math.min(0.55, 0.22 + intensity*0.01);
+    src.connect(filt); filt.connect(g); g.connect(this.master); src.start(t);
+    // deep boom
+    const o = this.ctx.createOscillator(), og = this.ctx.createGain();
+    o.type="sine";
+    o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(40, t+0.4);
+    og.gain.setValueAtTime(0.5, t); og.gain.exponentialRampToValueAtTime(0.001, t+0.45);
+    o.connect(og); og.connect(this.master); o.start(t); o.stop(t+0.5);
+  },
+
+  // Reward jingle — an arpeggio, with an octave-up sparkle for jackpots.
+  chime(freqs, triumphant){
+    freqs.forEach((f,i)=> this.tone(f, i*0.085, 0.55, "triangle", 0.28));
+    if(triumphant){
+      freqs.forEach((f,i)=> this.tone(f*2, 0.4 + i*0.05, 0.6, "sine", 0.16));
+    }
+  },
+};
+
+/* =========================================================================
+   PARTICLES  — one tiny canvas engine for sparks, confetti & fireworks.
+   ========================================================================= */
+const FX = {
+  cv:null, ctx:null, parts:[], W:0, H:0,
+  init(){
+    this.cv = document.getElementById("fx");
+    this.ctx = this.cv.getContext("2d");
+    this.resize();
+    addEventListener("resize", ()=>this.resize());
+    requestAnimationFrame(()=>this.loop());
+  },
+  resize(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    this.W = innerWidth; this.H = innerHeight;
+    this.cv.width = this.W*dpr; this.cv.height = this.H*dpr;
+    this.cv.style.width = this.W+"px"; this.cv.style.height = this.H+"px";
+    this.ctx.setTransform(dpr,0,0,dpr,0,0);   // draw in CSS pixels
+  },
+  // Radial spray of sparks.
+  burst(x, y, count, colors, opt={}){
+    const speed = opt.speed||5, grav = opt.gravity==null?0.12:opt.gravity;
+    for(let i=0;i<count;i++){
+      const a = Math.random()*Math.PI*2, s = speed*(0.4+Math.random());
+      this.parts.push({x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s - 1.5,
+        g:grav, life:1, decay:0.012+Math.random()*0.02,
+        size:2+Math.random()*3, shape:"spark",
+        color:colors[(Math.random()*colors.length)|0]});
+    }
+  },
+  // Falling, tumbling confetti.
+  confetti(x, y, count){
+    const palette = ["#ff5d8f","#ffd166","#06d6a0","#4cc9f0","#b362ff","#fff"];
+    for(let i=0;i<count;i++){
+      const a = -Math.PI/2 + (Math.random()-0.5)*1.6, s = 5+Math.random()*7;
+      this.parts.push({x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s,
+        g:0.18, life:1, decay:0.006+Math.random()*0.006,
+        size:5+Math.random()*5, shape:"confetti", rot:Math.random()*6.28,
+        spin:(Math.random()-0.5)*0.3,
+        color:palette[(Math.random()*palette.length)|0]});
+    }
+  },
+  loop(){
+    const c = this.ctx;
+    c.clearRect(0,0,this.W,this.H);
+    for(let i=this.parts.length-1;i>=0;i--){
+      const p = this.parts[i];
+      p.vx*=0.99; p.vy = p.vy*0.99 + p.g; p.x+=p.vx; p.y+=p.vy;
+      p.life -= p.decay;
+      if(p.life<=0 || p.y>this.H+40){ this.parts.splice(i,1); continue; }
+      c.globalAlpha = Math.max(0, p.life);
+      c.fillStyle = p.color;
+      if(p.shape==="confetti"){
+        p.rot += p.spin;
+        c.save(); c.translate(p.x,p.y); c.rotate(p.rot);
+        c.fillRect(-p.size/2, -p.size/4, p.size, p.size/2);
+        c.restore();
+      }else{
+        c.shadowBlur = 8; c.shadowColor = p.color;
+        c.beginPath(); c.arc(p.x,p.y,p.size,0,6.28); c.fill();
+        c.shadowBlur = 0;
+      }
+    }
+    c.globalAlpha = 1;
+    requestAnimationFrame(()=>this.loop());
+  },
+};
+
+/* =========================================================================
+   GAME LOGIC
+   ========================================================================= */
+const sleep = ms => new Promise(r=>setTimeout(r, ms));
+const tierIndex = id => CONFIG.tiers.findIndex(t=>t.id===id);
+const pick = arr => arr[(Math.random()*arr.length)|0];
+
+// Weighted random over a list of tiers.
+function weightedRoll(pool){
+  const tiers = pool || CONFIG.tiers;
+  const total = tiers.reduce((s,t)=>s+t.weight, 0);
+  let r = Math.random()*total;
+  for(const t of tiers){ if((r -= t.weight) < 0) return t; }
+  return tiers[tiers.length-1];
+}
+
+// Decide this open's tier, honouring the pity guarantee. (Pure — no mutation.)
+function rollTier(){
+  const floorIdx = tierIndex(CONFIG.pity.floorTier);
+  if(state.pitySince + 1 >= CONFIG.pity.interval){
+    return weightedRoll(CONFIG.tiers.slice(floorIdx));   // forced floor-or-better
+  }
+  return weightedRoll();
+}
+
+// Record a pull into saved state.
+function commit(tier, item){
+  state.totalOpened++;
+  state.tierCounts[tier.id] = (state.tierCounts[tier.id]||0) + 1;
+  const floorIdx = tierIndex(CONFIG.pity.floorTier);
+  state.pitySince = (tierIndex(tier.id) >= floorIdx) ? 0 : state.pitySince + 1;
+  const key = item.name;
+  const isNew = !state.inventory[key];
+  if(isNew) state.inventory[key] = {icon:item.icon, tier:tier.id, count:0};
+  state.inventory[key].count++;
+  lastNewName = isNew ? key : null;        // flag (or clear) the NEW! badge target
+  state.recent.unshift({ icon:item.icon, tier:tier.id });   // newest drop on the left
+  if(state.recent.length > 14) state.recent.length = 14;
+  save();
+}
+
+/* ----- DOM refs ----- */
+const box        = document.getElementById("box");
+const boxWrap    = document.getElementById("boxWrap");
+const stage      = document.getElementById("stage");
+const rays       = document.getElementById("rays");
+const reelWindow = document.getElementById("reelWindow");
+const reel       = document.getElementById("reel");
+const itemEl     = document.getElementById("item");
+const shake      = document.getElementById("shake");
+const flash      = document.getElementById("flash");
+const openBtn    = document.getElementById("openBtn");
+
+let busy = false, revealed = false;
+let lastNewName = null;                  // most recent first-time item, for the NEW! badge
+const prefersReduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ----- Animation helpers ----- */
+
+// Build the strip of cards: mostly random filler (weighted like the real odds,
+// so it's mostly commons with the odd flash of gold), with the prize at winIndex.
+function buildReel(winItem, winTier){
+  const { count, winIndex } = CONFIG.reel;
+  const epicIdx = tierIndex("epic");
+  const baitIdx = winIndex - 1;          // the card it "almost" stops on — a near-miss tease
+  let html = "";
+  for(let i=0;i<count;i++){
+    if(i === winIndex){
+      html += `<div class="card win-card" style="--c:${winTier.color}">`+
+              `<div class="card-ic">${winItem.icon}</div></div>`;
+    }else{
+      // Force a juicy Epic+ right before the prize so it looks like you nearly hit it.
+      const t = (i === baitIdx) ? weightedRoll(CONFIG.tiers.slice(epicIdx)) : weightedRoll();
+      html += `<div class="card" style="--c:${t.color}">`+
+              `<div class="card-ic">${pick(CONFIG.items[t.id]).icon}</div></div>`;
+    }
+  }
+  reel.innerHTML = html;
+}
+
+// Spin the strip and glide to a stop with the prize under the ticker.
+// The scroll is a CSS transition (runs on the compositor), so it ALWAYS plays
+// smoothly even if the main thread is busy or rAF is throttled. Measures real
+// card size from the DOM so the maths stay correct at any screen width.
+function spin(durationMs){
+  return new Promise(resolve=>{
+    const { winIndex } = CONFIG.reel;
+    const W = reelWindow.clientWidth;
+    const cardW = reel.children[0].getBoundingClientRect().width;
+    const gap = parseFloat(getComputedStyle(reel).columnGap) || 10;
+    const pitch = cardW + gap;
+    const centreOf = i => i*pitch + cardW/2;            // x of card i's centre
+    const startX = W/2 - centreOf(3);                   // begin a few cards in
+    const jitter = (Math.random()*2 - 1) * cardW*0.30;  // don't always land dead-centre
+    const targetX = W/2 - centreOf(winIndex) + jitter;
+
+    // 1) Snap to the start position with NO transition, then force a reflow so
+    //    the browser registers it before we animate away from it.
+    reel.style.transition = "none";
+    reel.style.transform = `translateX(${startX}px)`;
+    void reel.offsetWidth;
+
+    // 2) Glide to the prize with a long ease-out — the CS:GO deceleration.
+    reel.style.transition = `transform ${durationMs}ms cubic-bezier(.10,.72,.16,1)`;
+    reel.style.transform = `translateX(${targetX}px)`;
+
+    // 3) Tick once per card as it clicks past the centre ticker. This reads the
+    //    live animated position via rAF; if rAF is throttled you just lose the
+    //    ticks, never the scroll itself.
+    let settled = false, lastIdx = null;
+    (function ticks(){
+      if(settled) return;
+      let x = startX;
+      try{ x = new DOMMatrixReadOnly(getComputedStyle(reel).transform).m41; }catch(e){}
+      const idx = Math.round((W/2 - x - cardW/2)/pitch);
+      if(idx !== lastIdx){ lastIdx = idx; Sound.tick(); }
+      requestAnimationFrame(ticks);
+    })();
+
+    // 4) Resolve when the glide ends (transitionend), with a safety timeout in
+    //    case the event is missed.
+    const finish = ()=>{ if(settled) return; settled = true;
+      reel.removeEventListener("transitionend", finish); resolve(); };
+    reel.addEventListener("transitionend", finish);
+    setTimeout(finish, durationMs + 200);
+  });
+}
+
+// Whole-screen shake that decays to zero. Intensity scales with rarity.
+function screenShake(intensity, ms){
+  const start = performance.now();
+  (function frame(now){
+    const p = (now-start)/ms;
+    if(p>=1){ shake.style.transform=""; return; }
+    const amp = intensity*(1-p);
+    shake.style.transform =
+      `translate(${(Math.random()*2-1)*amp}px,${(Math.random()*2-1)*amp}px)`;
+    requestAnimationFrame(frame);
+  })(start);
+}
+
+function flashScreen(tier){
+  flash.style.background = tier.glow;
+  flash.style.opacity = Math.min(0.9, 0.35 + tier.shake*0.018);
+  flash.style.transition = "none";
+  requestAnimationFrame(()=>{
+    flash.style.transition = "opacity .5s ease-out";
+    flash.style.opacity = 0;
+  });
+}
+
+function emitParticles(tier, x, y){
+  FX.burst(x, y, tier.particles, [tier.color, tier.glow, "#ffffff"],
+           {speed:4 + tier.shake*0.18});
+  if(tier.confetti) FX.confetti(x, y, Math.round(tier.particles*0.6));
+}
+
+// A few timed firework pops for the rarest pulls.
+function fireworks(){
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      const x = innerWidth*(0.18+Math.random()*0.64);
+      const y = innerHeight*(0.18+Math.random()*0.30);
+      const hue = (Math.random()*360)|0;
+      FX.burst(x, y, 46, [`hsl(${hue},100%,65%)`,`hsl(${hue+40},100%,75%)`,"#fff"],
+               {speed:6, gravity:0.05});
+      Sound.tone(380+Math.random()*420, 0, 0.22, "sine", 0.14);
+    }, 320 + i*230);
+  }
+}
+
+// Big rarity word that slams across the screen for Epic+ pulls.
+const slamEl = document.getElementById("slam");
+function showSlam(tier){
+  if(tierIndex(tier.id) < tierIndex("epic")) return;       // only the good stuff
+  const words = { epic:"EPIC!", legendary:"LEGENDARY!", mythic:"✦ MYTHIC ✦" };
+  slamEl.innerHTML = `<span class="word">${words[tier.id] || tier.label}</span>`;
+  slamEl.style.setProperty("--slam", tier.color);
+  slamEl.classList.remove("show"); void slamEl.offsetWidth;  // restart the animation
+  slamEl.classList.add("show");
+}
+
+// Phone rumble that gets wilder with rarity (silently does nothing on desktop).
+function haptic(tier){
+  if(!navigator.vibrate) return;
+  const patterns = [[15], [25], [40,40,80], [30,30,30,30,140], [20,20,20,20,20,20,250]];
+  navigator.vibrate(patterns[tierIndex(tier.id)] || [15]);
+}
+
+// Compact result banner shown under the reel once it lands.
+function showResult(item, tier){
+  itemEl.innerHTML =
+    `<span class="r-ic">${item.icon}</span>`+
+    `<span class="r-nm">${item.name}</span>`+
+    `<span class="r-tier" style="color:${tier.color}">${tier.label}</span>`;
+  itemEl.className = "item show";
+}
+
+// Quick teardown when the player hits OPEN AGAIN: hide reel, restore the box.
+async function quickReset(){
+  itemEl.classList.remove("show");
+  rays.classList.remove("on");
+  reelWindow.classList.remove("show");
+  await sleep(230);
+  reel.innerHTML = "";
+  reel.style.transition = "none";          // don't animate the reset
+  reel.style.transform = "translateX(0)";
+  box.classList.remove("open");
+  boxWrap.classList.remove("hidden");
+}
+
+/* ----- The main sequence ----- */
+async function openBox(){
+  if(busy) return;
+  busy = true;
+  openBtn.disabled = true;
+  Sound.click();
+
+  if(revealed){ await quickReset(); revealed = false; }
+
+  // Decide the prize up front (visuals foreshadow its colour).
+  const tier = rollTier();
+  const item = pick(CONFIG.items[tier.id]);
+  stage.style.setProperty("--tier", tier.color);
+  stage.style.setProperty("--tier-glow", tier.glow);
+
+  // 1) Anticipation: the case charges with a rising "drumroll" hum, then cracks
+  //    open and hands off to the reel with a whoosh.
+  box.classList.add("charging");
+  Sound.startCharge(450);
+  await sleep(450);
+  Sound.stopCharge();
+  box.classList.remove("charging");
+  box.classList.add("open");
+  Sound.whoosh();
+  await sleep(150);
+  boxWrap.classList.add("hidden");
+
+  // 2) Build the strip and spin it CS:GO-style (longer glide for rarer pulls).
+  buildReel(item, tier);
+  reelWindow.classList.add("show");
+  await sleep(120);                       // let the strip paint before measuring
+  const reduced = prefersReduced();
+  const dur = reduced ? 650               // reduced motion: a quick, clean spin
+            : CONFIG.reel.baseSpin + tierIndex(tier.id) * CONFIG.reel.tierSpinAdd;
+  await spin(dur);
+
+  // 3) Landed → IMPACT, then a hit-stop, then the full climax.
+  const winCard = reel.querySelector(".win-card");
+  if(tier.rays) rays.classList.add("on");
+
+  // Impact: snap-zoom the card and hit flash + boom on the same frame.
+  winCard.classList.add(reduced ? "lit-plain" : "freeze");
+  Sound.burst(tier.shake * 0.7);
+  flashScreen(tier);
+  haptic(tier);
+
+  // Hit-stop: hold the frozen frame for a beat — longer for rarer pulls.
+  await sleep(reduced ? 0 : 80 + tierIndex(tier.id) * 15);
+
+  // Release: card punches out of the freeze; particles, slam, shake, chime fire.
+  if(!reduced){ winCard.classList.remove("freeze"); winCard.classList.add("lit"); }
+  const cr = winCard.getBoundingClientRect();
+  showSlam(tier);
+  emitParticles(tier, cr.left + cr.width/2, cr.top + cr.height/2);
+  if(!reduced) screenShake(tier.shake, 520);
+  if(tier.fireworks) fireworks();
+  Sound.chime(tier.chime, tier.fireworks);
+  showResult(item, tier);
+
+  // 4) Save & refresh the UI
+  commit(tier, item);
+  renderStats();
+  renderInventory();
+  renderDrops();
+
+  revealed = true;
+  busy = false;
+  openBtn.disabled = false;
+  openBtn.textContent = "OPEN AGAIN ✨";
+}
+
+/* =========================================================================
+   RENDERING (stats + inventory)
+   ========================================================================= */
+function renderStats(){
+  document.getElementById("totalCount").textContent = state.totalOpened;
+  document.getElementById("pityCount").textContent  = state.pitySince;
+  document.getElementById("pityMax").textContent    = CONFIG.pity.interval;
+  document.getElementById("pityFill").style.width   =
+    Math.min(100, state.pitySince / CONFIG.pity.interval * 100) + "%";
+
+  const wrap = document.getElementById("tierStats");
+  wrap.innerHTML = "";
+  CONFIG.tiers.forEach(t=>{
+    const chip = document.createElement("span");
+    chip.className = "tier-chip";
+    chip.style.color = t.color;
+    chip.innerHTML =
+      `<span class="dot"></span>${t.label} `+
+      `<span class="rate">${t.weight}%</span> `+
+      `<span class="cnt">×${state.tierCounts[t.id]||0}</span>`;
+    wrap.appendChild(chip);
+  });
+}
+
+function renderInventory(){
+  const grid = document.getElementById("inventory");
+  const entries = Object.entries(state.inventory);
+  if(entries.length === 0){
+    grid.innerHTML = `<div class="inv-empty">No loot yet — open a box! 📦</div>`;
+    return;
+  }
+  // Sort rarest-first, then by how many you own.
+  entries.sort((a,b)=>{
+    const d = tierIndex(b[1].tier) - tierIndex(a[1].tier);
+    return d !== 0 ? d : b[1].count - a[1].count;
+  });
+  grid.innerHTML = "";
+  for(const [name, it] of entries){
+    const tier = CONFIG.tiers[tierIndex(it.tier)];
+    const tile = document.createElement("div");
+    tile.className = "inv-tile" + (name === lastNewName ? " is-new" : "");
+    tile.style.setProperty("--c", tier.color);
+    tile.innerHTML =
+      `<div class="ic">${it.icon}</div><div class="nm">${name}</div>`+
+      (it.count>1 ? `<div class="badge">${it.count}</div>` : ``)+
+      (name === lastNewName ? `<div class="new-badge">NEW!</div>` : ``);
+    grid.appendChild(tile);
+  }
+}
+
+// Render the recent-drops feed (newest first).
+function renderDrops(){
+  const wrap = document.getElementById("dropsWrap");
+  wrap.innerHTML = "";
+  state.recent.forEach(d=>{
+    const tier = CONFIG.tiers[tierIndex(d.tier)] || CONFIG.tiers[0];
+    const el = document.createElement("div");
+    el.className = "drop";
+    el.style.setProperty("--c", tier.color);
+    el.title = tier.label;
+    el.textContent = d.icon;
+    wrap.appendChild(el);
+  });
+}
+
+/* =========================================================================
+   WIRE-UP
+   ========================================================================= */
+const muteBtn = document.getElementById("muteBtn");
+function applyMute(){
+  Sound.setMuted(state.muted);
+  muteBtn.textContent = state.muted ? "🔇" : "🔊";
+}
+
+openBtn.addEventListener("click", openBox);
+
+muteBtn.addEventListener("click", ()=>{
+  state.muted = !state.muted;
+  Sound.ensure();      // first tap also unlocks audio on mobile
+  applyMute();
+  save();
+});
+
+document.getElementById("resetBtn").addEventListener("click", ()=>{
+  if(!confirm("Clear all loot and stats? This can't be undone.")) return;
+  state.totalOpened = 0; state.pitySince = 0;
+  state.inventory = {};
+  state.recent = [];
+  lastNewName = null;
+  CONFIG.tiers.forEach(t=> state.tierCounts[t.id] = 0);
+  save(); renderStats(); renderInventory(); renderDrops();
+});
+
+/* Boot */
+load();
+FX.init();
+applyMute();
+renderStats();
+renderInventory();
+renderDrops();
+</script>
+</body>
+</html>
