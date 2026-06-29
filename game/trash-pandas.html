@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Moving Stars Background */
+
+/* Additional star layers for depth */
+
+.container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 32px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Maven Pro', Arial, sans-serif;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 56px;
+            line-height: 24px;
+            box-sizing: border-box;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            margin: 0;
+        }
+
+        .back-button:hover,
+        .fullscreen-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .game-frame {
+                height: 70vh;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+
+        /* Description Section Styles */
+        .description-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .description-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .description-section {
+            margin-bottom: 25px;
+        }
+
+        .description-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .description-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .description-section p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .description-section strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .features-list li {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .features-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .description-container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            .description-title {
+                font-size: 1.6rem;
+            }
+
+            .description-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .description-section p,
+            .features-list li {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+<title>Trash Pandas: Junkyard Run — Free Build &amp; Run Game</title>
+    <meta name="description" content="Play Trash Pandas: Junkyard Run free! Build a junk contraption, then watch the physics haul the cookie jar to the den. No download, Chromebook-ready.">
+    <meta name="keywords" content="trash pandas, junkyard run, build and run game, physics contraption game, raccoon game, contraption builder game, unblocked games for school, free browser game, no download game">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <link rel="canonical" href="https://braydenistallgames.online/game/trash-pandas.html">
+    <meta property="og:title" content="Trash Pandas: Junkyard Run — Free Build &amp; Run Game">
+    <meta property="og:description" content="Build a getaway cart out of junk, then watch it run. Grab greedily, dump ruthlessly, protect the cookie jar. An original physics build-and-run game — free, no download.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/game/trash-pandas.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Trash Pandas: Junkyard Run — Brayden is Tall Games">
+    <meta property="og:image:width" content="192">
+    <meta property="og:image:height" content="192">
+    <meta name="twitter:title" content="Trash Pandas: Junkyard Run — Free Build &amp; Run Game">
+    <meta name="twitter:description" content="Build a getaway cart out of junk, then watch the physics play out. Haul the cookie jar to the den. Original, exclusive, free — no download.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Trash Pandas: Junkyard Run">
+    <link rel="apple-touch-icon" href="../img/flame-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Trash Pandas: Junkyard Run — Free Build & Run Game | Brayden is Tall Games","description":"Build a contraption out of junk, then watch the physics play out as you haul the cookie jar to the raccoon den. An original, exclusive unblocked game.","url":"https://braydenistallgames.online/game/trash-pandas.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Trash Pandas: Junkyard Run","description":"A two-phase physics game: build a machine from junkyard parts, then run it to haul the cookie jar to the raccoon den.","genre":["Physics","Puzzle","Construction"],"keywords":"build and run, physics, contraption, raccoon, junkyard","gamePlatform":"Web Browser","playMode":"SinglePlayer","url":"https://braydenistallgames.online/game/trash-pandas.html","applicationCategory":"Game","operatingSystem":"Web Browser","author":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Trash Pandas: Junkyard Run","item":"https://braydenistallgames.online/game/trash-pandas.html"}]}</script>
+    <link rel="stylesheet" href="../stars.css?v=1">
+
+    <link rel="stylesheet" href="../site-theme.css?v=L1.5">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='../streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='../index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                
+            </div>
+            <h1 class="game-title">Trash Pandas: Junkyard Run <span style="font-size:0.4em;vertical-align:middle;padding:4px 10px;border-radius:999px;background:rgba(250,204,21,0.16);border:1px solid rgba(250,204,21,0.4);color:#fde68a;font-weight:700;letter-spacing:0.06em;">BETA</span></h1>
+        </div>
+
+        <p style="max-width:900px;margin:0 auto 18px;padding:12px 18px;border-radius:12px;background:rgba(250,204,21,0.10);border:1px solid rgba(250,204,21,0.3);color:#fde68a;text-align:center;font-size:0.95rem;">🧪 Trash Pandas is in <strong>beta</strong> — it's still being built, so expect rough edges and the occasional bug.</p>
+
+        <div class="game-container">
+            <iframe id="gameFrame" src="../games/trash-pandas/index.html" class="game-frame" allowfullscreen
+                allow="autoplay; fullscreen; gamepad"
+                sandbox="allow-scripts allow-same-origin">
+            </iframe>
+        </div>
+
+        <!-- Game Description Section -->
+        <div class="description-container">
+            <h2 class="description-title">About Trash Pandas: Junkyard Run</h2>
+
+            <div class="description-section">
+                <h3>🦝 An Original Build-and-Run Game</h3>
+                <p><strong>Trash Pandas: Junkyard Run</strong> is an exclusive, in-house physics game you won't find
+                    anywhere else. It plays in two phases: first you <strong>build</strong> a ramshackle machine out of
+                    junkyard parts, then you hit GO and <strong>watch the physics play out</strong> as your contraption
+                    lurches across the level. Your one job is to get the precious cookie jar safely to the raccoon den.</p>
+                <p>It's a love letter to classic contraption-builder games, but every level, part,
+                    raccoon and junkyard is built from scratch right here. No two builds run the same way, and half the
+                    fun is watching your over-engineered cart faceplant in glorious slow motion.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>🔧 How to Play — Build, Then Run</h3>
+                <p>In the <strong>build phase</strong>, drag parts from the bin onto the darkened grid. Parts snap onto
+                    neighbours, so you grow your machine outward from the cookie jar. Place wheels to roll, a fan or
+                    balloon to fly, springs to bounce, and frames to hold it all together. Drag a part back to the bin to
+                    remove it. When you're happy, press <strong>GO</strong>.</p>
+                <p>In the <strong>run phase</strong> the simulation takes over — you can't steer, but you
+                    <strong>click parts on the machine to fire them</strong> at the right moment: detonate TNT, pop a
+                    balloon, trigger a soda-bottle blast. Press <strong>R</strong> to jump back to the workshop and
+                    tweak your design, or <strong>Esc</strong> to pause. Your build is your strategy.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>⚙️ Parts &amp; Physics</h3>
+                <p>Every part behaves like the real thing. <strong>Wooden frames</strong> are light and flexible but
+                    snap under hard hits; <strong>iron frames</strong> weigh more but hold a sturdier machine together.
+                    Wheels roll, fans and balloons give you lift, springs bounce, and TNT and soda bottles deliver the
+                    chaos. Parts flex, break off on big impacts, and tumble away as debris.</p>
+                <p>The cookie jar is your cargo — it's fragile, so a bad landing can shatter it and end the run. But
+                    here's the trick: the jar wins by reaching the den <em>by any means</em>. Even if your machine
+                    explodes and the jar is thrown loose across the finish line, that still counts. Build smart, or build
+                    a glorious accident.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>💡 Tips for Beginners</h3>
+                <p>Start simple — a jar on two wheels with one fan often clears the early junkyards. Add weight low and
+                    keep the jar padded so it survives the bumps. If a run fails, hit R and change one thing at a time so
+                    you learn what actually helped.</p>
+                <p>Chasing all three stars? You'll need to finish with the cookie jar healthy, beat the time, and grab
+                    the star box that's tucked off the easy path — usually that means a second, riskier build. Experiment
+                    freely; retries are unlimited.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>✨ Key Features</h3>
+                <ul class="features-list">
+                    <li>Original, exclusive game made in-house — not a clone you'll find on every site</li>
+                    <li>Two-phase build-and-run gameplay with real soft-body physics</li>
+                    <li>Drag-and-drop workshop with wood &amp; iron frames, wheels, fans, balloons, springs, TNT and more</li>
+                    <li>Click-to-fire parts during the run for moment-to-moment control</li>
+                    <li>Multiple junkyard levels plus three-star challenges and a daily run</li>
+                    <li>Win even when your machine falls apart — the cookie jar just has to reach the den</li>
+                    <li>Unlimited retries, instant restart, no download — works on Chromebooks and school WiFi</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFullscreen() {
+            const iframe = document.getElementById('gameFrame');
+
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                } else if (iframe.msRequestFullscreen) {
+                    iframe.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Update button text based on fullscreen state
+        document.addEventListener('fullscreenchange', updateButtonText);
+        document.addEventListener('webkitfullscreenchange', updateButtonText);
+        document.addEventListener('msfullscreenchange', updateButtonText);
+
+        function updateButtonText() {
+            const button = document.querySelector('.fullscreen-button');
+            if (document.fullscreenElement) {
+                button.textContent = '⛶ Exit Fullscreen';
+            } else {
+                button.textContent = '⛶ Fullscreen';
+            }
+        }
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
+    <script src="../background-loader.js?v=S4.0"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="../index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="../streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            
+            <a href="../about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="../privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="../terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="../recommendations.js"></script>
+    <script src="../stars.js?v=1"></script>
+
+<script src="../settings-panel.js"></script>
+</body>
+
+</html>

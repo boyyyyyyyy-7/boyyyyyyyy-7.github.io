@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Google+Sans:400,500|Roboto:300,400,500,700|Source+Code+Pro:400,700&display=swap" rel="stylesheet"></noscript>
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Microsoft Clarity Analytics -->
+    <script type="text/javascript">
+        (function (c, l, a, r, i, t, y) {
+            c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments) };
+            t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "upbe2dvlo2");
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CFTDLXZJZJ');
+    </script>
+
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Moving Stars Background */
+
+/* Additional star layers for depth */
+
+.container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 32px;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            font-family: 'Maven Pro', Arial, sans-serif;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 56px;
+            line-height: 24px;
+            box-sizing: border-box;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            margin: 0;
+        }
+
+        .back-button:hover,
+        .fullscreen-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            transform: translateY(-2px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .game-frame {
+                height: 70vh;
+            }
+
+            .game-title {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+
+        /* Description Section Styles */
+        .description-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .description-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .description-section {
+            margin-bottom: 25px;
+        }
+
+        .description-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .description-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .description-section p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .description-section strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .features-list li {
+            color: rgba(255, 255, 255, 0.85);
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .features-list li::before {
+            content: "▸";
+            position: absolute;
+            left: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .description-container {
+                padding: 20px;
+                margin-top: 20px;
+            }
+
+            .description-title {
+                font-size: 1.6rem;
+            }
+
+            .description-section h3 {
+                font-size: 1.1rem;
+            }
+
+            .description-section p,
+            .features-list li {
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+
+<title>Cars | Brayden is Tall Games</title>
+    <meta name="description" content="Rev your engine and hit the track in Cars! Fast-paced free online racing with simple controls. Unblocked, no download — works on school Chromebooks.">
+    <meta name="keywords" content="cars game, racing game, free online racing, browser racing game, unblocked games for school">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://braydenistallgames.online/game/cars.html">
+    <meta property="og:title" content="Cars | Brayden is Tall Games">
+    <meta property="og:description" content="Rev your engine and race in Cars! Fast-paced online racing action with no download needed.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/game/cars.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta property="og:image:width" content="192">
+    <meta property="og:image:height" content="192">
+    <meta name="twitter:title" content="Cars | Brayden is Tall Games">
+    <meta name="twitter:description" content="Rev your engine and race in Cars! Fast-paced online racing action with no download needed.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Brayden is Tall Games">
+    <link rel="apple-touch-icon" href="../img/flame-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Cars - Free Online Racing Game | Brayden is Tall Games","description":"Rev your engine and race in Cars! Fast-paced online racing action with no download needed.","url":"https://braydenistallgames.online/game/cars.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Cars","description":"Navigate ramps, obstacles, and rough tracks while keeping your car under control.","genre":"Racing","keywords":"driving, cars, physics","url":"https://braydenistallgames.online/game/cars.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Cars","item":"https://braydenistallgames.online/game/cars.html"}]}</script>
+    <link rel="stylesheet" href="../stars.css?v=1">
+
+    <link rel="stylesheet" href="../site-theme.css?v=L1.5">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='../streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='../index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                
+            </div>
+            <h1 class="game-title">Cars</h1>
+        </div>
+
+        <div class="game-container">
+            <iframe id="gameFrame"
+                src="https://www.madalingames.com/wp-content/uploads/games/webgl/M/MCMb-files/03/mcmb-webgl/index.html"
+                class="game-frame" allowfullscreen
+                allow="autoplay; fullscreen; microphone; camera; geolocation; gyroscope; accelerometer; magnetometer; encrypted-media"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation">
+            </iframe>
+        </div>
+
+        <!-- Game Description Section -->
+        <div class="description-container">
+            <h2 class="description-title">About Cars</h2>
+
+            <div class="description-section">
+                <h3>  Physics-Driven Driving</h3>
+                <p>Cars puts you behind the wheel of vehicles that actually respond to terrain, momentum, and physics.
+                    You're navigating obstacle courses where every bump, ramp, and incline affects your vehicle
+                    differently. It's driving that demands awareness of how your car interacts with the environment, not
+                    just where you're steering.</p>
+                <p>What makes it engaging is the unpredictability. Flat roads are easy. But hit a rock at the wrong
+                    angle and your car flips. Take a ramp too fast and you overshoot the landing. The physics create
+                    consequences for every decision, making successful runs feel earned rather than guaranteed.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>  Control & Balance</h3>
+                <p>Arrow keys control acceleration, braking, and tilt. The tilt controls are critical they let you
+                    adjust your car's angle mid-air or on steep slopes. Land flat after a jump and you're fine. Land on
+                    your roof and you're done. Small tilt adjustments prevent crashes.</p>
+                <p>Different terrains demand different approaches. Smooth roads let you maintain speed. Rocky sections
+                    require careful throttle control. Ramps need precise speed and angle. The game constantly tests
+                    whether you understand how your vehicle behaves in each situation.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>  Driving Smart</h3>
+                <p>Control your speed before obstacles, not during them. By the time you're on a steep hill or mid-jump,
+                    adjusting speed is too late. Slow down early when approaching tricky sections. This gives you more
+                    control over how your car responds.</p>
+                <p>Use tilt aggressively. Small tilts prevent flips. When airborne, level out early so you land flat. On
+                    hills, match your car's angle to the slope. Tilt controls are the difference between smooth driving
+                    and constant crashing.</p>
+            </div>
+
+            <div class="description-section">
+                <h3>✨ Key Features</h3>
+                <ul class="features-list">
+                    <li>Realistic vehicle physics</li>
+                    <li>Diverse terrain and obstacles</li>
+                    <li>Mid-air tilt mechanics</li>
+                    <li>Multiple vehicle types</li>
+                    <li>Challenging track designs</li>
+                    <li>Physics-based problem-solving</li>
+                    <li>Progressive difficulty levels</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFullscreen() {
+            const iframe = document.getElementById('gameFrame');
+
+            if (!document.fullscreenElement) {
+                // Enter fullscreen
+                if (iframe.requestFullscreen) {
+                    iframe.requestFullscreen();
+                } else if (iframe.webkitRequestFullscreen) {
+                    iframe.webkitRequestFullscreen();
+                } else if (iframe.msRequestFullscreen) {
+                    iframe.msRequestFullscreen();
+                }
+            } else {
+                // Exit fullscreen
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        // Update button text based on fullscreen state
+        document.addEventListener('fullscreenchange', updateButtonText);
+        document.addEventListener('webkitfullscreenchange', updateButtonText);
+        document.addEventListener('msfullscreenchange', updateButtonText);
+
+        function updateButtonText() {
+            const button = document.querySelector('.fullscreen-button');
+            if (document.fullscreenElement) {
+                button.textContent = '⛶ Exit Fullscreen';
+            } else {
+                button.textContent = '⛶ Fullscreen';
+            }
+        }
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
+    <script src="../background-loader.js?v=S4.0"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="../index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="../streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            
+            <a href="../about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="../privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="../terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="../recommendations.js"></script>
+    <script src="../stars.js?v=1"></script>
+
+<script src="../settings-panel.js"></script>
+</body>
+
+</html>
