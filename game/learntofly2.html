@@ -68,7 +68,8 @@ loadScripts([gamPath], function (error){
     frame.style.height = '100%';
     frame.style.margin = '0';
     frame.style.padding = '0';
-    frame.src = "g/Ruffle/player.html?channel="+channel;
+    // swf=learntofly2 gives Ruffle a stable per-game key so SharedObject saves persist across reloads
+    frame.src = "g/Ruffle/player.html?channel="+channel+"&swf=learntofly2";
     document.body.appendChild(frame);
     frame.onload = function() {
      bc.postMessage({type: "swf", data: window.data});
