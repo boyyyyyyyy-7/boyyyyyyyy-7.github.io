@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><noscript><link href="https://fonts.googleapis.com/css?family=Maven%20Pro%3Ai%2Cbi%2C700%2C400&display=swap" rel="stylesheet"></noscript>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CFTDLXZJZJ"></script>
+    <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-CFTDLXZJZJ');</script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Maven Pro', Arial, sans-serif;
+            background: #0a0a0a;
+            color: #f9f9f9;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+.container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .back-button,
+        .fullscreen-button {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 16px 32px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .back-button:hover,
+        .fullscreen-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+            transform: translateY(-2px) scale(1.1);
+        }
+
+        .game-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .game-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .game-frame {
+            width: 100%;
+            height: 80vh;
+            border: none;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .description-container {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .description-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .description-section {
+            margin-bottom: 25px;
+        }
+
+        .description-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .description-section p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        @media (max-width: 768px) {
+            .game-frame {
+                height: 70vh;
+            }
+        }
+    </style>
+
+<title>Stack | Brayden is Tall Games</title>
+    <meta name="description" content="Tap to stack the blocks perfectly and build the tallest tower in Stack! Simple, addictive precision gameplay. Free, unblocked, and no download to play.">
+    <meta name="keywords" content="stack game, block stacking, precision game, free browser game, unblocked games for school">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://braydenistallgames.online/game/stack.html">
+    <meta property="og:title" content="Stack | Brayden is Tall Games">
+    <meta property="og:description" content="Tap to stack blocks perfectly in Stack! How high can you go? A free and addictive online precision game.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://braydenistallgames.online/game/stack.html">
+    <meta property="og:site_name" content="Brayden is Tall Games">
+    <meta property="og:locale" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta property="og:image:alt" content="Brayden is Tall Games">
+    <meta property="og:image:width" content="192">
+    <meta property="og:image:height" content="192">
+    <meta name="twitter:title" content="Stack | Brayden is Tall Games">
+    <meta name="twitter:description" content="Tap to stack blocks perfectly in Stack! How high can you go? A free and addictive online precision game.">
+    <meta name="twitter:image" content="https://braydenistallgames.online/img/flame-icon.png">
+    <meta name="twitter:image:alt" content="Brayden is Tall Games">
+    <link rel="apple-touch-icon" href="../img/flame-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#0a0a0a">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Stack - Free Online Stacking Game | Brayden is Tall Games","description":"Tap to stack blocks perfectly in Stack! How high can you go? A free and addictive online precision game.","url":"https://braydenistallgames.online/game/stack.html","isPartOf":{"@type":"WebSite","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Stack","description":"Tap to stack blocks perfectly. How high can you go?","genre":"Puzzle","keywords":"stacking, blocks, precision","url":"https://braydenistallgames.online/game/stack.html","applicationCategory":"Game","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Brayden is Tall Games","url":"https://braydenistallgames.online"}}</script>
+
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://braydenistallgames.online/"},{"@type":"ListItem","position":2,"name":"Stack","item":"https://braydenistallgames.online/game/stack.html"}]}</script>
+    <link rel="stylesheet" href="../stars.css?v=1">
+
+    <link rel="stylesheet" href="../site-theme.css?v=L1.5">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class='button-container' style='display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;'>
+                <a href='../streaks.html' class='back-button' title='Daily Streak' style='padding:16px; min-width:80px; display:flex; align-items:center; gap:8px;'><span style='font-size:20px;'>&#128293;</span><span class='streak-count'>0</span></a>
+                <div style='display:flex; gap:10px;'><a href='../index.html' class='back-button'>&#8592; Back</a><button class='fullscreen-button' onclick='toggleFullscreen()'>&#9974; Fullscreen</button></div>
+                
+            </div>
+            <h1 class="game-title">Stack</h1>
+        </div>
+        <div class="game-container">
+            <iframe id="gameFrame" src="https://braydenistallgames.online/games/stack.html" class="game-frame"
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-presentation"></iframe>
+        </div>
+
+        <div class="description-container">
+            <h2 class="description-title">About Stack</h2>
+            <div class="description-section">
+                <h3>  Perfect Stacking Challenge</h3>
+                <p>Blocks slide across the screen. Tap to drop them. If they land perfectly on the previous block, they
+                    stack. Miss the alignment and the overhanging part gets sliced off, making the next block smaller.
+                </p>
+                <p>Perfect stacks are satisfying. Each precise drop builds the tower higher. But one bad placement
+                    shrinks your platform, making future placements exponentially harder. The game rewards precision and
+                    punishes rushing.</p>
+            </div>
+            <div class="description-section">
+                <h3>  Rhythm & Timing</h3>
+                <p>The blocks slide in a predictable pattern. Learning the rhythm is key. Some players count " the
+                    beats, others feel it visually. Either way, consistency wins over random tapping.</p>
+                <p>As your tower grows, blocks slide faster. The timing window shrinks. What worked at level 5 feels too
+                    slow at level 50. You need to adapt your rhythm as difficulty increases.</p>
+            </div>
+            <div class="description-section">
+                <h3>  High Tower Strategy</h3>
+                <p>Watch the rhythm. Blocks slide at a consistent speed. Time your taps to this rhythm rather than
+                    reacting visually. As the tower grows taller, the blocks slide faster—adjust your timing
+                    accordingly.</p>
+                <p>Don't panic when the platform gets smaller. One perfect stack resets your block size to full width.
+                    Focus on getting that perfect drop rather than accepting mediocre placements.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function toggleFullscreen() {
+            const iframe = document.getElementById('gameFrame');
+            if (!document.fullscreenElement) {
+                if (iframe.requestFullscreen) iframe.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        }
+        document.addEventListener('fullscreenchange', () => {
+            document.querySelector('.fullscreen-button').textContent = document.fullscreenElement ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+        });
+    
+        // Prevent arrow keys from scrolling the page so they only work for the game
+        window.addEventListener("keydown", function(e) {
+            if(["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+                if (e.target.tagName !== "INPUT" && e.target.tagName !== "TEXTAREA") {
+                    e.preventDefault();
+                }
+            }
+        }, false);
+</script>
+    <script src="../background-loader.js?v=S4.0"></script>
+
+    <footer style="margin-top:40px;padding:24px 20px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.45);">
+        <div style="margin-bottom:12px;">
+            <a href="../index.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">All Games</a>
+            <a href="../streaks.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Streaks</a>
+            
+            <a href="../about.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">About</a>
+            <a href="../privacy-policy.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Privacy</a>
+            <a href="../terms-of-service.html" style="color:rgba(255,255,255,0.55);text-decoration:none;margin:0 10px;">Terms</a>
+        </div>
+        <p>&copy; 2026 Brayden is Tall Games &middot; Free browser games, no download required.</p>
+    </footer>
+    <script src="../recommendations.js"></script>
+    <script src="../stars.js?v=1"></script>
+
+<script src="../settings-panel.js"></script>
+</body>
+
+</html>
