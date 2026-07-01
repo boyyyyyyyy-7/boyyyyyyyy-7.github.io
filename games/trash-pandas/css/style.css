@@ -1,0 +1,390 @@
+/* ============================================================================
+   TRASH PANDAS: JUNKYARD RUN — UI stylesheet
+   ----------------------------------------------------------------------------
+   Only the MENUS and HUD live in CSS. The game world itself is drawn on the
+   canvas by js/engine.js. Palette: junkyard dusk — warm oranges fading into
+   deep purple, with rust + teal accents.
+   ========================================================================== */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* The "you're not looking at the real game" banner in index.html.
+   The stylesheet hides it — so it only shows where CSS failed to load. */
+#css-missing-warning { display: none; }
+
+:root {
+    --dusk-1: #2b1331;        /* deep purple sky top            */
+    --dusk-2: #6b2d3e;        /* warm horizon                   */
+    --rust:   #e07a3f;        /* rusty orange — primary accent  */
+    --teal:   #59c2b4;        /* raccoon-collar teal — buttons  */
+    --paper:  #fff4e3;        /* warm off-white text            */
+    --ink:    #1d1023;        /* darkest ink for text on light  */
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--dusk-1);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+}
+
+/* The canvas fills the window; JS keeps its resolution in sync */
+#game-wrap { position: fixed; inset: 0; }
+#game { display: block; width: 100%; height: 100%; }
+
+/* ============================================================================
+   SCREENS — title / level select / pause / win / lose.
+   All share .screen; .active shows one. They sit on top of the canvas.
+   ========================================================================== */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+    padding: 24px;
+    background: rgba(24, 10, 30, 0.66);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 10;
+}
+.screen.active { display: flex; animation: screen-pop 0.25s ease-out; }
+
+@keyframes screen-pop {
+    from { opacity: 0; transform: scale(1.02); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ============================ TITLE ======================================= */
+.title-raccoon { font-size: 72px; filter: drop-shadow(0 6px 12px rgba(0,0,0,0.5)); }
+
+h1 {
+    font-size: clamp(40px, 8vw, 76px);
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    color: var(--paper);
+    text-shadow:
+        0 3px 0 #a04a24,
+        0 6px 0 #6b2d16,
+        0 12px 24px rgba(0, 0, 0, 0.6);
+}
+
+.title-sub {
+    font-size: clamp(16px, 3vw, 24px);
+    font-weight: 800;
+    letter-spacing: 0.55em;
+    margin-left: 0.55em;          /* visually re-centers the wide tracking */
+    color: var(--rust);
+}
+
+.title-tag { opacity: 0.85; font-size: 1.05rem; }
+.title-tag em { color: var(--teal); font-style: normal; font-weight: 700; }
+
+.title-howto {
+    display: flex;
+    gap: 22px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 0.85rem;
+    opacity: 0.65;
+    margin-top: 8px;
+}
+.title-howto b { color: var(--teal); }
+
+/* ============================ BUTTONS ===================================== */
+.menu-buttons { display: flex; flex-direction: column; gap: 10px; min-width: 240px; }
+
+.btn {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 12px 26px;
+    border-radius: 14px;
+    color: var(--ink);
+    background: linear-gradient(180deg, #7fd9cc, var(--teal));
+    box-shadow: 0 4px 0 #2f8276, 0 10px 22px rgba(0, 0, 0, 0.4);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+.btn:hover  { transform: translateY(-2px); filter: brightness(1.06); }
+.btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #2f8276, 0 4px 10px rgba(0,0,0,0.4); }
+
+.btn.big { font-size: 1.2rem; padding: 15px 34px; }
+
+/* GO with no cargo placed: visibly dead until the jar is on the machine */
+.btn:disabled {
+    filter: grayscale(1) brightness(0.6);
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn.ghost {
+    background: transparent;
+    color: var(--paper);
+    box-shadow: inset 0 0 0 2px rgba(255, 244, 227, 0.35);
+}
+.btn.ghost:hover { box-shadow: inset 0 0 0 2px rgba(255, 244, 227, 0.7); }
+
+/* ========================= LEVEL SELECT =================================== */
+#screen-levels h2, #screen-pause h2, #screen-win h2, #screen-lose h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+}
+
+#levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 14px;
+    width: min(720px, 92vw);
+}
+
+.level-card {
+    background: linear-gradient(180deg, rgba(255, 244, 227, 0.10), rgba(255, 244, 227, 0.04));
+    border: 1px solid rgba(255, 244, 227, 0.18);
+    border-radius: 16px;
+    padding: 18px 14px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.level-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--teal);
+    background: linear-gradient(180deg, rgba(255, 244, 227, 0.16), rgba(255, 244, 227, 0.06));
+}
+.level-card .lv-num   { font-size: 0.75rem; letter-spacing: 0.2em; opacity: 0.6; }
+.level-card .lv-name  { font-weight: 800; font-size: 1.05rem; margin: 6px 0; }
+.level-card .lv-stars { font-size: 1.1rem; letter-spacing: 2px; color: #ffd24a; }
+.level-card .lv-best  { font-size: 0.78rem; opacity: 0.6; margin-top: 4px; }
+
+.level-card.daily { border-color: rgba(224, 122, 63, 0.55); }
+.level-card.daily .lv-num { color: var(--rust); opacity: 1; }
+
+/* ========================= WIN / LOSE ===================================== */
+.stars-row { font-size: 3rem; letter-spacing: 8px; color: #ffd24a; }
+.stars-row .dim { color: rgba(255, 244, 227, 0.25); }
+
+/* Each star pops in one after another (delay set inline by main.js) */
+.stars-row span {
+    display: inline-block;
+    animation: star-pop 0.45s cubic-bezier(0.2, 2.2, 0.4, 1) backwards;
+}
+@keyframes star-pop {
+    from { transform: scale(0) rotate(-40deg); }
+    to   { transform: scale(1) rotate(0); }
+}
+
+#win-details { opacity: 0.85; line-height: 1.7; font-size: 0.95rem; }
+#lose-reason { opacity: 0.85; font-size: 1.05rem; }
+
+/* ============================== HUD ======================================= */
+#hud {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 14px 18px;
+    z-index: 5;
+    pointer-events: none;       /* clicks fall through to the canvas */
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+#hud.hidden { display: none; }
+
+.hud-left  { text-align: left; }
+.hud-right { text-align: right; }
+
+#hud-level-name { font-weight: 800; font-size: 0.85rem; opacity: 0.75; letter-spacing: 0.08em; }
+#hud-time  { font-size: 1.5rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+#hud-parts { font-size: 1rem; font-weight: 700; }
+.hud-hint  { font-size: 0.72rem; opacity: 0.55; margin-top: 4px; }
+
+/* Cookie jar health bar */
+#jar-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.jar-icon { font-size: 1.3rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+#jar-bar {
+    width: 180px;
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(255, 244, 227, 0.3);
+    overflow: hidden;
+}
+#jar-bar-fill {
+    height: 100%;
+    width: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #e0533f, #ffd24a 55%, #8be08a);
+    /* The fill shrinks from the right as the jar takes damage */
+    transition: width 0.2s ease;
+}
+
+/* Flash the bar red when the jar takes a hit (class toggled by main.js) */
+#jar-bar.hit { animation: jar-hit 0.3s ease; }
+@keyframes jar-hit {
+    0%   { box-shadow: 0 0 0 3px rgba(224, 83, 63, 0.9); }
+    100% { box-shadow: 0 0 0 0 rgba(224, 83, 63, 0); }
+}
+
+/* Small screens: shrink the HUD so it doesn't crowd the view */
+@media (max-width: 640px) {
+    #jar-bar { width: 110px; }
+    .hud-hint { display: none; }
+}
+
+/* ============================================================================
+   WORKSHOP BAR — the build-mode parts tray along the bottom of the screen
+   ========================================================================== */
+#build-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    border-radius: 18px;
+    background: rgba(24, 10, 30, 0.82);
+    border: 1px solid rgba(255, 244, 227, 0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 6;
+    max-width: 94vw;
+}
+#build-bar.hidden { display: none; }
+
+.build-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    opacity: 0.75;
+}
+
+#build-tray {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* One tray slot per part type. The part's face is drawn onto the small
+   canvas inside by main.js (same draw code the game world uses). */
+.tray-part {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 244, 227, 0.18);
+    background: rgba(255, 244, 227, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+.tray-part:hover { transform: translateY(-2px); border-color: rgba(255, 244, 227, 0.45); }
+.tray-part.selected {
+    border-color: var(--teal);
+    background: rgba(89, 194, 180, 0.16);
+    box-shadow: 0 0 14px rgba(89, 194, 180, 0.35);
+}
+.tray-part.empty {
+    opacity: 0.32;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* little count bubble in the corner of each tray slot */
+.tray-count {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 999px;
+    background: var(--rust);
+    color: var(--paper);
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.btn.go {
+    background: linear-gradient(180deg, #ffb35c, var(--rust));
+    box-shadow: 0 4px 0 #8a4520, 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+.btn.go:active { box-shadow: 0 1px 0 #8a4520, 0 4px 10px rgba(0, 0, 0, 0.4); }
+
+/* ====================== RUN-PHASE BUTTON BAR ============================== */
+/* Big round buttons along the bottom while the machine runs — one per part
+   class on board (engine / fans / soda / TNT / balloons). */
+#run-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 6;
+}
+#run-bar.hidden { display: none; }
+
+.run-btn {
+    position: relative;
+    width: 58px;
+    height: 58px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 26px;
+    background: linear-gradient(180deg, #fff4e3, #e8d9c2);
+    box-shadow: 0 4px 0 #8a7458, 0 10px 22px rgba(0, 0, 0, 0.45);
+    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.run-btn:hover  { transform: translateY(-2px); }
+.run-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #8a7458, 0 4px 10px rgba(0,0,0,0.4); }
+
+/* switched-off state (engine/fans toggled off) */
+.run-btn.off { filter: grayscale(1) brightness(0.7); }
+
+.rb-icon { line-height: 1; }
+
+/* little count badge — how many bottles/TNT/balloons remain */
+.rb-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--rust);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 640px) {
+    .run-btn { width: 50px; height: 50px; font-size: 22px; }
+}

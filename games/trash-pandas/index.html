@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trash Pandas: Junkyard Run</title>
+    <meta name="description" content="Build your getaway cart out of junk WHILE it rolls. Grab greedily, dump ruthlessly, protect the cookie jar.">
+    <!-- This is the raw game frame; the indexable landing page with full SEO content
+         lives at /trash-pandas.html, so point search engines there to avoid duplicates. -->
+    <link rel="canonical" href="https://braydenistallgames.online/trash-pandas.html">
+    <link rel="stylesheet" href="css/style.css?v=TP6.6">
+</head>
+<body>
+
+    <!-- This warning is hidden by style.css the instant it loads. If you can
+         read it, you're viewing the raw HTML file (like an editor preview)
+         instead of the actual game. -->
+    <div id="css-missing-warning">
+        ⚠️ This is the raw file view, not the game!<br>
+        Open <b>http://localhost:8765/trash-pandas/</b> in your browser,
+        or double-click <b>index.html</b> in the trash-pandas folder.
+    </div>
+
+    <!-- ====================================================================
+         THE GAME CANVAS — everything in the world is drawn here.
+         The menus below are normal HTML laid on top of it.
+         ==================================================================== -->
+    <div id="game-wrap">
+        <canvas id="game"></canvas>
+
+        <!-- ============ IN-GAME HUD (visible only while playing) ========= -->
+        <div id="hud" class="hidden">
+            <div class="hud-left">
+                <div id="hud-level-name">Level</div>
+                <div id="hud-time">0.0s</div>
+            </div>
+            <div class="hud-center">
+                <!-- Cookie jar health bar -->
+                <div id="jar-bar-wrap" title="Cookie jar health">
+                    <span class="jar-icon">🍪</span>
+                    <div id="jar-bar"><div id="jar-bar-fill"></div></div>
+                </div>
+            </div>
+            <div class="hud-right">
+                <div id="hud-parts">🔩 0 parts</div>
+                <div class="hud-hint">click parts to USE them · R = back to workshop · Esc = pause</div>
+            </div>
+        </div>
+
+        <!-- ============ WORKSHOP BAR (visible only while building) ======= -->
+        <div id="build-bar" class="hidden">
+            <div class="build-title">🔧 WORKSHOP — pick a part, click a cell · click soda/fans to AIM them</div>
+            <div id="build-tray"><!-- part buttons injected by main.js --></div>
+            <button id="btn-go" class="btn big go">🚀 &nbsp;GO!</button>
+        </div>
+
+        <!-- ============ RUN BUTTONS (visible only while running) ========== -->
+        <!-- One button per part class on the machine: ⚙ engine, 🌀 fans,
+             🥤 soda, 💥 TNT, 🎈 balloons. Injected by main.js. -->
+        <div id="run-bar" class="hidden"></div>
+
+        <!-- ===================== TITLE SCREEN ============================ -->
+        <div id="screen-title" class="screen active">
+            <div class="title-art">
+                <div class="title-raccoon">🦝</div>
+                <h1>TRASH PANDAS</h1>
+                <div class="title-sub">JUNKYARD RUN</div>
+            </div>
+            <p class="title-tag">Build a junk machine. Press GO. <em>Protect the cookies.</em></p>
+            <div class="menu-buttons">
+                <button id="btn-play" class="btn big">▶ &nbsp;Play</button>
+                <button id="btn-daily" class="btn">📅 &nbsp;Daily Junkyard</button>
+            </div>
+            <div class="title-howto">
+                <div><b>Build</b> a machine from the parts bin, then hit <b>GO</b></div>
+                <div><b>Click parts</b> mid-run: motors &amp; fans toggle, TNT blows, balloons pop</div>
+                <div><b>R</b> back to the workshop · <b>Esc</b> pause · <b>M</b> mute</div>
+            </div>
+        </div>
+
+        <!-- ===================== LEVEL SELECT ============================ -->
+        <div id="screen-levels" class="screen">
+            <h2>Pick a junkyard</h2>
+            <div id="levels-grid"><!-- level cards injected by main.js --></div>
+            <button id="btn-back-title" class="btn ghost">← Back</button>
+        </div>
+
+        <!-- ===================== PAUSE =================================== -->
+        <div id="screen-pause" class="screen">
+            <h2>Paused</h2>
+            <div class="menu-buttons">
+                <button id="btn-resume" class="btn big">▶ &nbsp;Resume</button>
+                <button id="btn-retry-pause" class="btn">↻ &nbsp;Retry</button>
+                <button id="btn-quit-pause" class="btn ghost">Quit to menu</button>
+            </div>
+        </div>
+
+        <!-- ===================== WIN ===================================== -->
+        <div id="screen-win" class="screen">
+            <h2>Den reached! 🦝🎉</h2>
+            <div id="win-stars" class="stars-row"><!-- ★★☆ injected --></div>
+            <div id="win-details"></div>
+            <div class="menu-buttons">
+                <button id="btn-next" class="btn big">Next ➜</button>
+                <button id="btn-retry-win" class="btn">↻ &nbsp;Retry</button>
+                <button id="btn-quit-win" class="btn ghost">Menu</button>
+            </div>
+        </div>
+
+        <!-- ===================== LOSE ==================================== -->
+        <div id="screen-lose" class="screen">
+            <h2 id="lose-title">Run over!</h2>
+            <div id="lose-reason">The cookie jar shattered…</div>
+            <div class="menu-buttons">
+                <button id="btn-retry-lose" class="btn big">↻ &nbsp;Retry</button>
+                <button id="btn-quit-lose" class="btn ghost">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script order matters:
+         parts/levels/daily define data, engine simulates, main glues it all. -->
+    <script src="js/parts.js?v=TP6.6"></script>
+    <script src="js/levels.js?v=TP6.6"></script>
+    <script src="js/daily.js?v=TP6.6"></script>
+    <script src="js/sound.js?v=TP6.6"></script>
+    <script src="js/engine.js?v=TP6.6"></script>
+    <script src="js/main.js?v=TP6.6"></script>
+</body>
+</html>
